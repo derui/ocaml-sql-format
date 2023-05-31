@@ -1,0 +1,6 @@
+(library
+ (name lexer)
+ (public_name ocaml-sql-format.lexer)
+ (flags (:standard -safe-string))
+ (libraries sedlex ppx_deriving)
+ (preprocess (pps ppx_deriving.show ppx_deriving.eq sedlex.ppx)))

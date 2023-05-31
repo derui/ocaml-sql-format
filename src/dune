@@ -1,0 +1,5 @@
+(executable
+ (name main)
+ (public_name ocaml-sql-format)
+ (flags (:standard -safe-string))
+ (libraries ocaml-sql-format.lexer))
