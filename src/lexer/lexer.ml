@@ -28,7 +28,9 @@ let rec token buf accum =
   | kw_from ->
     token buf (Sy_keyword (Ky_from (Sedlexing.Utf8.lexeme buf)) :: accum)
   | kw_as -> token buf (Sy_keyword (Ky_as (Sedlexing.Utf8.lexeme buf)) :: accum)
-  | '*' -> token buf (Sy_keyword Ky_asterisk :: accum)
+  | '*' -> token buf (Sy_asterisk :: accum)
+  | '(' -> token buf (Sy_lparen :: accum)
+  | ')' -> token buf (Sy_rparen :: accum)
   | eof -> List.rev accum
   | quoted_id -> token buf (Sy_ident (Sedlexing.Utf8.lexeme buf) :: accum)
   | space -> token buf accum
