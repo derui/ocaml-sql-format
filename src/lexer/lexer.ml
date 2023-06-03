@@ -1,5 +1,5 @@
-open Syntax
-module Syntax = Syntax
+open Token
+module Token = Token
 
 let kw_select =
   [%sedlex.regexp?
@@ -24,15 +24,15 @@ let quoted_id =
 let rec token buf accum =
   match%sedlex buf with
   | kw_select ->
-    token buf (Sy_keyword (Ky_select (Sedlexing.Utf8.lexeme buf)) :: accum)
+    token buf (Tok_keyword (Ky_select (Sedlexing.Utf8.lexeme buf)) :: accum)
   | kw_from ->
-    token buf (Sy_keyword (Ky_from (Sedlexing.Utf8.lexeme buf)) :: accum)
-  | kw_as -> token buf (Sy_keyword (Ky_as (Sedlexing.Utf8.lexeme buf)) :: accum)
-  | '*' -> token buf (Sy_asterisk :: accum)
-  | '(' -> token buf (Sy_lparen :: accum)
-  | ')' -> token buf (Sy_rparen :: accum)
+    token buf (Tok_keyword (Ky_from (Sedlexing.Utf8.lexeme buf)) :: accum)
+  | kw_as -> token buf (Tok_keyword (Ky_as (Sedlexing.Utf8.lexeme buf)) :: accum)
+  | '*' -> token buf (Tok_asterisk :: accum)
+  | '(' -> token buf (Tok_lparen :: accum)
+  | ')' -> token buf (Tok_rparen :: accum)
   | eof -> List.rev accum
-  | quoted_id -> token buf (Sy_ident (Sedlexing.Utf8.lexeme buf) :: accum)
+  | quoted_id -> token buf (Tok_ident (Sedlexing.Utf8.lexeme buf) :: accum)
   | space -> token buf accum
   | any -> token buf accum
   | _ -> failwith "Malformed source"

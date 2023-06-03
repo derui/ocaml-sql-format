@@ -4,10 +4,10 @@ type keyword =
   | Ky_as of string
 [@@deriving show, eq]
 
-and syntax =
-  | Sy_keyword of keyword
-  | Sy_ident of string
-  | Sy_asterisk
-  | Sy_lparen
-  | Sy_rparen
+and token =
+  | Tok_keyword of keyword
+  | Tok_ident of string
+  | Tok_asterisk
+  | Tok_lparen
+  | Tok_rparen
 [@@deriving show, eq]
