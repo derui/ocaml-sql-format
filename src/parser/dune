@@ -1,0 +1,9 @@
+(menhir
+ (flags --external-tokens Token)
+ (modules parser_inner))
+
+(library
+  (name parser)
+  (public_name ocaml-sql-format.parser)
+  (libraries ppx_deriving)
+  (preprocess (pps ppx_deriving.show ppx_deriving.eq)))
