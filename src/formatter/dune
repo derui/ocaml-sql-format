@@ -1,0 +1,5 @@
+(library
+ (name formatter)
+ (public_name ocaml-sql-format.formatter)
+ (flags (:standard -safe-string))
+ (libraries ocaml-sql-format.parser ocaml-sql-format.lexer menhirLib))
