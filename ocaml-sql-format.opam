@@ -18,6 +18,7 @@ depends: [
   "ppx_deriving" { < "5.3.0"}
   "sedlex" { < "4.0"}
   "ppx_expect" { with-test }
+  "menhir" { build }
 ]
 available: ["ocaml" >= "4.09.0"]
 description: """

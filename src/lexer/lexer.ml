@@ -24,10 +24,10 @@ let quoted_id =
 let rec token buf accum =
   match%sedlex buf with
   | kw_select ->
-    token buf (Tok_keyword (Ky_select (Sedlexing.Utf8.lexeme buf)) :: accum)
+    token buf (Tok_keyword (Kw_select (Sedlexing.Utf8.lexeme buf)) :: accum)
   | kw_from ->
-    token buf (Tok_keyword (Ky_from (Sedlexing.Utf8.lexeme buf)) :: accum)
-  | kw_as -> token buf (Tok_keyword (Ky_as (Sedlexing.Utf8.lexeme buf)) :: accum)
+    token buf (Tok_keyword (Kw_from (Sedlexing.Utf8.lexeme buf)) :: accum)
+  | kw_as -> token buf (Tok_keyword (Kw_as (Sedlexing.Utf8.lexeme buf)) :: accum)
   | '*' -> token buf (Tok_asterisk :: accum)
   | '(' -> token buf (Tok_lparen :: accum)
   | ')' -> token buf (Tok_rparen :: accum)
