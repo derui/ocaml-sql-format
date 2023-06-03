@@ -1,6 +1,6 @@
 let%expect_test "simple select" =
   let buf = Sedlexing.Utf8.from_string "SELECT * FROM test" in
-  Lexer.token buf []
+  Lexer.token buf
   |> List.iter (fun v -> Printf.printf "%s\n" (Lexer.Token.show v));
 
   [%expect
@@ -12,7 +12,7 @@ let%expect_test "simple select" =
 
 let%expect_test "as keyword" =
   let buf = Sedlexing.Utf8.from_string "SELECT * FROM test as v" in
-  Lexer.token buf []
+  Lexer.token buf
   |> List.iter (fun v -> Printf.printf "%s\n" (Lexer.Token.show v));
 
   [%expect
@@ -26,7 +26,7 @@ let%expect_test "as keyword" =
 
 let%expect_test "parens" =
   let buf = Sedlexing.Utf8.from_string "SELECT * FROM test as v ()" in
-  Lexer.token buf []
+  Lexer.token buf
   |> List.iter (fun v -> Printf.printf "%s\n" (Lexer.Token.show v));
 
   [%expect
