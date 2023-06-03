@@ -1,0 +1,6 @@
+(library
+ (name lexer_test)
+ (flags (:standard -safe-string))
+ (inline_tests)
+ (libraries ocaml-sql-format.lexer)
+ (preprocess (pps ppx_expect)))
