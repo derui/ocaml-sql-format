@@ -1,12 +1,13 @@
 open Syntax
 module Syntax = Syntax
 
-let select_regex =
+let kw_select =
   [%sedlex.regexp?
     Chars "sS", Chars "eE", Chars "lL", Chars "eE", Chars "cC", Chars "tT"]
 
-let from_regex =
-  [%sedlex.regexp? Chars "fF", Chars "rR", Chars "oO", Chars "mM"]
+let kw_from = [%sedlex.regexp? Chars "fF", Chars "rR", Chars "oO", Chars "mM"]
+
+let kw_as = [%sedlex.regexp? Chars "aA", Chars "sS"]
 
 let space = [%sedlex.regexp? Plus (Chars " \t\r\n")]
 
@@ -22,10 +23,11 @@ let quoted_id =
 
 let rec token buf accum =
   match%sedlex buf with
-  | select_regex ->
+  | kw_select ->
     token buf (Sy_keyword (Ky_select (Sedlexing.Utf8.lexeme buf)) :: accum)
-  | from_regex ->
+  | kw_from ->
     token buf (Sy_keyword (Ky_from (Sedlexing.Utf8.lexeme buf)) :: accum)
+  | kw_as -> token buf (Sy_keyword (Ky_as (Sedlexing.Utf8.lexeme buf)) :: accum)
   | '*' -> token buf (Sy_keyword Ky_asterisk :: accum)
   | eof -> List.rev accum
   | quoted_id -> token buf (Sy_ident (Sedlexing.Utf8.lexeme buf) :: accum)

@@ -2,6 +2,7 @@ type keyword =
   | Ky_select of string
   | Ky_asterisk
   | Ky_from of string
+  | Ky_as of string
 [@@deriving show, eq]
 
 and syntax =
