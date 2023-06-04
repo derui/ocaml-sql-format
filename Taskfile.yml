@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+
+  build:
+    cmds:
+      - dune build
+    silent: true
+
+  gentest:
+    cmds:
+      - _build/default/tool/test_gen/test_gen.exe {{.USER_WORKING_DIR}}/test/files/{{.FILE}} {{.NAME}}  > ./test/test_{{now | unixEpoch}}.ml
+    deps: [build]
+
+  test:
+    cmds:
+      - dune build @runtest
+    silent: true
+
+  promote:
+    cmds:
+      - dune promote
+    desp: [test]
+    silent: true

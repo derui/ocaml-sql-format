@@ -1,0 +1,5 @@
+(library
+ (name ocaml_sql_format_test)
+ (libraries ocaml-sql-format.formatter sedlex)
+ (inline_tests)
+ (preprocess (pps ppx_expect)))

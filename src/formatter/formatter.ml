@@ -5,7 +5,7 @@ let format lexbuf =
   in
   let result = parser lexer in
   let results = List.map (Statement_printer.to_string ~option:()) result in
-  print_endline @@ String.concat "\n" results
+  String.concat "\n" results
 
 let from_channel chan ~option:() =
   let lexbuf = Sedlexing.Utf8.from_channel chan in
