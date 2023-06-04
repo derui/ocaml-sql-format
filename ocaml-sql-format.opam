@@ -19,6 +19,7 @@ depends: [
   "sedlex" { < "4.0"}
   "ppx_expect" { with-test }
   "menhir" { build }
+  "fmt"
 ]
 available: ["ocaml" >= "4.09.0"]
 description: """

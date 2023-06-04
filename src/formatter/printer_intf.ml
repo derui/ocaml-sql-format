@@ -1,5 +1,5 @@
 module type S = sig
   type t
 
-  val to_string : t -> option:Options.t -> string
+  val print : Format.formatter -> t -> option:Options.t -> unit
 end

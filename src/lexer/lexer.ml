@@ -24,9 +24,9 @@ let quoted_id =
 
 let rec token buf =
   match%sedlex buf with
-  | kw_select -> Kw_select (Sedlexing.Utf8.lexeme buf)
-  | kw_from -> Kw_from (Sedlexing.Utf8.lexeme buf)
-  | kw_as -> Kw_as (Sedlexing.Utf8.lexeme buf)
+  | kw_select -> Kw_select
+  | kw_from -> Kw_from
+  | kw_as -> Kw_as
   | '*' -> Tok_asterisk
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen

@@ -5,9 +5,11 @@ include (
   struct
     type t = statement
 
-    let to_string statement ~option =
+    let print f statement ~option =
       match statement with
       | Stmt_select { select_list; _ } ->
-        "SELECT" ^ " " ^ Select_list_printer.to_string select_list ~option
+        Token_printer.print f Parser.Token.Kw_select ~option;
+        Fmt.string f " ";
+        Select_list_printer.print f select_list ~option
   end :
     S with type t = statement)

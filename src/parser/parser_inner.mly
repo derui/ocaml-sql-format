@@ -8,11 +8,11 @@ open Ast
 %token <string> Tok_ident
 
 (* keywords *)
-%token <string> Kw_select
-%token <string> Kw_from
-%token <string> Kw_as
-%token <string> Kw_distinct
-%token <string> Kw_all
+%token Kw_select
+%token Kw_from
+%token Kw_as
+%token Kw_distinct
+%token Kw_all
 
 %token Tok_eof
 
