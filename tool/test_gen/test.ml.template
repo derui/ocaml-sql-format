@@ -5,7 +5,7 @@ let actual = {|
   %%ACTUAL%%
 |}
 
-let option = ()
+let option = F.Options.default
 
 let%test_unit "%%TEST_NAME%% for AST" =
   let actual_ast = Util.parse actual

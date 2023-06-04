@@ -5,7 +5,7 @@ let actual = {|
   SELECT *
 |}
 
-let option = ()
+let option = F.Options.default
 
 let%test_unit "simplest sql for AST" =
   let actual_ast = Util.parse actual
