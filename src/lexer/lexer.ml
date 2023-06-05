@@ -30,6 +30,8 @@ let rec token buf =
   | '*' -> Tok_asterisk
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
+  | '.' -> Tok_period
+  | ',' -> Tok_comma
   | eof -> Tok_eof
   | quoted_id -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | space -> token buf

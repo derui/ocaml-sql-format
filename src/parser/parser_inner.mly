@@ -30,7 +30,7 @@ statement:
 
 select_list:
   | Tok_asterisk { Ast.Sl_asterisk }
-  | first =  select_sublist; rest = separated_list(Tok_comma, select_sublist) { Ast.Sl_sublists (first :: rest) }
+  | separated_nonempty_list(Tok_comma, select_sublist) { Ast.Sl_sublists $1 }
 
 as_clause:
   | Kw_as identifier { $2 }

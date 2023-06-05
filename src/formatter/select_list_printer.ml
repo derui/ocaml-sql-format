@@ -20,7 +20,9 @@ module Sublist_printer : S with type t = select_sublist = struct
       Value_expression_printer.print f exp ~option;
       Option.iter
         (fun (Ident ident) ->
+          Fmt.string f " ";
           Token_printer.print f Parser.Token.Kw_as ~option;
+          Fmt.string f " ";
           Fmt.string f ident)
         as_clause
 end
