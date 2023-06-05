@@ -8,5 +8,7 @@ type token =
   | Tok_asterisk
   | Tok_lparen
   | Tok_rparen
+  | Tok_period
+  | Tok_comma
   | Tok_eof
 [@@deriving show, eq]

@@ -20,6 +20,8 @@ include (
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
+      | Tok_period -> Fmt.string f "."
+      | Tok_comma -> Fmt.string f ","
       | Tok_eof -> failwith "Can not stringify EOF"
   end :
     S with type t = token)

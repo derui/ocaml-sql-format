@@ -5,6 +5,8 @@ open Ast
 %token Tok_lparen
 %token Tok_rparen
 %token Tok_asterisk
+%token Tok_period
+%token Tok_comma
 %token <string> Tok_ident
 
 (* keywords *)
@@ -28,7 +30,28 @@ statement:
 
 select_list:
   | Tok_asterisk { Ast.Sl_asterisk }
+  | first =  select_sublist; rest = separated_list(Tok_comma, select_sublist) { Ast.Sl_sublists (first :: rest) }
+
+as_clause:
+  | Kw_as identifier { $2 }
 
 set_qualifier:
   | Kw_distinct {Ast.Distinct}
   | Kw_all { Ast.All }
+
+select_sublist:
+  | first = separated_nonempty_list(Tok_period, identifier);Tok_period Tok_asterisk {Ast.Ss_qualified_asterisk first}
+  | value_expression option(as_clause) { Ast.Ss_derived_column {exp = $1; as_clause = $2} }
+
+(* value expressions *)
+value_expression:
+  | value_expression_primary { $1 }
+
+value_expression_primary:
+  | Tok_lparen value_expression Tok_rparen {Ast.Exp_parenthesized $2}
+  | separated_nonempty_list(Tok_period, identifier) {Ast.Exp_nonparenthesized ( Ast.Vep_column $1 )}
+
+      (* end value expressions *)
+
+identifier:
+  | Tok_ident {Ast.Ident $1}
