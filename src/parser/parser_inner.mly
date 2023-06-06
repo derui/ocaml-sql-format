@@ -9,6 +9,14 @@ open Ast
 %token Tok_comma
 %token <string> Tok_ident
 
+(* operators *)
+%token Op_plus
+%token Op_minus
+%token Op_star
+%token Op_slash
+%token Op_double_amp
+%token Op_concat
+
 (* keywords *)
 %token Kw_select
 %token Kw_from

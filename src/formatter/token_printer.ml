@@ -22,6 +22,12 @@ include (
       | Tok_ident v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
+      | Op_plus -> Fmt.string f "+"
+      | Op_minus -> Fmt.string f "-"
+      | Op_star -> Fmt.string f "*"
+      | Op_slash -> Fmt.string f "/"
+      | Op_concat -> Fmt.string f "||"
+      | Op_double_amp -> Fmt.string f "&&"
       | Tok_eof -> failwith "Can not stringify EOF"
   end :
     S with type t = token)

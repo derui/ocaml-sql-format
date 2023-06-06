@@ -10,5 +10,11 @@ type token =
   | Tok_rparen
   | Tok_period
   | Tok_comma
+  | Op_plus
+  | Op_minus
+  | Op_star
+  | Op_slash
+  | Op_double_amp
+  | Op_concat
   | Tok_eof
 [@@deriving show, eq]

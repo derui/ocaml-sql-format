@@ -32,6 +32,12 @@ let rec token buf =
   | ')' -> Tok_rparen
   | '.' -> Tok_period
   | ',' -> Tok_comma
+  | '+' -> Op_plus
+  | '-' -> Op_minus
+  | '*' -> Op_star
+  | '/' -> Op_slash
+  | "||" -> Op_concat
+  | "&&" -> Op_double_amp
   | eof -> Tok_eof
   | quoted_id -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | space -> token buf
