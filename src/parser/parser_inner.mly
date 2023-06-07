@@ -29,6 +29,9 @@ open Ast
 %token Kw_false
 %token Kw_unknown
 %token Kw_null
+%token Kw_date
+%token Kw_time
+%token Kw_timestamp
 
 %token Tok_eof
 
@@ -71,6 +74,9 @@ value_expression_primary:
 non_numerical_literal:
   | Tok_string {Lit_string $1}
   | Tok_bin_string {Lit_bin_string $1}
+  | Kw_date Tok_string {Lit_datetime_string (`date $1)}
+  | Kw_time Tok_string {Lit_datetime_string (`date $1)}
+  | Kw_timestamp Tok_string {Lit_datetime_string (`timestamp $1)}
   | Kw_true {Lit_true `TRUE}
   | Kw_false {Lit_false `FALSE}
   | Kw_unknown {Lit_unknown `UNKNOWN}

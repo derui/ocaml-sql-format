@@ -28,6 +28,13 @@ module Literal = struct
   type unknown = [ `UNKNOWN ] [@@deriving show, eq]
 
   type null = [ `NULL ] [@@deriving show, eq]
+
+  type datetime_string =
+    [ `date of string
+    | `time of string
+    | `timestamp of string
+    ]
+  [@@deriving show, eq]
 end
 
 type statement =
@@ -85,6 +92,7 @@ and non_numeric_literal =
   | Lit_false of Literal.sql_false
   | Lit_unknown of Literal.unknown
   | Lit_null of Literal.null
+  | Lit_datetime_string of Literal.datetime_string
 
 and unsigned_numeric_literal =
   [ `unsigned of Literal.unsigned_integer

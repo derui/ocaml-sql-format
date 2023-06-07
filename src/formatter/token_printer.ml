@@ -20,6 +20,9 @@ include (
       | Kw_false -> Fmt.string f @@ as_keyword "false" keyword
       | Kw_unknown -> Fmt.string f @@ as_keyword "unknown" keyword
       | Kw_null -> Fmt.string f @@ as_keyword "null" keyword
+      | Kw_date -> Fmt.string f @@ as_keyword "date" keyword
+      | Kw_time -> Fmt.string f @@ as_keyword "time" keyword
+      | Kw_timestamp -> Fmt.string f @@ as_keyword "timestamp" keyword
       | Tok_asterisk -> Fmt.string f "*"
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

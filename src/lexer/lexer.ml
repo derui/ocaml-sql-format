@@ -25,6 +25,22 @@ let kw_unknown =
 
 let kw_null = [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL"]
 
+let kw_date = [%sedlex.regexp? Chars "dD", Chars "aA", Chars "tT", Chars "eE"]
+
+let kw_time = [%sedlex.regexp? Chars "tT", Chars "iI", Chars "mM", Chars "eE"]
+
+let kw_timestamp =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -55,6 +71,9 @@ let rec token buf =
   | kw_false -> Kw_false
   | kw_unknown -> Kw_unknown
   | kw_null -> Kw_null
+  | kw_date -> Kw_date
+  | kw_time -> Kw_time
+  | kw_timestamp -> Kw_timestamp
   | '*' -> Tok_asterisk
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen

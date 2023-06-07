@@ -8,6 +8,9 @@ type token =
   | Kw_false
   | Kw_unknown
   | Kw_null
+  | Kw_date
+  | Kw_time
+  | Kw_timestamp
   | Tok_ident of string
   | Tok_string of string
   | Tok_bin_string of string
