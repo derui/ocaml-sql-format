@@ -16,10 +16,16 @@ include (
       | Kw_as -> Fmt.string f @@ as_keyword "as" keyword
       | Kw_from -> Fmt.string f @@ as_keyword "from" keyword
       | Kw_distinct -> Fmt.string f @@ as_keyword "distinct" keyword
+      | Kw_true -> Fmt.string f @@ as_keyword "true" keyword
+      | Kw_false -> Fmt.string f @@ as_keyword "false" keyword
+      | Kw_unknown -> Fmt.string f @@ as_keyword "unknown" keyword
+      | Kw_null -> Fmt.string f @@ as_keyword "null" keyword
       | Tok_asterisk -> Fmt.string f "*"
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
+      | Tok_string v -> Fmt.string f v
+      | Tok_bin_string v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
       | Op_plus -> Fmt.string f "+"

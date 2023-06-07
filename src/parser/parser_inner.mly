@@ -8,6 +8,8 @@ open Ast
 %token Tok_period
 %token Tok_comma
 %token <string> Tok_ident
+%token <string> Tok_string
+%token <string> Tok_bin_string
 
 (* operators *)
 %token Op_plus
@@ -23,6 +25,10 @@ open Ast
 %token Kw_as
 %token Kw_distinct
 %token Kw_all
+%token Kw_true
+%token Kw_false
+%token Kw_unknown
+%token Kw_null
 
 %token Tok_eof
 
@@ -60,6 +66,15 @@ value_expression_primary:
   | separated_nonempty_list(Tok_period, identifier) {Ast.Exp_nonparenthesized ( Ast.Vep_column $1 )}
 
       (* end value expressions *)
+
+      (* literals *)
+non_numerical_literal:
+  | Tok_string {Lit_string $1}
+  | Tok_bin_string {Lit_bin_string $1}
+  | Kw_true {Lit_true `TRUE}
+  | Kw_false {Lit_false `FALSE}
+  | Kw_unknown {Lit_unknown `UNKNOWN}
+  | Kw_null {Lit_unknown `NULL}
 
 identifier:
   | Tok_ident {Ast.Ident $1}

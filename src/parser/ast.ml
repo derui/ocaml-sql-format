@@ -16,6 +16,18 @@ module Literal = struct
         ; fraction : unsigned_integer
         }
   [@@deriving show, eq]
+
+  type sql_string = string [@@deriving show, eq]
+
+  type bin_string = string [@@deriving show, eq]
+
+  type sql_false = [ `FALSE ] [@@deriving show, eq]
+
+  type sql_true = [ `TRUE ] [@@deriving show, eq]
+
+  type unknown = [ `UNKNOWN ] [@@deriving show, eq]
+
+  type null = [ `NULL ] [@@deriving show, eq]
 end
 
 type statement =
@@ -61,8 +73,18 @@ and numeric_value_expression =
 and term = Term of (value_expression_primary * [ `star | `slash ] option) list
 [@@deriving show, eq]
 
-and value_expression_primary = Vep_column of identifier list
+and value_expression_primary =
+  | Vep_column of identifier list
+  | Vep_non_numeric of non_numeric_literal
 [@@deriving show, eq]
+
+and non_numeric_literal =
+  | Lit_string of Literal.sql_string
+  | Lit_bin_string of Literal.bin_string
+  | Lit_true of Literal.sql_true
+  | Lit_false of Literal.sql_false
+  | Lit_unknown of Literal.unknown
+  | Lit_null of Literal.null
 
 and unsigned_numeric_literal =
   [ `unsigned of Literal.unsigned_integer

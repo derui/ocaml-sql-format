@@ -4,7 +4,13 @@ type token =
   | Kw_as
   | Kw_distinct
   | Kw_all
+  | Kw_true
+  | Kw_false
+  | Kw_unknown
+  | Kw_null
   | Tok_ident of string
+  | Tok_string of string
+  | Tok_bin_string of string
   | Tok_asterisk
   | Tok_lparen
   | Tok_rparen
