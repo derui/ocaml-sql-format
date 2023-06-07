@@ -28,7 +28,7 @@ include (
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
       | Tok_string v -> Fmt.string f v
-      | Tok_bin_string v -> Fmt.string f v
+      | Tok_typed_string v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
       | Op_plus -> Fmt.string f "+"

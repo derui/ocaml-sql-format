@@ -13,7 +13,7 @@ type token =
   | Kw_timestamp
   | Tok_ident of string
   | Tok_string of string
-  | Tok_bin_string of string
+  | Tok_typed_string of string
   | Tok_asterisk
   | Tok_lparen
   | Tok_rparen

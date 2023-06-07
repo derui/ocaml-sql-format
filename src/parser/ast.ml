@@ -19,7 +19,7 @@ module Literal = struct
 
   type sql_string = string [@@deriving show, eq]
 
-  type bin_string = string [@@deriving show, eq]
+  type typed_string = string [@@deriving show, eq]
 
   type sql_false = [ `FALSE ] [@@deriving show, eq]
 
@@ -87,7 +87,7 @@ and value_expression_primary =
 
 and non_numeric_literal =
   | Lit_string of Literal.sql_string
-  | Lit_bin_string of Literal.bin_string
+  | Lit_typed_string of Literal.typed_string
   | Lit_true of Literal.sql_true
   | Lit_false of Literal.sql_false
   | Lit_unknown of Literal.unknown

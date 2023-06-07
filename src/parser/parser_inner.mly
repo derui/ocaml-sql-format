@@ -9,7 +9,7 @@ open Ast
 %token Tok_comma
 %token <string> Tok_ident
 %token <string> Tok_string
-%token <string> Tok_bin_string
+%token <string> Tok_typed_string
 
 (* operators *)
 %token Op_plus
@@ -73,7 +73,7 @@ value_expression_primary:
       (* literals *)
 non_numerical_literal:
   | Tok_string {Lit_string $1}
-  | Tok_bin_string {Lit_bin_string $1}
+  | Tok_typed_string {Lit_typed_string $1}
   | Kw_date Tok_string {Lit_datetime_string (`date $1)}
   | Kw_time Tok_string {Lit_datetime_string (`date $1)}
   | Kw_timestamp Tok_string {Lit_datetime_string (`timestamp $1)}
