@@ -7,6 +7,8 @@ open Ast
 %token Tok_asterisk
 %token Tok_period
 %token Tok_comma
+%token Tok_colon
+%token Tok_dollar
 %token <string> Tok_ident
 %token <string> Tok_string
 %token <string> Tok_typed_string
@@ -18,6 +20,9 @@ open Ast
 %token Op_slash
 %token Op_double_amp
 %token Op_concat
+%token Op_eq
+%token Op_ge
+%token Op_gt
 
 (* keywords *)
 %token Kw_select

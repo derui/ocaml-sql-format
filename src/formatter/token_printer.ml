@@ -31,12 +31,17 @@ include (
       | Tok_typed_string v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
+      | Tok_colon -> Fmt.string f ":"
+      | Tok_dollar -> Fmt.string f "$"
       | Op_plus -> Fmt.string f "+"
       | Op_minus -> Fmt.string f "-"
       | Op_star -> Fmt.string f "*"
       | Op_slash -> Fmt.string f "/"
       | Op_concat -> Fmt.string f "||"
       | Op_double_amp -> Fmt.string f "&&"
+      | Op_eq -> Fmt.string f "="
+      | Op_ge -> Fmt.string f ">="
+      | Op_gt -> Fmt.string f ">"
       | Tok_eof -> failwith "Can not stringify EOF"
   end :
     S with type t = token)

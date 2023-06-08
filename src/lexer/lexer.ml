@@ -60,7 +60,7 @@ let string =
 
 let escaped_type = [%sedlex.regexp? '{', "d" | "t" | "ts" | "b"]
 
-let bin_string = [%sedlex.regexp? escaped_type, string, '}']
+let typed_string = [%sedlex.regexp? escaped_type, string, '}']
 
 let rec token buf =
   match%sedlex buf with
@@ -79,15 +79,20 @@ let rec token buf =
   | ')' -> Tok_rparen
   | '.' -> Tok_period
   | ',' -> Tok_comma
+  | ':' -> Tok_colon
+  | '$' -> Tok_dollar
   | '+' -> Op_plus
   | '-' -> Op_minus
   | '*' -> Op_star
   | '/' -> Op_slash
   | "||" -> Op_concat
   | "&&" -> Op_double_amp
+  | '=' -> Op_eq
+  | ">=" -> Op_ge
+  | '>' -> Op_gt
   | eof -> Tok_eof
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
-  | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
+  | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
   | quoted_id -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | space -> token buf
   | newline ->

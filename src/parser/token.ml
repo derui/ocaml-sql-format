@@ -19,11 +19,16 @@ type token =
   | Tok_rparen
   | Tok_period
   | Tok_comma
+  | Tok_colon
+  | Tok_dollar
   | Op_plus
   | Op_minus
   | Op_star
   | Op_slash
   | Op_double_amp
   | Op_concat
+  | Op_eq
+  | Op_ge
+  | Op_gt
   | Tok_eof
 [@@deriving show, eq]
