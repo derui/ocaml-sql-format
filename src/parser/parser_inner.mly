@@ -9,9 +9,16 @@ open Ast
 %token Tok_comma
 %token Tok_colon
 %token Tok_dollar
+%token Tok_lbrace
+%token Tok_rbrace
+%token Tok_lsbrace
+%token Tok_rsbrace
+%token Tok_qmark
+%token Tok_semicolon
 %token <string> Tok_ident
 %token <string> Tok_string
 %token <string> Tok_typed_string
+%token <string> Tok_bin_string
 
 (* operators *)
 %token Op_plus
@@ -23,6 +30,10 @@ open Ast
 %token Op_eq
 %token Op_ge
 %token Op_gt
+%token Op_le
+%token Op_lt
+%token Op_ne
+%token Op_ne2
 
 (* keywords *)
 %token Kw_select
@@ -62,7 +73,7 @@ set_qualifier:
   | Kw_all { Ast.All }
 
 select_sublist:
-  | first = separated_nonempty_list(Tok_period, identifier);Tok_period Tok_asterisk {Ast.Ss_qualified_asterisk first}
+  | first = separated_nonempty_list(Tok_period, identifier);Tok_period Tok_asterisk {Ast.Ss_all_in_group first}
   | value_expression option(as_clause) { Ast.Ss_derived_column {exp = $1; as_clause = $2} }
 
 (* value expressions *)

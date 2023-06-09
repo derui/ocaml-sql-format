@@ -29,10 +29,17 @@ include (
       | Tok_ident v -> Fmt.string f v
       | Tok_string v -> Fmt.string f v
       | Tok_typed_string v -> Fmt.string f v
+      | Tok_bin_string v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
       | Tok_colon -> Fmt.string f ":"
       | Tok_dollar -> Fmt.string f "$"
+      | Tok_lbrace -> Fmt.string f "{"
+      | Tok_rbrace -> Fmt.string f "}"
+      | Tok_lsbrace -> Fmt.string f "["
+      | Tok_rsbrace -> Fmt.string f "]"
+      | Tok_qmark -> Fmt.string f "?"
+      | Tok_semicolon -> Fmt.string f ";"
       | Op_plus -> Fmt.string f "+"
       | Op_minus -> Fmt.string f "-"
       | Op_star -> Fmt.string f "*"
@@ -42,6 +49,10 @@ include (
       | Op_eq -> Fmt.string f "="
       | Op_ge -> Fmt.string f ">="
       | Op_gt -> Fmt.string f ">"
+      | Op_le -> Fmt.string f "<="
+      | Op_lt -> Fmt.string f "<"
+      | Op_ne -> Fmt.string f "<>"
+      | Op_ne2 -> Fmt.string f "!="
       | Tok_eof -> failwith "Can not stringify EOF"
   end :
     S with type t = token)

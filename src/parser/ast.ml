@@ -21,6 +21,8 @@ module Literal = struct
 
   type typed_string = string [@@deriving show, eq]
 
+  type bin_string = string [@@deriving show, eq]
+
   type sql_false = [ `FALSE ] [@@deriving show, eq]
 
   type sql_true = [ `TRUE ] [@@deriving show, eq]
@@ -59,7 +61,7 @@ and select_sublist =
       { exp : value_expression
       ; as_clause : identifier option
       }
-  | Ss_qualified_asterisk of identifier list
+  | Ss_all_in_group of identifier list
 [@@deriving show, eq]
 
 and identifier = Ident of string [@@deriving show, eq]
@@ -88,6 +90,7 @@ and value_expression_primary =
 and non_numeric_literal =
   | Lit_string of Literal.sql_string
   | Lit_typed_string of Literal.typed_string
+  | Lit_bin_string of Literal.bin_string
   | Lit_true of Literal.sql_true
   | Lit_false of Literal.sql_false
   | Lit_unknown of Literal.unknown

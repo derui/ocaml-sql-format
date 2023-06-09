@@ -14,6 +14,7 @@ type token =
   | Tok_ident of string
   | Tok_string of string
   | Tok_typed_string of string
+  | Tok_bin_string of string
   | Tok_asterisk
   | Tok_lparen
   | Tok_rparen
@@ -21,6 +22,12 @@ type token =
   | Tok_comma
   | Tok_colon
   | Tok_dollar
+  | Tok_lbrace
+  | Tok_rbrace
+  | Tok_lsbrace
+  | Tok_rsbrace
+  | Tok_qmark
+  | Tok_semicolon
   | Op_plus
   | Op_minus
   | Op_star
@@ -30,5 +37,9 @@ type token =
   | Op_eq
   | Op_ge
   | Op_gt
+  | Op_le
+  | Op_lt
+  | Op_ne
+  | Op_ne2
   | Tok_eof
 [@@deriving show, eq]

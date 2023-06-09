@@ -62,6 +62,10 @@ let escaped_type = [%sedlex.regexp? '{', "d" | "t" | "ts" | "b"]
 
 let typed_string = [%sedlex.regexp? escaped_type, string, '}']
 
+let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
+
+let bin_string = [%sedlex.regexp? Chars "xX", '"', Star (hexit, hexit), '"']
+
 let rec token buf =
   match%sedlex buf with
   | kw_select -> Kw_select
@@ -81,6 +85,12 @@ let rec token buf =
   | ',' -> Tok_comma
   | ':' -> Tok_colon
   | '$' -> Tok_dollar
+  | '{' -> Tok_lbrace
+  | '}' -> Tok_rbrace
+  | '[' -> Tok_lsbrace
+  | ']' -> Tok_rsbrace
+  | '?' -> Tok_qmark
+  | ';' -> Tok_semicolon
   | '+' -> Op_plus
   | '-' -> Op_minus
   | '*' -> Op_star
@@ -90,9 +100,14 @@ let rec token buf =
   | '=' -> Op_eq
   | ">=" -> Op_ge
   | '>' -> Op_gt
+  | "<=" -> Op_le
+  | '<' -> Op_lt
+  | "<>" -> Op_ne
+  | "!=" -> Op_ne2
   | eof -> Tok_eof
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
+  | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
   | quoted_id -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | space -> token buf
   | newline ->
