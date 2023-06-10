@@ -10,6 +10,7 @@ include (
     type t = token
 
     let print f t ~option:{ Options.keyword; _ } =
+      let module L = Parser.Ast.Literal in
       match t with
       | Kw_all -> Fmt.string f @@ as_keyword "all" keyword
       | Kw_select -> Fmt.string f @@ as_keyword "select" keyword
@@ -23,13 +24,23 @@ include (
       | Kw_date -> Fmt.string f @@ as_keyword "date" keyword
       | Kw_time -> Fmt.string f @@ as_keyword "time" keyword
       | Kw_timestamp -> Fmt.string f @@ as_keyword "timestamp" keyword
-      | Tok_asterisk -> Fmt.string f "*"
+      | Kw_or -> Fmt.string f @@ as_keyword "or" keyword
+      | Kw_not -> Fmt.string f @@ as_keyword "not" keyword
+      | Kw_and -> Fmt.string f @@ as_keyword "and" keyword
+      | Kw_into -> Fmt.string f @@ as_keyword "into" keyword
+      | Kw_union -> Fmt.string f @@ as_keyword "union" keyword
+      | Kw_except -> Fmt.string f @@ as_keyword "except" keyword
+      | Kw_intersect -> Fmt.string f @@ as_keyword "intersect" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
+      | Tok_all_in_group v -> Fmt.string f v
       | Tok_string v -> Fmt.string f v
       | Tok_typed_string v -> Fmt.string f v
       | Tok_bin_string v -> Fmt.string f v
+      | Tok_unsigned_integer (L.Unsigned_integer v) -> Fmt.string f v
+      | Tok_approximate_numeric (L.Approximate_numeric v) -> Fmt.string f v
+      | Tok_decimal_numeric (L.Decimal_numeric v) -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
       | Tok_colon -> Fmt.string f ":"

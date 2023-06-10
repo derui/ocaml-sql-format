@@ -16,7 +16,7 @@ tasks:
 
   test:
     cmds:
-      - dune build @runtest
+      - dune runtest {{.CLI_ARGS}}
     silent: true
 
   promote:

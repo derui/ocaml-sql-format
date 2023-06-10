@@ -11,11 +11,22 @@ type token =
   | Kw_date
   | Kw_time
   | Kw_timestamp
+  | Kw_into
+  | Kw_or
+  | Kw_not
+  | Kw_and
+  | Kw_union
+  | Kw_except
+  | Kw_intersect
+  (* tokens *)
   | Tok_ident of string
+  | Tok_all_in_group of string
   | Tok_string of string
   | Tok_typed_string of string
   | Tok_bin_string of string
-  | Tok_asterisk
+  | Tok_unsigned_integer of Ast.Literal.unsigned_integer
+  | Tok_approximate_numeric of Ast.Literal.approximate_numeric
+  | Tok_decimal_numeric of Ast.Literal.decimal_numeric
   | Tok_lparen
   | Tok_rparen
   | Tok_period
@@ -28,6 +39,7 @@ type token =
   | Tok_rsbrace
   | Tok_qmark
   | Tok_semicolon
+  (* operators *)
   | Op_plus
   | Op_minus
   | Op_star

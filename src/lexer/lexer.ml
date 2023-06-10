@@ -1,4 +1,5 @@
 open Parser.Token
+module L = Parser.Ast.Literal
 
 let kw_select =
   [%sedlex.regexp?
@@ -41,6 +42,31 @@ let kw_timestamp =
     , Chars "mM"
     , Chars "pP" )]
 
+let kw_into = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "oO"]
+
+let kw_or = [%sedlex.regexp? Chars "oO", Chars "rR"]
+
+let kw_not = [%sedlex.regexp? Chars "nN", Chars "oO", Chars "tT"]
+
+let kw_union =
+  [%sedlex.regexp? Chars "uU", Chars "nN", Chars "iI", Chars "oO", Chars "nN"]
+
+let kw_except =
+  [%sedlex.regexp?
+    Chars "eE", Chars "xX", Chars "cC", Chars "eE", Chars "pP", Chars "tT"]
+
+let kw_intersect =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -49,11 +75,23 @@ let letter = [%sedlex.regexp? 'a' .. 'z' | 'A' .. 'Z' | 0x0153 .. 0xfffd]
 
 let digit = [%sedlex.regexp? '0' .. '9']
 
+let unsigned_integer = [%sedlex.regexp? Plus digit]
+
+let approximate_numeric =
+  [%sedlex.regexp?
+    digit, '.', unsigned_integer, Chars "eE", Opt (Chars "+-"), unsigned_integer]
+
+let decimal_numeric = [%sedlex.regexp? Star digit, '.', unsigned_integer]
+
 let id_part =
   [%sedlex.regexp? ('@' | '#' | letter), Star (letter | '_' | digit)]
 
 let quoted_id =
   [%sedlex.regexp? id_part | '"', Star ("\"\"" | Sub (any, '"')), '"']
+
+let identifier = [%sedlex.regexp? quoted_id, Star ('.', quoted_id)]
+
+let all_in_group = [%sedlex.regexp? identifier, '.', '*']
 
 let string =
   [%sedlex.regexp? Opt (Chars "EN"), "'", Star ("''" | Sub (any, "'")), "'"]
@@ -78,7 +116,12 @@ let rec token buf =
   | kw_date -> Kw_date
   | kw_time -> Kw_time
   | kw_timestamp -> Kw_timestamp
-  | '*' -> Tok_asterisk
+  | kw_into -> Kw_into
+  | kw_or -> Kw_or
+  | kw_not -> Kw_not
+  | kw_union -> Kw_union
+  | kw_except -> Kw_except
+  | kw_intersect -> Kw_intersect
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
@@ -108,7 +151,14 @@ let rec token buf =
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
   | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
-  | quoted_id -> Tok_ident (Sedlexing.Utf8.lexeme buf)
+  | all_in_group -> Tok_all_in_group (Sedlexing.Utf8.lexeme buf)
+  | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
+  | unsigned_integer ->
+    Tok_unsigned_integer (L.Unsigned_integer (Sedlexing.Utf8.lexeme buf))
+  | approximate_numeric ->
+    Tok_approximate_numeric (L.Approximate_numeric (Sedlexing.Utf8.lexeme buf))
+  | decimal_numeric ->
+    Tok_decimal_numeric (L.Decimal_numeric (Sedlexing.Utf8.lexeme buf))
   | space -> token buf
   | newline ->
     Sedlexing.new_line buf;

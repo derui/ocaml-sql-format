@@ -4,7 +4,6 @@ open Ast
 
 %token Tok_lparen
 %token Tok_rparen
-%token Tok_asterisk
 %token Tok_period
 %token Tok_comma
 %token Tok_colon
@@ -19,6 +18,10 @@ open Ast
 %token <string> Tok_string
 %token <string> Tok_typed_string
 %token <string> Tok_bin_string
+%token <string> Tok_all_in_group
+%token <Literal.unsigned_integer> Tok_unsigned_integer
+%token <Literal.approximate_numeric> Tok_approximate_numeric
+%token <Literal.decimal_numeric> Tok_decimal_numeric
 
 (* operators *)
 %token Op_plus
@@ -48,55 +51,175 @@ open Ast
 %token Kw_date
 %token Kw_time
 %token Kw_timestamp
+%token Kw_into
+%token Kw_or
+%token Kw_not
+%token Kw_and
+%token Kw_union
+%token Kw_except
+%token Kw_intersect
 
 %token Tok_eof
 
-%start <Ast.statement list> statements
-
+%start <Ast.entry list> entries
 %%
 
-statements:
-  | list(statement); Tok_eof { $1 }
+entries:
+  | nonempty_list(entry) Tok_eof { $1 }
 
-statement:
-  | Kw_select; qualifier = option(set_qualifier); select_list = select_list { Stmt_select {qualifier; select_list} }
+entry:
+                 | directly_executable_statement { Directly_executable_statement $1 }
+
+directly_executable_statement:
+                 | query_expression { Query_expression $1 }
+
+query_expression:
+                 | query_expression_body { {with_list = []; body = $1} }
+
+
+query_expression_body:
+  | query_term { Query_term $1 }
+
+sub_query_term:
+  | Kw_intersect option(set_qualifier) query_primary { ($2, $3) }
+
+query_term:
+  | query_primary list(sub_query_term) { ($1, $2) }
+
+query_primary:
+  | query {Query $1}
+
+query:
+  | select_clause; into = option(into_clause); from = option(sub_select_clause) { {clause = $1; into; from} }
+
+select_clause:
+  | Kw_select; qualifier = option(set_qualifier); select_list = select_list { {qualifier; select_list} }
+
+into_clause:
+  | Kw_into identifier {Ast.Into_clause $2}
+
+sub_select_clause:
+  | from_clause { {tables = $1; where = None; group_by = None; having =  None;} }
+
+from_clause:
+  | Kw_from separated_nonempty_list(Tok_comma, table_reference) { $2 }
+
+      (* table reference *)
+table_reference:
+  | joined_table { Joined_table $1 }
+
+joined_table:
+  | table_primary { $1 }
+
+table_primary:
+  | table_name { `table_name $1 }
+
+table_name:
+  | identifier option(Kw_as) identifier { ($1, Some $3) }
+  | identifier { ($1, None) }
+    (* end table reference *)
 
 select_list:
-  | Tok_asterisk { Ast.Sl_asterisk }
-  | separated_nonempty_list(Tok_comma, select_sublist) { Ast.Sl_sublists $1 }
-
-as_clause:
-  | Kw_as identifier { $2 }
+  | Op_star { `asterisk }
+  | separated_nonempty_list(Tok_comma, select_sublist) { `select_list $1 }
 
 set_qualifier:
   | Kw_distinct {Ast.Distinct}
   | Kw_all { Ast.All }
 
+joiner:
+  | Kw_union {Ast.Union}
+  | Kw_except { Ast.Except }
+
 select_sublist:
-  | first = separated_nonempty_list(Tok_period, identifier);Tok_period Tok_asterisk {Ast.Ss_all_in_group first}
-  | value_expression option(as_clause) { Ast.Ss_derived_column {exp = $1; as_clause = $2} }
+  | Tok_all_in_group {Ast.All_in_group $1}
+  | expression option(pair(option(Kw_as), identifier)) {
+        let alias = match $2 with
+          | None -> None
+          | Some (_, ident) -> Some ident in
+        Ast.Select_derived_column {exp = $1; alias} }
+
+expression:
+  | condition {$1}
+
+condition:
+  | boolean_value_expression {$1}
+
+(* boolean expression *)
+boolean_value_expression:
+  | separated_nonempty_list(Kw_or, boolean_term) { (List.hd $1, List.tl $1) }
+
+boolean_term:
+  | separated_nonempty_list(Kw_and, boolean_factor) { (List.hd $1, List.tl $1) }
+
+boolean_factor:
+  | option(Kw_not) boolean_primary { match $1 with
+                                     | None -> `Normal $2
+                                     | Some _ -> `Not $2}
+
+      (* 他のASTの実装も必要 *)
+boolean_primary:
+  | common_value_expression { Boolean_primary {value = $1}}
+
+      (* common value expression *)
+amp_or_concat:
+  | Op_double_amp { `amp }
+  | Op_concat { `concat }
+
+plus_or_minus:
+  | Op_minus { `minus }
+  | Op_plus { `plus }
+
+star_or_slash:
+  | Op_star {`star}
+  | Op_slash {`slash}
+
+common_value_expression:
+  | numeric_value_expression list(pair(amp_or_concat, numeric_value_expression)) {($1, $2) }
+
+numeric_value_expression:
+  | term list(pair(plus_or_minus, term)) { ($1, $2) }
+
+term:
+  | value_expression_primary list(pair(star_or_slash, value_expression_primary)) { ($1, $2) }
 
 (* value expressions *)
-value_expression:
-  | value_expression_primary { $1 }
-
 value_expression_primary:
-  | Tok_lparen value_expression Tok_rparen {Ast.Exp_parenthesized $2}
-  | separated_nonempty_list(Tok_period, identifier) {Ast.Exp_nonparenthesized ( Ast.Vep_column $1 )}
+  | non_numeric_literal {Ast.Non_numeric_literal $1}
+  | option(plus_or_minus) unsigned_numeric_literal { Ast.Unsigned_numeric_literal ($1, $2) }
+  | unsigned_value_expression_primary list(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Unsigned_value_expression_primary {exp = $1; indices = $2} }
 
+unsigned_value_expression_primary:
+  | Tok_qmark { `parameter_qmark  }
+  | Tok_dollar Tok_unsigned_integer { `parameter_dollar $2  }
+  | identifier { `identifier $1 }
+      (* need implementation:
+         - escaped function
+         - unescaped Function
+         - subquery
+         - nested expression
+         - array expression constructor
+         - searched case expression
+         - case expression
+       *)
       (* end value expressions *)
 
       (* literals *)
-non_numerical_literal:
-  | Tok_string {Lit_string $1}
-  | Tok_typed_string {Lit_typed_string $1}
-  | Kw_date Tok_string {Lit_datetime_string (`date $1)}
-  | Kw_time Tok_string {Lit_datetime_string (`date $1)}
-  | Kw_timestamp Tok_string {Lit_datetime_string (`timestamp $1)}
-  | Kw_true {Lit_true `TRUE}
-  | Kw_false {Lit_false `FALSE}
-  | Kw_unknown {Lit_unknown `UNKNOWN}
-  | Kw_null {Lit_unknown `NULL}
+non_numeric_literal:
+  | Tok_string {`string $1}
+  | Tok_typed_string {`typed_string $1}
+  | Kw_date Tok_string {`datetime_string (`date $2)}
+  | Kw_time Tok_string {`datetime_string (`time $2)}
+  | Kw_timestamp Tok_string {`datetime_string (`timestamp $2)}
+  | Kw_true {`TRUE }
+  | Kw_false {`FALSE }
+  | Kw_unknown {`UNKNOWN}
+  | Kw_null {`NULL }
+
+unsigned_numeric_literal:
+  | Tok_unsigned_integer { `unsigned $1 }
+  | Tok_approximate_numeric { `approximate $1 }
+  | Tok_decimal_numeric { `decimal $1 }
 
 identifier:
   | Tok_ident {Ast.Ident $1}

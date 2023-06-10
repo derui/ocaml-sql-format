@@ -1,9 +1,14 @@
 (menhir
- (flags --external-tokens Token)
+ (flags --external-tokens Token --explain --table)
  (modules parser_inner))
+
+(rule
+  (targets parser_messages.ml)
+  (deps parser.messages parser_inner.mly)
+  (action (with-stdout-to %{targets} (run menhir --compile-errors %{deps}))))
 
 (library
   (name parser)
   (public_name ocaml-sql-format.parser)
-  (libraries ppx_deriving)
+  (libraries ppx_deriving menhirLib)
   (preprocess (pps ppx_deriving.show ppx_deriving.eq)))
