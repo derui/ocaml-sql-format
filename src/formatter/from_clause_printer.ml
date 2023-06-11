@@ -6,7 +6,7 @@ include (
     type t = from_clause
 
     let print f t ~option =
-      let { tables; group_by; _ } = t in
+      let { tables; group_by; having; _ } = t in
       Fmt.string f " ";
       Token_printer.print f ~option Parser.Token.Kw_from;
       Fmt.string f " ";
@@ -24,6 +24,11 @@ include (
           (fun v ->
             Fmt.string f " ";
             Group_by_clause_printer.print f ~option v)
-          group_by
+          group_by;
+        Option.iter
+          (fun v ->
+            Fmt.string f " ";
+            Having_clause_printer.print f ~option v)
+          having
   end :
     S with type t = from_clause)

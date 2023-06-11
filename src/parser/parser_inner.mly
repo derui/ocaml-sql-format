@@ -61,6 +61,7 @@ open Ast
 %token Kw_group
 %token Kw_by
 %token Kw_rollup
+%token Kw_having
 
 %token Tok_eof
 
@@ -102,7 +103,7 @@ into_clause:
   | Kw_into identifier {Ast.Into_clause $2}
 
 sub_select_clause:
-  | from_clause; group_by = option(group_by_clause) { {tables = $1; where = None; having =  None; group_by} }
+  | from_clause; group_by = option(group_by_clause); having = option(having_clause) { {tables = $1; where = None; having; group_by} }
 
 from_clause:
   | Kw_from separated_nonempty_list(Tok_comma, table_reference)  { $2 }
@@ -110,6 +111,9 @@ from_clause:
 group_by_clause:
   | Kw_group Kw_by Kw_rollup Tok_lparen; exp = separated_nonempty_list(Tok_comma, expression); Tok_rparen { Group_by_clause (`rollup exp) }
   | Kw_group Kw_by; exp = separated_nonempty_list(Tok_comma, expression) { Group_by_clause (`default exp) }
+
+having_clause:
+  | Kw_having condition { Having_clause $2 }
 
       (* table reference *)
 table_reference:

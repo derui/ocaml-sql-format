@@ -61,7 +61,7 @@ and group_by_clause =
       [ `rollup of expression list | `default of expression list ]
 [@@deriving show, eq]
 
-and having_clause = unit [@@deriving show, eq]
+and having_clause = Having_clause of condition [@@deriving show, eq]
 
 and into_clause = Into_clause of identifier [@@deriving show, eq]
 
