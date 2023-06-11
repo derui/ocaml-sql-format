@@ -5,6 +5,8 @@ let get_parse_error env =
   match I.stack env with
   | (lazy Nil) -> "Invalid syntax"
   | (lazy (Cons (I.Element (state, _, _, _), _))) -> (
+    (* debug output. *)
+    Printf.printf "error in state: %d\n" (I.number state);
     try Parser.Mesasges.message (I.number state)
     with Not_found -> "invalid syntax (no specific message for this eror)")
 

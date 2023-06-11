@@ -31,6 +31,9 @@ include (
       | Kw_union -> Fmt.string f @@ as_keyword "union" keyword
       | Kw_except -> Fmt.string f @@ as_keyword "except" keyword
       | Kw_intersect -> Fmt.string f @@ as_keyword "intersect" keyword
+      | Kw_by -> Fmt.string f @@ as_keyword "by" keyword
+      | Kw_group -> Fmt.string f @@ as_keyword "group" keyword
+      | Kw_rollup -> Fmt.string f @@ as_keyword "rollup" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

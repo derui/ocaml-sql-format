@@ -18,6 +18,9 @@ type token =
   | Kw_union
   | Kw_except
   | Kw_intersect
+  | Kw_group
+  | Kw_by
+  | Kw_rollup
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

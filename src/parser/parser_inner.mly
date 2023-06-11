@@ -58,6 +58,9 @@ open Ast
 %token Kw_union
 %token Kw_except
 %token Kw_intersect
+%token Kw_group
+%token Kw_by
+%token Kw_rollup
 
 %token Tok_eof
 
@@ -65,7 +68,7 @@ open Ast
 %%
 
 entries:
-  | nonempty_list(entry) Tok_eof { $1 }
+  | separated_nonempty_list(Tok_semicolon, entry) Tok_eof { $1 }
 
 entry:
                  | directly_executable_statement { Directly_executable_statement $1 }
@@ -90,7 +93,7 @@ query_primary:
   | query {Query $1}
 
 query:
-  | select_clause; into = option(into_clause); from = option(sub_select_clause) { {clause = $1; into; from} }
+  | select_clause; into = option(into_clause); from = option(sub_select_clause); group_by = option(group_by_clause) { {clause = $1; into; from; group_by} }
 
 select_clause:
   | Kw_select; qualifier = option(set_qualifier); select_list = select_list { {qualifier; select_list} }
@@ -99,10 +102,14 @@ into_clause:
   | Kw_into identifier {Ast.Into_clause $2}
 
 sub_select_clause:
-  | from_clause { {tables = $1; where = None; group_by = None; having =  None;} }
+  | from_clause { {tables = $1; where = None; having =  None;} }
 
 from_clause:
   | Kw_from separated_nonempty_list(Tok_comma, table_reference) { $2 }
+
+group_by_clause:
+  | Kw_group Kw_by Kw_rollup Tok_lparen; exp = separated_nonempty_list(Tok_comma, expression); Tok_rparen { Group_by_clause (`rollup exp) }
+  | Kw_group Kw_by; exp = separated_nonempty_list(Tok_comma, expression) { Group_by_clause (`default exp) }
 
       (* table reference *)
 table_reference:
