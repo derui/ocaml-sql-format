@@ -54,7 +54,7 @@ and from_clause =
   }
 [@@deriving show, eq]
 
-and where_clause = unit [@@deriving show, eq]
+and where_clause = Where_clause of condition [@@deriving show, eq]
 
 and group_by_clause =
   | Group_by_clause of

@@ -82,6 +82,9 @@ let kw_having =
   [%sedlex.regexp?
     Chars "hH", Chars "aA", Chars "vV", Chars "iI", Chars "nN", Chars "gG"]
 
+let kw_where =
+  [%sedlex.regexp? Chars "wW", Chars "hH", Chars "eE", Chars "rR", Chars "eE"]
+
 let kw_by = [%sedlex.regexp? Chars "bB", Chars "yY"]
 
 let space = [%sedlex.regexp? Plus (Chars " \t")]
@@ -144,6 +147,7 @@ let rec token buf =
   | kw_by -> Kw_by
   | kw_rollup -> Kw_rollup
   | kw_having -> Kw_having
+  | kw_where -> Kw_where
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

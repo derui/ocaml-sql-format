@@ -22,6 +22,7 @@ type token =
   | Kw_by
   | Kw_rollup
   | Kw_having
+  | Kw_where
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

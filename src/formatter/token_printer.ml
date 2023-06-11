@@ -35,6 +35,7 @@ include (
       | Kw_group -> Fmt.string f @@ as_keyword "group" keyword
       | Kw_rollup -> Fmt.string f @@ as_keyword "rollup" keyword
       | Kw_having -> Fmt.string f @@ as_keyword "having" keyword
+      | Kw_where -> Fmt.string f @@ as_keyword "where" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
