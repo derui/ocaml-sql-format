@@ -6,7 +6,7 @@ include (
     type t = query
 
     let print f t ~option =
-      let { clause; from; into; group_by } = t in
+      let { clause; from; into } = t in
       Select_clause_printer.print f clause ~option;
       Option.iter
         (fun v ->
@@ -17,11 +17,6 @@ include (
         (fun v ->
           Fmt.string f " ";
           From_clause_printer.print f ~option v)
-        from;
-      Option.iter
-        (fun v ->
-          Fmt.string f " ";
-          Group_by_clause_printer.print f ~option v)
-        group_by
+        from
   end :
     S with type t = query)

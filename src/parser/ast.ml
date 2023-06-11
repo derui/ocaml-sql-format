@@ -43,13 +43,13 @@ and query =
   { clause : select_clause
   ; into : into_clause option
   ; from : from_clause option
-  ; group_by : group_by_clause option
   }
 [@@deriving show, eq]
 
 and from_clause =
   { tables : table_reference list
   ; where : where_clause option
+  ; group_by : group_by_clause option
   ; having : having_clause option
   }
 [@@deriving show, eq]
