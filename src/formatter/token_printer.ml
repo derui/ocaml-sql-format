@@ -41,6 +41,13 @@ include (
       | Kw_desc -> Fmt.string f @@ as_keyword "desc" keyword
       | Kw_first -> Fmt.string f @@ as_keyword "first" keyword
       | Kw_last -> Fmt.string f @@ as_keyword "last" keyword
+      | Kw_limit -> Fmt.string f @@ as_keyword "limit" keyword
+      | Kw_offset -> Fmt.string f @@ as_keyword "offset" keyword
+      | Kw_row -> Fmt.string f @@ as_keyword "row" keyword
+      | Kw_rows -> Fmt.string f @@ as_keyword "rows" keyword
+      | Kw_fetch -> Fmt.string f @@ as_keyword "fetch" keyword
+      | Kw_next -> Fmt.string f @@ as_keyword "next" keyword
+      | Kw_only -> Fmt.string f @@ as_keyword "only" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

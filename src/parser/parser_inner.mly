@@ -68,6 +68,13 @@ open Ast
 %token Kw_desc
 %token Kw_first
 %token Kw_last
+%token Kw_limit
+%token Kw_offset
+%token Kw_row
+%token Kw_rows
+%token Kw_fetch
+%token Kw_next
+%token Kw_only
 
 %token Tok_eof
 
@@ -91,10 +98,15 @@ sub_query_expression_body:
                  | joiner option(set_qualifier) query_term { ($1, $2, $3) }
 
 query_expression_body:
-  | query_term; terms = list(sub_query_expression_body); order_by = option(order_by_clause) { Query_expression_body {term = $1; terms;
-                                                                     order_by
-                          } }
-
+  | query_term; terms = list(sub_query_expression_body); order_by = option(order_by_clause);
+    limit = option(limit_clause) {
+                Query_expression_body {
+                    term = $1;
+                    terms;
+                    order_by;
+                    limit;
+                  }
+              }
 
 order_by_clause:
   | Kw_order Kw_by; list = separated_nonempty_list(Tok_comma, sort_specification) { Order_by_clause list }
@@ -112,6 +124,25 @@ sort_specification:
                                                                                                  order = $2;
                                                                                                  null_order = $3
       } }
+
+limit_clause:
+  | Kw_limit; count =  integer_parameter {Limit_clause_limit {count; offset = None}}
+  | Kw_limit; count =  integer_parameter; Tok_comma; start =  integer_parameter {Limit_clause_limit {count; offset = Some(`comma start)}}
+  | Kw_limit; count =  integer_parameter; Kw_offset; start =  integer_parameter; {Limit_clause_limit {count; offset = Some (`keyword start)}}
+  | Kw_offset; start =  integer_parameter; rows = row; fetch = option(fetch_clause) {Limit_clause_offset {start; rows; fetch}}
+  | fetch_clause {Limit_clause_fetch $1}
+
+fetch_clause:
+  | Kw_fetch Kw_first; param = option(integer_parameter); rows = row; Kw_only {Fetch_clause {position = `first; param; rows}}
+  | Kw_fetch Kw_next; param = option(integer_parameter); rows = row; Kw_only {Fetch_clause {position = `next; param; rows}}
+
+integer_parameter:
+  | Tok_unsigned_integer {`unsigned_integer $1}
+  | unsigned_value_expression_primary {`expression $1}
+
+row:
+  | Kw_row {`row}
+  | Kw_rows {`rows}
 
 sort_key:
   | expression { $1 }

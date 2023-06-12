@@ -28,6 +28,13 @@ type token =
   | Kw_desc
   | Kw_first
   | Kw_last
+  | Kw_limit
+  | Kw_offset
+  | Kw_row
+  | Kw_rows
+  | Kw_fetch
+  | Kw_next
+  | Kw_only
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

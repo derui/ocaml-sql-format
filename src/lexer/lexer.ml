@@ -99,6 +99,24 @@ let kw_first =
 
 let kw_last = [%sedlex.regexp? Chars "lL", Chars "aA", Chars "sS", Chars "tT"]
 
+let kw_limit =
+  [%sedlex.regexp? Chars "lL", Chars "iI", Chars "mM", Chars "iI", Chars "tT"]
+
+let kw_offset =
+  [%sedlex.regexp?
+    Chars "oO", Chars "fF", Chars "fF", Chars "sS", Chars "eE", Chars "tT"]
+
+let kw_row = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "wW"]
+
+let kw_rows = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "wW", Chars "sS"]
+
+let kw_fetch =
+  [%sedlex.regexp? Chars "fF", Chars "eE", Chars "tT", Chars "cC", Chars "hH"]
+
+let kw_next = [%sedlex.regexp? Chars "nN", Chars "eE", Chars "xX", Chars "tT"]
+
+let kw_only = [%sedlex.regexp? Chars "oO", Chars "nN", Chars "lL", Chars "yY"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -165,6 +183,13 @@ let rec token buf =
   | kw_desc -> Kw_desc
   | kw_first -> Kw_first
   | kw_last -> Kw_last
+  | kw_limit -> Kw_limit
+  | kw_offset -> Kw_offset
+  | kw_row -> Kw_row
+  | kw_rows -> Kw_rows
+  | kw_fetch -> Kw_fetch
+  | kw_next -> Kw_next
+  | kw_only -> Kw_only
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

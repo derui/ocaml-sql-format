@@ -37,10 +37,39 @@ and query_expression_body =
       { term : query_term
       ; terms : (joiner * qualifier option * query_term) list
       ; order_by : order_by_clause option
+      ; limit : limit_clause option
       }
 [@@deriving show, eq]
 
 and order_by_clause = Order_by_clause of sort_specification list
+[@@deriving show, eq]
+
+and limit_clause =
+  | Limit_clause_limit of
+      { count : integer_parameter
+      ; offset :
+          [ `comma of integer_parameter | `keyword of integer_parameter ] option
+      }
+  | Limit_clause_offset of
+      { start : integer_parameter
+      ; rows : [ `row | `rows ]
+      ; fetch : fetch_clause option
+      }
+  | Limit_clause_fetch of fetch_clause
+[@@deriving show, eq]
+
+and integer_parameter =
+  [ `unsigned_integer of Literal.unsigned_integer
+  | `expression of unsigned_value_expression_primary
+  ]
+[@@deriving show, eq]
+
+and fetch_clause =
+  | Fetch_clause of
+      { position : [ `first | `next ]
+      ; param : integer_parameter option
+      ; rows : [ `row | `rows ]
+      }
 [@@deriving show, eq]
 
 and sort_specification =
