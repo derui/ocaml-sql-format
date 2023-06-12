@@ -87,6 +87,18 @@ let kw_where =
 
 let kw_by = [%sedlex.regexp? Chars "bB", Chars "yY"]
 
+let kw_order =
+  [%sedlex.regexp? Chars "oO", Chars "rR", Chars "dD", Chars "eE", Chars "rR"]
+
+let kw_asc = [%sedlex.regexp? Chars "aA", Chars "sS", Chars "cC"]
+
+let kw_desc = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "sS", Chars "cC"]
+
+let kw_first =
+  [%sedlex.regexp? Chars "fF", Chars "iI", Chars "rR", Chars "sS", Chars "tT"]
+
+let kw_last = [%sedlex.regexp? Chars "lL", Chars "aA", Chars "sS", Chars "tT"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -148,6 +160,11 @@ let rec token buf =
   | kw_rollup -> Kw_rollup
   | kw_having -> Kw_having
   | kw_where -> Kw_where
+  | kw_order -> Kw_order
+  | kw_asc -> Kw_asc
+  | kw_desc -> Kw_desc
+  | kw_first -> Kw_first
+  | kw_last -> Kw_last
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

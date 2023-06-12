@@ -63,6 +63,11 @@ open Ast
 %token Kw_rollup
 %token Kw_having
 %token Kw_where
+%token Kw_order
+%token Kw_asc
+%token Kw_desc
+%token Kw_first
+%token Kw_last
 
 %token Tok_eof
 
@@ -82,8 +87,34 @@ query_expression:
                  | query_expression_body { {with_list = []; body = $1} }
 
 
+sub_query_expression_body:
+                 | joiner option(set_qualifier) query_term { ($1, $2, $3) }
+
 query_expression_body:
-  | query_term { Query_term $1 }
+  | query_term; terms = list(sub_query_expression_body); order_by = option(order_by_clause) { Query_expression_body {term = $1; terms;
+                                                                     order_by
+                          } }
+
+
+order_by_clause:
+  | Kw_order Kw_by; list = separated_nonempty_list(Tok_comma, sort_specification) { Order_by_clause list }
+
+sort_specification_order:
+  | Kw_asc {`asc}
+  | Kw_desc {`desc}
+
+sort_specification_null:
+  | Kw_null Kw_first {`null_first }
+  | Kw_null Kw_last {`null_last}
+
+sort_specification:
+  | sort_key option(sort_specification_order) option(sort_specification_null) { Sort_specification {key = $1;
+                                                                                                 order = $2;
+                                                                                                 null_order = $3
+      } }
+
+sort_key:
+  | expression { $1 }
 
 sub_query_term:
   | Kw_intersect option(set_qualifier) query_primary { ($2, $3) }

@@ -36,6 +36,11 @@ include (
       | Kw_rollup -> Fmt.string f @@ as_keyword "rollup" keyword
       | Kw_having -> Fmt.string f @@ as_keyword "having" keyword
       | Kw_where -> Fmt.string f @@ as_keyword "where" keyword
+      | Kw_order -> Fmt.string f @@ as_keyword "order" keyword
+      | Kw_asc -> Fmt.string f @@ as_keyword "asc" keyword
+      | Kw_desc -> Fmt.string f @@ as_keyword "desc" keyword
+      | Kw_first -> Fmt.string f @@ as_keyword "first" keyword
+      | Kw_last -> Fmt.string f @@ as_keyword "last" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

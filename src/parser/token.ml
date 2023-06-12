@@ -23,6 +23,11 @@ type token =
   | Kw_rollup
   | Kw_having
   | Kw_where
+  | Kw_order
+  | Kw_asc
+  | Kw_desc
+  | Kw_first
+  | Kw_last
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -32,7 +32,26 @@ and query_expression =
   }
 [@@deriving show, eq]
 
-and query_expression_body = Query_term of query_term [@@deriving show, eq]
+and query_expression_body =
+  | Query_expression_body of
+      { term : query_term
+      ; terms : (joiner * qualifier option * query_term) list
+      ; order_by : order_by_clause option
+      }
+[@@deriving show, eq]
+
+and order_by_clause = Order_by_clause of sort_specification list
+[@@deriving show, eq]
+
+and sort_specification =
+  | Sort_specification of
+      { key : sort_key
+      ; order : [ `asc | `desc ] option
+      ; null_order : [ `null_first | `null_last ] option
+      }
+[@@deriving show, eq]
+
+and sort_key = expression [@@deriving show, eq]
 
 and query_term = query_primary * (qualifier option * query_primary) list
 [@@deriving show, eq]
