@@ -93,9 +93,14 @@ directly_executable_statement:
 query_expression:
                  | query_expression_body { {with_list = []; body = $1} }
 
-
+                     (* A sub format to get terms in query_expression_body *)
 sub_query_expression_body:
-                 | joiner option(set_qualifier) query_term { ($1, $2, $3) }
+                 | Kw_union Kw_all query_term { (Ast.Union, Some Ast.All, $3) }
+                 | Kw_union Kw_distinct query_term { (Ast.Union, Some Ast.Distinct, $3) }
+                 | Kw_union query_term { (Ast.Union, None, $2) }
+                 | Kw_except Kw_all query_term { (Ast.Except, Some Ast.All, $3) }
+                 | Kw_except Kw_distinct query_term { (Ast.Except, Some Ast.Distinct, $3) }
+                 | Kw_except query_term { (Ast.Except, None, $2) }
 
 query_expression_body:
   | query_term; terms = list(sub_query_expression_body); order_by = option(order_by_clause);
@@ -148,7 +153,9 @@ sort_key:
   | expression { $1 }
 
 sub_query_term:
-  | Kw_intersect option(set_qualifier) query_primary { ($2, $3) }
+  | Kw_intersect query_primary { (None, $2) }
+  | Kw_intersect Kw_all query_primary { (Some Ast.All, $3) }
+  | Kw_intersect Kw_distinct query_primary { (Some Ast.Distinct, $3) }
 
 query_term:
   | query_primary list(sub_query_term) { ($1, $2) }
@@ -160,7 +167,9 @@ query:
   | select_clause; into = option(into_clause); from = option(sub_select_clause) { {clause = $1; into; from } }
 
 select_clause:
-  | Kw_select; qualifier = option(set_qualifier); select_list = select_list { {qualifier; select_list} }
+  | Kw_select; select_list = select_list { {qualifier = None; select_list} }
+  | Kw_select; Kw_all select_list = select_list { {qualifier = Some Ast.All; select_list} }
+  | Kw_select; Kw_distinct select_list = select_list { {qualifier = Some Ast.Distinct; select_list} }
 
 into_clause:
   | Kw_into identifier {Ast.Into_clause $2}
@@ -199,14 +208,6 @@ table_name:
 select_list:
   | Op_star { `asterisk }
   | separated_nonempty_list(Tok_comma, select_sublist) { `select_list $1 }
-
-set_qualifier:
-  | Kw_distinct {Ast.Distinct}
-  | Kw_all { Ast.All }
-
-joiner:
-  | Kw_union {Ast.Union}
-  | Kw_except { Ast.Except }
 
 select_sublist:
   | Tok_all_in_group {Ast.All_in_group $1}

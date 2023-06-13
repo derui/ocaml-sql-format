@@ -117,6 +117,19 @@ let kw_next = [%sedlex.regexp? Chars "nN", Chars "eE", Chars "xX", Chars "tT"]
 
 let kw_only = [%sedlex.regexp? Chars "oO", Chars "nN", Chars "lL", Chars "yY"]
 
+let kw_all = [%sedlex.regexp? Chars "aA", Chars "lL", Chars "lL"]
+
+let kw_distinct =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "cC"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -190,6 +203,8 @@ let rec token buf =
   | kw_fetch -> Kw_fetch
   | kw_next -> Kw_next
   | kw_only -> Kw_only
+  | kw_all -> Kw_all
+  | kw_distinct -> Kw_distinct
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

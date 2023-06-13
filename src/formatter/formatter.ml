@@ -23,6 +23,9 @@ let rec parse lexbuf (checkpoint : Parser.Ast.entry list I.checkpoint) =
   | I.HandlingError _env ->
     let line, pos = Exception.get_lexing_position lexbuf in
     let msg = get_parse_error _env in
+    (* debug output *)
+    Printf.printf "error at (%d, %d) %s\n" line pos
+      (Sedlexing.Utf8.lexeme lexbuf);
     raise (Exception.Syntax_error (Some (line, pos), msg))
   | I.Accepted v -> v
   | I.Rejected ->
