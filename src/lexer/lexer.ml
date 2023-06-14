@@ -134,6 +134,16 @@ let kw_distinct =
 
 let kw_is = [%sedlex.regexp? Chars "iI", Chars "sS"]
 
+let kw_between =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "eE"
+    , Chars "tT"
+    , Chars "wW"
+    , Chars "eE"
+    , Chars "eE"
+    , Chars "nN" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -210,6 +220,7 @@ let rec token buf =
   | kw_all -> Kw_all
   | kw_distinct -> Kw_distinct
   | kw_is -> Kw_is
+  | kw_between -> Kw_between
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

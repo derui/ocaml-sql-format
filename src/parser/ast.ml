@@ -173,6 +173,8 @@ and boolean_primary_predicate =
     [ `eq | `ne | `ne2 | `ge | `gt | `le | `lt ] * common_value_expression
   | `is_null
   | `is_not_null
+  | `between of common_value_expression * common_value_expression
+  | `between_not of common_value_expression * common_value_expression
   ]
 [@@deriving show, eq]
 

@@ -36,6 +36,7 @@ type token =
   | Kw_next
   | Kw_only
   | Kw_is
+  | Kw_between
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -31,6 +31,24 @@ module Predicate_printer : S with type t = boolean_primary_predicate = struct
       Token_printer.print f op ~option;
       Fmt.string f " ";
       Value_printers.Common_value_expression_printer.print f value ~option
+    | `between (s, e) ->
+      Token_printer.print f Kw_between ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f s ~option;
+      Fmt.string f " ";
+      Token_printer.print f Kw_and ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f e ~option
+    | `between_not (s, e) ->
+      Token_printer.print f Kw_not ~option;
+      Fmt.string f " ";
+      Token_printer.print f Kw_between ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f s ~option;
+      Fmt.string f " ";
+      Token_printer.print f Kw_and ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f e ~option
 end
 
 include (
