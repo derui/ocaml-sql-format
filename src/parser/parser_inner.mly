@@ -75,6 +75,7 @@ open Ast
 %token Kw_fetch
 %token Kw_next
 %token Kw_only
+%token Kw_is
 
 %token Tok_eof
 
@@ -237,7 +238,25 @@ boolean_factor:
 
       (* 他のASTの実装も必要 *)
 boolean_primary:
-  | common_value_expression { Boolean_primary {value = $1}}
+  | common_value_expression { Boolean_primary {value = $1; predicate = None}}
+  | common_value_expression comparison_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+  | common_value_expression is_null_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+
+is_null_predicate:
+  | Kw_is Kw_null { `is_null }
+  | Kw_is Kw_not Kw_null { `is_not_null }
+
+comparison_predicate:
+  | comparison_operator common_value_expression { `comparison ($1, $2) }
+
+comparison_operator:
+  | Op_eq { `eq }
+  | Op_ne { `ne }
+  | Op_ne2 { `ne2 }
+  | Op_ge { `ge }
+  | Op_gt { `gt }
+  | Op_le { `le }
+  | Op_lt { `lt }
 
       (* common value expression *)
 amp_or_concat:

@@ -46,6 +46,8 @@ let kw_into = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "oO"]
 
 let kw_or = [%sedlex.regexp? Chars "oO", Chars "rR"]
 
+let kw_and = [%sedlex.regexp? Chars "aA", Chars "nN", Chars "dD"]
+
 let kw_not = [%sedlex.regexp? Chars "nN", Chars "oO", Chars "tT"]
 
 let kw_union =
@@ -130,6 +132,8 @@ let kw_distinct =
     , Chars "cC"
     , Chars "tT" )]
 
+let kw_is = [%sedlex.regexp? Chars "iI", Chars "sS"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -185,7 +189,7 @@ let rec token buf =
   | kw_union -> Kw_union
   | kw_except -> Kw_except
   | kw_intersect -> Kw_intersect
-  | kw_or -> Kw_or
+  | kw_and -> Kw_and
   | kw_group -> Kw_group
   | kw_by -> Kw_by
   | kw_rollup -> Kw_rollup
@@ -205,6 +209,7 @@ let rec token buf =
   | kw_only -> Kw_only
   | kw_all -> Kw_all
   | kw_distinct -> Kw_distinct
+  | kw_is -> Kw_is
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

@@ -12,7 +12,9 @@ include (
 
       List.iter
         (fun v ->
+          Fmt.string f " ";
           Token_printer.print f Kw_and ~option;
+          Fmt.string f " ";
           Boolean_factor_printer.print f v ~option)
         factors
   end :

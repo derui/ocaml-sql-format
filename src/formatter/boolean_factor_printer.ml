@@ -10,6 +10,7 @@ include (
       match t with
       | `Not primary ->
         Token_printer.print f Kw_not ~option;
+        Fmt.string f " ";
         Boolean_primary_printer.print f primary ~option
       | `Normal primary -> Boolean_primary_printer.print f primary ~option
   end :

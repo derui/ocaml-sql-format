@@ -12,7 +12,9 @@ include (
 
       List.iter
         (fun v ->
+          Fmt.string f " ";
           Token_printer.print f Kw_or ~option;
+          Fmt.string f " ";
           Boolean_term_printer.print f v ~option)
         terms
   end :

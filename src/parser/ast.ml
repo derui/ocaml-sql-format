@@ -163,7 +163,17 @@ and boolean_factor =
 
 and boolean_primary =
   | Boolean_primary of
-      { value : common_value_expression (* need some predicates *) }
+      { value : common_value_expression
+      ; predicate : boolean_primary_predicate option
+      }
+[@@deriving show, eq]
+
+and boolean_primary_predicate =
+  [ `comparison of
+    [ `eq | `ne | `ne2 | `ge | `gt | `le | `lt ] * common_value_expression
+  | `is_null
+  | `is_not_null
+  ]
 [@@deriving show, eq]
 
 and common_value_expression =
