@@ -144,6 +144,19 @@ let kw_between =
     , Chars "eE"
     , Chars "nN" )]
 
+let kw_like_regex =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "iI"
+    , Chars "kK"
+    , Chars "eE"
+    , '_'
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "gG"
+    , Chars "eE"
+    , Chars "xX" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -221,6 +234,7 @@ let rec token buf =
   | kw_distinct -> Kw_distinct
   | kw_is -> Kw_is
   | kw_between -> Kw_between
+  | kw_like_regex -> Kw_like_regex
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

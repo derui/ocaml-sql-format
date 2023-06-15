@@ -37,6 +37,7 @@ type token =
   | Kw_only
   | Kw_is
   | Kw_between
+  | Kw_like_regex
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

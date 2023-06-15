@@ -77,6 +77,7 @@ open Ast
 %token Kw_only
 %token Kw_is
 %token Kw_between
+%token Kw_like_regex
 
 %token Tok_eof
 
@@ -311,6 +312,7 @@ unsigned_value_expression_primary:
 non_numeric_literal:
   | Tok_string {`string $1}
   | Tok_typed_string {`typed_string $1}
+  | Tok_bin_string {`bin_string $1}
   | Kw_date Tok_string {`datetime_string (`date $2)}
   | Kw_time Tok_string {`datetime_string (`time $2)}
   | Kw_timestamp Tok_string {`datetime_string (`timestamp $2)}

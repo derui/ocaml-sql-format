@@ -50,6 +50,7 @@ include (
       | Kw_only -> Fmt.string f @@ as_keyword "only" keyword
       | Kw_is -> Fmt.string f @@ as_keyword "is" keyword
       | Kw_between -> Fmt.string f @@ as_keyword "between" keyword
+      | Kw_like_regex -> Fmt.string f @@ as_keyword "like_regex" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
