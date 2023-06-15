@@ -49,6 +49,16 @@ module Predicate_printer : S with type t = boolean_primary_predicate = struct
       Token_printer.print f Kw_and ~option;
       Fmt.string f " ";
       Value_printers.Common_value_expression_printer.print f e ~option
+    | `like_regex s ->
+      Token_printer.print f Kw_like_regex ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f s ~option
+    | `like_regex_not s ->
+      Token_printer.print f Kw_not ~option;
+      Fmt.string f " ";
+      Token_printer.print f Kw_like_regex ~option;
+      Fmt.string f " ";
+      Value_printers.Common_value_expression_printer.print f s ~option
 end
 
 include (

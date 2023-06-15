@@ -175,6 +175,8 @@ and boolean_primary_predicate =
   | `is_not_null
   | `between of common_value_expression * common_value_expression
   | `between_not of common_value_expression * common_value_expression
+  | `like_regex of common_value_expression
+  | `like_regex_not of common_value_expression
   ]
 [@@deriving show, eq]
 

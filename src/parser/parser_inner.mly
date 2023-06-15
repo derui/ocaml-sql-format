@@ -244,6 +244,11 @@ boolean_primary:
   | common_value_expression comparison_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
   | common_value_expression is_null_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
   | common_value_expression between_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+  | common_value_expression like_regex_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+
+like_regex_predicate:
+  | Kw_like_regex; s = common_value_expression { `like_regex s }
+  | Kw_not Kw_like_regex; s = common_value_expression { `like_regex_not s }
 
 between_predicate:
   | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `between (s, e) }
