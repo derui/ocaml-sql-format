@@ -78,6 +78,10 @@ open Ast
 %token Kw_is
 %token Kw_between
 %token Kw_like_regex
+%token Kw_similar
+%token Kw_to
+%token Kw_escape
+%token Kw_like
 
 %token Tok_eof
 
@@ -245,6 +249,20 @@ boolean_primary:
   | common_value_expression is_null_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
   | common_value_expression between_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
   | common_value_expression like_regex_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+  | common_value_expression match_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+
+character:
+  | Tok_string {$1}
+
+match_predicate_escape:
+  | Kw_escape c = character { c }
+  | Tok_lbrace Kw_escape c = character Tok_rbrace { c }
+
+match_predicate:
+  | Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `match' (`like, e, escape) }
+  | Kw_not Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `match_not (`like, e, escape) }
+  | Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `match' (`similar, e, escape) }
+  | Kw_not Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `match_not (`similar, e, escape) }
 
 like_regex_predicate:
   | Kw_like_regex; s = common_value_expression { `like_regex s }

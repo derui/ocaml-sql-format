@@ -51,6 +51,10 @@ include (
       | Kw_is -> Fmt.string f @@ as_keyword "is" keyword
       | Kw_between -> Fmt.string f @@ as_keyword "between" keyword
       | Kw_like_regex -> Fmt.string f @@ as_keyword "like_regex" keyword
+      | Kw_similar -> Fmt.string f @@ as_keyword "similar" keyword
+      | Kw_to -> Fmt.string f @@ as_keyword "to" keyword
+      | Kw_escape -> Fmt.string f @@ as_keyword "escape" keyword
+      | Kw_like -> Fmt.string f @@ as_keyword "like" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

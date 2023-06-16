@@ -177,6 +177,10 @@ and boolean_primary_predicate =
   | `between_not of common_value_expression * common_value_expression
   | `like_regex of common_value_expression
   | `like_regex_not of common_value_expression
+  | `match' of
+    [ `similar | `like ] * common_value_expression * Literal.sql_string option
+  | `match_not of
+    [ `similar | `like ] * common_value_expression * Literal.sql_string option
   ]
 [@@deriving show, eq]
 

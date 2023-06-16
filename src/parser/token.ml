@@ -38,6 +38,10 @@ type token =
   | Kw_is
   | Kw_between
   | Kw_like_regex
+  | Kw_similar
+  | Kw_to
+  | Kw_escape
+  | Kw_like
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
