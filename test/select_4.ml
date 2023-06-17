@@ -13,9 +13,9 @@ let actual =
 let option = F.Options.default
 
 let%test_unit "select into for AST" =
-  let actual_ast = Util.parse actual
-  and expect_ast = Util.parse @@ F.from_string actual ~option in
-  assert (List.for_all2 Parser.Ast.equal_entry actual_ast expect_ast)
+  let actual_ast = F.from_string ~option actual
+  and expect_ast = F.from_string ~option @@ F.from_string actual ~option in
+  assert (actual_ast = expect_ast)
 
 let%expect_test "select into for formatting" =
   print_endline @@ F.from_string actual ~option;

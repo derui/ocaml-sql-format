@@ -1,4 +1,4 @@
-module Options = Options
+module Options = Printer.Options
 module I = Parser.Parser.MenhirInterpreter
 
 let get_parse_error env =

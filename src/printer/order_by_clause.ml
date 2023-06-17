@@ -1,0 +1,26 @@
+open Parser.Ast
+open Parser.Token
+open Intf
+
+module type S = PRINTER with type t = ext order_by_clause
+
+module Make (SS : GEN with type t = ext sort_specification) : S = struct
+  type t = ext order_by_clause
+
+  let print f t ~option =
+    match t with
+    | `Order_by_clause ([], _) -> failwith "Invalid syntax"
+    | `Order_by_clause (first :: rest, _) ->
+      let module SS = (val SS.generate ()) in
+      Printer_token.print f Kw_order ~option;
+      Fmt.string f " ";
+      Printer_token.print f Kw_by ~option;
+      Fmt.string f " ";
+      SS.print f first ~option;
+
+      List.iter
+        (fun v ->
+          Printer_token.print f Tok_comma ~option;
+          SS.print f v ~option)
+        rest
+end

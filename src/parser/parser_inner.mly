@@ -82,6 +82,8 @@ open Ast
 %token Kw_to
 %token Kw_escape
 %token Kw_like
+%token Kw_any
+%token Kw_some
 
 %token Tok_eof
 
@@ -92,36 +94,36 @@ entries:
   | separated_nonempty_list(Tok_semicolon, entry) Tok_eof { $1 }
 
 entry:
-                 | directly_executable_statement { Directly_executable_statement $1 }
+                 | directly_executable_statement { $1 }
 
 directly_executable_statement:
-                 | query_expression { Query_expression $1 }
+                 | query_expression { `Directly_executable_statement ($1, ()) }
 
 query_expression:
-                 | query_expression_body { {with_list = []; body = $1} }
+                 | query_expression_body { `Query_expression ([], $1, ()) }
 
                      (* A sub format to get terms in query_expression_body *)
 sub_query_expression_body:
-                 | Kw_union Kw_all query_term { (Ast.Union, Some Ast.All, $3) }
-                 | Kw_union Kw_distinct query_term { (Ast.Union, Some Ast.Distinct, $3) }
-                 | Kw_union query_term { (Ast.Union, None, $2) }
-                 | Kw_except Kw_all query_term { (Ast.Except, Some Ast.All, $3) }
-                 | Kw_except Kw_distinct query_term { (Ast.Except, Some Ast.Distinct, $3) }
-                 | Kw_except query_term { (Ast.Except, None, $2) }
+                 | Kw_union Kw_all query_term { (`Union, Some `All, $3) }
+                 | Kw_union Kw_distinct query_term { (`Union, Some `Distinct, $3) }
+                 | Kw_union query_term { (`Union, None, $2) }
+                 | Kw_except Kw_all query_term { (`Except, Some `All, $3) }
+                 | Kw_except Kw_distinct query_term { (`Except, Some `Distinct, $3) }
+                 | Kw_except query_term { (`Except, None, $2) }
 
 query_expression_body:
   | query_term; terms = list(sub_query_expression_body); order_by = option(order_by_clause);
     limit = option(limit_clause) {
-                Query_expression_body {
+                `Query_expression_body ({
                     term = $1;
                     terms;
                     order_by;
                     limit;
-                  }
+                  }, ())
               }
 
 order_by_clause:
-  | Kw_order Kw_by; list = separated_nonempty_list(Tok_comma, sort_specification) { Order_by_clause list }
+  | Kw_order Kw_by; list = separated_nonempty_list(Tok_comma, sort_specification) { `Order_by_clause (list, ()) }
 
 sort_specification_order:
   | Kw_asc {`asc}
@@ -132,80 +134,77 @@ sort_specification_null:
   | Kw_null Kw_last {`null_last}
 
 sort_specification:
-  | sort_key option(sort_specification_order) option(sort_specification_null) { Sort_specification {key = $1;
-                                                                                                 order = $2;
-                                                                                                 null_order = $3
-      } }
+  | sort_key option(sort_specification_order) option(sort_specification_null) { `Sort_specification ($1, $2, $3, ())}
 
 limit_clause:
-  | Kw_limit; count =  integer_parameter {Limit_clause_limit {count; offset = None}}
-  | Kw_limit; count =  integer_parameter; Tok_comma; start =  integer_parameter {Limit_clause_limit {count; offset = Some(`comma start)}}
-  | Kw_limit; count =  integer_parameter; Kw_offset; start =  integer_parameter; {Limit_clause_limit {count; offset = Some (`keyword start)}}
-  | Kw_offset; start =  integer_parameter; rows = row; fetch = option(fetch_clause) {Limit_clause_offset {start; rows; fetch}}
-  | fetch_clause {Limit_clause_fetch $1}
+  | Kw_limit; count =  integer_parameter {`Limit_clause (`limit {count; offset = None}, ())}
+  | Kw_limit; count =  integer_parameter; Tok_comma; start =  integer_parameter {`Limit_clause (`limit {count; offset = Some(`comma start)}, ())}
+  | Kw_limit; count =  integer_parameter; Kw_offset; start =  integer_parameter; {`Limit_clause (`limit {count; offset = Some (`keyword start)}, ())}
+  | Kw_offset; start =  integer_parameter; rows = row; fetch = option(fetch_clause) {`Limit_clause (`offset ({start; fetch}, rows), ())}
+  | fetch_clause {`Limit_clause (`fetch $1, ())}
 
 fetch_clause:
-  | Kw_fetch Kw_first; param = option(integer_parameter); rows = row; Kw_only {Fetch_clause {position = `first; param; rows}}
-  | Kw_fetch Kw_next; param = option(integer_parameter); rows = row; Kw_only {Fetch_clause {position = `next; param; rows}}
+  | Kw_fetch Kw_first; param = option(integer_parameter); rows = row; Kw_only {`Fetch_clause ({position = `first; param}, rows, ())}
+  | Kw_fetch Kw_next; param = option(integer_parameter); rows = row; Kw_only {`Fetch_clause ({position = `next; param}, rows, ())}
 
 integer_parameter:
-  | Tok_unsigned_integer {`unsigned_integer $1}
-  | unsigned_value_expression_primary {`expression $1}
+  | Tok_unsigned_integer {`Integer_parameter (`unsigned_integer $1, ())}
+  | unsigned_value_expression_primary {`Integer_parameter (`expression $1, ())}
 
 row:
   | Kw_row {`row}
   | Kw_rows {`rows}
 
 sort_key:
-  | expression { $1 }
+  | expression { `Sort_key ($1, ()) }
 
 sub_query_term:
   | Kw_intersect query_primary { (None, $2) }
-  | Kw_intersect Kw_all query_primary { (Some Ast.All, $3) }
-  | Kw_intersect Kw_distinct query_primary { (Some Ast.Distinct, $3) }
+  | Kw_intersect Kw_all query_primary { (Some `All, $3) }
+  | Kw_intersect Kw_distinct query_primary { (Some `Distinct, $3) }
 
 query_term:
-  | query_primary list(sub_query_term) { ($1, $2) }
+  | query_primary list(sub_query_term) { `Query_term ($1, $2, ()) }
 
 query_primary:
-  | query {Query $1}
+  | query {`Query_primary ($1, ())}
 
 query:
-  | select_clause; into = option(into_clause); from = option(sub_select_clause) { {clause = $1; into; from } }
+  | select_clause; into = option(into_clause); from = option(sub_select_clause) { `Query ($1, into, from, ()) }
 
 select_clause:
-  | Kw_select; select_list = select_list { {qualifier = None; select_list} }
-  | Kw_select; Kw_all select_list = select_list { {qualifier = Some Ast.All; select_list} }
-  | Kw_select; Kw_distinct select_list = select_list { {qualifier = Some Ast.Distinct; select_list} }
+  | Kw_select; select_list = select_list { `Select_clause (None, select_list,())}
+  | Kw_select; Kw_all select_list = select_list { `Select_clause (Some `All, select_list, ()) }
+  | Kw_select; Kw_distinct select_list = select_list { `Select_clause (Some `Distinct, select_list, ()) }
 
 into_clause:
-  | Kw_into identifier {Ast.Into_clause $2}
+  | Kw_into identifier {`Into_clause ($2, ())}
 
 sub_select_clause:
-  | from_clause; where = option(where_clause); group_by = option(group_by_clause); having = option(having_clause) { {tables = $1; where; having; group_by} }
+  | from_clause; where = option(where_clause); group_by = option(group_by_clause); having = option(having_clause) { `From_clause ({tables = $1; where; having; group_by}, ()) }
 
 from_clause:
   | Kw_from separated_nonempty_list(Tok_comma, table_reference)  { $2 }
 
 group_by_clause:
-  | Kw_group Kw_by Kw_rollup Tok_lparen; exp = separated_nonempty_list(Tok_comma, expression); Tok_rparen { Group_by_clause (`rollup exp) }
-  | Kw_group Kw_by; exp = separated_nonempty_list(Tok_comma, expression) { Group_by_clause (`default exp) }
+  | Kw_group Kw_by Kw_rollup Tok_lparen; exp = separated_nonempty_list(Tok_comma, expression); Tok_rparen { `Group_by_clause (`rollup exp, ()) }
+  | Kw_group Kw_by; exp = separated_nonempty_list(Tok_comma, expression) { `Group_by_clause (`default exp, ()) }
 
 having_clause:
-  | Kw_having condition { Having_clause $2 }
+  | Kw_having condition { `Having_clause ($2, ()) }
 
 where_clause:
-  | Kw_where condition { Where_clause $2 }
+  | Kw_where condition { `Where_clause ($2, ()) }
 
       (* table reference *)
 table_reference:
-  | joined_table { Joined_table $1 }
+  | joined_table { `Table_reference ($1, ()) }
 
 joined_table:
-  | table_primary { $1 }
+  | table_primary { `Joined_table ($1, ()) }
 
 table_primary:
-  | table_name { `table_name $1 }
+  | table_name { `Table_primary (`table_name $1, ()) }
 
 table_name:
   | identifier option(Kw_as) identifier { ($1, Some $3) }
@@ -217,76 +216,90 @@ select_list:
   | separated_nonempty_list(Tok_comma, select_sublist) { `select_list $1 }
 
 select_sublist:
-  | Tok_all_in_group {Ast.All_in_group $1}
+  | Tok_all_in_group {`Select_sublist (`All_in_group $1, ())}
   | expression option(pair(option(Kw_as), identifier)) {
         let alias = match $2 with
           | None -> None
-          | Some (_, ident) -> Some ident in
-        Ast.Select_derived_column {exp = $1; alias} }
+          | Some (_, ident) -> Some ident
+        in
+        `Select_sublist (`Derived_column ($1, alias), ()) }
 
 expression:
-  | condition {$1}
+  | condition { `Expression ($1, ())}
 
 condition:
-  | boolean_value_expression {$1}
+  | boolean_value_expression { `Condition ($1, ())}
 
 (* boolean expression *)
 boolean_value_expression:
-  | separated_nonempty_list(Kw_or, boolean_term) { (List.hd $1, List.tl $1) }
+  | separated_nonempty_list(Kw_or, boolean_term) { `Boolean_value_expression (List.hd $1, List.tl $1, ()) }
 
 boolean_term:
-  | separated_nonempty_list(Kw_and, boolean_factor) { (List.hd $1, List.tl $1) }
+  | separated_nonempty_list(Kw_and, boolean_factor) { `Boolean_term (List.hd $1, List.tl $1, ()) }
 
 boolean_factor:
   | option(Kw_not) boolean_primary { match $1 with
-                                     | None -> `Normal $2
-                                     | Some _ -> `Not $2}
+                                     | None -> `Boolean_factor (`normal $2, ())
+                                     | Some _ -> `Boolean_factor (`not' $2, ())
+      }
 
       (* 他のASTの実装も必要 *)
 boolean_primary:
-  | common_value_expression { Boolean_primary {value = $1; predicate = None}}
-  | common_value_expression comparison_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
-  | common_value_expression is_null_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
-  | common_value_expression between_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
-  | common_value_expression like_regex_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
-  | common_value_expression match_predicate { Boolean_primary {value = $1;  predicate = Some $2}}
+  | common_value_expression { `Boolean_primary ($1, None, ())}
+  | common_value_expression comparison_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression is_null_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression between_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression like_regex_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression match_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some $2, ())}
+
+subquery:
+  | Tok_lparen q = query_expression Tok_rparen { `Subquery (`query q, ()) }
+
+quantified_comparison_predicate:
+  | comparison_operator Kw_any Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `any, e), ()) }
+  | comparison_operator Kw_some Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `some, e), ()) }
+  | comparison_operator Kw_all Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `all, e),()) }
+  | comparison_operator Kw_any  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `any, q), ()) }
+  | comparison_operator Kw_some  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `some, q), ()) }
+  | comparison_operator Kw_all  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `all, q), ()) }
 
 character:
-  | Tok_string {$1}
+  | Tok_string { `Character ($1, ())}
 
 match_predicate_escape:
   | Kw_escape c = character { c }
   | Tok_lbrace Kw_escape c = character Tok_rbrace { c }
 
 match_predicate:
-  | Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `match' (`like, e, escape) }
-  | Kw_not Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `match_not (`like, e, escape) }
-  | Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `match' (`similar, e, escape) }
-  | Kw_not Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `match_not (`similar, e, escape) }
+  | Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match' (`like, e, escape), ()) }
+  | Kw_not Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match_not (`like, e, escape), ()) }
+  | Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match' (`similar, e, escape), ()) }
+  | Kw_not Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match_not (`similar, e, escape), ()) }
 
 like_regex_predicate:
-  | Kw_like_regex; s = common_value_expression { `like_regex s }
-  | Kw_not Kw_like_regex; s = common_value_expression { `like_regex_not s }
+  | Kw_like_regex; s = common_value_expression { `Boolean_primary_predicate (`like_regex s, ()) }
+  | Kw_not Kw_like_regex; s = common_value_expression { `Boolean_primary_predicate (`like_regex_not s, ()) }
 
 between_predicate:
-  | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `between (s, e) }
-  | Kw_not Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `between_not (s, e) }
+  | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Boolean_primary_predicate (`between (s, e), ()) }
+  | Kw_not Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Boolean_primary_predicate (`between_not (s, e), ()) }
 
 is_null_predicate:
-  | Kw_is Kw_null { `is_null }
-  | Kw_is Kw_not Kw_null { `is_not_null }
+  | Kw_is Kw_null { `Boolean_primary_predicate (`is_null, ()) }
+  | Kw_is Kw_not Kw_null { `Boolean_primary_predicate (`is_not_null, ()) }
 
 comparison_predicate:
-  | comparison_operator common_value_expression { `comparison ($1, $2) }
+  | comparison_operator common_value_expression { `Boolean_primary_predicate (`comparison ($1, $2), ()) }
 
 comparison_operator:
-  | Op_eq { `eq }
-  | Op_ne { `ne }
-  | Op_ne2 { `ne2 }
-  | Op_ge { `ge }
-  | Op_gt { `gt }
-  | Op_le { `le }
-  | Op_lt { `lt }
+  | Op_eq { `Comparison_operator (`eq, ()) }
+  | Op_ne { `Comparison_operator (`ne, ()) }
+  | Op_ne2 { `Comparison_operator (`ne2, ()) }
+  | Op_ge { `Comparison_operator (`ge, ()) }
+  | Op_gt { `Comparison_operator (`gt, ()) }
+  | Op_le { `Comparison_operator (`le, ()) }
+  | Op_lt { `Comparison_operator (`lt, ()) }
 
       (* common value expression *)
 amp_or_concat:
@@ -302,24 +315,24 @@ star_or_slash:
   | Op_slash {`slash}
 
 common_value_expression:
-  | numeric_value_expression list(pair(amp_or_concat, numeric_value_expression)) {($1, $2) }
+  | numeric_value_expression list(pair(amp_or_concat, numeric_value_expression)) { `Common_value_expression ($1, $2, ()) }
 
 numeric_value_expression:
-  | term list(pair(plus_or_minus, term)) { ($1, $2) }
+  | term list(pair(plus_or_minus, term)) { `Numeric_value_expression ($1, $2, ()) }
 
 term:
-  | value_expression_primary list(pair(star_or_slash, value_expression_primary)) { ($1, $2) }
+  | value_expression_primary list(pair(star_or_slash, value_expression_primary)) { `Term ($1, $2, ()) }
 
 (* value expressions *)
 value_expression_primary:
-  | non_numeric_literal {Ast.Non_numeric_literal $1}
-  | option(plus_or_minus) unsigned_numeric_literal { Ast.Unsigned_numeric_literal ($1, $2) }
-  | unsigned_value_expression_primary list(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Unsigned_value_expression_primary {exp = $1; indices = $2} }
+  | non_numeric_literal { `Value_expression_primary (`non_numeric_literal $1, ())}
+  | option(plus_or_minus) unsigned_numeric_literal { `Value_expression_primary (`unsigned_numeric_literal ($1, $2), ()) }
+  | unsigned_value_expression_primary list(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { `Value_expression_primary (`unsigned_value_expression_primary ($1, $2), ()) }
 
 unsigned_value_expression_primary:
-  | Tok_qmark { `parameter_qmark  }
-  | Tok_dollar Tok_unsigned_integer { `parameter_dollar $2  }
-  | identifier { `identifier $1 }
+  | Tok_qmark { `Unsigned_value_expression_primary (`parameter_qmark , ()) }
+  | Tok_dollar Tok_unsigned_integer { `Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
+  | identifier { `Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
       (* need implementation:
          - escaped function
          - unescaped Function
@@ -333,21 +346,21 @@ unsigned_value_expression_primary:
 
       (* literals *)
 non_numeric_literal:
-  | Tok_string {`string $1}
-  | Tok_typed_string {`typed_string $1}
-  | Tok_bin_string {`bin_string $1}
-  | Kw_date Tok_string {`datetime_string (`date $2)}
-  | Kw_time Tok_string {`datetime_string (`time $2)}
-  | Kw_timestamp Tok_string {`datetime_string (`timestamp $2)}
-  | Kw_true {`TRUE }
-  | Kw_false {`FALSE }
-  | Kw_unknown {`UNKNOWN}
-  | Kw_null {`NULL }
+  | Tok_string { `Non_numeric_literal (`string $1, ())}
+  | Tok_typed_string {`Non_numeric_literal (`typed_string $1, ())}
+  | Tok_bin_string {`Non_numeric_literal (`bin_string $1, ())}
+  | Kw_date Tok_string {`Non_numeric_literal (`datetime_string (`date $2), ())}
+  | Kw_time Tok_string {`Non_numeric_literal (`datetime_string (`time $2), ())}
+  | Kw_timestamp Tok_string {`Non_numeric_literal (`datetime_string (`timestamp $2), ())}
+  | Kw_true {`Non_numeric_literal (`TRUE, ()) }
+  | Kw_false {`Non_numeric_literal (`FALSE, ()) }
+  | Kw_unknown {`Non_numeric_literal (`UNKNOWN, ())}
+  | Kw_null { `Non_numeric_literal (`NULL, ()) }
 
 unsigned_numeric_literal:
-  | Tok_unsigned_integer { `unsigned $1 }
-  | Tok_approximate_numeric { `approximate $1 }
-  | Tok_decimal_numeric { `decimal $1 }
+  | Tok_unsigned_integer { `Unsigned_numeric_literal (`unsigned $1, ()) }
+  | Tok_approximate_numeric { `Unsigned_numeric_literal (`approximate $1, ()) }
+  | Tok_decimal_numeric { `Unsigned_numeric_literal (`decimal $1, ()) }
 
 identifier:
-  | Tok_ident {Ast.Ident $1}
+  | Tok_ident { `Identifier ($1, ())}

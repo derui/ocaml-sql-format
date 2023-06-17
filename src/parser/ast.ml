@@ -20,215 +20,259 @@ module Literal = struct
   [@@deriving show, eq]
 end
 
-type entry = Directly_executable_statement of directly_executable_statement
-[@@deriving show, eq]
-
-and directly_executable_statement = Query_expression of query_expression
-[@@deriving show, eq]
-
-and query_expression =
-  { with_list : unit list
-  ; body : query_expression_body
-  }
-[@@deriving show, eq]
-
-and query_expression_body =
-  | Query_expression_body of
-      { term : query_term
-      ; terms : (joiner * qualifier option * query_term) list
-      ; order_by : order_by_clause option
-      ; limit : limit_clause option
-      }
-[@@deriving show, eq]
-
-and order_by_clause = Order_by_clause of sort_specification list
-[@@deriving show, eq]
-
-and limit_clause =
-  | Limit_clause_limit of
-      { count : integer_parameter
-      ; offset :
-          [ `comma of integer_parameter | `keyword of integer_parameter ] option
-      }
-  | Limit_clause_offset of
-      { start : integer_parameter
-      ; rows : [ `row | `rows ]
-      ; fetch : fetch_clause option
-      }
-  | Limit_clause_fetch of fetch_clause
-[@@deriving show, eq]
-
-and integer_parameter =
-  [ `unsigned_integer of Literal.unsigned_integer
-  | `expression of unsigned_value_expression_primary
+(* no-info types *)
+type qualifier =
+  [ `Distinct
+  | `All
   ]
-[@@deriving show, eq]
-
-and fetch_clause =
-  | Fetch_clause of
-      { position : [ `first | `next ]
-      ; param : integer_parameter option
-      ; rows : [ `row | `rows ]
-      }
-[@@deriving show, eq]
-
-and sort_specification =
-  | Sort_specification of
-      { key : sort_key
-      ; order : [ `asc | `desc ] option
-      ; null_order : [ `null_first | `null_last ] option
-      }
-[@@deriving show, eq]
-
-and sort_key = expression [@@deriving show, eq]
-
-and query_term = query_primary * (qualifier option * query_primary) list
-[@@deriving show, eq]
-
-and query_primary = Query of query [@@deriving show, eq]
-
-and query =
-  { clause : select_clause
-  ; into : into_clause option
-  ; from : from_clause option
-  }
-[@@deriving show, eq]
-
-and from_clause =
-  { tables : table_reference list
-  ; where : where_clause option
-  ; group_by : group_by_clause option
-  ; having : having_clause option
-  }
-[@@deriving show, eq]
-
-and where_clause = Where_clause of condition [@@deriving show, eq]
-
-and group_by_clause =
-  | Group_by_clause of
-      [ `rollup of expression list | `default of expression list ]
-[@@deriving show, eq]
-
-and having_clause = Having_clause of condition [@@deriving show, eq]
-
-and into_clause = Into_clause of identifier [@@deriving show, eq]
-
-and select_clause =
-  { qualifier : qualifier option
-  ; select_list : [ `asterisk | `select_list of select_sublist list ]
-  }
-[@@deriving show, eq]
-
-and joined_table = table_primary [@@deriving show, eq]
-
-and table_primary = [ `table_name of identifier * identifier option ]
-[@@deriving show, eq]
-
-and table_reference = Joined_table of joined_table [@@deriving show, eq]
-
-and qualifier =
-  | Distinct
-  | All
 [@@deriving show, eq]
 
 and joiner =
-  | Union
-  | Except
-[@@deriving show, eq]
-
-and select_sublist =
-  | Select_derived_column of
-      { exp : expression
-      ; alias : identifier option
-      }
-  | All_in_group of string
-[@@deriving show, eq]
-
-and identifier = Ident of string [@@deriving show, eq]
-
-and expression = condition [@@deriving show, eq]
-
-and condition = boolean_value_expression [@@deriving show, eq]
-
-and boolean_value_expression = boolean_term * boolean_term list
-[@@deriving show, eq]
-
-and boolean_term = boolean_factor * boolean_factor list [@@deriving show, eq]
-
-and boolean_factor =
-  [ `Not of boolean_primary
-  | `Normal of boolean_primary
+  [ `Union
+  | `Except
   ]
 [@@deriving show, eq]
 
-and boolean_primary =
-  | Boolean_primary of
-      { value : common_value_expression
-      ; predicate : boolean_primary_predicate option
-      }
-[@@deriving show, eq]
-
-and boolean_primary_predicate =
-  [ `comparison of
-    [ `eq | `ne | `ne2 | `ge | `gt | `le | `lt ] * common_value_expression
-  | `is_null
-  | `is_not_null
-  | `between of common_value_expression * common_value_expression
-  | `between_not of common_value_expression * common_value_expression
-  | `like_regex of common_value_expression
-  | `like_regex_not of common_value_expression
-  | `match' of
-    [ `similar | `like ] * common_value_expression * Literal.sql_string option
-  | `match_not of
-    [ `similar | `like ] * common_value_expression * Literal.sql_string option
+and row_variant_ =
+  [ `row
+  | `rows
   ]
 [@@deriving show, eq]
 
-and common_value_expression =
-  numeric_value_expression
-  * ([ `amp | `concat ] * numeric_value_expression) list
-[@@deriving show, eq]
+type 'a identifier = [ `Identifier of string * 'a ]
 
-and numeric_value_expression = term * ([ `plus | `minus ] * term) list
-[@@deriving show, eq]
-
-and term =
-  value_expression_primary
-  * ([ `star | `slash ] * value_expression_primary) list
-[@@deriving show, eq]
-
-and value_expression_primary =
-  | Non_numeric_literal of non_numeric_literal
-  | Unsigned_numeric_literal of
-      [ `plus | `minus ] option * unsigned_numeric_literal
-  | Unsigned_value_expression_primary of
-      { exp : unsigned_value_expression_primary
-      ; indices : numeric_value_expression list
-      }
-[@@deriving show, eq]
-
-and unsigned_value_expression_primary =
-  [ `parameter_qmark
-  | `parameter_dollar of Literal.unsigned_integer
-  | `identifier of identifier
+and 'a unsigned_value_expression_primary =
+  [ `Unsigned_value_expression_primary of
+    [ `parameter_qmark
+    | `parameter_dollar of Literal.unsigned_integer
+    | `parameter_identifier of 'a identifier
+    ]
+    * 'a
   ]
-[@@deriving show, eq]
 
-and non_numeric_literal =
-  [ `string of Literal.sql_string
-  | `typed_string of Literal.typed_string
-  | `bin_string of Literal.bin_string
-  | `TRUE
-  | `FALSE
-  | `UNKNOWN
-  | `NULL
-  | `datetime_string of Literal.datetime_string
+and 'a non_numeric_literal =
+  [ `Non_numeric_literal of
+    [ `string of Literal.sql_string
+    | `typed_string of Literal.typed_string
+    | `bin_string of Literal.bin_string
+    | `TRUE
+    | `FALSE
+    | `UNKNOWN
+    | `NULL
+    | `datetime_string of Literal.datetime_string
+    ]
+    * 'a
   ]
-[@@deriving show, eq]
 
-and unsigned_numeric_literal =
-  [ `unsigned of Literal.unsigned_integer
-  | `approximate of Literal.approximate_numeric
-  | `decimal of Literal.decimal_numeric
+and 'a unsigned_numeric_literal =
+  [ `Unsigned_numeric_literal of
+    [ `unsigned of Literal.unsigned_integer
+    | `approximate of Literal.approximate_numeric
+    | `decimal of Literal.decimal_numeric
+    ]
+    * 'a
   ]
-[@@deriving show, eq]
+
+and 'a directly_executable_statement =
+  [ `Directly_executable_statement of 'a query_expression * 'a ]
+
+and 'a query_expression =
+  [ `Query_expression of
+    'a query_expression_body list * 'a query_expression_body * 'a
+  ]
+
+and 'a query_expression_body_ =
+  { term : 'a query_term
+  ; terms : (joiner * qualifier option * 'a query_term) list
+  ; order_by : 'a order_by_clause option
+  ; limit : 'a limit_clause option
+  }
+
+and 'a query_expression_body =
+  [ `Query_expression_body of 'a query_expression_body_ * 'a ]
+
+and 'a order_by_clause = [ `Order_by_clause of 'a sort_specification list * 'a ]
+
+and 'a limit_clause_limit_ =
+  { count : 'a integer_parameter
+  ; offset :
+      [ `comma of 'a integer_parameter | `keyword of 'a integer_parameter ]
+      option
+  }
+
+and 'a limit_clause_offset_ =
+  { start : 'a integer_parameter
+  ; fetch : 'a fetch_clause option
+  }
+
+and 'a limit_clause =
+  [ `Limit_clause of
+    [ `limit of 'a limit_clause_limit_
+    | `offset of 'a limit_clause_offset_ * row_variant_
+    | `fetch of 'a fetch_clause
+    ]
+    * 'a
+  ]
+
+and 'a integer_parameter =
+  [ `Integer_parameter of
+    [ `unsigned_integer of Literal.unsigned_integer
+    | `expression of 'a unsigned_value_expression_primary
+    ]
+    * 'a
+  ]
+
+and 'a fetch_clause_ =
+  { position : [ `first | `next ]
+  ; param : 'a integer_parameter option
+  }
+
+and 'a fetch_clause = [ `Fetch_clause of 'a fetch_clause_ * row_variant_ * 'a ]
+
+and 'a sort_specification =
+  [ `Sort_specification of
+    'a sort_key
+    * [ `asc | `desc ] option
+    * [ `null_first | `null_last ] option
+    * 'a
+  ]
+
+and 'a sort_key = [ `Sort_key of 'a expression * 'a ]
+
+and 'a query_term =
+  [ `Query_term of
+    'a query_primary * (qualifier option * 'a query_primary) list * 'a
+  ]
+
+and 'a query_primary = [ `Query_primary of 'a query * 'a ]
+
+and 'a query =
+  [ `Query of
+    'a select_clause * 'a into_clause option * 'a from_clause option * 'a
+  ]
+
+and 'a from_clause_ =
+  { tables : 'a table_reference list
+  ; where : 'a where_clause option
+  ; group_by : 'a group_by_clause option
+  ; having : 'a having_clause option
+  }
+
+and 'a from_clause = [ `From_clause of 'a from_clause_ * 'a ]
+
+and 'a where_clause = [ `Where_clause of 'a condition * 'a ]
+
+and 'a group_by_clause =
+  [ `Group_by_clause of
+    [ `rollup of 'a expression list | `default of 'a expression list ] * 'a
+  ]
+
+and 'a having_clause = [ `Having_clause of 'a condition * 'a ]
+
+and 'a into_clause = [ `Into_clause of 'a identifier * 'a ]
+
+and 'a select_clause =
+  [ `Select_clause of
+    qualifier option
+    * [ `asterisk | `select_list of 'a select_sublist list ]
+    * 'a
+  ]
+
+and 'a joined_table = [ `Joined_table of 'a table_primary * 'a ]
+
+and 'a table_primary =
+  [ `Table_primary of
+    [ `table_name of 'a identifier * 'a identifier option ] * 'a
+  ]
+
+and 'a table_reference = [ `Table_reference of 'a joined_table * 'a ]
+
+and 'a select_sublist =
+  [ `Select_sublist of
+    [ `Derived_column of 'a expression * 'a identifier option
+    | `All_in_group of string
+    ]
+    * 'a
+  ]
+
+and 'a expression = [ `Expression of 'a condition * 'a ]
+
+and 'a condition = [ `Condition of 'a boolean_value_expression * 'a ]
+
+and 'a boolean_value_expression =
+  [ `Boolean_value_expression of 'a boolean_term * 'a boolean_term list * 'a ]
+
+and 'a boolean_term =
+  [ `Boolean_term of 'a boolean_factor * 'a boolean_factor list * 'a ]
+
+and 'a boolean_factor =
+  [ `Boolean_factor of
+    [ `not' of 'a boolean_primary | `normal of 'a boolean_primary ] * 'a
+  ]
+
+and 'a boolean_primary =
+  [ `Boolean_primary of
+    'a common_value_expression * 'a boolean_primary_predicate option * 'a
+  ]
+
+and 'a boolean_primary_predicate =
+  [ `Boolean_primary_predicate of
+    [ `comparison of 'a comparison_operator * 'a common_value_expression
+    | `is_null
+    | `is_not_null
+    | `between of 'a common_value_expression * 'a common_value_expression
+    | `between_not of 'a common_value_expression * 'a common_value_expression
+    | `like_regex of 'a common_value_expression
+    | `like_regex_not of 'a common_value_expression
+    | `match' of
+      [ `similar | `like ] * 'a common_value_expression * 'a character option
+    | `match_not of
+      [ `similar | `like ] * 'a common_value_expression * 'a character option
+    | `quantified_exp of
+      'a comparison_operator * [ `all | `some | `any ] * 'a expression
+    | `quantified_query of
+      'a comparison_operator * [ `all | `some | `any ] * 'a subquery
+    ]
+    * 'a
+  ]
+
+and 'a character = [ `Character of Literal.sql_string * 'a ]
+
+and 'a subquery = [ `Subquery of [ `query of 'a query_expression ] * 'a ]
+
+and 'a comparison_operator =
+  [ `Comparison_operator of [ `eq | `ne | `ne2 | `ge | `gt | `le | `lt ] * 'a ]
+
+and 'a common_value_expression =
+  [ `Common_value_expression of
+    'a numeric_value_expression
+    * ([ `amp | `concat ] * 'a numeric_value_expression) list
+    * 'a
+  ]
+
+and 'a numeric_value_expression =
+  [ `Numeric_value_expression of
+    'a term * ([ `plus | `minus ] * 'a term) list * 'a
+  ]
+
+and 'a term =
+  [ `Term of
+    'a value_expression_primary
+    * ([ `star | `slash ] * 'a value_expression_primary) list
+    * 'a
+  ]
+
+and 'a value_expression_primary =
+  [ `Value_expression_primary of
+    [ `non_numeric_literal of 'a non_numeric_literal
+    | `unsigned_numeric_literal of
+      [ `plus | `minus ] option * 'a unsigned_numeric_literal
+    | `unsigned_value_expression_primary of
+      'a unsigned_value_expression_primary * 'a numeric_value_expression list
+    ]
+    * 'a
+  ]
+
+type ext = unit
+
+type entry = ext directly_executable_statement

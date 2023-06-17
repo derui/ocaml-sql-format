@@ -42,6 +42,8 @@ type token =
   | Kw_to
   | Kw_escape
   | Kw_like
+  | Kw_any
+  | Kw_some
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -175,6 +175,10 @@ let kw_escape =
 
 let kw_like = [%sedlex.regexp? Chars "lL", Chars "iI", Chars "kK", Chars "eE"]
 
+let kw_any = [%sedlex.regexp? Chars "aA", Chars "nN", Chars "yY"]
+
+let kw_some = [%sedlex.regexp? Chars "sS", Chars "oO", Chars "mM", Chars "eE"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -257,6 +261,8 @@ let rec token buf =
   | kw_to -> Kw_to
   | kw_escape -> Kw_escape
   | kw_like -> Kw_like
+  | kw_any -> Kw_any
+  | kw_some -> Kw_some
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

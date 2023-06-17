@@ -1,5 +1,5 @@
 module Options : sig
-  include module type of Options
+  include module type of Printer.Options
 end
 
 (** [from_channel chan ~option] format file from channel *)
