@@ -15,9 +15,11 @@ module Make (Vep : GEN with type t = ext value_expression_primary) : S = struct
 
       List.iter
         (fun (op, primary) ->
+          Fmt.string f " ";
           (match op with
           | `star -> Printer_token.print f Op_star ~option
           | `slash -> Printer_token.print f Op_slash ~option);
+          Fmt.string f " ";
           Vep.print f primary ~option)
         primaries
 end

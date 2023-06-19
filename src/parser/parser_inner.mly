@@ -254,15 +254,15 @@ boolean_primary:
   | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some $2, ())}
 
 subquery:
-  | Tok_lparen q = query_expression Tok_rparen { `Subquery (`query q, ()) }
+  | Tok_lparen; q = query_expression; Tok_rparen { `Subquery (`query q, ()) }
 
 quantified_comparison_predicate:
+  | comparison_operator Kw_any;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `any, q), ()) }
+  | comparison_operator Kw_some;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `some, q), ()) }
+  | comparison_operator Kw_all;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `all, q), ()) }
   | comparison_operator Kw_any Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `any, e), ()) }
   | comparison_operator Kw_some Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `some, e), ()) }
   | comparison_operator Kw_all Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `all, e),()) }
-  | comparison_operator Kw_any  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `any, q), ()) }
-  | comparison_operator Kw_some  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `some, q), ()) }
-  | comparison_operator Kw_all  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `all, q), ()) }
 
 character:
   | Tok_string { `Character ($1, ())}

@@ -128,7 +128,5 @@ module Make
       in
       Printer_token.print f kw ~option;
       Fmt.string f " ";
-      Printer_token.print f Tok_lparen ~option;
-      Subquery.print f q ~option;
-      Printer_token.print f Tok_rparen ~option
+      Subquery.print f q ~option
 end

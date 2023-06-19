@@ -716,12 +716,12 @@ entries: Kw_select Tok_ident Op_eq Tok_semicolon
 ## Ends in an error in state: 117.
 ##
 ## comparison_predicate -> comparison_operator . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
-## quantified_comparison_predicate -> comparison_operator . Kw_any Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
-## quantified_comparison_predicate -> comparison_operator . Kw_some Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
-## quantified_comparison_predicate -> comparison_operator . Kw_all Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator . Kw_any subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator . Kw_some subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator . Kw_all subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator . Kw_any Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator . Kw_some Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator . Kw_all Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## comparison_operator
@@ -733,8 +733,8 @@ entries: Kw_select Tok_ident Op_eq Kw_some Tok_unsigned_integer
 ##
 ## Ends in an error in state: 118.
 ##
-## quantified_comparison_predicate -> comparison_operator Kw_some . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_some . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator Kw_some . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## comparison_operator Kw_some
@@ -1648,8 +1648,8 @@ entries: Kw_select Tok_ident Op_eq Kw_any Tok_unsigned_integer
 ##
 ## Ends in an error in state: 248.
 ##
-## quantified_comparison_predicate -> comparison_operator Kw_any . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_any . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator Kw_any . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## comparison_operator Kw_any
@@ -1707,8 +1707,8 @@ entries: Kw_select Tok_ident Op_eq Kw_all Tok_unsigned_integer
 ##
 ## Ends in an error in state: 253.
 ##
-## quantified_comparison_predicate -> comparison_operator Kw_all . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_all . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## quantified_comparison_predicate -> comparison_operator Kw_all . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## comparison_operator Kw_all
