@@ -13,7 +13,7 @@ let read_content file =
 let () =
   let file = Sys.argv.(1)
   and test_name = Sys.argv.(2) in
-  let content = read_content file in
+  let content = read_content (file ^ ".sql") in
   let template =
     read_content @@ Filename.concat "tool/test_gen" "test.ml.template"
   in
