@@ -39,6 +39,8 @@ and row_variant_ =
   ]
 [@@deriving show, eq]
 
+and not_op = [ `not' ] option [@@deriving show, eq]
+
 type 'a identifier = [ `Identifier of string * 'a ]
 
 and 'a unsigned_value_expression_primary =
@@ -205,34 +207,59 @@ and 'a boolean_value_expression =
 and 'a boolean_term =
   [ `Boolean_term of 'a boolean_factor * 'a boolean_factor list * 'a ]
 
-and 'a boolean_factor =
-  [ `Boolean_factor of
-    [ `not' of 'a boolean_primary | `normal of 'a boolean_primary ] * 'a
-  ]
+and 'a boolean_factor = [ `Boolean_factor of 'a boolean_primary * not_op * 'a ]
 
 and 'a boolean_primary =
   [ `Boolean_primary of
-    'a common_value_expression * 'a boolean_primary_predicate option * 'a
+    'a common_value_expression
+    * [ `comparison of 'a comparison_predicate
+      | `is_null of 'a is_null_predicate
+      | `between of 'a between_predicate
+      | `like_regex of 'a like_regex_predicate
+      | `match' of 'a match_predicate
+      | `quantified of 'a quantified_comparison_predicate
+      | `in' of 'a in_predicate
+      ]
+      option
+    * 'a
   ]
 
-and 'a boolean_primary_predicate =
-  [ `Boolean_primary_predicate of
-    [ `comparison of 'a comparison_operator * 'a common_value_expression
-    | `is_null
-    | `is_not_null
-    | `between of 'a common_value_expression * 'a common_value_expression
-    | `between_not of 'a common_value_expression * 'a common_value_expression
-    | `like_regex of 'a common_value_expression
-    | `like_regex_not of 'a common_value_expression
-    | `match' of
-      [ `similar | `like ] * 'a common_value_expression * 'a character option
-    | `match_not of
-      [ `similar | `like ] * 'a common_value_expression * 'a character option
-    | `quantified_exp of
-      'a comparison_operator * [ `all | `some | `any ] * 'a expression
-    | `quantified_query of
-      'a comparison_operator * [ `all | `some | `any ] * 'a subquery
-    ]
+and 'a quantified_comparison_predicate =
+  [ `Quantified_comparison_predicate of
+    'a comparison_operator
+    * [ `all | `some | `any ]
+    * [ `expr of 'a expression | `query of 'a subquery ]
+    * 'a
+  ]
+
+and 'a match_predicate =
+  [ `Match_predicate of
+    [ `similar | `like ]
+    * 'a common_value_expression
+    * 'a character option
+    * not_op
+    * 'a
+  ]
+
+and 'a like_regex_predicate =
+  [ `Like_regex_predicate of 'a common_value_expression * not_op * 'a ]
+
+and 'a between_predicate =
+  [ `Between_predicate of
+    'a common_value_expression * 'a common_value_expression * not_op * 'a
+  ]
+
+and 'a is_null_predicate = [ `Is_null_predicate of not_op * 'a ]
+
+and 'a comparison_predicate =
+  [ `Comparison_predicate of
+    'a comparison_operator * 'a common_value_expression * 'a
+  ]
+
+and 'a in_predicate =
+  [ `In_predicate of
+    [ `query of 'a subquery | `values of 'a common_value_expression list ]
+    * not_op
     * 'a
   ]
 

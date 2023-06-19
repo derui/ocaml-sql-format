@@ -179,6 +179,8 @@ let kw_any = [%sedlex.regexp? Chars "aA", Chars "nN", Chars "yY"]
 
 let kw_some = [%sedlex.regexp? Chars "sS", Chars "oO", Chars "mM", Chars "eE"]
 
+let kw_in = [%sedlex.regexp? Chars "iI", Chars "nN"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -263,6 +265,7 @@ let rec token buf =
   | kw_like -> Kw_like
   | kw_any -> Kw_any
   | kw_some -> Kw_some
+  | kw_in -> Kw_in
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

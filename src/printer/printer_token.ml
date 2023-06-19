@@ -57,6 +57,7 @@ include (
       | Kw_like -> Fmt.string f @@ as_keyword "like" keyword
       | Kw_any -> Fmt.string f @@ as_keyword "any" keyword
       | Kw_some -> Fmt.string f @@ as_keyword "some" keyword
+      | Kw_in -> Fmt.string f @@ as_keyword "in" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

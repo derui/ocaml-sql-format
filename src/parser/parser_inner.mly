@@ -84,6 +84,7 @@ open Ast
 %token Kw_like
 %token Kw_any
 %token Kw_some
+%token Kw_in
 
 %token Tok_eof
 
@@ -239,30 +240,37 @@ boolean_term:
 
 boolean_factor:
   | option(Kw_not) boolean_primary { match $1 with
-                                     | None -> `Boolean_factor (`normal $2, ())
-                                     | Some _ -> `Boolean_factor (`not' $2, ())
+                                     | None -> `Boolean_factor ($2, None, ())
+                                     | Some _ -> `Boolean_factor ($2, Some `not', ())
       }
 
       (* 他のASTの実装も必要 *)
 boolean_primary:
   | common_value_expression { `Boolean_primary ($1, None, ())}
-  | common_value_expression comparison_predicate { `Boolean_primary ($1, Some $2, ())}
-  | common_value_expression is_null_predicate { `Boolean_primary ($1, Some $2, ())}
-  | common_value_expression between_predicate { `Boolean_primary ($1, Some $2, ())}
-  | common_value_expression like_regex_predicate { `Boolean_primary ($1, Some $2, ())}
-  | common_value_expression match_predicate { `Boolean_primary ($1, Some $2, ())}
-  | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some $2, ())}
+  | common_value_expression comparison_predicate { `Boolean_primary ($1, Some (`comparison $2), ())}
+  | common_value_expression is_null_predicate { `Boolean_primary ($1, Some (`is_null $2), ())}
+  | common_value_expression between_predicate { `Boolean_primary ($1, Some (`between $2), ())}
+  | common_value_expression like_regex_predicate { `Boolean_primary ($1, Some (`like_regex $2), ())}
+  | common_value_expression match_predicate { `Boolean_primary ($1, Some (`match' $2), ())}
+  | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some (`quantified $2), ())}
+  | common_value_expression in_predicate { `Boolean_primary ($1, Some (`in' $2), ())}
+
+in_predicate:
+  | Kw_in q = subquery { `In_predicate (`query q, None,()) }
+  | Kw_in Tok_lparen;l = separated_nonempty_list(Tok_comma, common_value_expression); Tok_rparen { `In_predicate (`values l, None, ()) }
+  | Kw_not Kw_in q = subquery { `In_predicate (`query q, Some `not', ()) }
+  | Kw_not Kw_in Tok_lparen; l = separated_nonempty_list(Tok_comma, common_value_expression); Tok_rparen { `In_predicate (`values l, Some `not', ()) }
 
 subquery:
   | Tok_lparen; q = query_expression; Tok_rparen { `Subquery (`query q, ()) }
 
 quantified_comparison_predicate:
-  | comparison_operator Kw_any;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `any, q), ()) }
-  | comparison_operator Kw_some;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `some, q), ()) }
-  | comparison_operator Kw_all;  q = subquery  { `Boolean_primary_predicate (`quantified_query ($1, `all, q), ()) }
-  | comparison_operator Kw_any Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `any, e), ()) }
-  | comparison_operator Kw_some Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `some, e), ()) }
-  | comparison_operator Kw_all Tok_lparen e = expression Tok_rparen { `Boolean_primary_predicate (`quantified_exp ($1, `all, e),()) }
+  | comparison_operator Kw_any;  q = subquery  { `Quantified_comparison_predicate ($1, `any, `query q, ()) }
+  | comparison_operator Kw_some;  q = subquery  { `Quantified_comparison_predicate ($1, `some, `query q, ()) }
+  | comparison_operator Kw_all;  q = subquery  { `Quantified_comparison_predicate ($1, `all, `query q, ()) }
+  | comparison_operator Kw_any Tok_lparen e = expression Tok_rparen { `Quantified_comparison_predicate ($1, `any, `expr e, ()) }
+  | comparison_operator Kw_some Tok_lparen e = expression Tok_rparen { `Quantified_comparison_predicate ($1, `some, `expr e, ()) }
+  | comparison_operator Kw_all Tok_lparen e = expression Tok_rparen { `Quantified_comparison_predicate ($1, `all, `expr e, ()) }
 
 character:
   | Tok_string { `Character ($1, ())}
@@ -272,25 +280,25 @@ match_predicate_escape:
   | Tok_lbrace Kw_escape c = character Tok_rbrace { c }
 
 match_predicate:
-  | Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match' (`like, e, escape), ()) }
-  | Kw_not Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match_not (`like, e, escape), ()) }
-  | Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match' (`similar, e, escape), ()) }
-  | Kw_not Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Boolean_primary_predicate (`match_not (`similar, e, escape), ()) }
+  | Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Match_predicate (`like, e, escape, None, ()) }
+  | Kw_not Kw_like; e = common_value_expression; escape = option(match_predicate_escape) { `Match_predicate (`like, e, escape, Some `not', ()) }
+  | Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Match_predicate (`similar, e, escape, None, ()) }
+  | Kw_not Kw_similar Kw_to; e = common_value_expression; escape = option(match_predicate_escape) { `Match_predicate (`similar, e, escape, Some `not', ()) }
 
 like_regex_predicate:
-  | Kw_like_regex; s = common_value_expression { `Boolean_primary_predicate (`like_regex s, ()) }
-  | Kw_not Kw_like_regex; s = common_value_expression { `Boolean_primary_predicate (`like_regex_not s, ()) }
+  | Kw_like_regex; s = common_value_expression { `Like_regex_predicate (s, None, ()) }
+  | Kw_not Kw_like_regex; s = common_value_expression { `Like_regex_predicate (s, Some `not', ()) }
 
 between_predicate:
-  | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Boolean_primary_predicate (`between (s, e), ()) }
-  | Kw_not Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Boolean_primary_predicate (`between_not (s, e), ()) }
+  | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Between_predicate (s, e,None, ()) }
+  | Kw_not Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Between_predicate (s, e, Some `not', ()) }
 
 is_null_predicate:
-  | Kw_is Kw_null { `Boolean_primary_predicate (`is_null, ()) }
-  | Kw_is Kw_not Kw_null { `Boolean_primary_predicate (`is_not_null, ()) }
+  | Kw_is Kw_null { `Is_null_predicate (None, ()) }
+  | Kw_is Kw_not Kw_null { `Is_null_predicate (Some `not', ()) }
 
 comparison_predicate:
-  | comparison_operator common_value_expression { `Boolean_primary_predicate (`comparison ($1, $2), ()) }
+  | comparison_operator common_value_expression { `Comparison_predicate ($1, $2, ()) }
 
 comparison_operator:
   | Op_eq { `Comparison_operator (`eq, ()) }
