@@ -291,9 +291,39 @@ and boolean_primary () =
                 let generate = common_value_expression
               end)
               (struct
-                type t = A.ext A.boolean_primary_predicate
+                type t = A.ext A.comparison_predicate
 
-                let generate = boolean_primary_predicate
+                let generate = comparison_predicate
+              end)
+              (struct
+                type t = A.ext A.is_null_predicate
+
+                let generate = is_null_predicate
+              end)
+              (struct
+                type t = A.ext A.between_predicate
+
+                let generate = between_predicate
+              end)
+              (struct
+                type t = A.ext A.like_regex_predicate
+
+                let generate = like_regex_predicate
+              end)
+              (struct
+                type t = A.ext A.match_predicate
+
+                let generate = match_predicate
+              end)
+              (struct
+                type t = A.ext A.quantified_comparison_predicate
+
+                let generate = quantified_comparison_predicate
+              end)
+              (struct
+                type t = A.ext A.in_predicate
+
+                let generate = in_predicate
               end) : S))
 
 and common_value_expression () =
@@ -304,8 +334,8 @@ and common_value_expression () =
       let generate = numeric_value_expression
     end) : S))
 
-and boolean_primary_predicate () =
-  Boolean_primary_predicate.(
+and comparison_predicate () =
+  Comparison_predicate.(
     (module Make
               (struct
                 type t = A.ext A.comparison_operator
@@ -316,6 +346,47 @@ and boolean_primary_predicate () =
                 type t = A.ext A.common_value_expression
 
                 let generate = common_value_expression
+              end) : S))
+
+and is_null_predicate () = Is_null_predicate.((module Make () : S))
+
+and between_predicate () =
+  Between_predicate.(
+    (module Make (struct
+      type t = A.ext A.common_value_expression
+
+      let generate = common_value_expression
+    end) : S))
+
+and like_regex_predicate () =
+  Like_regex_predicate.(
+    (module Make (struct
+      type t = A.ext A.common_value_expression
+
+      let generate = common_value_expression
+    end) : S))
+
+and match_predicate () =
+  Match_predicate.(
+    (module Make
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.character
+
+                let generate = character
+              end) : S))
+
+and quantified_comparison_predicate () =
+  Quantified_comparison_predicate.(
+    (module Make
+              (struct
+                type t = A.ext A.comparison_operator
+
+                let generate = comparison_operator
               end)
               (struct
                 type t = A.ext A.subquery
@@ -326,11 +397,20 @@ and boolean_primary_predicate () =
                 type t = A.ext A.expression
 
                 let generate = expression
+              end) : S))
+
+and in_predicate () =
+  In_predicate.(
+    (module Make
+              (struct
+                type t = A.ext A.subquery
+
+                let generate = subquery
               end)
               (struct
-                type t = A.ext A.character
+                type t = A.ext A.common_value_expression
 
-                let generate = character
+                let generate = common_value_expression
               end) : S))
 
 and subquery () =

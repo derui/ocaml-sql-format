@@ -4,7 +4,7 @@ open Intf
 
 module type S = PRINTER with type t = ext is_null_predicate
 
-module Make : S = struct
+module Make () : S = struct
   type t = ext is_null_predicate
 
   let print f t ~option =

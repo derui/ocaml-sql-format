@@ -10,8 +10,8 @@ module Make
     (Between : GEN with type t = ext between_predicate)
     (Like_regex : GEN with type t = ext like_regex_predicate)
     (Match : GEN with type t = ext match_predicate)
-    (Quantified : GEN with type t = ext quantified_comparison_predicate) : S =
-struct
+    (Quantified : GEN with type t = ext quantified_comparison_predicate)
+    (In : GEN with type t = ext in_predicate) : S = struct
   type t = ext boolean_primary
 
   let print f t ~option =
@@ -47,8 +47,8 @@ struct
             Fmt.string f " ";
             Quantified.print f v ~option
           | `in' (_ as v) ->
-            let module Quantified = (val Quantified.generate ()) in
+            let module In = (val In.generate ()) in
             Fmt.string f " ";
-            Quantified.print f v ~option)
+            In.print f v ~option)
         predicate
 end

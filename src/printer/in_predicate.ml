@@ -22,25 +22,28 @@ module Make
       Printer_token.print f Kw_in ~option;
       Fmt.string f " ";
       Q.print f q ~option
-    | `In_predicate (`values l, not_op, _) -> (
-      Option.iter
-        (fun _ ->
-          Printer_token.print f Kw_not ~option;
-          Fmt.string f " ")
-        not_op;
+    | `In_predicate (`values l, not_op, _) ->
+      (Option.iter
+         (fun _ ->
+           Printer_token.print f Kw_not ~option;
+           Fmt.string f " ")
+         not_op;
 
-      let module Cve = (val Cve.generate ()) in
-      Printer_token.print f Kw_in ~option;
-      Fmt.string f " ";
-      match l with
-      | [] -> failwith "need least one element"
-      | [ hd ] -> Cve.print f hd ~option
-      | hd :: tail ->
-        Cve.print f hd ~option;
-        List.iter
-          (fun v ->
-            Printer_token.print f Tok_comma ~option;
-            Fmt.string f " ";
-            Cve.print f v ~option)
-          tail)
+       let module Cve = (val Cve.generate ()) in
+       Printer_token.print f Kw_in ~option;
+       Fmt.string f " ";
+       Printer_token.print f Tok_lparen ~option;
+
+       match l with
+       | [] -> failwith "need least one element"
+       | [ hd ] -> Cve.print f hd ~option
+       | hd :: tail ->
+         Cve.print f hd ~option;
+         List.iter
+           (fun v ->
+             Printer_token.print f Tok_comma ~option;
+             Fmt.string f " ";
+             Cve.print f v ~option)
+           tail);
+      Printer_token.print f Tok_rparen ~option
 end
