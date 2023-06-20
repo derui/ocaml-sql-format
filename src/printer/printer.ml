@@ -324,6 +324,11 @@ and boolean_primary () =
                 type t = A.ext A.in_predicate
 
                 let generate = in_predicate
+              end)
+              (struct
+                type t = A.ext A.is_distinct
+
+                let generate = is_distinct
               end) : S))
 
 and common_value_expression () =
@@ -379,6 +384,14 @@ and match_predicate () =
 
                 let generate = character
               end) : S))
+
+and is_distinct () =
+  Is_distinct.(
+    (module Make (struct
+      type t = A.ext A.common_value_expression
+
+      let generate = common_value_expression
+    end) : S))
 
 and quantified_comparison_predicate () =
   Quantified_comparison_predicate.(

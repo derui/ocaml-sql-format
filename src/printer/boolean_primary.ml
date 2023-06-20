@@ -11,7 +11,8 @@ module Make
     (Like_regex : GEN with type t = ext like_regex_predicate)
     (Match : GEN with type t = ext match_predicate)
     (Quantified : GEN with type t = ext quantified_comparison_predicate)
-    (In : GEN with type t = ext in_predicate) : S = struct
+    (In : GEN with type t = ext in_predicate)
+    (Is_distinct : GEN with type t = ext is_distinct) : S = struct
   type t = ext boolean_primary
 
   let print f t ~option =
@@ -49,6 +50,10 @@ module Make
           | `in' (_ as v) ->
             let module In = (val In.generate ()) in
             Fmt.string f " ";
-            In.print f v ~option)
+            In.print f v ~option
+          | `is_distinct (_ as v) ->
+            let module Is_distinct = (val Is_distinct.generate ()) in
+            Fmt.string f " ";
+            Is_distinct.print f v ~option)
         predicate
 end

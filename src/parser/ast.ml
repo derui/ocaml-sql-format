@@ -219,6 +219,7 @@ and 'a boolean_primary =
       | `match' of 'a match_predicate
       | `quantified of 'a quantified_comparison_predicate
       | `in' of 'a in_predicate
+      | `is_distinct of 'a is_distinct
       ]
       option
     * 'a
@@ -255,6 +256,9 @@ and 'a comparison_predicate =
   [ `Comparison_predicate of
     'a comparison_operator * 'a common_value_expression * 'a
   ]
+
+and 'a is_distinct =
+  [ `Is_distinct of 'a common_value_expression * not_op * 'a ]
 
 and 'a in_predicate =
   [ `In_predicate of

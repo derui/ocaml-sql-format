@@ -254,6 +254,7 @@ boolean_primary:
   | common_value_expression match_predicate { `Boolean_primary ($1, Some (`match' $2), ())}
   | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some (`quantified $2), ())}
   | common_value_expression in_predicate { `Boolean_primary ($1, Some (`in' $2), ())}
+  | common_value_expression is_distinct { `Boolean_primary ($1, Some (`is_distinct $2), ())}
 
 in_predicate:
   | Kw_in q = subquery { `In_predicate (`query q, None,()) }
@@ -292,6 +293,10 @@ like_regex_predicate:
 between_predicate:
   | Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Between_predicate (s, e,None, ()) }
   | Kw_not Kw_between; s = common_value_expression; Kw_and; e = common_value_expression { `Between_predicate (s, e, Some `not', ()) }
+
+is_distinct:
+  | Kw_is Kw_distinct Kw_from; s = common_value_expression { `Is_distinct (s, None, ()) }
+  |  Kw_is Kw_not Kw_distinct Kw_from; s = common_value_expression { `Is_distinct (s, Some `not', ()) }
 
 is_null_predicate:
   | Kw_is Kw_null { `Is_null_predicate (None, ()) }
