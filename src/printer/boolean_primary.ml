@@ -12,7 +12,8 @@ module Make
     (Match : GEN with type t = ext match_predicate)
     (Quantified : GEN with type t = ext quantified_comparison_predicate)
     (In : GEN with type t = ext in_predicate)
-    (Is_distinct : GEN with type t = ext is_distinct) : S = struct
+    (Is_distinct : GEN with type t = ext is_distinct)
+    (Exists : GEN with type t = ext exists_predicate) : S = struct
   type t = ext boolean_primary
 
   let print f t ~option =
@@ -54,6 +55,10 @@ module Make
           | `is_distinct (_ as v) ->
             let module Is_distinct = (val Is_distinct.generate ()) in
             Fmt.string f " ";
-            Is_distinct.print f v ~option)
+            Is_distinct.print f v ~option
+          | `exists (_ as v) ->
+            let module Exists = (val Exists.generate ()) in
+            Fmt.string f " ";
+            Exists.print f v ~option)
         predicate
 end

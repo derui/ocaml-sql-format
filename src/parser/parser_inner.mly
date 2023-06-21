@@ -85,6 +85,7 @@ open Ast
 %token Kw_any
 %token Kw_some
 %token Kw_in
+%token Kw_exists
 
 %token Tok_eof
 
@@ -255,6 +256,10 @@ boolean_primary:
   | common_value_expression quantified_comparison_predicate { `Boolean_primary ($1, Some (`quantified $2), ())}
   | common_value_expression in_predicate { `Boolean_primary ($1, Some (`in' $2), ())}
   | common_value_expression is_distinct { `Boolean_primary ($1, Some (`is_distinct $2), ())}
+  | common_value_expression exists_predicate { `Boolean_primary ($1, Some (`exists $2), ())}
+
+exists_predicate:
+  | Kw_exists q = subquery { `Exists_predicate (q, ()) }
 
 in_predicate:
   | Kw_in q = subquery { `In_predicate (`query q, None,()) }

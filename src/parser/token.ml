@@ -45,6 +45,7 @@ type token =
   | Kw_any
   | Kw_some
   | Kw_in
+  | Kw_exists
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -329,6 +329,11 @@ and boolean_primary () =
                 type t = A.ext A.is_distinct
 
                 let generate = is_distinct
+              end)
+              (struct
+                type t = A.ext A.exists_predicate
+
+                let generate = exists_predicate
               end) : S))
 
 and common_value_expression () =
@@ -391,6 +396,14 @@ and is_distinct () =
       type t = A.ext A.common_value_expression
 
       let generate = common_value_expression
+    end) : S))
+
+and exists_predicate () =
+  Exists_predicate.(
+    (module Make (struct
+      type t = A.ext A.subquery
+
+      let generate = subquery
     end) : S))
 
 and quantified_comparison_predicate () =

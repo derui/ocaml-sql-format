@@ -220,10 +220,13 @@ and 'a boolean_primary =
       | `quantified of 'a quantified_comparison_predicate
       | `in' of 'a in_predicate
       | `is_distinct of 'a is_distinct
+      | `exists of 'a exists_predicate
       ]
       option
     * 'a
   ]
+
+and 'a exists_predicate = [ `Exists_predicate of 'a subquery * 'a ]
 
 and 'a quantified_comparison_predicate =
   [ `Quantified_comparison_predicate of
