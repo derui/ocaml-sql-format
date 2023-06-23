@@ -187,6 +187,19 @@ let kw_exists =
 
 let kw_with = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "tT", Chars "hH"]
 
+let kw_table =
+  [%sedlex.regexp? Chars "tT", Chars "aA", Chars "bB", Chars "lL", Chars "eE"]
+
+let kw_lateral =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "lL" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -274,6 +287,8 @@ let rec token buf =
   | kw_in -> Kw_in
   | kw_exists -> Kw_exists
   | kw_with -> Kw_with
+  | kw_table -> Kw_table
+  | kw_lateral -> Kw_lateral
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

@@ -60,6 +60,8 @@ include (
       | Kw_in -> Fmt.string f @@ as_keyword "in" keyword
       | Kw_exists -> Fmt.string f @@ as_keyword "exists" keyword
       | Kw_with -> Fmt.string f @@ as_keyword "with" keyword
+      | Kw_table -> Fmt.string f @@ as_keyword "table" keyword
+      | Kw_lateral -> Fmt.string f @@ as_keyword "lateral" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

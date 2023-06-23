@@ -223,11 +223,31 @@ and joined_table () =
 
 and table_primary () =
   Table_primary.(
-    (module Make (struct
-      type t = A.ext A.identifier
+    (module Make
+              (struct
+                type t = A.ext A.identifier
 
-      let generate = identifier
-    end) : S))
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.table_subquery
+
+                let generate = table_subquery
+              end) : S))
+
+and table_subquery () =
+  Table_subquery.(
+    (module Make
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.query_expression
+
+                let generate = query_expression
+              end) : S))
 
 and where_clause () =
   Where_clause.(

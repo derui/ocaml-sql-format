@@ -3,7 +3,7 @@ module P = Parser.Parser
 
 let actual =
   {|
-  SELECT  * INTO "some_table name" union select t.b from table t
+  SELECT  * INTO "some_table name" union select t.b from "table" t
 |}
 
 let option = F.Options.default
@@ -18,4 +18,4 @@ let%expect_test "select into for formatting" =
   [%expect
     {|
     SELECT * INTO "some_table name" UNION
-    SELECT t.b  FROM table AS t |}]
+    SELECT t.b  FROM "table" AS t |}]

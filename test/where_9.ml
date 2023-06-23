@@ -3,7 +3,7 @@ module P = Parser.Parser
 
 let actual =
   {|
-  SELECT * from table b
+  SELECT * from "table" b
 where
     b is distinct from a
  OR b is not distinct from 'a'
@@ -19,4 +19,4 @@ let%test_unit "where_9 for AST" =
 let%expect_test "where_9 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM table AS b WHERE b IS DISTINCT FROM a OR b IS NOT DISTINCT FROM 'a' |}]
+    {| SELECT *  FROM "table" AS b WHERE b IS DISTINCT FROM a OR b IS NOT DISTINCT FROM 'a' |}]

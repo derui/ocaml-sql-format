@@ -87,6 +87,8 @@ open Ast
 %token Kw_in
 %token Kw_exists
 %token Kw_with
+%token Kw_table
+%token Kw_lateral
 
 %token Tok_eof
 
@@ -215,6 +217,12 @@ joined_table:
 
 table_primary:
   | table_name { `Table_primary (`table_name $1, ()) }
+  | table_subquery { `Table_primary (`table_subquery $1, ()) }
+
+table_subquery:
+  | Kw_table Tok_lparen; e = query_expression; Tok_rparen option(Kw_as); ident = identifier {`Table_subquery (Some `table, e, ident, ())}
+  | Kw_lateral Tok_lparen; e = query_expression; Tok_rparen option(Kw_as); ident = identifier {`Table_subquery (Some `lateral, e, ident, ())}
+  | Tok_lparen; e = query_expression; Tok_rparen option(Kw_as); ident = identifier {`Table_subquery (None, e, ident, ())}
 
 table_name:
   | identifier option(Kw_as) identifier { ($1, Some $3) }

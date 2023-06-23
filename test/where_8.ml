@@ -3,7 +3,7 @@ module P = Parser.Parser
 
 let actual =
   {|
-  SELECT * from table b
+  SELECT * from "table" b
 where
     b in (select c * 151 from table_c)
  OR b in (1, 34, 'abc')
@@ -21,4 +21,4 @@ let%test_unit "where_8 for AST" =
 let%expect_test "where_8 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM table AS b WHERE b IN (SELECT c * 151  FROM table_c) OR b IN (1, 34, 'abc') AND c NOT IN (3, 4) AND b NOT IN (SELECT a,b,c,d,e,"f g"  FROM table_d) |}]
+    {| SELECT *  FROM "table" AS b WHERE b IN (SELECT c * 151  FROM table_c) OR b IN (1, 34, 'abc') AND c NOT IN (3, 4) AND b NOT IN (SELECT a,b,c,d,e,"f g"  FROM table_d) |}]

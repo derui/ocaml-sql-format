@@ -191,7 +191,15 @@ and 'a joined_table = [ `Joined_table of 'a table_primary * 'a ]
 
 and 'a table_primary =
   [ `Table_primary of
-    [ `table_name of 'a identifier * 'a identifier option ] * 'a
+    [ `table_name of 'a identifier * 'a identifier option
+    | `table_subquery of 'a table_subquery
+    ]
+    * 'a
+  ]
+
+and 'a table_subquery =
+  [ `Table_subquery of
+    [ `table | `lateral ] option * 'a query_expression * 'a identifier * 'a
   ]
 
 and 'a table_reference = [ `Table_reference of 'a joined_table * 'a ]
