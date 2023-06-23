@@ -80,8 +80,15 @@ and 'a directly_executable_statement =
 
 and 'a query_expression =
   [ `Query_expression of
-    'a query_expression_body list * 'a query_expression_body * 'a
+    'a with_list_element list * 'a query_expression_body * 'a
   ]
+
+and 'a with_list_element =
+  [ `With_list_element of
+    'a identifier * 'a column_list option * 'a query_expression * 'a
+  ]
+
+and 'a column_list = [ `Column_list of 'a identifier list * 'a ]
 
 and 'a query_expression_body_ =
   { term : 'a query_term

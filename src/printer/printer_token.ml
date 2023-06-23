@@ -59,6 +59,7 @@ include (
       | Kw_some -> Fmt.string f @@ as_keyword "some" keyword
       | Kw_in -> Fmt.string f @@ as_keyword "in" keyword
       | Kw_exists -> Fmt.string f @@ as_keyword "exists" keyword
+      | Kw_with -> Fmt.string f @@ as_keyword "with" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

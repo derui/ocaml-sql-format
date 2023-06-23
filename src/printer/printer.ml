@@ -26,10 +26,43 @@ let rec directly_executable_statement () =
 
 and query_expression () =
   Query_expression.(
-    (module Make (struct
-      type t = A.ext A.query_expression_body
+    (module Make
+              (struct
+                type t = A.ext A.query_expression_body
 
-      let generate = query_expression_body
+                let generate = query_expression_body
+              end)
+              (struct
+                type t = A.ext A.with_list_element
+
+                let generate = with_list_element
+              end) : S))
+
+and with_list_element () =
+  With_list_element.(
+    (module Make
+              (struct
+                type t = A.ext A.query_expression
+
+                let generate = query_expression
+              end)
+              (struct
+                type t = A.ext A.column_list
+
+                let generate = column_list
+              end)
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end) : S))
+
+and column_list () =
+  Column_list.(
+    (module Make (struct
+      type t = A.ext A.identifier
+
+      let generate = identifier
     end) : S))
 
 and query_expression_body () =

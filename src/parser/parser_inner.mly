@@ -86,6 +86,7 @@ open Ast
 %token Kw_some
 %token Kw_in
 %token Kw_exists
+%token Kw_with
 
 %token Tok_eof
 
@@ -103,6 +104,13 @@ directly_executable_statement:
 
 query_expression:
                  | query_expression_body { `Query_expression ([], $1, ()) }
+                 | Kw_with; l = separated_nonempty_list(Tok_comma, with_list_element); e = query_expression_body { `Query_expression (l, e, ()) }
+
+with_list_element:
+  | id = identifier; column_list =  option(column_list); Kw_as Tok_lparen; e = query_expression Tok_rparen {`With_list_element (id, column_list, e, ())}
+
+column_list:
+                 | Tok_lparen l = separated_nonempty_list(Tok_comma, identifier) Tok_rparen {`Column_list (l, ())}
 
                      (* A sub format to get terms in query_expression_body *)
 sub_query_expression_body:

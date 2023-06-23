@@ -10,9 +10,131 @@ entries: Tok_unsigned_integer
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-entries: Kw_select Tok_semicolon
+entries: Kw_with Tok_unsigned_integer
 ##
 ## Ends in an error in state: 1.
+##
+## query_expression -> Kw_with . separated_nonempty_list(Tok_comma,with_list_element) query_expression_body [ Tok_semicolon Tok_rparen Tok_eof ]
+##
+## The known suffix of the stack is as follows:
+## Kw_with
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Kw_as Tok_lparen Kw_select Tok_ident Tok_rparen Tok_unsigned_integer
+##
+## Ends in an error in state: 3.
+##
+## separated_nonempty_list(Tok_comma,with_list_element) -> with_list_element . [ Kw_select ]
+## separated_nonempty_list(Tok_comma,with_list_element) -> with_list_element . Tok_comma separated_nonempty_list(Tok_comma,with_list_element) [ Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## with_list_element
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Kw_as Tok_lparen Kw_select Tok_ident Tok_rparen Tok_comma Tok_unsigned_integer
+##
+## Ends in an error in state: 4.
+##
+## separated_nonempty_list(Tok_comma,with_list_element) -> with_list_element Tok_comma . separated_nonempty_list(Tok_comma,with_list_element) [ Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## with_list_element Tok_comma
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Tok_unsigned_integer
+##
+## Ends in an error in state: 6.
+##
+## with_list_element -> identifier . option(column_list) Kw_as Tok_lparen query_expression Tok_rparen [ Tok_comma Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## identifier
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Tok_lparen Tok_unsigned_integer
+##
+## Ends in an error in state: 7.
+##
+## column_list -> Tok_lparen . separated_nonempty_list(Tok_comma,identifier) Tok_rparen [ Kw_as ]
+##
+## The known suffix of the stack is as follows:
+## Tok_lparen
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Tok_lparen Tok_ident Tok_unsigned_integer
+##
+## Ends in an error in state: 10.
+##
+## separated_nonempty_list(Tok_comma,identifier) -> identifier . [ Tok_rparen ]
+## separated_nonempty_list(Tok_comma,identifier) -> identifier . Tok_comma separated_nonempty_list(Tok_comma,identifier) [ Tok_rparen ]
+##
+## The known suffix of the stack is as follows:
+## identifier
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Tok_lparen Tok_ident Tok_comma Tok_unsigned_integer
+##
+## Ends in an error in state: 11.
+##
+## separated_nonempty_list(Tok_comma,identifier) -> identifier Tok_comma . separated_nonempty_list(Tok_comma,identifier) [ Tok_rparen ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_comma
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Tok_lparen Tok_ident Tok_rparen Tok_unsigned_integer
+##
+## Ends in an error in state: 13.
+##
+## with_list_element -> identifier option(column_list) . Kw_as Tok_lparen query_expression Tok_rparen [ Tok_comma Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## identifier option(column_list)
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Kw_as Tok_unsigned_integer
+##
+## Ends in an error in state: 14.
+##
+## with_list_element -> identifier option(column_list) Kw_as . Tok_lparen query_expression Tok_rparen [ Tok_comma Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## identifier option(column_list) Kw_as
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_with Tok_ident Kw_as Tok_lparen Tok_unsigned_integer
+##
+## Ends in an error in state: 15.
+##
+## with_list_element -> identifier option(column_list) Kw_as Tok_lparen . query_expression Tok_rparen [ Tok_comma Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## identifier option(column_list) Kw_as Tok_lparen
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_select Tok_semicolon
+##
+## Ends in an error in state: 16.
 ##
 ## select_clause -> Kw_select . select_list [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ## select_clause -> Kw_select . Kw_all select_list [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
@@ -26,7 +148,7 @@ entries: Kw_select Tok_semicolon
 
 entries: Kw_select Kw_distinct Tok_semicolon
 ##
-## Ends in an error in state: 5.
+## Ends in an error in state: 20.
 ##
 ## select_clause -> Kw_select Kw_distinct . select_list [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -38,7 +160,7 @@ entries: Kw_select Kw_distinct Tok_semicolon
 
 entries: Kw_select Tok_all_in_group Tok_unsigned_integer
 ##
-## Ends in an error in state: 9.
+## Ends in an error in state: 24.
 ##
 ## separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist . [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ## separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist . Tok_comma separated_nonempty_list(Tok_comma,select_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
@@ -51,7 +173,7 @@ entries: Kw_select Tok_all_in_group Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 10.
+## Ends in an error in state: 25.
 ##
 ## separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist Tok_comma . separated_nonempty_list(Tok_comma,select_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -63,7 +185,7 @@ entries: Kw_select Tok_ident Tok_comma Tok_semicolon
 
 entries: Kw_select Kw_not Tok_semicolon
 ##
-## Ends in an error in state: 12.
+## Ends in an error in state: 27.
 ##
 ## boolean_factor -> option(Kw_not) . boolean_primary [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -75,9 +197,9 @@ entries: Kw_select Kw_not Tok_semicolon
 
 entries: Kw_select Tok_dollar Tok_typed_string
 ##
-## Ends in an error in state: 17.
+## Ends in an error in state: 31.
 ##
-## unsigned_value_expression_primary -> Tok_dollar . Tok_unsigned_integer [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lsbrace Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_rows Kw_row Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## unsigned_value_expression_primary -> Tok_dollar . Tok_unsigned_integer [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lsbrace Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_rows Kw_row Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_dollar
@@ -87,9 +209,9 @@ entries: Kw_select Tok_dollar Tok_typed_string
 
 entries: Kw_select Kw_timestamp Tok_unsigned_integer
 ##
-## Ends in an error in state: 24.
+## Ends in an error in state: 38.
 ##
-## non_numeric_literal -> Kw_timestamp . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## non_numeric_literal -> Kw_timestamp . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_timestamp
@@ -99,9 +221,9 @@ entries: Kw_select Kw_timestamp Tok_unsigned_integer
 
 entries: Kw_select Kw_time Tok_unsigned_integer
 ##
-## Ends in an error in state: 26.
+## Ends in an error in state: 40.
 ##
-## non_numeric_literal -> Kw_time . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## non_numeric_literal -> Kw_time . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_time
@@ -111,9 +233,9 @@ entries: Kw_select Kw_time Tok_unsigned_integer
 
 entries: Kw_select Kw_date Tok_unsigned_integer
 ##
-## Ends in an error in state: 30.
+## Ends in an error in state: 44.
 ##
-## non_numeric_literal -> Kw_date . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## non_numeric_literal -> Kw_date . Tok_string [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_date
@@ -123,9 +245,9 @@ entries: Kw_select Kw_date Tok_unsigned_integer
 
 entries: Kw_select Kw_false Tok_unsigned_integer
 ##
-## Ends in an error in state: 32.
+## Ends in an error in state: 46.
 ##
-## term -> value_expression_primary . list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## term -> value_expression_primary . list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## value_expression_primary
@@ -135,9 +257,9 @@ entries: Kw_select Kw_false Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Op_slash Tok_semicolon
 ##
-## Ends in an error in state: 35.
+## Ends in an error in state: 49.
 ##
-## list(pair(star_or_slash,value_expression_primary)) -> star_or_slash . value_expression_primary list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(pair(star_or_slash,value_expression_primary)) -> star_or_slash . value_expression_primary list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## star_or_slash
@@ -147,9 +269,9 @@ entries: Kw_select Tok_ident Op_slash Tok_semicolon
 
 entries: Kw_select Tok_ident Op_slash Kw_false Tok_unsigned_integer
 ##
-## Ends in an error in state: 36.
+## Ends in an error in state: 50.
 ##
-## list(pair(star_or_slash,value_expression_primary)) -> star_or_slash value_expression_primary . list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(pair(star_or_slash,value_expression_primary)) -> star_or_slash value_expression_primary . list(pair(star_or_slash,value_expression_primary)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## star_or_slash value_expression_primary
@@ -159,9 +281,9 @@ entries: Kw_select Tok_ident Op_slash Kw_false Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 38.
+## Ends in an error in state: 52.
 ##
-## value_expression_primary -> unsigned_value_expression_primary . list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## value_expression_primary -> unsigned_value_expression_primary . list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## unsigned_value_expression_primary
@@ -171,9 +293,9 @@ entries: Kw_select Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Tok_lsbrace Tok_semicolon
 ##
-## Ends in an error in state: 39.
+## Ends in an error in state: 53.
 ##
-## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace . numeric_value_expression Tok_rsbrace list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace . numeric_value_expression Tok_rsbrace list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lsbrace
@@ -183,9 +305,9 @@ entries: Kw_select Tok_ident Tok_lsbrace Tok_semicolon
 
 entries: Kw_select Tok_ident Op_minus Tok_semicolon
 ##
-## Ends in an error in state: 41.
+## Ends in an error in state: 55.
 ##
-## list(pair(plus_or_minus,term)) -> plus_or_minus . term list(pair(plus_or_minus,term)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(pair(plus_or_minus,term)) -> plus_or_minus . term list(pair(plus_or_minus,term)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## plus_or_minus
@@ -195,9 +317,9 @@ entries: Kw_select Tok_ident Op_minus Tok_semicolon
 
 entries: Kw_select Op_minus Tok_typed_string
 ##
-## Ends in an error in state: 45.
+## Ends in an error in state: 59.
 ##
-## value_expression_primary -> option(plus_or_minus) . unsigned_numeric_literal [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## value_expression_primary -> option(plus_or_minus) . unsigned_numeric_literal [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## option(plus_or_minus)
@@ -207,9 +329,9 @@ entries: Kw_select Op_minus Tok_typed_string
 
 entries: Kw_select Tok_ident Tok_lsbrace Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 53.
+## Ends in an error in state: 67.
 ##
-## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace numeric_value_expression . Tok_rsbrace list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace numeric_value_expression . Tok_rsbrace list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lsbrace numeric_value_expression
@@ -218,21 +340,21 @@ entries: Kw_select Tok_ident Tok_lsbrace Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Tok_lsbrace Tok_ident Tok_rsbrace Tok_unsigned_integer
 ##
-## Ends in an error in state: 54.
+## Ends in an error in state: 68.
 ##
-## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace numeric_value_expression Tok_rsbrace . list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) -> Tok_lsbrace numeric_value_expression Tok_rsbrace . list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) [ Tok_semicolon Tok_rsbrace Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_plus Op_ne2 Op_ne Op_minus Op_lt Op_le Op_gt Op_ge Op_eq Op_double_amp Op_concat Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lsbrace numeric_value_expression Tok_rsbrace
@@ -242,9 +364,9 @@ entries: Kw_select Tok_ident Tok_lsbrace Tok_ident Tok_rsbrace Tok_unsigned_inte
 
 entries: Kw_select Tok_ident Tok_rsbrace
 ##
-## Ends in an error in state: 58.
+## Ends in an error in state: 72.
 ##
-## common_value_expression -> numeric_value_expression . list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## common_value_expression -> numeric_value_expression . list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## numeric_value_expression
@@ -253,21 +375,21 @@ entries: Kw_select Tok_ident Tok_rsbrace
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Op_concat Tok_semicolon
 ##
-## Ends in an error in state: 62.
+## Ends in an error in state: 76.
 ##
-## list(pair(amp_or_concat,numeric_value_expression)) -> amp_or_concat . numeric_value_expression list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(pair(amp_or_concat,numeric_value_expression)) -> amp_or_concat . numeric_value_expression list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## amp_or_concat
@@ -277,9 +399,9 @@ entries: Kw_select Tok_ident Op_concat Tok_semicolon
 
 entries: Kw_select Tok_ident Op_concat Tok_ident Tok_rsbrace
 ##
-## Ends in an error in state: 63.
+## Ends in an error in state: 77.
 ##
-## list(pair(amp_or_concat,numeric_value_expression)) -> amp_or_concat numeric_value_expression . list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
+## list(pair(amp_or_concat,numeric_value_expression)) -> amp_or_concat numeric_value_expression . list(pair(amp_or_concat,numeric_value_expression)) [ Tok_semicolon Tok_rparen Tok_lbrace Tok_ident Tok_eof Tok_comma Op_ne2 Op_ne Op_lt Op_le Op_gt Op_ge Op_eq Kw_union Kw_similar Kw_order Kw_or Kw_offset Kw_null Kw_not Kw_limit Kw_like_regex Kw_like Kw_is Kw_into Kw_intersect Kw_in Kw_having Kw_group Kw_from Kw_fetch Kw_exists Kw_except Kw_escape Kw_desc Kw_between Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## amp_or_concat numeric_value_expression
@@ -288,19 +410,19 @@ entries: Kw_select Tok_ident Op_concat Tok_ident Tok_rsbrace
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Tok_lbrace
 ##
-## Ends in an error in state: 65.
+## Ends in an error in state: 79.
 ##
 ## boolean_primary -> common_value_expression . [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## boolean_primary -> common_value_expression . comparison_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -310,7 +432,8 @@ entries: Kw_select Tok_ident Tok_lbrace
 ## boolean_primary -> common_value_expression . match_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## boolean_primary -> common_value_expression . quantified_comparison_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## boolean_primary -> common_value_expression . in_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
-## boolean_primary -> common_value_expression . is_distinct_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## boolean_primary -> common_value_expression . is_distinct [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## boolean_primary -> common_value_expression . exists_predicate [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## common_value_expression
@@ -319,21 +442,21 @@ entries: Kw_select Tok_ident Tok_lbrace
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_similar Tok_unsigned_integer
 ##
-## Ends in an error in state: 73.
+## Ends in an error in state: 87.
 ##
 ## match_predicate -> Kw_similar . Kw_to common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -345,7 +468,7 @@ entries: Kw_select Tok_ident Kw_similar Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_similar Kw_to Tok_semicolon
 ##
-## Ends in an error in state: 74.
+## Ends in an error in state: 88.
 ##
 ## match_predicate -> Kw_similar Kw_to . common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -357,7 +480,7 @@ entries: Kw_select Tok_ident Kw_similar Kw_to Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_similar Kw_to Tok_ident Op_ne2
 ##
-## Ends in an error in state: 75.
+## Ends in an error in state: 89.
 ##
 ## match_predicate -> Kw_similar Kw_to common_value_expression . option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -368,21 +491,21 @@ entries: Kw_select Tok_ident Kw_similar Kw_to Tok_ident Op_ne2
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Tok_unsigned_integer
 ##
-## Ends in an error in state: 76.
+## Ends in an error in state: 90.
 ##
 ## match_predicate_escape -> Tok_lbrace . Kw_escape character Tok_rbrace [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -394,7 +517,7 @@ entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Kw_escape Tok_unsigned_integer
 ##
-## Ends in an error in state: 77.
+## Ends in an error in state: 91.
 ##
 ## match_predicate_escape -> Tok_lbrace Kw_escape . character Tok_rbrace [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -406,7 +529,7 @@ entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Kw_escape Tok_unsigned
 
 entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Kw_escape Tok_string Tok_unsigned_integer
 ##
-## Ends in an error in state: 79.
+## Ends in an error in state: 93.
 ##
 ## match_predicate_escape -> Tok_lbrace Kw_escape character . Tok_rbrace [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -418,7 +541,7 @@ entries: Kw_select Tok_ident Kw_like Tok_ident Tok_lbrace Kw_escape Tok_string T
 
 entries: Kw_select Tok_ident Kw_like Tok_ident Kw_escape Tok_unsigned_integer
 ##
-## Ends in an error in state: 81.
+## Ends in an error in state: 95.
 ##
 ## match_predicate_escape -> Kw_escape . character [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -430,7 +553,7 @@ entries: Kw_select Tok_ident Kw_like Tok_ident Kw_escape Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_not Tok_unsigned_integer
 ##
-## Ends in an error in state: 85.
+## Ends in an error in state: 99.
 ##
 ## between_predicate -> Kw_not . Kw_between common_value_expression Kw_and common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## in_predicate -> Kw_not . Kw_in subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -447,7 +570,7 @@ entries: Kw_select Tok_ident Kw_not Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_not Kw_similar Tok_unsigned_integer
 ##
-## Ends in an error in state: 86.
+## Ends in an error in state: 100.
 ##
 ## match_predicate -> Kw_not Kw_similar . Kw_to common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -459,7 +582,7 @@ entries: Kw_select Tok_ident Kw_not Kw_similar Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_not Kw_similar Kw_to Tok_semicolon
 ##
-## Ends in an error in state: 87.
+## Ends in an error in state: 101.
 ##
 ## match_predicate -> Kw_not Kw_similar Kw_to . common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -471,7 +594,7 @@ entries: Kw_select Tok_ident Kw_not Kw_similar Kw_to Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_not Kw_similar Kw_to Tok_ident Op_ne2
 ##
-## Ends in an error in state: 88.
+## Ends in an error in state: 102.
 ##
 ## match_predicate -> Kw_not Kw_similar Kw_to common_value_expression . option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -482,21 +605,21 @@ entries: Kw_select Tok_ident Kw_not Kw_similar Kw_to Tok_ident Op_ne2
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_not Kw_like_regex Tok_semicolon
 ##
-## Ends in an error in state: 90.
+## Ends in an error in state: 104.
 ##
 ## like_regex_predicate -> Kw_not Kw_like_regex . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -508,7 +631,7 @@ entries: Kw_select Tok_ident Kw_not Kw_like_regex Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_not Kw_like Tok_semicolon
 ##
-## Ends in an error in state: 92.
+## Ends in an error in state: 106.
 ##
 ## match_predicate -> Kw_not Kw_like . common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -520,7 +643,7 @@ entries: Kw_select Tok_ident Kw_not Kw_like Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_not Kw_like Tok_ident Op_ne2
 ##
-## Ends in an error in state: 93.
+## Ends in an error in state: 107.
 ##
 ## match_predicate -> Kw_not Kw_like common_value_expression . option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -531,21 +654,21 @@ entries: Kw_select Tok_ident Kw_not Kw_like Tok_ident Op_ne2
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_not Kw_in Tok_unsigned_integer
 ##
-## Ends in an error in state: 95.
+## Ends in an error in state: 109.
 ##
 ## in_predicate -> Kw_not Kw_in . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## in_predicate -> Kw_not Kw_in . Tok_lparen separated_nonempty_list(Tok_comma,common_value_expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -558,7 +681,7 @@ entries: Kw_select Tok_ident Kw_not Kw_in Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_not Kw_in Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 96.
+## Ends in an error in state: 110.
 ##
 ## in_predicate -> Kw_not Kw_in Tok_lparen . separated_nonempty_list(Tok_comma,common_value_expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -571,7 +694,7 @@ entries: Kw_select Tok_ident Kw_not Kw_in Tok_lparen Tok_semicolon
 
 entries: Kw_select Op_star Tok_unsigned_integer
 ##
-## Ends in an error in state: 99.
+## Ends in an error in state: 113.
 ##
 ## query -> select_clause . option(into_clause) option(sub_select_clause) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -583,7 +706,7 @@ entries: Kw_select Op_star Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_into Tok_unsigned_integer
 ##
-## Ends in an error in state: 100.
+## Ends in an error in state: 114.
 ##
 ## into_clause -> Kw_into . identifier [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -595,7 +718,7 @@ entries: Kw_select Tok_ident Kw_into Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_into Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 102.
+## Ends in an error in state: 116.
 ##
 ## query -> select_clause option(into_clause) . option(sub_select_clause) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -607,7 +730,7 @@ entries: Kw_select Tok_ident Kw_into Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_unsigned_integer
 ##
-## Ends in an error in state: 103.
+## Ends in an error in state: 117.
 ##
 ## from_clause -> Kw_from . separated_nonempty_list(Tok_comma,table_reference) [ Tok_semicolon Tok_rparen Tok_eof Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ##
@@ -619,7 +742,7 @@ entries: Kw_select Tok_ident Kw_from Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 104.
+## Ends in an error in state: 118.
 ##
 ## separated_nonempty_list(Tok_comma,table_reference) -> table_reference . [ Tok_semicolon Tok_rparen Tok_eof Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ## separated_nonempty_list(Tok_comma,table_reference) -> table_reference . Tok_comma separated_nonempty_list(Tok_comma,table_reference) [ Tok_semicolon Tok_rparen Tok_eof Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
@@ -632,7 +755,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Tok_comma Tok_unsigned_integer
 ##
-## Ends in an error in state: 105.
+## Ends in an error in state: 119.
 ##
 ## separated_nonempty_list(Tok_comma,table_reference) -> table_reference Tok_comma . separated_nonempty_list(Tok_comma,table_reference) [ Tok_semicolon Tok_rparen Tok_eof Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ##
@@ -644,7 +767,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Tok_comma Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 110.
+## Ends in an error in state: 124.
 ##
 ## table_name -> identifier . option(Kw_as) identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ## table_name -> identifier . [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
@@ -657,7 +780,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_as Tok_unsigned_integer
 ##
-## Ends in an error in state: 112.
+## Ends in an error in state: 126.
 ##
 ## table_name -> identifier option(Kw_as) . identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_where Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ##
@@ -669,7 +792,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_as Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_where Tok_semicolon
 ##
-## Ends in an error in state: 118.
+## Ends in an error in state: 132.
 ##
 ## where_clause -> Kw_where . condition [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_group Kw_fetch Kw_except ]
 ##
@@ -681,7 +804,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_where Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_or Tok_semicolon
 ##
-## Ends in an error in state: 122.
+## Ends in an error in state: 136.
 ##
 ## separated_nonempty_list(Kw_or,boolean_term) -> boolean_term Kw_or . separated_nonempty_list(Kw_or,boolean_term) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as ]
 ##
@@ -693,7 +816,7 @@ entries: Kw_select Tok_ident Kw_or Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_is Kw_null Tok_unsigned_integer
 ##
-## Ends in an error in state: 124.
+## Ends in an error in state: 138.
 ##
 ## separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor . [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as ]
 ## separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor . Kw_and separated_nonempty_list(Kw_and,boolean_factor) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as ]
@@ -706,7 +829,7 @@ entries: Kw_select Tok_ident Kw_is Kw_null Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_and Tok_semicolon
 ##
-## Ends in an error in state: 125.
+## Ends in an error in state: 139.
 ##
 ## separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor Kw_and . separated_nonempty_list(Kw_and,boolean_factor) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as ]
 ##
@@ -718,7 +841,7 @@ entries: Kw_select Tok_ident Kw_and Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_where Tok_ident Tok_ident
 ##
-## Ends in an error in state: 128.
+## Ends in an error in state: 142.
 ##
 ## sub_select_clause -> from_clause option(where_clause) . option(group_by_clause) option(having_clause) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -729,30 +852,30 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_where Tok_ident Tok_ident
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 119, spurious reduction of production where_clause -> Kw_where condition
-## In state 127, spurious reduction of production option(where_clause) -> where_clause
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 133, spurious reduction of production where_clause -> Kw_where condition
+## In state 141, spurious reduction of production option(where_clause) -> where_clause
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Tok_unsigned_integer
 ##
-## Ends in an error in state: 129.
+## Ends in an error in state: 143.
 ##
 ## group_by_clause -> Kw_group . Kw_by Kw_rollup Tok_lparen separated_nonempty_list(Tok_comma,expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ## group_by_clause -> Kw_group . Kw_by separated_nonempty_list(Tok_comma,expression) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
@@ -765,7 +888,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_semicolon
 ##
-## Ends in an error in state: 130.
+## Ends in an error in state: 144.
 ##
 ## group_by_clause -> Kw_group Kw_by . Kw_rollup Tok_lparen separated_nonempty_list(Tok_comma,expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ## group_by_clause -> Kw_group Kw_by . separated_nonempty_list(Tok_comma,expression) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
@@ -778,7 +901,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_unsigned_integer
 ##
-## Ends in an error in state: 131.
+## Ends in an error in state: 145.
 ##
 ## group_by_clause -> Kw_group Kw_by Kw_rollup . Tok_lparen separated_nonempty_list(Tok_comma,expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ##
@@ -790,7 +913,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_unsi
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 132.
+## Ends in an error in state: 146.
 ##
 ## group_by_clause -> Kw_group Kw_by Kw_rollup Tok_lparen . separated_nonempty_list(Tok_comma,expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ##
@@ -802,7 +925,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lpar
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 133.
+## Ends in an error in state: 147.
 ##
 ## group_by_clause -> Kw_group Kw_by Kw_rollup Tok_lparen separated_nonempty_list(Tok_comma,expression) . Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ##
@@ -813,30 +936,30 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lpar
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
-## In state 135, spurious reduction of production separated_nonempty_list(Tok_comma,expression) -> expression
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
+## In state 149, spurious reduction of production separated_nonempty_list(Tok_comma,expression) -> expression
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_ident Tok_ident
 ##
-## Ends in an error in state: 135.
+## Ends in an error in state: 149.
 ##
 ## separated_nonempty_list(Tok_comma,expression) -> expression . [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ## separated_nonempty_list(Tok_comma,expression) -> expression . Tok_comma separated_nonempty_list(Tok_comma,expression) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
@@ -848,29 +971,29 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_ident Tok_iden
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_ident Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 136.
+## Ends in an error in state: 150.
 ##
 ## separated_nonempty_list(Tok_comma,expression) -> expression Tok_comma . separated_nonempty_list(Tok_comma,expression) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_having Kw_fetch Kw_except ]
 ##
@@ -882,7 +1005,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Tok_ident Tok_comm
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lparen Tok_ident Tok_rparen Tok_unsigned_integer
 ##
-## Ends in an error in state: 140.
+## Ends in an error in state: 154.
 ##
 ## sub_select_clause -> from_clause option(where_clause) option(group_by_clause) . option(having_clause) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -894,7 +1017,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_group Kw_by Kw_rollup Tok_lpar
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_having Tok_semicolon
 ##
-## Ends in an error in state: 141.
+## Ends in an error in state: 155.
 ##
 ## having_clause -> Kw_having . condition [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -906,7 +1029,7 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_having Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_union Tok_unsigned_integer
 ##
-## Ends in an error in state: 148.
+## Ends in an error in state: 162.
 ##
 ## sub_query_expression_body -> Kw_union . Kw_all query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ## sub_query_expression_body -> Kw_union . Kw_distinct query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
@@ -920,7 +1043,7 @@ entries: Kw_select Tok_ident Kw_union Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_union Kw_distinct Tok_unsigned_integer
 ##
-## Ends in an error in state: 149.
+## Ends in an error in state: 163.
 ##
 ## sub_query_expression_body -> Kw_union Kw_distinct . query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -932,7 +1055,7 @@ entries: Kw_select Tok_ident Kw_union Kw_distinct Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_from Tok_ident Kw_having Tok_ident Tok_ident
 ##
-## Ends in an error in state: 151.
+## Ends in an error in state: 165.
 ##
 ## query_term -> query_primary . list(sub_query_term) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -943,34 +1066,34 @@ entries: Kw_select Tok_ident Kw_from Tok_ident Kw_having Tok_ident Tok_ident
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 142, spurious reduction of production having_clause -> Kw_having condition
-## In state 144, spurious reduction of production option(having_clause) -> having_clause
-## In state 143, spurious reduction of production sub_select_clause -> from_clause option(where_clause) option(group_by_clause) option(having_clause)
-## In state 115, spurious reduction of production option(sub_select_clause) -> sub_select_clause
-## In state 116, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
-## In state 155, spurious reduction of production query_primary -> query
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 156, spurious reduction of production having_clause -> Kw_having condition
+## In state 158, spurious reduction of production option(having_clause) -> having_clause
+## In state 157, spurious reduction of production sub_select_clause -> from_clause option(where_clause) option(group_by_clause) option(having_clause)
+## In state 129, spurious reduction of production option(sub_select_clause) -> sub_select_clause
+## In state 130, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
+## In state 169, spurious reduction of production query_primary -> query
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_intersect Tok_unsigned_integer
 ##
-## Ends in an error in state: 152.
+## Ends in an error in state: 166.
 ##
 ## sub_query_term -> Kw_intersect . query_primary [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ## sub_query_term -> Kw_intersect . Kw_all query_primary [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
@@ -984,7 +1107,7 @@ entries: Kw_select Tok_ident Kw_intersect Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_intersect Kw_distinct Tok_unsigned_integer
 ##
-## Ends in an error in state: 153.
+## Ends in an error in state: 167.
 ##
 ## sub_query_term -> Kw_intersect Kw_distinct . query_primary [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -996,7 +1119,7 @@ entries: Kw_select Tok_ident Kw_intersect Kw_distinct Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_intersect Kw_all Tok_unsigned_integer
 ##
-## Ends in an error in state: 156.
+## Ends in an error in state: 170.
 ##
 ## sub_query_term -> Kw_intersect Kw_all . query_primary [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_intersect Kw_fetch Kw_except ]
 ##
@@ -1008,7 +1131,7 @@ entries: Kw_select Tok_ident Kw_intersect Kw_all Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_intersect Kw_select Tok_ident Kw_from Tok_ident Kw_having Tok_ident Tok_ident
 ##
-## Ends in an error in state: 159.
+## Ends in an error in state: 173.
 ##
 ## list(sub_query_term) -> sub_query_term . list(sub_query_term) [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -1019,35 +1142,35 @@ entries: Kw_select Tok_ident Kw_intersect Kw_select Tok_ident Kw_from Tok_ident 
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 142, spurious reduction of production having_clause -> Kw_having condition
-## In state 144, spurious reduction of production option(having_clause) -> having_clause
-## In state 143, spurious reduction of production sub_select_clause -> from_clause option(where_clause) option(group_by_clause) option(having_clause)
-## In state 115, spurious reduction of production option(sub_select_clause) -> sub_select_clause
-## In state 116, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
-## In state 155, spurious reduction of production query_primary -> query
-## In state 158, spurious reduction of production sub_query_term -> Kw_intersect query_primary
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 156, spurious reduction of production having_clause -> Kw_having condition
+## In state 158, spurious reduction of production option(having_clause) -> having_clause
+## In state 157, spurious reduction of production sub_select_clause -> from_clause option(where_clause) option(group_by_clause) option(having_clause)
+## In state 129, spurious reduction of production option(sub_select_clause) -> sub_select_clause
+## In state 130, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
+## In state 169, spurious reduction of production query_primary -> query
+## In state 172, spurious reduction of production sub_query_term -> Kw_intersect query_primary
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_union Kw_all Tok_unsigned_integer
 ##
-## Ends in an error in state: 162.
+## Ends in an error in state: 176.
 ##
 ## sub_query_expression_body -> Kw_union Kw_all . query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -1059,7 +1182,7 @@ entries: Kw_select Tok_ident Kw_union Kw_all Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_except Tok_unsigned_integer
 ##
-## Ends in an error in state: 165.
+## Ends in an error in state: 179.
 ##
 ## sub_query_expression_body -> Kw_except . Kw_all query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ## sub_query_expression_body -> Kw_except . Kw_distinct query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
@@ -1073,7 +1196,7 @@ entries: Kw_select Tok_ident Kw_except Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_except Kw_distinct Tok_unsigned_integer
 ##
-## Ends in an error in state: 166.
+## Ends in an error in state: 180.
 ##
 ## sub_query_expression_body -> Kw_except Kw_distinct . query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -1085,7 +1208,7 @@ entries: Kw_select Tok_ident Kw_except Kw_distinct Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_except Kw_all Tok_unsigned_integer
 ##
-## Ends in an error in state: 168.
+## Ends in an error in state: 182.
 ##
 ## sub_query_expression_body -> Kw_except Kw_all . query_term [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_fetch Kw_except ]
 ##
@@ -1097,7 +1220,7 @@ entries: Kw_select Tok_ident Kw_except Kw_all Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_order Tok_unsigned_integer
 ##
-## Ends in an error in state: 174.
+## Ends in an error in state: 188.
 ##
 ## order_by_clause -> Kw_order . Kw_by separated_nonempty_list(Tok_comma,sort_specification) [ Tok_semicolon Tok_rparen Tok_eof Kw_offset Kw_limit Kw_fetch ]
 ##
@@ -1109,7 +1232,7 @@ entries: Kw_select Tok_ident Kw_order Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_semicolon
 ##
-## Ends in an error in state: 175.
+## Ends in an error in state: 189.
 ##
 ## order_by_clause -> Kw_order Kw_by . separated_nonempty_list(Tok_comma,sort_specification) [ Tok_semicolon Tok_rparen Tok_eof Kw_offset Kw_limit Kw_fetch ]
 ##
@@ -1121,7 +1244,7 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_null Kw_first Tok_unsigned_integer
 ##
-## Ends in an error in state: 176.
+## Ends in an error in state: 190.
 ##
 ## separated_nonempty_list(Tok_comma,sort_specification) -> sort_specification . [ Tok_semicolon Tok_rparen Tok_eof Kw_offset Kw_limit Kw_fetch ]
 ## separated_nonempty_list(Tok_comma,sort_specification) -> sort_specification . Tok_comma separated_nonempty_list(Tok_comma,sort_specification) [ Tok_semicolon Tok_rparen Tok_eof Kw_offset Kw_limit Kw_fetch ]
@@ -1134,7 +1257,7 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_null Kw_first Tok_unsig
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 177.
+## Ends in an error in state: 191.
 ##
 ## separated_nonempty_list(Tok_comma,sort_specification) -> sort_specification Tok_comma . separated_nonempty_list(Tok_comma,sort_specification) [ Tok_semicolon Tok_rparen Tok_eof Kw_offset Kw_limit Kw_fetch ]
 ##
@@ -1146,7 +1269,7 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Tok_comma Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Tok_ident
 ##
-## Ends in an error in state: 178.
+## Ends in an error in state: 192.
 ##
 ## sort_specification -> sort_key . option(sort_specification_order) option(sort_specification_null) [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_offset Kw_limit Kw_fetch ]
 ##
@@ -1157,30 +1280,30 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Tok_ident
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
-## In state 189, spurious reduction of production sort_key -> expression
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
+## In state 203, spurious reduction of production sort_key -> expression
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_asc Tok_unsigned_integer
 ##
-## Ends in an error in state: 182.
+## Ends in an error in state: 196.
 ##
 ## sort_specification -> sort_key option(sort_specification_order) . option(sort_specification_null) [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_offset Kw_limit Kw_fetch ]
 ##
@@ -1192,7 +1315,7 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_asc Tok_unsigned_intege
 
 entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_null Tok_unsigned_integer
 ##
-## Ends in an error in state: 183.
+## Ends in an error in state: 197.
 ##
 ## sort_specification_null -> Kw_null . Kw_first [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_offset Kw_limit Kw_fetch ]
 ## sort_specification_null -> Kw_null . Kw_last [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_offset Kw_limit Kw_fetch ]
@@ -1205,7 +1328,7 @@ entries: Kw_select Tok_ident Kw_order Kw_by Tok_ident Kw_null Tok_unsigned_integ
 
 entries: Kw_select Tok_ident Kw_offset Tok_typed_string
 ##
-## Ends in an error in state: 193.
+## Ends in an error in state: 207.
 ##
 ## limit_clause -> Kw_offset . integer_parameter row option(fetch_clause) [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1217,7 +1340,7 @@ entries: Kw_select Tok_ident Kw_offset Tok_typed_string
 
 entries: Kw_select Tok_ident Kw_offset Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 196.
+## Ends in an error in state: 210.
 ##
 ## limit_clause -> Kw_offset integer_parameter . row option(fetch_clause) [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1229,7 +1352,7 @@ entries: Kw_select Tok_ident Kw_offset Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_offset Tok_ident Kw_row Tok_unsigned_integer
 ##
-## Ends in an error in state: 199.
+## Ends in an error in state: 213.
 ##
 ## limit_clause -> Kw_offset integer_parameter row . option(fetch_clause) [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1241,7 +1364,7 @@ entries: Kw_select Tok_ident Kw_offset Tok_ident Kw_row Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_fetch Tok_unsigned_integer
 ##
-## Ends in an error in state: 200.
+## Ends in an error in state: 214.
 ##
 ## fetch_clause -> Kw_fetch . Kw_first option(integer_parameter) row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ## fetch_clause -> Kw_fetch . Kw_next option(integer_parameter) row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
@@ -1254,7 +1377,7 @@ entries: Kw_select Tok_ident Kw_fetch Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_fetch Kw_next Tok_typed_string
 ##
-## Ends in an error in state: 201.
+## Ends in an error in state: 215.
 ##
 ## fetch_clause -> Kw_fetch Kw_next . option(integer_parameter) row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1266,7 +1389,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_next Tok_typed_string
 
 entries: Kw_select Tok_ident Kw_fetch Kw_next Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 202.
+## Ends in an error in state: 216.
 ##
 ## fetch_clause -> Kw_fetch Kw_next option(integer_parameter) . row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1278,7 +1401,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_next Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_fetch Kw_next Kw_row Tok_unsigned_integer
 ##
-## Ends in an error in state: 203.
+## Ends in an error in state: 217.
 ##
 ## fetch_clause -> Kw_fetch Kw_next option(integer_parameter) row . Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1290,7 +1413,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_next Kw_row Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_fetch Kw_first Tok_typed_string
 ##
-## Ends in an error in state: 206.
+## Ends in an error in state: 220.
 ##
 ## fetch_clause -> Kw_fetch Kw_first . option(integer_parameter) row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1302,7 +1425,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_first Tok_typed_string
 
 entries: Kw_select Tok_ident Kw_fetch Kw_first Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 207.
+## Ends in an error in state: 221.
 ##
 ## fetch_clause -> Kw_fetch Kw_first option(integer_parameter) . row Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1314,7 +1437,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_first Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_fetch Kw_first Kw_row Tok_unsigned_integer
 ##
-## Ends in an error in state: 208.
+## Ends in an error in state: 222.
 ##
 ## fetch_clause -> Kw_fetch Kw_first option(integer_parameter) row . Kw_only [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1326,7 +1449,7 @@ entries: Kw_select Tok_ident Kw_fetch Kw_first Kw_row Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_limit Tok_typed_string
 ##
-## Ends in an error in state: 212.
+## Ends in an error in state: 226.
 ##
 ## limit_clause -> Kw_limit . integer_parameter [ Tok_semicolon Tok_rparen Tok_eof ]
 ## limit_clause -> Kw_limit . integer_parameter Tok_comma integer_parameter [ Tok_semicolon Tok_rparen Tok_eof ]
@@ -1340,7 +1463,7 @@ entries: Kw_select Tok_ident Kw_limit Tok_typed_string
 
 entries: Kw_select Tok_ident Kw_limit Tok_ident Tok_unsigned_integer
 ##
-## Ends in an error in state: 213.
+## Ends in an error in state: 227.
 ##
 ## limit_clause -> Kw_limit integer_parameter . [ Tok_semicolon Tok_rparen Tok_eof ]
 ## limit_clause -> Kw_limit integer_parameter . Tok_comma integer_parameter [ Tok_semicolon Tok_rparen Tok_eof ]
@@ -1354,7 +1477,7 @@ entries: Kw_select Tok_ident Kw_limit Tok_ident Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_limit Tok_ident Tok_comma Tok_typed_string
 ##
-## Ends in an error in state: 214.
+## Ends in an error in state: 228.
 ##
 ## limit_clause -> Kw_limit integer_parameter Tok_comma . integer_parameter [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1366,7 +1489,7 @@ entries: Kw_select Tok_ident Kw_limit Tok_ident Tok_comma Tok_typed_string
 
 entries: Kw_select Tok_ident Kw_limit Tok_ident Kw_offset Tok_typed_string
 ##
-## Ends in an error in state: 216.
+## Ends in an error in state: 230.
 ##
 ## limit_clause -> Kw_limit integer_parameter Kw_offset . integer_parameter [ Tok_semicolon Tok_rparen Tok_eof ]
 ##
@@ -1376,9 +1499,9 @@ entries: Kw_select Tok_ident Kw_limit Tok_ident Kw_offset Tok_typed_string
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-entries: Kw_select Tok_ident Kw_in Tok_lparen Kw_select Tok_ident Tok_semicolon
+entries: Kw_select Tok_ident Kw_exists Tok_lparen Kw_select Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 222.
+## Ends in an error in state: 236.
 ##
 ## subquery -> Tok_lparen query_expression . Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1389,45 +1512,45 @@ entries: Kw_select Tok_ident Kw_in Tok_lparen Kw_select Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
-## In state 282, spurious reduction of production option(pair(option(Kw_as),identifier)) ->
-## In state 283, spurious reduction of production select_sublist -> expression option(pair(option(Kw_as),identifier))
-## In state 9, spurious reduction of production separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist
-## In state 6, spurious reduction of production select_list -> separated_nonempty_list(Tok_comma,select_sublist)
-## In state 289, spurious reduction of production select_clause -> Kw_select select_list
-## In state 99, spurious reduction of production option(into_clause) ->
-## In state 102, spurious reduction of production option(sub_select_clause) ->
-## In state 116, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
-## In state 155, spurious reduction of production query_primary -> query
-## In state 151, spurious reduction of production list(sub_query_term) ->
-## In state 161, spurious reduction of production query_term -> query_primary list(sub_query_term)
-## In state 147, spurious reduction of production list(sub_query_expression_body) ->
-## In state 173, spurious reduction of production option(order_by_clause) ->
-## In state 192, spurious reduction of production option(limit_clause) ->
-## In state 218, spurious reduction of production query_expression_body -> query_term list(sub_query_expression_body) option(order_by_clause) option(limit_clause)
-## In state 221, spurious reduction of production query_expression -> query_expression_body
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
+## In state 300, spurious reduction of production option(pair(option(Kw_as),identifier)) ->
+## In state 301, spurious reduction of production select_sublist -> expression option(pair(option(Kw_as),identifier))
+## In state 24, spurious reduction of production separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist
+## In state 21, spurious reduction of production select_list -> separated_nonempty_list(Tok_comma,select_sublist)
+## In state 307, spurious reduction of production select_clause -> Kw_select select_list
+## In state 113, spurious reduction of production option(into_clause) ->
+## In state 116, spurious reduction of production option(sub_select_clause) ->
+## In state 130, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
+## In state 169, spurious reduction of production query_primary -> query
+## In state 165, spurious reduction of production list(sub_query_term) ->
+## In state 175, spurious reduction of production query_term -> query_primary list(sub_query_term)
+## In state 161, spurious reduction of production list(sub_query_expression_body) ->
+## In state 187, spurious reduction of production option(order_by_clause) ->
+## In state 206, spurious reduction of production option(limit_clause) ->
+## In state 232, spurious reduction of production query_expression_body -> query_term list(sub_query_expression_body) option(order_by_clause) option(limit_clause)
+## In state 235, spurious reduction of production query_expression -> query_expression_body
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 224.
+## Ends in an error in state: 238.
 ##
 ## separated_nonempty_list(Tok_comma,common_value_expression) -> common_value_expression . [ Tok_rparen ]
 ## separated_nonempty_list(Tok_comma,common_value_expression) -> common_value_expression . Tok_comma separated_nonempty_list(Tok_comma,common_value_expression) [ Tok_rparen ]
@@ -1439,21 +1562,21 @@ entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_ident Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 225.
+## Ends in an error in state: 239.
 ##
 ## separated_nonempty_list(Tok_comma,common_value_expression) -> common_value_expression Tok_comma . separated_nonempty_list(Tok_comma,common_value_expression) [ Tok_rparen ]
 ##
@@ -1465,7 +1588,7 @@ entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_ident Tok_comma Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_not Kw_between Tok_semicolon
 ##
-## Ends in an error in state: 228.
+## Ends in an error in state: 242.
 ##
 ## between_predicate -> Kw_not Kw_between . common_value_expression Kw_and common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1477,7 +1600,7 @@ entries: Kw_select Tok_ident Kw_not Kw_between Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_not Kw_between Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 229.
+## Ends in an error in state: 243.
 ##
 ## between_predicate -> Kw_not Kw_between common_value_expression . Kw_and common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1488,21 +1611,21 @@ entries: Kw_select Tok_ident Kw_not Kw_between Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_not Kw_between Tok_ident Kw_and Tok_semicolon
 ##
-## Ends in an error in state: 230.
+## Ends in an error in state: 244.
 ##
 ## between_predicate -> Kw_not Kw_between common_value_expression Kw_and . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1514,7 +1637,7 @@ entries: Kw_select Tok_ident Kw_not Kw_between Tok_ident Kw_and Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_like_regex Tok_semicolon
 ##
-## Ends in an error in state: 232.
+## Ends in an error in state: 246.
 ##
 ## like_regex_predicate -> Kw_like_regex . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1526,7 +1649,7 @@ entries: Kw_select Tok_ident Kw_like_regex Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_like Tok_semicolon
 ##
-## Ends in an error in state: 234.
+## Ends in an error in state: 248.
 ##
 ## match_predicate -> Kw_like . common_value_expression option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1538,7 +1661,7 @@ entries: Kw_select Tok_ident Kw_like Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_like Tok_ident Op_ne2
 ##
-## Ends in an error in state: 235.
+## Ends in an error in state: 249.
 ##
 ## match_predicate -> Kw_like common_value_expression . option(match_predicate_escape) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1549,24 +1672,24 @@ entries: Kw_select Tok_ident Kw_like Tok_ident Op_ne2
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_is Tok_unsigned_integer
 ##
-## Ends in an error in state: 237.
+## Ends in an error in state: 251.
 ##
-## is_distinct_predicate -> Kw_is . Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
-## is_distinct_predicate -> Kw_is . Kw_not Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is . Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is . Kw_not Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## is_null_predicate -> Kw_is . Kw_null [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## is_null_predicate -> Kw_is . Kw_not Kw_null [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1578,9 +1701,9 @@ entries: Kw_select Tok_ident Kw_is Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_is Kw_not Tok_unsigned_integer
 ##
-## Ends in an error in state: 239.
+## Ends in an error in state: 253.
 ##
-## is_distinct_predicate -> Kw_is Kw_not . Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is Kw_not . Kw_distinct Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## is_null_predicate -> Kw_is Kw_not . Kw_null [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
@@ -1591,9 +1714,9 @@ entries: Kw_select Tok_ident Kw_is Kw_not Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_is Kw_not Kw_distinct Tok_unsigned_integer
 ##
-## Ends in an error in state: 241.
+## Ends in an error in state: 255.
 ##
-## is_distinct_predicate -> Kw_is Kw_not Kw_distinct . Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is Kw_not Kw_distinct . Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_is Kw_not Kw_distinct
@@ -1603,9 +1726,9 @@ entries: Kw_select Tok_ident Kw_is Kw_not Kw_distinct Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_is Kw_not Kw_distinct Kw_from Tok_semicolon
 ##
-## Ends in an error in state: 242.
+## Ends in an error in state: 256.
 ##
-## is_distinct_predicate -> Kw_is Kw_not Kw_distinct Kw_from . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is Kw_not Kw_distinct Kw_from . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_is Kw_not Kw_distinct Kw_from
@@ -1615,9 +1738,9 @@ entries: Kw_select Tok_ident Kw_is Kw_not Kw_distinct Kw_from Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_is Kw_distinct Tok_unsigned_integer
 ##
-## Ends in an error in state: 244.
+## Ends in an error in state: 258.
 ##
-## is_distinct_predicate -> Kw_is Kw_distinct . Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is Kw_distinct . Kw_from common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_is Kw_distinct
@@ -1627,9 +1750,9 @@ entries: Kw_select Tok_ident Kw_is Kw_distinct Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_is Kw_distinct Kw_from Tok_semicolon
 ##
-## Ends in an error in state: 245.
+## Ends in an error in state: 259.
 ##
-## is_distinct_predicate -> Kw_is Kw_distinct Kw_from . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+## is_distinct -> Kw_is Kw_distinct Kw_from . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_is Kw_distinct Kw_from
@@ -1639,7 +1762,7 @@ entries: Kw_select Tok_ident Kw_is Kw_distinct Kw_from Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_in Tok_unsigned_integer
 ##
-## Ends in an error in state: 247.
+## Ends in an error in state: 261.
 ##
 ## in_predicate -> Kw_in . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## in_predicate -> Kw_in . Tok_lparen separated_nonempty_list(Tok_comma,common_value_expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1652,7 +1775,7 @@ entries: Kw_select Tok_ident Kw_in Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 248.
+## Ends in an error in state: 262.
 ##
 ## in_predicate -> Kw_in Tok_lparen . separated_nonempty_list(Tok_comma,common_value_expression) Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1663,9 +1786,33 @@ entries: Kw_select Tok_ident Kw_in Tok_lparen Tok_semicolon
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
+entries: Kw_select Tok_ident Kw_exists Tok_unsigned_integer
+##
+## Ends in an error in state: 266.
+##
+## exists_predicate -> Kw_exists . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+##
+## The known suffix of the stack is as follows:
+## Kw_exists
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+entries: Kw_select Tok_ident Kw_exists Tok_lparen Tok_unsigned_integer
+##
+## Ends in an error in state: 267.
+##
+## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
+##
+## The known suffix of the stack is as follows:
+## Tok_lparen
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
 entries: Kw_select Tok_ident Kw_between Tok_semicolon
 ##
-## Ends in an error in state: 252.
+## Ends in an error in state: 269.
 ##
 ## between_predicate -> Kw_between . common_value_expression Kw_and common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1677,7 +1824,7 @@ entries: Kw_select Tok_ident Kw_between Tok_semicolon
 
 entries: Kw_select Tok_ident Kw_between Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 253.
+## Ends in an error in state: 270.
 ##
 ## between_predicate -> Kw_between common_value_expression . Kw_and common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1688,21 +1835,21 @@ entries: Kw_select Tok_ident Kw_between Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_between Tok_ident Kw_and Tok_semicolon
 ##
-## Ends in an error in state: 254.
+## Ends in an error in state: 271.
 ##
 ## between_predicate -> Kw_between common_value_expression Kw_and . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1714,7 +1861,7 @@ entries: Kw_select Tok_ident Kw_between Tok_ident Kw_and Tok_semicolon
 
 entries: Kw_select Tok_ident Op_eq Tok_semicolon
 ##
-## Ends in an error in state: 263.
+## Ends in an error in state: 281.
 ##
 ## comparison_predicate -> comparison_operator . common_value_expression [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator . Kw_any subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1732,7 +1879,7 @@ entries: Kw_select Tok_ident Op_eq Tok_semicolon
 
 entries: Kw_select Tok_ident Op_eq Kw_some Tok_unsigned_integer
 ##
-## Ends in an error in state: 264.
+## Ends in an error in state: 282.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_some . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_some . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1745,7 +1892,7 @@ entries: Kw_select Tok_ident Op_eq Kw_some Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Op_eq Kw_some Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 265.
+## Ends in an error in state: 283.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_some Tok_lparen . expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1758,7 +1905,7 @@ entries: Kw_select Tok_ident Op_eq Kw_some Tok_lparen Tok_semicolon
 
 entries: Kw_select Tok_ident Op_eq Kw_some Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 266.
+## Ends in an error in state: 284.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_some Tok_lparen expression . Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1769,29 +1916,29 @@ entries: Kw_select Tok_ident Op_eq Kw_some Tok_lparen Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Op_eq Kw_any Tok_unsigned_integer
 ##
-## Ends in an error in state: 269.
+## Ends in an error in state: 287.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_any . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_any . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1804,7 +1951,7 @@ entries: Kw_select Tok_ident Op_eq Kw_any Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Op_eq Kw_any Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 270.
+## Ends in an error in state: 288.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_any Tok_lparen . expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1817,7 +1964,7 @@ entries: Kw_select Tok_ident Op_eq Kw_any Tok_lparen Tok_semicolon
 
 entries: Kw_select Tok_ident Op_eq Kw_any Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 271.
+## Ends in an error in state: 289.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_any Tok_lparen expression . Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1828,29 +1975,29 @@ entries: Kw_select Tok_ident Op_eq Kw_any Tok_lparen Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Op_eq Kw_all Tok_unsigned_integer
 ##
-## Ends in an error in state: 274.
+## Ends in an error in state: 292.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_all . subquery [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## quantified_comparison_predicate -> comparison_operator Kw_all . Tok_lparen expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1863,7 +2010,7 @@ entries: Kw_select Tok_ident Op_eq Kw_all Tok_unsigned_integer
 
 entries: Kw_select Tok_ident Op_eq Kw_all Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 275.
+## Ends in an error in state: 293.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_all Tok_lparen . expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ## subquery -> Tok_lparen . query_expression Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
@@ -1876,7 +2023,7 @@ entries: Kw_select Tok_ident Op_eq Kw_all Tok_lparen Tok_semicolon
 
 entries: Kw_select Tok_ident Op_eq Kw_all Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 276.
+## Ends in an error in state: 294.
 ##
 ## quantified_comparison_predicate -> comparison_operator Kw_all Tok_lparen expression . Tok_rparen [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma Kw_union Kw_order Kw_or Kw_offset Kw_null Kw_limit Kw_into Kw_intersect Kw_having Kw_group Kw_from Kw_fetch Kw_except Kw_desc Kw_asc Kw_as Kw_and ]
 ##
@@ -1887,29 +2034,29 @@ entries: Kw_select Tok_ident Op_eq Kw_all Tok_lparen Tok_ident Tok_semicolon
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_null
 ##
-## Ends in an error in state: 282.
+## Ends in an error in state: 300.
 ##
 ## select_sublist -> expression . option(pair(option(Kw_as),identifier)) [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -1920,29 +2067,29 @@ entries: Kw_select Tok_ident Kw_null
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Kw_as Tok_unsigned_integer
 ##
-## Ends in an error in state: 284.
+## Ends in an error in state: 302.
 ##
 ## option(pair(option(Kw_as),identifier)) -> option(Kw_as) . identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -1954,7 +2101,7 @@ entries: Kw_select Tok_ident Kw_as Tok_unsigned_integer
 
 entries: Kw_select Kw_all Tok_semicolon
 ##
-## Ends in an error in state: 287.
+## Ends in an error in state: 305.
 ##
 ## select_clause -> Kw_select Kw_all . select_list [ Tok_semicolon Tok_rparen Tok_eof Kw_union Kw_order Kw_offset Kw_limit Kw_into Kw_intersect Kw_from Kw_fetch Kw_except ]
 ##
@@ -1964,9 +2111,58 @@ entries: Kw_select Kw_all Tok_semicolon
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
+entries: Kw_with Tok_ident Kw_as Tok_lparen Kw_select Tok_ident Tok_semicolon
+##
+## Ends in an error in state: 308.
+##
+## with_list_element -> identifier option(column_list) Kw_as Tok_lparen query_expression . Tok_rparen [ Tok_comma Kw_select ]
+##
+## The known suffix of the stack is as follows:
+## identifier option(column_list) Kw_as Tok_lparen query_expression
+##
+## WARNING: This example involves spurious reductions.
+## This implies that, although the LR(1) items shown above provide an
+## accurate view of the past (what has been recognized so far), they
+## may provide an INCOMPLETE view of the future (what was expected next).
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
+## In state 300, spurious reduction of production option(pair(option(Kw_as),identifier)) ->
+## In state 301, spurious reduction of production select_sublist -> expression option(pair(option(Kw_as),identifier))
+## In state 24, spurious reduction of production separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist
+## In state 21, spurious reduction of production select_list -> separated_nonempty_list(Tok_comma,select_sublist)
+## In state 307, spurious reduction of production select_clause -> Kw_select select_list
+## In state 113, spurious reduction of production option(into_clause) ->
+## In state 116, spurious reduction of production option(sub_select_clause) ->
+## In state 130, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
+## In state 169, spurious reduction of production query_primary -> query
+## In state 165, spurious reduction of production list(sub_query_term) ->
+## In state 175, spurious reduction of production query_term -> query_primary list(sub_query_term)
+## In state 161, spurious reduction of production list(sub_query_expression_body) ->
+## In state 187, spurious reduction of production option(order_by_clause) ->
+## In state 206, spurious reduction of production option(limit_clause) ->
+## In state 232, spurious reduction of production query_expression_body -> query_term list(sub_query_expression_body) option(order_by_clause) option(limit_clause)
+## In state 235, spurious reduction of production query_expression -> query_expression_body
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
 entries: Kw_select Tok_ident Tok_rparen
 ##
-## Ends in an error in state: 293.
+## Ends in an error in state: 316.
 ##
 ## separated_nonempty_list(Tok_semicolon,entry) -> entry . [ Tok_eof ]
 ## separated_nonempty_list(Tok_semicolon,entry) -> entry . Tok_semicolon separated_nonempty_list(Tok_semicolon,entry) [ Tok_eof ]
@@ -1978,47 +2174,47 @@ entries: Kw_select Tok_ident Tok_rparen
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 38, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
-## In state 56, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
-## In state 32, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
-## In state 57, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
-## In state 40, spurious reduction of production list(pair(plus_or_minus,term)) ->
-## In state 52, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
-## In state 58, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
-## In state 61, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
-## In state 65, spurious reduction of production boolean_primary -> common_value_expression
-## In state 281, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
-## In state 124, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
-## In state 8, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
-## In state 121, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
-## In state 7, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
-## In state 120, spurious reduction of production condition -> boolean_value_expression
-## In state 138, spurious reduction of production expression -> condition
-## In state 282, spurious reduction of production option(pair(option(Kw_as),identifier)) ->
-## In state 283, spurious reduction of production select_sublist -> expression option(pair(option(Kw_as),identifier))
-## In state 9, spurious reduction of production separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist
-## In state 6, spurious reduction of production select_list -> separated_nonempty_list(Tok_comma,select_sublist)
-## In state 289, spurious reduction of production select_clause -> Kw_select select_list
-## In state 99, spurious reduction of production option(into_clause) ->
-## In state 102, spurious reduction of production option(sub_select_clause) ->
-## In state 116, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
-## In state 155, spurious reduction of production query_primary -> query
-## In state 151, spurious reduction of production list(sub_query_term) ->
-## In state 161, spurious reduction of production query_term -> query_primary list(sub_query_term)
-## In state 147, spurious reduction of production list(sub_query_expression_body) ->
-## In state 173, spurious reduction of production option(order_by_clause) ->
-## In state 192, spurious reduction of production option(limit_clause) ->
-## In state 218, spurious reduction of production query_expression_body -> query_term list(sub_query_expression_body) option(order_by_clause) option(limit_clause)
-## In state 221, spurious reduction of production query_expression -> query_expression_body
-## In state 292, spurious reduction of production directly_executable_statement -> query_expression
-## In state 296, spurious reduction of production entry -> directly_executable_statement
+## In state 52, spurious reduction of production list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace)) ->
+## In state 70, spurious reduction of production value_expression_primary -> unsigned_value_expression_primary list(delimited(Tok_lsbrace,numeric_value_expression,Tok_rsbrace))
+## In state 46, spurious reduction of production list(pair(star_or_slash,value_expression_primary)) ->
+## In state 71, spurious reduction of production term -> value_expression_primary list(pair(star_or_slash,value_expression_primary))
+## In state 54, spurious reduction of production list(pair(plus_or_minus,term)) ->
+## In state 66, spurious reduction of production numeric_value_expression -> term list(pair(plus_or_minus,term))
+## In state 72, spurious reduction of production list(pair(amp_or_concat,numeric_value_expression)) ->
+## In state 75, spurious reduction of production common_value_expression -> numeric_value_expression list(pair(amp_or_concat,numeric_value_expression))
+## In state 79, spurious reduction of production boolean_primary -> common_value_expression
+## In state 299, spurious reduction of production boolean_factor -> option(Kw_not) boolean_primary
+## In state 138, spurious reduction of production separated_nonempty_list(Kw_and,boolean_factor) -> boolean_factor
+## In state 23, spurious reduction of production boolean_term -> separated_nonempty_list(Kw_and,boolean_factor)
+## In state 135, spurious reduction of production separated_nonempty_list(Kw_or,boolean_term) -> boolean_term
+## In state 22, spurious reduction of production boolean_value_expression -> separated_nonempty_list(Kw_or,boolean_term)
+## In state 134, spurious reduction of production condition -> boolean_value_expression
+## In state 152, spurious reduction of production expression -> condition
+## In state 300, spurious reduction of production option(pair(option(Kw_as),identifier)) ->
+## In state 301, spurious reduction of production select_sublist -> expression option(pair(option(Kw_as),identifier))
+## In state 24, spurious reduction of production separated_nonempty_list(Tok_comma,select_sublist) -> select_sublist
+## In state 21, spurious reduction of production select_list -> separated_nonempty_list(Tok_comma,select_sublist)
+## In state 307, spurious reduction of production select_clause -> Kw_select select_list
+## In state 113, spurious reduction of production option(into_clause) ->
+## In state 116, spurious reduction of production option(sub_select_clause) ->
+## In state 130, spurious reduction of production query -> select_clause option(into_clause) option(sub_select_clause)
+## In state 169, spurious reduction of production query_primary -> query
+## In state 165, spurious reduction of production list(sub_query_term) ->
+## In state 175, spurious reduction of production query_term -> query_primary list(sub_query_term)
+## In state 161, spurious reduction of production list(sub_query_expression_body) ->
+## In state 187, spurious reduction of production option(order_by_clause) ->
+## In state 206, spurious reduction of production option(limit_clause) ->
+## In state 232, spurious reduction of production query_expression_body -> query_term list(sub_query_expression_body) option(order_by_clause) option(limit_clause)
+## In state 235, spurious reduction of production query_expression -> query_expression_body
+## In state 315, spurious reduction of production directly_executable_statement -> query_expression
+## In state 319, spurious reduction of production entry -> directly_executable_statement
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 entries: Kw_select Tok_ident Tok_semicolon Tok_unsigned_integer
 ##
-## Ends in an error in state: 294.
+## Ends in an error in state: 317.
 ##
 ## separated_nonempty_list(Tok_semicolon,entry) -> entry Tok_semicolon . separated_nonempty_list(Tok_semicolon,entry) [ Tok_eof ]
 ##
