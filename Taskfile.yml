@@ -12,7 +12,6 @@ tasks:
   gentest:
     cmds:
       - _build/default/tool/test_gen/test_gen.exe {{.USER_WORKING_DIR}}/test/files/{{.FILE}} {{.NAME}}  > ./test/{{.FILE}}.ml
-    deps: [build]
 
   test:
     cmds:

@@ -49,6 +49,14 @@ type token =
   | Kw_with
   | Kw_table
   | Kw_lateral
+  | Kw_left
+  | Kw_right
+  | Kw_full
+  | Kw_outer
+  | Kw_inner
+  | Kw_cross
+  | Kw_join
+  | Kw_on
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

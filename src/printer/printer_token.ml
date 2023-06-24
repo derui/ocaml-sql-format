@@ -62,6 +62,14 @@ include (
       | Kw_with -> Fmt.string f @@ as_keyword "with" keyword
       | Kw_table -> Fmt.string f @@ as_keyword "table" keyword
       | Kw_lateral -> Fmt.string f @@ as_keyword "lateral" keyword
+      | Kw_left -> Fmt.string f @@ as_keyword "left" keyword
+      | Kw_right -> Fmt.string f @@ as_keyword "right" keyword
+      | Kw_full -> Fmt.string f @@ as_keyword "full" keyword
+      | Kw_outer -> Fmt.string f @@ as_keyword "outer" keyword
+      | Kw_inner -> Fmt.string f @@ as_keyword "inner" keyword
+      | Kw_cross -> Fmt.string f @@ as_keyword "cross" keyword
+      | Kw_join -> Fmt.string f @@ as_keyword "join" keyword
+      | Kw_on -> Fmt.string f @@ as_keyword "on" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

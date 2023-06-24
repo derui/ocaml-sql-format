@@ -89,6 +89,14 @@ open Ast
 %token Kw_with
 %token Kw_table
 %token Kw_lateral
+%token Kw_left
+%token Kw_right
+%token Kw_full
+%token Kw_outer
+%token Kw_inner
+%token Kw_cross
+%token Kw_join
+%token Kw_on
 
 %token Tok_eof
 
@@ -213,7 +221,16 @@ table_reference:
   | joined_table { `Table_reference ($1, ()) }
 
 joined_table:
-  | table_primary { `Joined_table ($1, ()) }
+  | table_primary list(sub_joined_table) { `Joined_table ($1, $2, ()) }
+
+sub_joined_table:
+  | Kw_cross Kw_join p = table_primary { `cross (`cross, p) }
+  | Kw_union Kw_join p = table_primary { `cross (`union, p) }
+  | Kw_join p = table_reference Kw_on c = condition { `qualified (None, p, c) }
+  | Kw_right pair(option(Kw_outer), Kw_join) p = table_reference Kw_on c = condition { `qualified (Some `right, p, c) }
+  | Kw_left pair(option(Kw_outer), Kw_join) p = table_reference Kw_on c = condition { `qualified (Some `left, p, c) }
+  | Kw_full pair(option(Kw_outer), Kw_join) p = table_reference Kw_on c = condition { `qualified (Some `full, p, c) }
+  | Kw_inner Kw_join p = table_reference Kw_on c = condition { `qualified (Some `inner, p, c) }
 
 table_primary:
   | table_name { `Table_primary (`table_name $1, ()) }

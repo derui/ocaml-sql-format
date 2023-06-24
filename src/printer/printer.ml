@@ -215,11 +215,22 @@ and table_reference () =
 
 and joined_table () =
   Joined_table.(
-    (module Make (struct
-      type t = A.ext A.table_primary
+    (module Make
+              (struct
+                type t = A.ext A.table_primary
 
-      let generate = table_primary
-    end) : S))
+                let generate = table_primary
+              end)
+              (struct
+                type t = A.ext A.table_reference
+
+                let generate = table_reference
+              end)
+              (struct
+                type t = A.ext A.condition
+
+                let generate = condition
+              end) : S))
 
 and table_primary () =
   Table_primary.(

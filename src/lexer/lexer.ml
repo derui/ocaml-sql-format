@@ -200,6 +200,26 @@ let kw_lateral =
     , Chars "aA"
     , Chars "lL" )]
 
+let kw_left = [%sedlex.regexp? Chars "lL", Chars "eE", Chars "fF", Chars "tT"]
+
+let kw_right =
+  [%sedlex.regexp? Chars "rR", Chars "iI", Chars "gG", Chars "hH", Chars "tT"]
+
+let kw_full = [%sedlex.regexp? Chars "fF", Chars "uU", Chars "lL", Chars "lL"]
+
+let kw_outer =
+  [%sedlex.regexp? Chars "oO", Chars "uU", Chars "tT", Chars "eE", Chars "rR"]
+
+let kw_inner =
+  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "nN", Chars "nN", Chars "rR"]
+
+let kw_cross =
+  [%sedlex.regexp? Chars "cC", Chars "rR", Chars "oO", Chars "sS", Chars "sS"]
+
+let kw_join = [%sedlex.regexp? Chars "jJ", Chars "oO", Chars "iI", Chars "nN"]
+
+let kw_on = [%sedlex.regexp? Chars "oO", Chars "nN"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -289,6 +309,14 @@ let rec token buf =
   | kw_with -> Kw_with
   | kw_table -> Kw_table
   | kw_lateral -> Kw_lateral
+  | kw_left -> Kw_left
+  | kw_right -> Kw_right
+  | kw_full -> Kw_full
+  | kw_outer -> Kw_outer
+  | kw_inner -> Kw_inner
+  | kw_cross -> Kw_cross
+  | kw_join -> Kw_join
+  | kw_on -> Kw_on
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

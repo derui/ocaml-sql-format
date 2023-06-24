@@ -187,7 +187,18 @@ and 'a select_clause =
     * 'a
   ]
 
-and 'a joined_table = [ `Joined_table of 'a table_primary * 'a ]
+and 'a joined_table =
+  [ `Joined_table of
+    'a table_primary
+    * [ `cross of [ `cross | `union ] * 'a table_primary
+      | `qualified of
+        [ `left | `right | `full | `inner ] option
+        * 'a table_reference
+        * 'a condition
+      ]
+      list
+    * 'a
+  ]
 
 and 'a table_primary =
   [ `Table_primary of
