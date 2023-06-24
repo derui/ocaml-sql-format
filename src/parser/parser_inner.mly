@@ -385,10 +385,10 @@ unsigned_value_expression_primary:
   | Tok_qmark { `Unsigned_value_expression_primary (`parameter_qmark , ()) }
   | Tok_dollar Tok_unsigned_integer { `Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
   | identifier { `Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
+  | subquery { `Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
       (* need implementation:
          - escaped function
          - unescaped Function
-         - subquery
          - nested expression
          - array expression constructor
          - searched case expression

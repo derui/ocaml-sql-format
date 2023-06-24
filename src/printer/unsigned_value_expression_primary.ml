@@ -4,7 +4,9 @@ open Intf
 
 module type S = PRINTER with type t = ext unsigned_value_expression_primary
 
-module Make (I : GEN with type t = ext identifier) : S = struct
+module Make
+    (I : GEN with type t = ext identifier)
+    (Subquery : GEN with type t = ext subquery) : S = struct
   type t = ext unsigned_value_expression_primary
 
   let print f t ~option =
@@ -16,4 +18,7 @@ module Make (I : GEN with type t = ext identifier) : S = struct
     | `Unsigned_value_expression_primary (`parameter_identifier v, _) ->
       let module I = (val I.generate ()) in
       I.print f v ~option
+    | `Unsigned_value_expression_primary (`parameter_subquery v, _) ->
+      let module Subquery = (val Subquery.generate ()) in
+      Subquery.print f v ~option
 end

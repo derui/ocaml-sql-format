@@ -3,14 +3,6 @@ module Options = Options
 
 let identifier () = Identifier.((module Make () : S))
 
-let unsigned_value_expression_primary () =
-  Unsigned_value_expression_primary.(
-    (module Make (struct
-      type t = A.ext A.identifier
-
-      let generate = identifier
-    end) : S))
-
 let non_numeric_literal () = Non_numeric_literal.((module Make () : S))
 
 let unsigned_numeric_literal () =
@@ -559,3 +551,17 @@ and value_expression_primary () =
               end) : S))
 
 and character () = Character.((module Make () : S))
+
+and unsigned_value_expression_primary () =
+  Unsigned_value_expression_primary.(
+    (module Make
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.subquery
+
+                let generate = subquery
+              end) : S))

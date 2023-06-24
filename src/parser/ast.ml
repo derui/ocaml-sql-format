@@ -48,6 +48,7 @@ and 'a unsigned_value_expression_primary =
     [ `parameter_qmark
     | `parameter_dollar of Literal.unsigned_integer
     | `parameter_identifier of 'a identifier
+    | `parameter_subquery of 'a subquery
     ]
     * 'a
   ]
