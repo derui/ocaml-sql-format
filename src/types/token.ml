@@ -69,6 +69,17 @@ type token =
   | Kw_no
   | Kw_header
   | Kw_encoding
+  | Kw_count
+  | Kw_count_big
+  | Kw_sum
+  | Kw_avg
+  | Kw_min
+  | Kw_max
+  | Kw_every
+  | Kw_stddev_pop
+  | Kw_stddev_samp
+  | Kw_var_samp
+  | Kw_var_pop
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

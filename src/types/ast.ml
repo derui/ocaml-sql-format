@@ -327,7 +327,9 @@ and 'a value_expression_primary =
 
 and 'a unescaped_function =
   | Unescaped_function of
-      [ `text_aggregate_function of 'a text_aggregate_function ]
+      [ `text_aggregate_function of 'a text_aggregate_function
+      | `standard_aggregate_function of 'a standard_aggregate_function
+      ]
 
 and 'a derived_column =
   | Derived_column of 'a expression * 'a identifier option * 'a
@@ -340,6 +342,30 @@ and 'a text_aggregate_function =
       * 'a identifier option (* encoding *)
       * 'a order_by_clause option
       * 'a
+
+and 'a standard_aggregate_function =
+  | Standard_aggregate_function of
+      [ `count_star
+      | `count_big_star
+      | `call of standard_aggregate_functions * qualifier option * 'a expression
+      ]
+      * 'a
+
+and standard_aggregate_functions =
+  [ `count
+  | `count_big
+  | `sum
+  | `avg
+  | `min
+  | `max
+  | `every
+  | `stddev_pop
+  | `stddev_samp
+  | `var_samp
+  | `var_pop
+  | `some
+  | `any
+  ]
 
 type ext = unit
 

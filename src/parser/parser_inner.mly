@@ -109,6 +109,17 @@ open Types.Ast
 %token Kw_no
 %token Kw_header
 %token Kw_encoding
+%token Kw_count
+%token Kw_count_big
+%token Kw_sum
+%token Kw_avg
+%token Kw_min
+%token Kw_max
+%token Kw_every
+%token Kw_stddev_pop
+%token Kw_stddev_samp
+%token Kw_var_samp
+%token Kw_var_pop
 
 %token Tok_eof
 
@@ -495,6 +506,7 @@ nested_expression:
 
 unescaped_function:
 | f = text_aggregate_function {Unescaped_function (`text_aggregate_function f)}
+| f = standard_aggregate_function {Unescaped_function (`standard_aggregate_function f)}
 ;;
 
 text_aggregate_function:
@@ -533,6 +545,30 @@ text_aggregate_function:
                                 Option.map snd encoding,
                                 order_by,
                                 ()) }
+;;
+
+standard_aggregate_function:
+| Kw_count Tok_lparen Op_star Tok_rparen { Standard_aggregate_function (`count_star, ())}
+| Kw_count_big Tok_lparen Op_star Tok_rparen { Standard_aggregate_function (`count_big_star, ())}
+| kw = standard_aggregate_function_name Tok_lparen e = expression Tok_rparen { Standard_aggregate_function (`call (kw, None, e), ())}
+| kw = standard_aggregate_function_name Tok_lparen Kw_all e = expression Tok_rparen { Standard_aggregate_function (`call (kw, Some `All, e), ())}
+| kw = standard_aggregate_function_name; Tok_lparen Kw_distinct e = expression Tok_rparen { Standard_aggregate_function (`call (kw, Some `Distinct, e), ())}
+;;
+
+%inline standard_aggregate_function_name:
+| Kw_count {`count}
+| Kw_count_big {`count_big}
+| Kw_sum {`sum}
+| Kw_avg {`avg}
+| Kw_min {`min}
+| Kw_max {`max}
+| Kw_every {`every}
+| Kw_stddev_pop {`stddev_pop}
+| Kw_stddev_samp {`stddev_samp}
+| Kw_var_samp {`var_samp}
+| Kw_var_pop {`var_pop}
+| Kw_some {`some}
+| Kw_any {`any}
 ;;
 
       (* literals *)

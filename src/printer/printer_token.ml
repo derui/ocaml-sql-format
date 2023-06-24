@@ -82,6 +82,17 @@ include (
       | Kw_no -> Fmt.string f @@ as_keyword "no" keyword
       | Kw_header -> Fmt.string f @@ as_keyword "header" keyword
       | Kw_encoding -> Fmt.string f @@ as_keyword "encoding" keyword
+      | Kw_count -> Fmt.string f @@ as_keyword "count" keyword
+      | Kw_count_big -> Fmt.string f @@ as_keyword "count_big" keyword
+      | Kw_avg -> Fmt.string f @@ as_keyword "avg" keyword
+      | Kw_sum -> Fmt.string f @@ as_keyword "sum" keyword
+      | Kw_min -> Fmt.string f @@ as_keyword "min" keyword
+      | Kw_max -> Fmt.string f @@ as_keyword "max" keyword
+      | Kw_every -> Fmt.string f @@ as_keyword "every" keyword
+      | Kw_stddev_pop -> Fmt.string f @@ as_keyword "stddev_pop" keyword
+      | Kw_stddev_samp -> Fmt.string f @@ as_keyword "stddev_samp" keyword
+      | Kw_var_samp -> Fmt.string f @@ as_keyword "var_samp" keyword
+      | Kw_var_pop -> Fmt.string f @@ as_keyword "var_pop" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

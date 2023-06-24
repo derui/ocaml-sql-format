@@ -274,6 +274,74 @@ let kw_encoding =
     , Chars "nN"
     , Chars "gG" )]
 
+let kw_count =
+  [%sedlex.regexp? Chars "cC", Chars "oO", Chars "uU", Chars "nN", Chars "tT"]
+
+let kw_count_big =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "bB"
+    , Chars "iI"
+    , Chars "gG" )]
+
+let kw_sum = [%sedlex.regexp? Chars "sS", Chars "uU", Chars "mM"]
+
+let kw_avg = [%sedlex.regexp? Chars "aA", Chars "vV", Chars "gG"]
+
+let kw_min = [%sedlex.regexp? Chars "mM", Chars "iI", Chars "nN"]
+
+let kw_max = [%sedlex.regexp? Chars "mM", Chars "aA", Chars "xX"]
+
+let kw_every =
+  [%sedlex.regexp? Chars "eE", Chars "vV", Chars "eE", Chars "rR", Chars "yY"]
+
+let kw_stddev_pop =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "tT"
+    , Chars "dD"
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "vV"
+    , '_'
+    , Chars "pP"
+    , Chars "oO"
+    , Chars "pP" )]
+
+let kw_stddev_samp =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "tT"
+    , Chars "dD"
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "vV"
+    , '_'
+    , Chars "sS"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP" )]
+
+let kw_var_samp =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "aA"
+    , Chars "rR"
+    , '_'
+    , Chars "sS"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP" )]
+
+let kw_var_pop =
+  [%sedlex.regexp?
+    Chars "vV", Chars "aA", Chars "rR", '_', Chars "pP", Chars "oO", Chars "pP"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -383,6 +451,17 @@ let rec token buf =
   | kw_no -> Kw_no
   | kw_header -> Kw_header
   | kw_encoding -> Kw_encoding
+  | kw_count -> Kw_count
+  | kw_count_big -> Kw_count_big
+  | kw_avg -> Kw_avg
+  | kw_sum -> Kw_sum
+  | kw_min -> Kw_min
+  | kw_max -> Kw_max
+  | kw_every -> Kw_every
+  | kw_stddev_pop -> Kw_stddev_pop
+  | kw_stddev_samp -> Kw_stddev_samp
+  | kw_var_samp -> Kw_var_samp
+  | kw_var_pop -> Kw_var_pop
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

@@ -1,5 +1,5 @@
 (menhir
- (flags --external-tokens Types.Token --table)
+ (flags --external-tokens Types.Token --explain --table)
  (modules parser_inner)
  (infer false))
 

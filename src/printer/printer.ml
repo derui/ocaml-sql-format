@@ -584,11 +584,17 @@ and derived_column () =
 
 and unescaped_function () =
   Unescaped_function.(
-    (module Make (struct
-      type t = A.ext A.text_aggregate_function
+    (module Make
+              (struct
+                type t = A.ext A.text_aggregate_function
 
-      let generate = text_aggregate_function
-    end) : S))
+                let generate = text_aggregate_function
+              end)
+              (struct
+                type t = A.ext A.standard_aggregate_function
+
+                let generate = standard_aggregate_function
+              end) : S))
 
 and text_aggregate_function () =
   Text_aggregate_function.(
@@ -618,6 +624,14 @@ and text_aggregate_function () =
 
                 let generate = derived_column
               end) : S))
+
+and standard_aggregate_function () =
+  Standard_aggregate_function.(
+    (module Make (struct
+      type t = A.ext A.expression
+
+      let generate = expression
+    end) : S))
 
 and unsigned_value_expression_primary () =
   Unsigned_value_expression_primary.(
