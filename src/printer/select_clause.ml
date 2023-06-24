@@ -8,7 +8,7 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
 
   let print f t ~option =
     match t with
-    | `Select_clause (qualifier, select_list, _) -> (
+    | Select_clause (qualifier, select_list, _) -> (
       Printer_token.print f ~option Types.Token.Kw_select;
       Fmt.string f " ";
 

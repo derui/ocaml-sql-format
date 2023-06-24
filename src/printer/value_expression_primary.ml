@@ -13,10 +13,10 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Value_expression_primary (`non_numeric_literal l, _) ->
+    | Value_expression_primary (`non_numeric_literal l, _) ->
       let module Nnl = (val Nnl.generate ()) in
       Nnl.print f l ~option
-    | `Value_expression_primary (`unsigned_numeric_literal (op, l), _) ->
+    | Value_expression_primary (`unsigned_numeric_literal (op, l), _) ->
       Option.iter
         (function
           | `plus -> Printer_token.print f Op_plus ~option
@@ -24,7 +24,7 @@ module Make
         op;
       let module Unl = (val Unl.generate ()) in
       Unl.print f l ~option
-    | `Value_expression_primary
+    | Value_expression_primary
         (`unsigned_value_expression_primary (exp, indices), _) ->
       let module Expr = (val Expr.generate ()) in
       let module Nve = (val Nve.generate ()) in

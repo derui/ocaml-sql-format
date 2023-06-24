@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Query (clause, into, from, _) ->
+    | Query (clause, into, from, _) ->
       let module Select = (val Select.generate ()) in
       Select.print f clause ~option;
       Option.iter

@@ -9,7 +9,7 @@ module Make (P : GEN with type t = ext query_primary) : S = struct
 
   let print f t ~option =
     match t with
-    | `Query_term (primary, list, _) ->
+    | Query_term (primary, list, _) ->
       let module P = (val P.generate ()) in
       P.print f primary ~option;
 

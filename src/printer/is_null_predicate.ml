@@ -9,11 +9,11 @@ module Make () : S = struct
 
   let print f t ~option =
     match t with
-    | `Is_null_predicate (None, _) ->
+    | Is_null_predicate (None, _) ->
       Printer_token.print f Kw_is ~option;
       Fmt.string f " ";
       Printer_token.print f Kw_null ~option
-    | `Is_null_predicate (Some _, _) ->
+    | Is_null_predicate (Some _, _) ->
       Printer_token.print f Kw_is ~option;
       Fmt.string f " ";
       Printer_token.print f Kw_not ~option;

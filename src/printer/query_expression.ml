@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Query_expression (with_list, e, ()) ->
+    | Query_expression (with_list, e, ()) ->
       let module P = (val P.generate ()) in
       (match with_list with
       | [] -> ()

@@ -9,7 +9,7 @@ module Make (Cve : GEN with type t = ext common_value_expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Like_regex_predicate (s, not_op, _) ->
+    | Like_regex_predicate (s, not_op, _) ->
       Option.iter
         (fun _ ->
           Printer_token.print f Kw_not ~option;

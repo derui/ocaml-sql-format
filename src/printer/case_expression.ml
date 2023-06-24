@@ -9,7 +9,7 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Case_expression (e, list, els, _) ->
+    | Case_expression (e, list, els, _) ->
       Printer_token.print f Kw_case ~option;
       Fmt.string f " ";
       let module Expr = (val Expr.generate ()) in

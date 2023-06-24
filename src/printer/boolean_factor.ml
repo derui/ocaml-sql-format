@@ -9,7 +9,7 @@ module Make (B : GEN with type t = ext boolean_primary) : S = struct
   let print f t ~option =
     let module B = (val B.generate ()) in
     match t with
-    | `Boolean_factor (primary, not_op, _) ->
+    | Boolean_factor (primary, not_op, _) ->
       Option.iter
         (fun _ ->
           Printer_token.print f Kw_not ~option;

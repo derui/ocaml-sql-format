@@ -8,7 +8,7 @@ module Make (B : GEN with type t = ext boolean_value_expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Condition (exp, _) ->
+    | Condition (exp, _) ->
       let module B = (val B.generate ()) in
       B.print f exp ~option
 end

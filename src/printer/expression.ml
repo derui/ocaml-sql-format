@@ -8,7 +8,7 @@ module Make (C : GEN with type t = ext condition) : S = struct
 
   let print f t ~option =
     match t with
-    | `Expression (exp, _) ->
+    | Expression (exp, _) ->
       let module C = (val C.generate ()) in
       C.print f exp ~option
 end

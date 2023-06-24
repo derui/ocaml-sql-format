@@ -18,7 +18,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Match_predicate (kw, e, escape, not_op, _) ->
+    | Match_predicate (kw, e, escape, not_op, _) ->
       Option.iter
         (fun _ ->
           Printer_token.print f Kw_not ~option;

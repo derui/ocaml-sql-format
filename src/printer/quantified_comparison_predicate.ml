@@ -12,7 +12,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Quantified_comparison_predicate (op, kw, `expr e, _) ->
+    | Quantified_comparison_predicate (op, kw, `expr e, _) ->
       let module Co = (val Co.generate ()) in
       let module Expr = (val Expr.generate ()) in
       Co.print f op ~option;
@@ -28,7 +28,7 @@ module Make
       Printer_token.print f Tok_lparen ~option;
       Expr.print f e ~option;
       Printer_token.print f Tok_rparen ~option
-    | `Quantified_comparison_predicate (op, kw, `query q, _) ->
+    | Quantified_comparison_predicate (op, kw, `query q, _) ->
       let module Co = (val Co.generate ()) in
       let module Subquery = (val Subquery.generate ()) in
       Co.print f op ~option;

@@ -9,7 +9,7 @@ module Make (Cond : GEN with type t = ext condition) : S = struct
 
   let print f t ~option =
     match t with
-    | `Where_clause (t, _) ->
+    | Where_clause (t, _) ->
       let module Cond = (val Cond.generate ()) in
       Printer_token.print f ~option Kw_where;
       Fmt.string f " ";

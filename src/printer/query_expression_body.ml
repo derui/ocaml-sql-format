@@ -12,7 +12,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Query_expression_body ({ term; order_by; limit; terms }, _) ->
+    | Query_expression_body ({ term; order_by; limit; terms }, _) ->
       let module P = (val P.generate ()) in
       P.print f term ~option;
 

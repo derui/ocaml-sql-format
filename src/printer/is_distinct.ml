@@ -9,7 +9,7 @@ module Make (Cve : GEN with type t = ext common_value_expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Is_distinct (e, not_op, _) ->
+    | Is_distinct (e, not_op, _) ->
       Printer_token.print f Kw_is ~option;
       Fmt.string f " ";
       Option.iter

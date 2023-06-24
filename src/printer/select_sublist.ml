@@ -10,8 +10,8 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Select_sublist (`All_in_group s, _) -> Fmt.string f s
-    | `Select_sublist (`Select_derived_column (exp, alias), _) ->
+    | Select_sublist (`All_in_group s, _) -> Fmt.string f s
+    | Select_sublist (`Select_derived_column (exp, alias), _) ->
       let module Expr = (val Expr.generate ()) in
       Expr.print f exp ~option;
       Option.iter

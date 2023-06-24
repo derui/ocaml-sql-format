@@ -9,7 +9,7 @@ module Make (IP : GEN with type t = ext integer_parameter) : S = struct
 
   let print f t ~option =
     match t with
-    | `Fetch_clause ({ position; param }, rows, _) ->
+    | Fetch_clause ({ position; param }, rows, _) ->
       Printer_token.print f Kw_fetch ~option;
       Fmt.string f " ";
       let kw =

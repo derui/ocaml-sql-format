@@ -12,7 +12,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Table_primary (`table_name (ident, alias), _) ->
+    | Table_primary (`table_name (ident, alias), _) ->
       let module I = (val I.generate ()) in
       I.print f ident ~option;
       Option.iter
@@ -22,10 +22,10 @@ module Make
           Fmt.string f " ";
           I.print f v ~option)
         alias
-    | `Table_primary (`table_subquery s, _) ->
+    | Table_primary (`table_subquery s, _) ->
       let module Subquery = (val Subquery.generate ()) in
       Subquery.print f s ~option
-    | `Table_primary (`joined joined, _) ->
+    | Table_primary (`joined joined, _) ->
       Printer_token.print f Tok_lparen ~option;
       let module JT = (val JT.generate ()) in
       JT.print f joined ~option;

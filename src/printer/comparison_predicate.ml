@@ -10,7 +10,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Comparison_predicate (op, value, _) ->
+    | Comparison_predicate (op, value, _) ->
       let module Co = (val Co.generate ()) in
       let module Cve = (val Cve.generate ()) in
       Co.print f op ~option;

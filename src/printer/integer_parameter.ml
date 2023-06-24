@@ -9,9 +9,9 @@ module Make (Exp : GEN with type t = ext unsigned_value_expression_primary) :
 
   let print f t ~option =
     match t with
-    | `Integer_parameter (`unsigned_integer (Literal.Unsigned_integer v), _) ->
+    | Integer_parameter (`unsigned_integer (Literal.Unsigned_integer v), _) ->
       Fmt.string f v
-    | `Integer_parameter (`expression v, _) ->
+    | Integer_parameter (`expression v, _) ->
       let module Exp = (val Exp.generate ()) in
       Exp.print f v ~option
 end

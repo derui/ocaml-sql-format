@@ -8,7 +8,7 @@ module Make (I : GEN with type t = ext identifier) : S = struct
 
   let print f t ~option =
     match t with
-    | `Into_clause (ident, _) ->
+    | Into_clause (ident, _) ->
       let module I = (val I.generate ()) in
       Printer_token.print f ~option Types.Token.Kw_into;
       Fmt.string f " ";

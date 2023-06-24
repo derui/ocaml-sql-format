@@ -9,8 +9,8 @@ module Make (SS : GEN with type t = ext sort_specification) : S = struct
 
   let print f t ~option =
     match t with
-    | `Order_by_clause ([], _) -> failwith "Invalid syntax"
-    | `Order_by_clause (first :: rest, _) ->
+    | Order_by_clause ([], _) -> failwith "Invalid syntax"
+    | Order_by_clause (first :: rest, _) ->
       let module SS = (val SS.generate ()) in
       Printer_token.print f Kw_order ~option;
       Fmt.string f " ";

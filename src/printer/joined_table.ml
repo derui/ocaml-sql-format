@@ -12,7 +12,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Joined_table (p, list, _) ->
+    | Joined_table (p, list, _) ->
       let module TP = (val TP.generate ()) in
       TP.print f p ~option;
       List.iter

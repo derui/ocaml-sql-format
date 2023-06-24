@@ -8,7 +8,7 @@ module Make (I : GEN with type t = ext identifier) : S = struct
 
   let print f t ~option =
     match t with
-    | `Column_list (list, _) ->
+    | Column_list (list, _) ->
       let module I = (val I.generate ()) in
       Printer_token.print f Tok_lparen ~option;
 

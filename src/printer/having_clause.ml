@@ -9,7 +9,7 @@ module Make (Con : GEN with type t = ext condition) : S = struct
 
   let print f t ~option =
     match t with
-    | `Having_clause (t, _f) ->
+    | Having_clause (t, _f) ->
       let module Con = (val Con.generate ()) in
       Printer_token.print f ~option Kw_having;
       Fmt.string f " ";

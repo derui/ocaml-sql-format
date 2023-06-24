@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Limit_clause (`limit { count; offset }, _) ->
+    | Limit_clause (`limit { count; offset }, _) ->
       let module IP = (val IP.generate ()) in
       Printer_token.print f Kw_limit ~option;
       Fmt.string f " ";
@@ -29,7 +29,7 @@ module Make
             Fmt.string f " ";
             IP.print f param ~option)
         offset
-    | `Limit_clause (`offset ({ start; fetch }, rows), _) ->
+    | Limit_clause (`offset ({ start; fetch }, rows), _) ->
       let module IP = (val IP.generate ()) in
       Printer_token.print f Kw_offset ~option;
       Fmt.string f " ";
@@ -48,7 +48,7 @@ module Make
           Fmt.string f " ";
           Fc.print f fetch ~option)
         fetch
-    | `Limit_clause (`fetch v, _) ->
+    | Limit_clause (`fetch v, _) ->
       let module Fc = (val Fc.generate ()) in
       Fc.print f v ~option
 end

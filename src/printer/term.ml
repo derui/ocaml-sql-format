@@ -9,7 +9,7 @@ module Make (Vep : GEN with type t = ext value_expression_primary) : S = struct
 
   let print f t ~option =
     match t with
-    | `Term (primary, primaries, _) ->
+    | Term (primary, primaries, _) ->
       let module Vep = (val Vep.generate ()) in
       Vep.print f primary ~option;
 

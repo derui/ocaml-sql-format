@@ -9,7 +9,7 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Nested_expression (list, _) ->
+    | Nested_expression (list, _) ->
       Printer_token.print f Tok_lparen ~option;
       let module Expr = (val Expr.generate ()) in
       (match list with

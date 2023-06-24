@@ -10,7 +10,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Derived_column (exp, alias, _) ->
+    | Derived_column (exp, alias, _) ->
       let module Expr = (val Expr.generate ()) in
       Expr.print f exp ~option;
       Option.iter

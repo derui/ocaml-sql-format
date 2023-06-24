@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `With_list_element (ident, column_list, q, _) ->
+    | With_list_element (ident, column_list, q, _) ->
       let module P = (val P.generate ()) in
       let module C = (val C.generate ()) in
       let module I = (val I.generate ()) in

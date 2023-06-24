@@ -9,7 +9,7 @@ module Make (Sort_key : GEN with type t = ext sort_key) : S = struct
 
   let print f t ~option =
     match t with
-    | `Sort_specification (key, order, null_order, _) ->
+    | Sort_specification (key, order, null_order, _) ->
       let module Sort_key = (val Sort_key.generate ()) in
       Sort_key.print f key ~option;
 

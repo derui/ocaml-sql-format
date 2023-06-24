@@ -9,7 +9,7 @@ module Make (Term : GEN with type t = ext term) : S = struct
 
   let print f t ~option =
     match t with
-    | `Numeric_value_expression (term, terms, _) ->
+    | Numeric_value_expression (term, terms, _) ->
       let module Term = (val Term.generate ()) in
       Term.print f term ~option;
 

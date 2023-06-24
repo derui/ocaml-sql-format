@@ -20,7 +20,7 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Group_by_clause (t, _) -> (
+    | Group_by_clause (t, _) -> (
       Printer_token.print f ~option Kw_group;
       Fmt.string f " ";
       Printer_token.print f ~option Kw_by;

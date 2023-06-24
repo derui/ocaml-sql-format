@@ -7,7 +7,7 @@ module type S = PRINTER with type t = ext comparison_operator
 module Make () : S = struct
   type t = ext comparison_operator
 
-  let print f (`Comparison_operator (t, _)) ~option =
+  let print f (Comparison_operator (t, _)) ~option =
     let op =
       match t with
       | `eq -> Op_eq

@@ -9,7 +9,7 @@ module Make (Q : GEN with type t = ext subquery) : S = struct
 
   let print f t ~option =
     match t with
-    | `Exists_predicate (q, _) ->
+    | Exists_predicate (q, _) ->
       let module Q = (val Q.generate ()) in
       Printer_token.print f Kw_exists ~option;
       Fmt.string f " ";

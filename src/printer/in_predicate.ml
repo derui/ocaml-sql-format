@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `In_predicate (`query q, not_op, _) ->
+    | In_predicate (`query q, not_op, _) ->
       Option.iter
         (fun _ ->
           Printer_token.print f Kw_not ~option;
@@ -22,7 +22,7 @@ module Make
       Printer_token.print f Kw_in ~option;
       Fmt.string f " ";
       Q.print f q ~option
-    | `In_predicate (`values l, not_op, _) ->
+    | In_predicate (`values l, not_op, _) ->
       (Option.iter
          (fun _ ->
            Printer_token.print f Kw_not ~option;

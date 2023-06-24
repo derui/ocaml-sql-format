@@ -9,7 +9,7 @@ module Make (B : GEN with type t = ext boolean_term) : S = struct
 
   let print f t ~option =
     match t with
-    | `Boolean_value_expression (term, terms, _) ->
+    | Boolean_value_expression (term, terms, _) ->
       let module B = (val B.generate ()) in
       B.print f term ~option;
 

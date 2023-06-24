@@ -9,7 +9,7 @@ module Make (Q : GEN with type t = ext query_expression) : S = struct
 
   let print f t ~option =
     match t with
-    | `Subquery (`query q, _) ->
+    | Subquery (`query q, _) ->
       let module Q = (val Q.generate ()) in
       Printer_token.print f Tok_lparen ~option;
       Q.print f q ~option;

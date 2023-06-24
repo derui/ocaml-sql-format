@@ -18,7 +18,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Boolean_primary (value, predicate, _) ->
+    | Boolean_primary (value, predicate, _) ->
       let module Cve = (val Cve.generate ()) in
       Cve.print f value ~option;
 

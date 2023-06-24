@@ -8,7 +8,7 @@ module Make (JT : GEN with type t = ext joined_table) : S = struct
 
   let print f t ~option =
     match t with
-    | `Table_reference (jt, _) ->
+    | Table_reference (jt, _) ->
       let module JT = (val JT.generate ()) in
       JT.print f jt ~option
 end

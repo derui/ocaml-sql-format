@@ -11,7 +11,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Table_subquery (prefix, expr, ident, _) ->
+    | Table_subquery (prefix, expr, ident, _) ->
       let module QExpr = (val QExpr.generate ()) in
       let module I = (val I.generate ()) in
       Option.iter
