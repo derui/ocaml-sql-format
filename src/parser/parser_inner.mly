@@ -97,6 +97,11 @@ open Ast
 %token Kw_cross
 %token Kw_join
 %token Kw_on
+%token Kw_case
+%token Kw_when
+%token Kw_then
+%token Kw_end
+%token Kw_else
 
 %token Tok_eof
 
@@ -386,6 +391,7 @@ unsigned_value_expression_primary:
   | Tok_dollar Tok_unsigned_integer { `Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
   | identifier { `Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
   | subquery { `Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
+  | case_expression { `Unsigned_value_expression_primary (`case_expression $1, ()) }
       (* need implementation:
          - escaped function
          - unescaped Function
@@ -395,6 +401,12 @@ unsigned_value_expression_primary:
          - case expression
        *)
       (* end value expressions *)
+
+sub_case_expression:
+  | Kw_when w = expression Kw_then t = expression {(w, t)}
+
+case_expression:
+  | Kw_case; e = expression; list = nonempty_list(sub_case_expression) els = option(pair(Kw_else, expression)) Kw_end { `Case_expression (e, list, Option.map (fun (_, e) -> e) els, ()) }
 
       (* literals *)
 non_numeric_literal:

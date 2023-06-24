@@ -552,6 +552,14 @@ and value_expression_primary () =
 
 and character () = Character.((module Make () : S))
 
+and case_expression () =
+  Case_expression.(
+    (module Make (struct
+      type t = A.ext A.expression
+
+      let generate = expression
+    end) : S))
+
 and unsigned_value_expression_primary () =
   Unsigned_value_expression_primary.(
     (module Make
@@ -564,4 +572,9 @@ and unsigned_value_expression_primary () =
                 type t = A.ext A.subquery
 
                 let generate = subquery
+              end)
+              (struct
+                type t = A.ext A.case_expression
+
+                let generate = case_expression
               end) : S))

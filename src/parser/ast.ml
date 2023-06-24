@@ -49,7 +49,16 @@ and 'a unsigned_value_expression_primary =
     | `parameter_dollar of Literal.unsigned_integer
     | `parameter_identifier of 'a identifier
     | `parameter_subquery of 'a subquery
+    | `case_expression of 'a case_expression
     ]
+    * 'a
+  ]
+
+and 'a case_expression =
+  [ `Case_expression of
+    'a expression
+    * ('a expression * 'a expression) list
+    * 'a expression option
     * 'a
   ]
 

@@ -57,6 +57,11 @@ type token =
   | Kw_cross
   | Kw_join
   | Kw_on
+  | Kw_case
+  | Kw_when
+  | Kw_then
+  | Kw_end
+  | Kw_else
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

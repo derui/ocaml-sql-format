@@ -6,7 +6,8 @@ module type S = PRINTER with type t = ext unsigned_value_expression_primary
 
 module Make
     (I : GEN with type t = ext identifier)
-    (Subquery : GEN with type t = ext subquery) : S = struct
+    (Subquery : GEN with type t = ext subquery)
+    (CE : GEN with type t = ext case_expression) : S = struct
   type t = ext unsigned_value_expression_primary
 
   let print f t ~option =
@@ -21,4 +22,7 @@ module Make
     | `Unsigned_value_expression_primary (`parameter_subquery v, _) ->
       let module Subquery = (val Subquery.generate ()) in
       Subquery.print f v ~option
+    | `Unsigned_value_expression_primary (`case_expression v, _) ->
+      let module CE = (val CE.generate ()) in
+      CE.print f v ~option
 end

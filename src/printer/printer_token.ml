@@ -70,6 +70,11 @@ include (
       | Kw_cross -> Fmt.string f @@ as_keyword "cross" keyword
       | Kw_join -> Fmt.string f @@ as_keyword "join" keyword
       | Kw_on -> Fmt.string f @@ as_keyword "on" keyword
+      | Kw_case -> Fmt.string f @@ as_keyword "case" keyword
+      | Kw_when -> Fmt.string f @@ as_keyword "when" keyword
+      | Kw_then -> Fmt.string f @@ as_keyword "then" keyword
+      | Kw_end -> Fmt.string f @@ as_keyword "end" keyword
+      | Kw_else -> Fmt.string f @@ as_keyword "else" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

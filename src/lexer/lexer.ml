@@ -220,6 +220,16 @@ let kw_join = [%sedlex.regexp? Chars "jJ", Chars "oO", Chars "iI", Chars "nN"]
 
 let kw_on = [%sedlex.regexp? Chars "oO", Chars "nN"]
 
+let kw_case = [%sedlex.regexp? Chars "cC", Chars "aA", Chars "sS", Chars "eE"]
+
+let kw_when = [%sedlex.regexp? Chars "wW", Chars "hH", Chars "eE", Chars "nN"]
+
+let kw_then = [%sedlex.regexp? Chars "tT", Chars "hH", Chars "eE", Chars "nN"]
+
+let kw_end = [%sedlex.regexp? Chars "eE", Chars "nN", Chars "dD"]
+
+let kw_else = [%sedlex.regexp? Chars "eE", Chars "lL", Chars "sS", Chars "eE"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -317,6 +327,11 @@ let rec token buf =
   | kw_cross -> Kw_cross
   | kw_join -> Kw_join
   | kw_on -> Kw_on
+  | kw_case -> Kw_case
+  | kw_when -> Kw_when
+  | kw_then -> Kw_then
+  | kw_end -> Kw_end
+  | kw_else -> Kw_else
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
