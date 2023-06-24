@@ -211,7 +211,7 @@ let kw_outer =
   [%sedlex.regexp? Chars "oO", Chars "uU", Chars "tT", Chars "eE", Chars "rR"]
 
 let kw_inner =
-  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "nN", Chars "nN", Chars "rR"]
+  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "nN", Chars "eE", Chars "rR"]
 
 let kw_cross =
   [%sedlex.regexp? Chars "cC", Chars "rR", Chars "oO", Chars "sS", Chars "sS"]

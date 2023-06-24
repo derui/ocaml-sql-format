@@ -1,11 +1,13 @@
 open Parser.Ast
+open Parser.Token
 open Intf
 
 module type S = PRINTER with type t = ext table_primary
 
 module Make
     (I : GEN with type t = ext identifier)
-    (Subquery : GEN with type t = ext table_subquery) : S = struct
+    (Subquery : GEN with type t = ext table_subquery)
+    (JT : GEN with type t = ext joined_table) : S = struct
   type t = ext table_primary
 
   let print f t ~option =
@@ -23,4 +25,9 @@ module Make
     | `Table_primary (`table_subquery s, _) ->
       let module Subquery = (val Subquery.generate ()) in
       Subquery.print f s ~option
+    | `Table_primary (`joined joined, _) ->
+      Printer_token.print f Tok_lparen ~option;
+      let module JT = (val JT.generate ()) in
+      JT.print f joined ~option;
+      Printer_token.print f Tok_rparen ~option
 end

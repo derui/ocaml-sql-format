@@ -235,6 +235,7 @@ sub_joined_table:
 table_primary:
   | table_name { `Table_primary (`table_name $1, ()) }
   | table_subquery { `Table_primary (`table_subquery $1, ()) }
+  | Tok_lparen jt = joined_table Tok_rparen { `Table_primary (`joined jt, ()) }
 
 table_subquery:
   | Kw_table Tok_lparen; e = query_expression; Tok_rparen option(Kw_as); ident = identifier {`Table_subquery (Some `table, e, ident, ())}
@@ -242,7 +243,7 @@ table_subquery:
   | Tok_lparen; e = query_expression; Tok_rparen option(Kw_as); ident = identifier {`Table_subquery (None, e, ident, ())}
 
 table_name:
-  | identifier option(Kw_as) identifier { ($1, Some $3) }
+  | identifier pair(option(Kw_as), identifier) { ($1, Some (snd $2)) }
   | identifier { ($1, None) }
     (* end table reference *)
 

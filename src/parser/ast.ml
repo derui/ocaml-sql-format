@@ -204,6 +204,7 @@ and 'a table_primary =
   [ `Table_primary of
     [ `table_name of 'a identifier * 'a identifier option
     | `table_subquery of 'a table_subquery
+    | `joined of 'a joined_table
     ]
     * 'a
   ]

@@ -23,4 +23,4 @@ let%test_unit "from_4 for AST" =
 let%expect_test "from_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM a CROSS JOIN f UNION JOIN g AS inner JOIN b ON a.id = b.id JOIN b ON a.id = b.id LEFT JOIN c ON a.id = c.id FULL JOIN d ON a.id = d.id |}]
+    {| SELECT *  FROM a CROSS JOIN f UNION JOIN g INNER JOIN b ON a.id = b.id JOIN b ON a.id = b.id LEFT JOIN c ON a.id = c.id FULL JOIN d ON a.id = d.id |}]

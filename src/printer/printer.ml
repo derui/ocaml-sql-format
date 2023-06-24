@@ -244,6 +244,11 @@ and table_primary () =
                 type t = A.ext A.table_subquery
 
                 let generate = table_subquery
+              end)
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
               end) : S))
 
 and table_subquery () =
