@@ -230,6 +230,50 @@ let kw_end = [%sedlex.regexp? Chars "eE", Chars "nN", Chars "dD"]
 
 let kw_else = [%sedlex.regexp? Chars "eE", Chars "lL", Chars "sS", Chars "eE"]
 
+let kw_textagg =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "eE"
+    , Chars "xX"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "gG"
+    , Chars "gG" )]
+
+let kw_for = [%sedlex.regexp? Chars "fF", Chars "oO", Chars "rR"]
+
+let kw_delimiter =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "lL"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_quote =
+  [%sedlex.regexp? Chars "qQ", Chars "uU", Chars "oO", Chars "tT", Chars "eE"]
+
+let kw_no = [%sedlex.regexp? Chars "nN", Chars "oO"]
+
+let kw_header =
+  [%sedlex.regexp?
+    Chars "hH", Chars "eE", Chars "aA", Chars "dD", Chars "eE", Chars "rR"]
+
+let kw_encoding =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "nN"
+    , Chars "cC"
+    , Chars "oO"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -332,6 +376,13 @@ let rec token buf =
   | kw_then -> Kw_then
   | kw_end -> Kw_end
   | kw_else -> Kw_else
+  | kw_textagg -> Kw_textagg
+  | kw_for -> Kw_for
+  | kw_delimiter -> Kw_delimiter
+  | kw_quote -> Kw_quote
+  | kw_no -> Kw_no
+  | kw_header -> Kw_header
+  | kw_encoding -> Kw_encoding
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

@@ -8,7 +8,9 @@ module Make
     (I : GEN with type t = ext identifier)
     (Subquery : GEN with type t = ext subquery)
     (CE : GEN with type t = ext case_expression)
-    (SCE : GEN with type t = ext searched_case_expression) : S = struct
+    (SCE : GEN with type t = ext searched_case_expression)
+    (NE : GEN with type t = ext nested_expression)
+    (TAF : GEN with type t = ext text_aggregate_function) : S = struct
   type t = ext unsigned_value_expression_primary
 
   let print f t ~option =
@@ -29,4 +31,10 @@ module Make
     | `Unsigned_value_expression_primary (`searched_case_expression v, _) ->
       let module SCE = (val SCE.generate ()) in
       SCE.print f v ~option
+    | `Unsigned_value_expression_primary (`nested_expression v, _) ->
+      let module NE = (val NE.generate ()) in
+      NE.print f v ~option
+    | `Unsigned_value_expression_primary (`text_aggregate_function v, _) ->
+      let module TAF = (val TAF.generate ()) in
+      TAF.print f v ~option
 end

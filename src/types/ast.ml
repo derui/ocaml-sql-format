@@ -51,6 +51,8 @@ and 'a unsigned_value_expression_primary =
     | `parameter_subquery of 'a subquery
     | `case_expression of 'a case_expression
     | `searched_case_expression of 'a searched_case_expression
+    | `nested_expression of 'a nested_expression
+    | `text_aggregate_function of 'a text_aggregate_function
     ]
     * 'a
   ]
@@ -67,6 +69,8 @@ and 'a searched_case_expression =
   [ `Searched_case_expression of
     ('a expression * 'a expression) list * 'a expression option * 'a
   ]
+
+and 'a nested_expression = [ `Nested_expression of 'a expression list * 'a ]
 
 and 'a non_numeric_literal =
   [ `Non_numeric_literal of
@@ -234,7 +238,7 @@ and 'a table_reference = [ `Table_reference of 'a joined_table * 'a ]
 
 and 'a select_sublist =
   [ `Select_sublist of
-    [ `Derived_column of 'a expression * 'a identifier option
+    [ `Select_derived_column of 'a expression * 'a identifier option
     | `All_in_group of string
     ]
     * 'a
@@ -347,6 +351,19 @@ and 'a value_expression_primary =
     | `unsigned_value_expression_primary of
       'a unsigned_value_expression_primary * 'a numeric_value_expression list
     ]
+    * 'a
+  ]
+
+and 'a derived_column =
+  [ `Derived_column of 'a expression * 'a identifier option * 'a ]
+
+and 'a text_aggregate_function =
+  [ `Text_aggregate_function of
+    'a derived_column list
+    * 'a character option (* delimiter *)
+    * [ `quote of 'a character | `no_quote ] option (* quote *)
+    * 'a identifier option (* encoding *)
+    * 'a order_by_clause option
     * 'a
   ]
 

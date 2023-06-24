@@ -1,6 +1,7 @@
 (menhir
- (flags --external-tokens Types.Token --explain --table)
- (modules parser_inner))
+ (flags --external-tokens Types.Token --table)
+ (modules parser_inner)
+ (infer false))
 
 (rule
   (targets parser_messages.ml)

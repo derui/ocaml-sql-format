@@ -62,6 +62,13 @@ type token =
   | Kw_then
   | Kw_end
   | Kw_else
+  | Kw_textagg
+  | Kw_for
+  | Kw_delimiter
+  | Kw_quote
+  | Kw_no
+  | Kw_header
+  | Kw_encoding
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

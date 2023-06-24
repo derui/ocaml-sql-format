@@ -568,6 +568,57 @@ and searched_case_expression () =
       let generate = expression
     end) : S))
 
+and nested_expression () =
+  Nested_expression.(
+    (module Make (struct
+      type t = A.ext A.expression
+
+      let generate = expression
+    end) : S))
+
+and derived_column () =
+  Derived_column.(
+    (module Make
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.expression
+
+                let generate = expression
+              end) : S))
+
+and text_aggregate_function () =
+  Text_aggregate_function.(
+    (module Make
+              (struct
+                type t = A.ext A.expression
+
+                let generate = expression
+              end)
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.character
+
+                let generate = character
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
+              end)
+              (struct
+                type t = A.ext A.derived_column
+
+                let generate = derived_column
+              end) : S))
+
 and unsigned_value_expression_primary () =
   Unsigned_value_expression_primary.(
     (module Make
@@ -590,4 +641,14 @@ and unsigned_value_expression_primary () =
                 type t = A.ext A.searched_case_expression
 
                 let generate = searched_case_expression
+              end)
+              (struct
+                type t = A.ext A.nested_expression
+
+                let generate = nested_expression
+              end)
+              (struct
+                type t = A.ext A.text_aggregate_function
+
+                let generate = text_aggregate_function
               end) : S))

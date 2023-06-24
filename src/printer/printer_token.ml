@@ -75,6 +75,13 @@ include (
       | Kw_then -> Fmt.string f @@ as_keyword "then" keyword
       | Kw_end -> Fmt.string f @@ as_keyword "end" keyword
       | Kw_else -> Fmt.string f @@ as_keyword "else" keyword
+      | Kw_textagg -> Fmt.string f @@ as_keyword "textagg" keyword
+      | Kw_for -> Fmt.string f @@ as_keyword "for" keyword
+      | Kw_delimiter -> Fmt.string f @@ as_keyword "delimiter" keyword
+      | Kw_quote -> Fmt.string f @@ as_keyword "quote" keyword
+      | Kw_no -> Fmt.string f @@ as_keyword "no" keyword
+      | Kw_header -> Fmt.string f @@ as_keyword "header" keyword
+      | Kw_encoding -> Fmt.string f @@ as_keyword "encoding" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
