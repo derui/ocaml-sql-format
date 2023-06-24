@@ -1,5 +1,5 @@
-open Parser.Token
-module L = Parser.Ast.Literal
+open Types.Token
+module L = Types.Ast.Literal
 
 let kw_select =
   [%sedlex.regexp?

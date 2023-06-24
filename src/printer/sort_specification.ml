@@ -1,5 +1,5 @@
-open Parser.Ast
-open Parser.Token
+open Types.Ast
+open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext sort_specification

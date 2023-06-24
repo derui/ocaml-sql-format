@@ -10,7 +10,7 @@ let get_parse_error env =
     try Parser.Mesasges.message (I.number state)
     with Not_found -> "invalid syntax (no specific message for this eror)")
 
-let rec parse lexbuf (checkpoint : Parser.Ast.entry list I.checkpoint) =
+let rec parse lexbuf (checkpoint : Types.Ast.entry list I.checkpoint) =
   match checkpoint with
   | I.InputNeeded _env ->
     let token = Lexer.token lexbuf in

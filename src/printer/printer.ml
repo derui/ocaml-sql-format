@@ -1,4 +1,4 @@
-module A = Parser.Ast
+module A = Types.Ast
 module Options = Options
 
 let identifier () = Identifier.((module Make () : S))
@@ -560,6 +560,14 @@ and case_expression () =
       let generate = expression
     end) : S))
 
+and searched_case_expression () =
+  Searched_case_expression.(
+    (module Make (struct
+      type t = A.ext A.expression
+
+      let generate = expression
+    end) : S))
+
 and unsigned_value_expression_primary () =
   Unsigned_value_expression_primary.(
     (module Make
@@ -577,4 +585,9 @@ and unsigned_value_expression_primary () =
                 type t = A.ext A.case_expression
 
                 let generate = case_expression
+              end)
+              (struct
+                type t = A.ext A.searched_case_expression
+
+                let generate = searched_case_expression
               end) : S))

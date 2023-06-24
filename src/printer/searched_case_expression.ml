@@ -2,20 +2,17 @@ open Types.Ast
 open Types.Token
 open Intf
 
-module type S = PRINTER with type t = ext case_expression
+module type S = PRINTER with type t = ext searched_case_expression
 
 module Make (Expr : GEN with type t = ext expression) : S = struct
-  type t = ext case_expression
+  type t = ext searched_case_expression
 
   let print f t ~option =
     match t with
-    | `Case_expression (e, list, els, _) ->
+    | `Searched_case_expression (list, els, _) ->
       Printer_token.print f Kw_case ~option;
       Fmt.string f " ";
       let module Expr = (val Expr.generate ()) in
-      Expr.print f e ~option;
-      Fmt.string f " ";
-
       List.iter
         (fun (w, t) ->
           Printer_token.print f Kw_when ~option;

@@ -1,4 +1,4 @@
-open Parser.Ast
+open Types.Ast
 open Intf
 
 module type S = PRINTER with type t = ext from_clause
@@ -14,7 +14,7 @@ module Make
     match t with
     | `From_clause ({ tables; group_by; having; where }, _) ->
       Fmt.string f " ";
-      Printer_token.print f ~option Parser.Token.Kw_from;
+      Printer_token.print f ~option Types.Token.Kw_from;
       Fmt.string f " ";
 
       (match tables with
@@ -24,7 +24,7 @@ module Make
         Table_reference.print f ~option fst;
         List.iter
           (fun v ->
-            Printer_token.print f ~option Parser.Token.Tok_comma;
+            Printer_token.print f ~option Types.Token.Tok_comma;
             Table_reference.print f ~option v)
           rest);
       Option.iter

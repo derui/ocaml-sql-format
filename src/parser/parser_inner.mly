@@ -1,5 +1,5 @@
 %{
-open Ast
+open Types.Ast
 %}
 
 %token Tok_lparen
@@ -105,7 +105,7 @@ open Ast
 
 %token Tok_eof
 
-%start <Ast.entry list> entries
+%start <Types.Ast.entry list> entries
 %%
 
 entries:
@@ -392,6 +392,7 @@ unsigned_value_expression_primary:
   | identifier { `Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
   | subquery { `Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
   | case_expression { `Unsigned_value_expression_primary (`case_expression $1, ()) }
+  | searched_case_expression { `Unsigned_value_expression_primary (`searched_case_expression $1, ()) }
       (* need implementation:
          - escaped function
          - unescaped Function
@@ -407,6 +408,9 @@ sub_case_expression:
 
 case_expression:
   | Kw_case; e = expression; list = nonempty_list(sub_case_expression) els = option(pair(Kw_else, expression)) Kw_end { `Case_expression (e, list, Option.map (fun (_, e) -> e) els, ()) }
+
+searched_case_expression:
+  | Kw_case; list = nonempty_list(sub_case_expression) els = option(pair(Kw_else, expression)) Kw_end { `Searched_case_expression (list, Option.map (fun (_, e) -> e) els, ()) }
 
       (* literals *)
 non_numeric_literal:

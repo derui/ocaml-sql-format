@@ -1,4 +1,4 @@
-open Parser.Token
+open Types.Token
 open Intf
 
 let as_keyword original = function
@@ -10,7 +10,7 @@ include (
     type t = token
 
     let print f t ~option:{ Options.keyword; _ } =
-      let module L = Parser.Ast.Literal in
+      let module L = Types.Ast.Literal in
       match t with
       | Kw_all -> Fmt.string f @@ as_keyword "all" keyword
       | Kw_select -> Fmt.string f @@ as_keyword "select" keyword

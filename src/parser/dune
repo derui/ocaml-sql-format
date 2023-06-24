@@ -1,5 +1,5 @@
 (menhir
- (flags --external-tokens Token --explain --table)
+ (flags --external-tokens Types.Token --explain --table)
  (modules parser_inner))
 
 (rule
@@ -10,5 +10,4 @@
 (library
   (name parser)
   (public_name ocaml-sql-format.parser)
-  (libraries ppx_deriving menhirLib)
-  (preprocess (pps ppx_deriving.show ppx_deriving.eq)))
+  (libraries menhirLib ocaml-sql-format.types))

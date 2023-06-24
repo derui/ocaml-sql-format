@@ -50,6 +50,7 @@ and 'a unsigned_value_expression_primary =
     | `parameter_identifier of 'a identifier
     | `parameter_subquery of 'a subquery
     | `case_expression of 'a case_expression
+    | `searched_case_expression of 'a searched_case_expression
     ]
     * 'a
   ]
@@ -60,6 +61,11 @@ and 'a case_expression =
     * ('a expression * 'a expression) list
     * 'a expression option
     * 'a
+  ]
+
+and 'a searched_case_expression =
+  [ `Searched_case_expression of
+    ('a expression * 'a expression) list * 'a expression option * 'a
   ]
 
 and 'a non_numeric_literal =

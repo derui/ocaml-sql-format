@@ -1,5 +1,5 @@
-open Parser.Ast
-open Parser.Token
+open Types.Ast
+open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext unsigned_value_expression_primary
@@ -7,7 +7,8 @@ module type S = PRINTER with type t = ext unsigned_value_expression_primary
 module Make
     (I : GEN with type t = ext identifier)
     (Subquery : GEN with type t = ext subquery)
-    (CE : GEN with type t = ext case_expression) : S = struct
+    (CE : GEN with type t = ext case_expression)
+    (SCE : GEN with type t = ext searched_case_expression) : S = struct
   type t = ext unsigned_value_expression_primary
 
   let print f t ~option =
@@ -25,4 +26,7 @@ module Make
     | `Unsigned_value_expression_primary (`case_expression v, _) ->
       let module CE = (val CE.generate ()) in
       CE.print f v ~option
+    | `Unsigned_value_expression_primary (`searched_case_expression v, _) ->
+      let module SCE = (val SCE.generate ()) in
+      SCE.print f v ~option
 end
