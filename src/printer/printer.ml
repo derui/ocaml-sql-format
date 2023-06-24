@@ -8,15 +8,27 @@ let non_numeric_literal () = Non_numeric_literal.((module Make () : S))
 let unsigned_numeric_literal () =
   Unsigned_numeric_literal.((module Make () : S))
 
-let rec directly_executable_statement () =
-  Directly_executable_statement.(
+let column_list () =
+  Column_list.(
     (module Make (struct
-      type t = A.ext A.query_expression
+      type t = A.ext A.identifier
 
-      let generate = query_expression
+      let generate = identifier
     end) : S))
 
-and query_expression () =
+let into_clause () =
+  Into_clause.(
+    (module Make (struct
+      type t = A.ext A.identifier
+
+      let generate = identifier
+    end) : S))
+
+let comparison_operator () = Comparison_operator.((module Make () : S))
+
+let character () = Character.((module Make () : S))
+
+let rec query_expression () =
   Query_expression.(
     (module Make
               (struct
@@ -48,14 +60,6 @@ and with_list_element () =
 
                 let generate = identifier
               end) : S))
-
-and column_list () =
-  Column_list.(
-    (module Make (struct
-      type t = A.ext A.identifier
-
-      let generate = identifier
-    end) : S))
 
 and query_expression_body () =
   Query_expression_body.(
@@ -164,14 +168,6 @@ and query () =
 
                 let generate = from_clause
               end) : S))
-
-and into_clause () =
-  Into_clause.(
-    (module Make (struct
-      type t = A.ext A.identifier
-
-      let generate = identifier
-    end) : S))
 
 and from_clause () =
   From_clause.(
@@ -508,8 +504,6 @@ and subquery () =
       let generate = query_expression
     end) : S))
 
-and comparison_operator () = Comparison_operator.((module Make () : S))
-
 and numeric_value_expression () =
   Numeric_value_expression.(
     (module Make (struct
@@ -550,8 +544,6 @@ and value_expression_primary () =
                 let generate = numeric_value_expression
               end) : S))
 
-and character () = Character.((module Make () : S))
-
 and case_expression () =
   Case_expression.(
     (module Make (struct
@@ -589,6 +581,14 @@ and derived_column () =
 
                 let generate = expression
               end) : S))
+
+and unescaped_function () =
+  Unescaped_function.(
+    (module Make (struct
+      type t = A.ext A.text_aggregate_function
+
+      let generate = text_aggregate_function
+    end) : S))
 
 and text_aggregate_function () =
   Text_aggregate_function.(
@@ -648,7 +648,15 @@ and unsigned_value_expression_primary () =
                 let generate = nested_expression
               end)
               (struct
-                type t = A.ext A.text_aggregate_function
+                type t = A.ext A.unescaped_function
 
-                let generate = text_aggregate_function
+                let generate = unescaped_function
               end) : S))
+
+let directly_executable_statement () =
+  Directly_executable_statement.(
+    (module Make (struct
+      type t = A.ext A.query_expression
+
+      let generate = query_expression
+    end) : S))

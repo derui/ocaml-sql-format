@@ -14,7 +14,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | `Text_aggregate_function (columns, delim, quote, encoding, order_by, _) ->
+    | Text_aggregate_function (columns, delim, quote, encoding, order_by, _) ->
       Printer_token.print f Kw_textagg ~option;
       Fmt.string f " ";
       Printer_token.print f Tok_lparen ~option;

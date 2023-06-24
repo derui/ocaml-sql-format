@@ -44,18 +44,17 @@ and not_op = [ `not' ] option [@@deriving show, eq]
 type 'a identifier = [ `Identifier of string * 'a ]
 
 and 'a unsigned_value_expression_primary =
-  [ `Unsigned_value_expression_primary of
-    [ `parameter_qmark
-    | `parameter_dollar of Literal.unsigned_integer
-    | `parameter_identifier of 'a identifier
-    | `parameter_subquery of 'a subquery
-    | `case_expression of 'a case_expression
-    | `searched_case_expression of 'a searched_case_expression
-    | `nested_expression of 'a nested_expression
-    | `text_aggregate_function of 'a text_aggregate_function
-    ]
-    * 'a
-  ]
+  | Unsigned_value_expression_primary of
+      [ `parameter_qmark
+      | `parameter_dollar of Literal.unsigned_integer
+      | `parameter_identifier of 'a identifier
+      | `parameter_subquery of 'a subquery
+      | `case_expression of 'a case_expression
+      | `searched_case_expression of 'a searched_case_expression
+      | `nested_expression of 'a nested_expression
+      | `unescaped_function of 'a unescaped_function
+      ]
+      * 'a
 
 and 'a case_expression =
   [ `Case_expression of
@@ -354,18 +353,21 @@ and 'a value_expression_primary =
     * 'a
   ]
 
+and 'a unescaped_function =
+  | Unescaped_function of
+      [ `text_aggregate_function of 'a text_aggregate_function ]
+
 and 'a derived_column =
   [ `Derived_column of 'a expression * 'a identifier option * 'a ]
 
 and 'a text_aggregate_function =
-  [ `Text_aggregate_function of
-    'a derived_column list
-    * 'a character option (* delimiter *)
-    * [ `quote of 'a character | `no_quote ] option (* quote *)
-    * 'a identifier option (* encoding *)
-    * 'a order_by_clause option
-    * 'a
-  ]
+  | Text_aggregate_function of
+      'a derived_column list
+      * 'a character option (* delimiter *)
+      * [ `quote of 'a character | `no_quote ] option (* quote *)
+      * 'a identifier option (* encoding *)
+      * 'a order_by_clause option
+      * 'a
 
 type ext = unit
 

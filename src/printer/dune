@@ -2,4 +2,4 @@
  (name printer)
  (public_name ocaml-sql-format.printer)
  (flags (:standard -safe-string))
- (libraries fmt ocaml-sql-format.types menhirLib))
+ (libraries fmt ocaml-sql-format.types))

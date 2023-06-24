@@ -460,14 +460,14 @@ value_expression_primary:
 ;;
 
 unsigned_value_expression_primary:
-  | Tok_qmark { `Unsigned_value_expression_primary (`parameter_qmark , ()) }
-  | Tok_dollar Tok_unsigned_integer { `Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
-  | identifier { `Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
-  | subquery { `Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
-  | case_expression { `Unsigned_value_expression_primary (`case_expression $1, ()) }
-  | searched_case_expression { `Unsigned_value_expression_primary (`searched_case_expression $1, ()) }
-  | nested_expression { `Unsigned_value_expression_primary (`nested_expression $1, ()) }
-  | text_aggregate_function { `Unsigned_value_expression_primary (`text_aggregate_function $1, ()) }
+  | Tok_qmark { Unsigned_value_expression_primary (`parameter_qmark , ()) }
+  | Tok_dollar Tok_unsigned_integer { Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
+  | identifier { Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
+  | subquery { Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
+  | case_expression { Unsigned_value_expression_primary (`case_expression $1, ()) }
+  | searched_case_expression { Unsigned_value_expression_primary (`searched_case_expression $1, ()) }
+  | nested_expression { Unsigned_value_expression_primary (`nested_expression $1, ()) }
+  | f = unescaped_function { Unsigned_value_expression_primary (`unescaped_function f, ()) }
       (* need implementation:
          - escaped function
          - unescaped Function
@@ -493,13 +493,17 @@ nested_expression:
   | Tok_lparen; list = separated_nonempty_list(Tok_comma, expression) option(Tok_comma) Tok_rparen { `Nested_expression (list, ()) }
 ;;
 
+unescaped_function:
+| f = text_aggregate_function {Unescaped_function (`text_aggregate_function f)}
+;;
+
 text_aggregate_function:
   | Kw_textagg Tok_lparen option(Kw_for); columns = separated_nonempty_list(Tok_comma, derived_column);
     delimiter = option(pair(Kw_delimiter, character));
     option(Kw_header);
     encoding = option(pair(Kw_encoding, identifier));
     order_by = option(order_by_clause); Tok_rparen
-    { `Text_aggregate_function (columns,
+    { Text_aggregate_function (columns,
                                 Option.map snd delimiter,
                                 None,
                                 Option.map snd encoding,
@@ -511,7 +515,7 @@ text_aggregate_function:
     option(Kw_header);
     encoding = option(pair(Kw_encoding, identifier));
     order_by = option(order_by_clause); Tok_rparen
-    { `Text_aggregate_function (columns,
+    { Text_aggregate_function (columns,
                                 Option.map snd delimiter,
                                 Some (`quote (snd quote)),
                                 Option.map snd encoding,
@@ -523,7 +527,7 @@ text_aggregate_function:
     option(Kw_header);
     encoding = option(pair(Kw_encoding, identifier));
     order_by = option(order_by_clause); Tok_rparen
-    { `Text_aggregate_function (columns,
+    { Text_aggregate_function (columns,
                                 Option.map snd delimiter,
                                 Some `no_quote,
                                 Option.map snd encoding,
