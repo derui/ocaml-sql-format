@@ -341,7 +341,9 @@ and 'a unescaped_function =
         'a analytic_aggregate_function
         * 'a filter_clause option
         * 'a window_specification
+      | `function' of 'a function' * 'a window_specification option
       ]
+      * 'a
 
 and 'a derived_column =
   | Derived_column of 'a expression * 'a identifier option * 'a
@@ -456,6 +458,13 @@ and 'a basic_data_type = Basic_data_type of 'a simple_data_type * bool * 'a
 and 'a data_type =
   | Data_type of
       [ `basic of 'a basic_data_type | `other of 'a identifier * bool ] * 'a
+
+and 'a function' =
+  | Function of
+      [ `convert of 'a expression * 'a data_type
+      | `cast of 'a expression * 'a data_type
+      ]
+      * 'a
 
 type ext = unit
 

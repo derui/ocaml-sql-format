@@ -118,6 +118,9 @@ type token =
   | Kw_geometry
   | Kw_geography
   | Kw_xml
+  (* functions *)
+  | Kw_convert
+  | Kw_cast
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

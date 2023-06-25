@@ -644,6 +644,11 @@ and unescaped_function () =
                 type t = A.ext A.analytic_aggregate_function
 
                 let generate = analytic_aggregate_function
+              end)
+              (struct
+                type t = A.ext A.function'
+
+                let generate = function'
               end) : S))
 
 and text_aggregate_function () =
@@ -759,6 +764,20 @@ and window_frame_bound () =
 
       let generate = unsigned_integer
     end) : S))
+
+and function' () =
+  Function.(
+    (module Make
+              (struct
+                type t = A.ext A.expression
+
+                let generate = expression
+              end)
+              (struct
+                type t = A.ext A.data_type
+
+                let generate = data_type
+              end) : S))
 
 let directly_executable_statement () =
   Directly_executable_statement.(

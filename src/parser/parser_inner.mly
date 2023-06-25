@@ -158,6 +158,8 @@ open Types.Ast
 %token Kw_geometry
 %token Kw_geography
 %token Kw_xml
+%token Kw_convert
+%token Kw_cast
 
 %token Tok_eof
 
@@ -543,9 +545,10 @@ nested_expression:
 ;;
 
 unescaped_function:
-| f = text_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`text_aggregate_function (f, filter, window))}
-| f = standard_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`standard_aggregate_function (f, filter, window))}
-| f = analytic_aggregate_function; filter = option(filter_clause); window = window_specification {Unescaped_function (`analytic_aggregate_function (f, filter, window))}
+| f = text_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`text_aggregate_function (f, filter, window), ())}
+| f = standard_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`standard_aggregate_function (f, filter, window), ())}
+| f = analytic_aggregate_function; filter = option(filter_clause); window = window_specification {Unescaped_function (`analytic_aggregate_function (f, filter, window), ())}
+| f = function_;  window = option(window_specification) {Unescaped_function (`function' (f, window), ())}
 ;;
 
 text_aggregate_function:
@@ -670,61 +673,66 @@ analytic_aggregate_function:
 ;;
 
 simple_data_type:
-  | Kw_string { Simple_data_type (`string None) }
-  | Kw_string Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`string (Some ui)) }
-  | Kw_varchar { Simple_data_type (`varchar None) }
-  | Kw_varchar Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varchar (Some ui)) }
-  | Kw_boolean { Simple_data_type `boolean }
-  | Kw_byte { Simple_data_type `byte }
-  | Kw_tinyint { Simple_data_type `tinyint }
-  | Kw_short { Simple_data_type `short }
-  | Kw_smallint { Simple_data_type `smallint }
-  | Kw_char { Simple_data_type (`char None) }
-  | Kw_char Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`char (Some ui)) }
-  | Kw_integer { Simple_data_type `integer }
-  | Kw_long { Simple_data_type `long }
-  | Kw_bigint { Simple_data_type `bigint }
-  | Kw_biginteger { Simple_data_type (`biginteger None) }
-  | Kw_biginteger Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`biginteger (Some ui)) }
-  | Kw_float { Simple_data_type `float }
-  | Kw_real { Simple_data_type `real }
-  | Kw_double { Simple_data_type `double }
-  | Kw_bigdecimal { Simple_data_type (`bigdecimal (None, None)) }
-  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, None)) }
-  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, Some prec)) }
-  | Kw_decimal { Simple_data_type (`decimal (None, None)) }
-  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, None)) }
-  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, Some prec)) }
-  | Kw_date { Simple_data_type `date }
-  | Kw_time { Simple_data_type `time }
-  | Kw_timestamp { Simple_data_type (`timestamp None) }
-  | Kw_timestamp Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`timestamp (Some ui)) }
-  | Kw_object { Simple_data_type (`object' None) }
-  | Kw_object Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`object' (Some ui)) }
-  | Kw_blob { Simple_data_type (`blob None) }
-  | Kw_blob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`blob (Some ui)) }
-  | Kw_clob { Simple_data_type (`clob None) }
-  | Kw_clob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`clob (Some ui)) }
-  | Kw_json { Simple_data_type `json }
-  | Kw_varbinary { Simple_data_type (`varbinary None) }
-  | Kw_varbinary Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varbinary (Some ui)) }
-  | Kw_geometry { Simple_data_type `geometry }
-  | Kw_geography { Simple_data_type `geography }
-  | Kw_xml { Simple_data_type `xml }
+  | Kw_string { Simple_data_type (`string None, ()) }
+  | Kw_string Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`string (Some ui), ()) }
+  | Kw_varchar { Simple_data_type (`varchar None, ()) }
+  | Kw_varchar Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varchar (Some ui), ()) }
+  | Kw_boolean { Simple_data_type (`boolean, ()) }
+  | Kw_byte { Simple_data_type (`byte, ()) }
+  | Kw_tinyint { Simple_data_type (`tinyint, ()) }
+  | Kw_short { Simple_data_type (`short, ()) }
+  | Kw_smallint { Simple_data_type (`smallint, ()) }
+  | Kw_char { Simple_data_type (`char None, ()) }
+  | Kw_char Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`char (Some ui), ()) }
+  | Kw_integer { Simple_data_type (`integer, ()) }
+  | Kw_long { Simple_data_type (`long, ()) }
+  | Kw_bigint { Simple_data_type (`bigint, ()) }
+  | Kw_biginteger { Simple_data_type (`biginteger None, ()) }
+  | Kw_biginteger Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`biginteger (Some ui), ()) }
+  | Kw_float { Simple_data_type (`float, ()) }
+  | Kw_real { Simple_data_type (`real, ()) }
+  | Kw_double { Simple_data_type (`double, ()) }
+  | Kw_bigdecimal { Simple_data_type (`bigdecimal (None, None), ()) }
+  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, None), ()) }
+  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, Some prec), ()) }
+  | Kw_decimal { Simple_data_type (`decimal (None, None), ()) }
+  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, None), ()) }
+  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, Some prec), ()) }
+  | Kw_date { Simple_data_type (`date, ()) }
+  | Kw_time { Simple_data_type (`time, ()) }
+  | Kw_timestamp { Simple_data_type (`timestamp None, ()) }
+  | Kw_timestamp Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`timestamp (Some ui), ()) }
+  | Kw_object { Simple_data_type (`object' None, ()) }
+  | Kw_object Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`object' (Some ui), ()) }
+  | Kw_blob { Simple_data_type (`blob None, ()) }
+  | Kw_blob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`blob (Some ui), ()) }
+  | Kw_clob { Simple_data_type (`clob None, ()) }
+  | Kw_clob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`clob (Some ui), ()) }
+  | Kw_json { Simple_data_type (`json, ()) }
+  | Kw_varbinary { Simple_data_type (`varbinary None, ()) }
+  | Kw_varbinary Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varbinary (Some ui), ()) }
+  | Kw_geometry { Simple_data_type (`geometry, ()) }
+  | Kw_geography { Simple_data_type (`geography, ()) }
+  | Kw_xml { Simple_data_type (`xml, ()) }
 ;;
 
 basic_data_type:
-  | typ = simple_data_type; ary = option(pair(Tok_lbrace, Tok_rbrace)) {
+  | typ = simple_data_type; ary = option(pair(Tok_lsbrace, Tok_rsbrace)) {
                                       let ary = Option.map (fun _ -> true) ary |> Option.value ~default:false in
                                       Basic_data_type (typ, ary, ())
                                     }
 ;;
 data_type:
   | typ = basic_data_type { Data_type (`basic typ, ())}
-  | typ = identifier; ary = option(pair(Tok_lbrace, Tok_rbrace)) {
+  | typ = identifier; ary = option(pair(Tok_lsbrace, Tok_rsbrace)) {
                                       let ary = Option.map (fun _ -> true) ary |> Option.value ~default:false in
-                                      Basic_data_type (`other (typ, ary), ())
+                                      Data_type (`other (typ, ary), ())
                                     }
+;;
+
+function_:
+| Kw_convert Tok_lparen e = expression Tok_comma d = data_type  Tok_rparen { Function (`convert (e, d), ()) }
+| Kw_cast Tok_lparen e = expression Kw_as d = data_type  Tok_rparen { Function (`cast (e, d), ()) }
 ;;
       (* literals *)
 unsigned_integer:

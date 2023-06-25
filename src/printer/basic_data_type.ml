@@ -14,6 +14,6 @@ module Make (Simple : GEN with type t = ext simple_data_type) : S = struct
       Simple.print f typ ~option;
 
       if as_array then (
-        Printer_token.print f Tok_lbrace ~option;
-        Printer_token.print f Tok_rbrace ~option)
+        Printer_token.print f Tok_lsbrace ~option;
+        Printer_token.print f Tok_rsbrace ~option)
 end

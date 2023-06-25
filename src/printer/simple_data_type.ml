@@ -57,32 +57,38 @@ module Make (UI : GEN with type t = ext unsigned_integer) : S = struct
     | Simple_data_type (`float, _) -> Printer_token.print f Kw_float ~option
     | Simple_data_type (`real, _) -> Printer_token.print f Kw_real ~option
     | Simple_data_type (`double, _) -> Printer_token.print f Kw_double ~option
-    | Simple_data_type (`bigdecimal (ui, precision), _) ->
+    | Simple_data_type (`bigdecimal (ui, precision), _) -> (
       Printer_token.print f Kw_bigdecimal ~option;
-      Option.iter
-        (fun v ->
-          let module UI = (val UI.generate ()) in
-          print_arg f (fun () -> UI.print f v ~option) ~option)
-        ui;
-      Option.iter
-        (fun v ->
-          let module UI = (val UI.generate ()) in
-          Printer_token.print f Tok_comma ~option;
-          print_arg f (fun () -> UI.print f v ~option) ~option)
-        precision
-    | Simple_data_type (`decimal (ui, precision), _) ->
+      match (ui, precision) with
+      | Some ui, None ->
+        let module UI = (val UI.generate ()) in
+        print_arg f (fun () -> UI.print f ui ~option) ~option
+      | Some ui, Some prec ->
+        let module UI = (val UI.generate ()) in
+        print_arg f
+          (fun () ->
+            UI.print f ui ~option;
+            Printer_token.print f Tok_comma ~option;
+            UI.print f prec ~option)
+          ~option
+      | None, None -> ()
+      | _ -> failwith "invalid bigdecimal")
+    | Simple_data_type (`decimal (ui, precision), _) -> (
       Printer_token.print f Kw_decimal ~option;
-      Option.iter
-        (fun v ->
-          let module UI = (val UI.generate ()) in
-          print_arg f (fun () -> UI.print f v ~option) ~option)
-        ui;
-      Option.iter
-        (fun v ->
-          let module UI = (val UI.generate ()) in
-          Printer_token.print f Tok_comma ~option;
-          print_arg f (fun () -> UI.print f v ~option) ~option)
-        precision
+      match (ui, precision) with
+      | Some ui, None ->
+        let module UI = (val UI.generate ()) in
+        print_arg f (fun () -> UI.print f ui ~option) ~option
+      | Some ui, Some prec ->
+        let module UI = (val UI.generate ()) in
+        print_arg f
+          (fun () ->
+            UI.print f ui ~option;
+            Printer_token.print f Tok_comma ~option;
+            UI.print f prec ~option)
+          ~option
+      | None, None -> ()
+      | _ -> failwith "invalid decimal")
     | Simple_data_type (`date, _) -> Printer_token.print f Kw_date ~option
     | Simple_data_type (`time, _) -> Printer_token.print f Kw_time ~option
     | Simple_data_type (`timestamp ui, _) ->

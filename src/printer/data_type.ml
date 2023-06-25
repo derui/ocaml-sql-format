@@ -19,6 +19,6 @@ module Make
       I.print f ident ~option;
 
       if as_array then (
-        Printer_token.print f Tok_lbrace ~option;
-        Printer_token.print f Tok_rbrace ~option)
+        Printer_token.print f Tok_lsbrace ~option;
+        Printer_token.print f Tok_rsbrace ~option)
 end

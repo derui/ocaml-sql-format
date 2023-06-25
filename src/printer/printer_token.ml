@@ -131,6 +131,8 @@ include (
       | Kw_geometry -> Fmt.string f @@ as_keyword "geometry" keyword
       | Kw_geography -> Fmt.string f @@ as_keyword "geography" keyword
       | Kw_xml -> Fmt.string f @@ as_keyword "xml" keyword
+      | Kw_convert -> Fmt.string f @@ as_keyword "convert" keyword
+      | Kw_cast -> Fmt.string f @@ as_keyword "cast" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

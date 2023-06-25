@@ -624,6 +624,18 @@ let kw_geography =
 
 let kw_xml = [%sedlex.regexp? Chars "xX", Chars "mM", Chars "lL"]
 
+let kw_convert =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "vV"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "tT" )]
+
+let kw_cast = [%sedlex.regexp? Chars "cC", Chars "aA", Chars "sS", Chars "tT"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -782,6 +794,8 @@ let rec token buf =
   | kw_geometry -> Kw_geometry
   | kw_geography -> Kw_geography
   | kw_xml -> Kw_xml
+  | kw_convert -> Kw_convert
+  | kw_cast -> Kw_cast
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
