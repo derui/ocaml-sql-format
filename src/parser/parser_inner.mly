@@ -719,6 +719,13 @@ basic_data_type:
                                       Basic_data_type (typ, ary, ())
                                     }
 ;;
+data_type:
+  | typ = basic_data_type { Data_type (`basic typ, ())}
+  | typ = identifier; ary = option(pair(Tok_lbrace, Tok_rbrace)) {
+                                      let ary = Option.map (fun _ -> true) ary |> Option.value ~default:false in
+                                      Basic_data_type (`other (typ, ary), ())
+                                    }
+;;
       (* literals *)
 unsigned_integer:
 | Tok_unsigned_integer { Unsigned_integer ($1, ()) }

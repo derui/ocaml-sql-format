@@ -453,6 +453,10 @@ and 'a simple_data_type =
 
 and 'a basic_data_type = Basic_data_type of 'a simple_data_type * bool * 'a
 
+and 'a data_type =
+  | Data_type of
+      [ `basic of 'a basic_data_type | `other of 'a identifier * bool ] * 'a
+
 type ext = unit
 
 type entry = ext directly_executable_statement

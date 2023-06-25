@@ -49,6 +49,20 @@ let basic_data_type () =
       let generate = simple_data_type
     end) : S))
 
+let data_type () =
+  Data_type.(
+    (module Make
+              (struct
+                type t = A.ext A.basic_data_type
+
+                let generate = basic_data_type
+              end)
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
+              end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
