@@ -712,6 +712,13 @@ simple_data_type:
   | Kw_geography { Simple_data_type `geography }
   | Kw_xml { Simple_data_type `xml }
 ;;
+
+basic_data_type:
+  | typ = simple_data_type; ary = option(pair(Tok_lbrace, Tok_rbrace)) {
+                                      let ary = Option.map (fun _ -> true) ary |> Option.value ~default:false in
+                                      Basic_data_type (typ, ary, ())
+                                    }
+;;
       (* literals *)
 unsigned_integer:
 | Tok_unsigned_integer { Unsigned_integer ($1, ()) }

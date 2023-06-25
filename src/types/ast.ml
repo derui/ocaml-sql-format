@@ -451,6 +451,8 @@ and 'a simple_data_type =
       ]
       * 'a
 
+and 'a basic_data_type = Basic_data_type of 'a simple_data_type * bool * 'a
+
 type ext = unit
 
 type entry = ext directly_executable_statement

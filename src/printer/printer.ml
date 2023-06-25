@@ -41,6 +41,14 @@ let simple_data_type () =
       let generate = unsigned_integer
     end) : S))
 
+let basic_data_type () =
+  Basic_data_type.(
+    (module Make (struct
+      type t = A.ext A.simple_data_type
+
+      let generate = simple_data_type
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
