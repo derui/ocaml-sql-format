@@ -33,6 +33,14 @@ let unsigned_integer () = Unsigned_integer.((module Make () : S))
 let analytic_aggregate_function () =
   Analytic_aggregate_function.((module Make () : S))
 
+let simple_data_type () =
+  Simple_data_type.(
+    (module Make (struct
+      type t = A.ext A.unsigned_integer
+
+      let generate = unsigned_integer
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

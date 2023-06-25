@@ -464,6 +464,166 @@ let kw_cume_dist =
     , Chars "sS"
     , Chars "tT" )]
 
+let kw_string =
+  [%sedlex.regexp?
+    Chars "sS", Chars "tT", Chars "rR", Chars "iI", Chars "nN", Chars "gG"]
+
+let kw_varchar =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "cC"
+    , Chars "hH"
+    , Chars "aA"
+    , Chars "rR" )]
+
+let kw_boolean =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "oO"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "nN" )]
+
+let kw_byte = [%sedlex.regexp? Chars "bB", Chars "yY", Chars "tT", Chars "eE"]
+
+let kw_tinyint =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "yY"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_short =
+  [%sedlex.regexp? Chars "sS", Chars "hH", Chars "oO", Chars "rR", Chars "tT"]
+
+let kw_smallint =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "mM"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_char = [%sedlex.regexp? Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
+
+let kw_integer =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "gG"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_long = [%sedlex.regexp? Chars "lL", Chars "oO", Chars "nN", Chars "gG"]
+
+let kw_bigint =
+  [%sedlex.regexp?
+    Chars "bB", Chars "iI", Chars "gG", Chars "iI", Chars "nN", Chars "tT"]
+
+let kw_biginteger =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "iI"
+    , Chars "gG"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "gG"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_float =
+  [%sedlex.regexp? Chars "fF", Chars "lL", Chars "oO", Chars "aA", Chars "tT"]
+
+let kw_real = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "aA", Chars "lL"]
+
+let kw_double =
+  [%sedlex.regexp?
+    Chars "dD", Chars "oO", Chars "uU", Chars "bB", Chars "lL", Chars "eE"]
+
+let kw_bigdecimal =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "iI"
+    , Chars "gG"
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "aA"
+    , Chars "lL" )]
+
+let kw_decimal =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "aA"
+    , Chars "lL" )]
+
+let kw_object =
+  [%sedlex.regexp?
+    Chars "oO", Chars "bB", Chars "jJ", Chars "eE", Chars "cC", Chars "tT"]
+
+let kw_blob = [%sedlex.regexp? Chars "bB", Chars "lL", Chars "oO", Chars "bB"]
+
+let kw_clob = [%sedlex.regexp? Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
+
+let kw_json = [%sedlex.regexp? Chars "jJ", Chars "sS", Chars "oO", Chars "nN"]
+
+let kw_varbinary =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "bB"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "yY" )]
+
+let kw_geometry =
+  [%sedlex.regexp?
+    ( Chars "gG"
+    , Chars "eE"
+    , Chars "oO"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "yY" )]
+
+let kw_geography =
+  [%sedlex.regexp?
+    ( Chars "gG"
+    , Chars "eE"
+    , Chars "oO"
+    , Chars "gG"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "pP"
+    , Chars "hH"
+    , Chars "yY" )]
+
+let kw_xml = [%sedlex.regexp? Chars "xX", Chars "mM", Chars "lL"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -597,6 +757,31 @@ let rec token buf =
   | kw_dense_rank -> Kw_dense_rank
   | kw_percent_rank -> Kw_percent_rank
   | kw_cume_dist -> Kw_cume_dist
+  | kw_string -> Kw_string
+  | kw_varchar -> Kw_varchar
+  | kw_boolean -> Kw_boolean
+  | kw_byte -> Kw_byte
+  | kw_tinyint -> Kw_tinyint
+  | kw_short -> Kw_short
+  | kw_smallint -> Kw_smallint
+  | kw_char -> Kw_char
+  | kw_integer -> Kw_integer
+  | kw_long -> Kw_long
+  | kw_bigint -> Kw_bigint
+  | kw_biginteger -> Kw_biginteger
+  | kw_float -> Kw_float
+  | kw_real -> Kw_real
+  | kw_double -> Kw_double
+  | kw_bigdecimal -> Kw_bigdecimal
+  | kw_decimal -> Kw_decimal
+  | kw_object -> Kw_object
+  | kw_blob -> Kw_blob
+  | kw_clob -> Kw_clob
+  | kw_json -> Kw_json
+  | kw_varbinary -> Kw_varbinary
+  | kw_geometry -> Kw_geometry
+  | kw_geography -> Kw_geography
+  | kw_xml -> Kw_xml
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

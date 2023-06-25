@@ -133,6 +133,31 @@ open Types.Ast
 %token Kw_dense_rank
 %token Kw_percent_rank
 %token Kw_cume_dist
+%token Kw_string
+%token Kw_varchar
+%token Kw_boolean
+%token Kw_byte
+%token Kw_tinyint
+%token Kw_short
+%token Kw_smallint
+%token Kw_char
+%token Kw_integer
+%token Kw_long
+%token Kw_bigint
+%token Kw_biginteger
+%token Kw_float
+%token Kw_real
+%token Kw_double
+%token Kw_bigdecimal
+%token Kw_decimal
+%token Kw_object
+%token Kw_blob
+%token Kw_clob
+%token Kw_json
+%token Kw_varbinary
+%token Kw_geometry
+%token Kw_geography
+%token Kw_xml
 
 %token Tok_eof
 
@@ -644,6 +669,49 @@ analytic_aggregate_function:
 | Kw_cume_dist {`cume_dist}
 ;;
 
+simple_data_type:
+  | Kw_string { Simple_data_type (`string None) }
+  | Kw_string Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`string (Some ui)) }
+  | Kw_varchar { Simple_data_type (`varchar None) }
+  | Kw_varchar Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varchar (Some ui)) }
+  | Kw_boolean { Simple_data_type `boolean }
+  | Kw_byte { Simple_data_type `byte }
+  | Kw_tinyint { Simple_data_type `tinyint }
+  | Kw_short { Simple_data_type `short }
+  | Kw_smallint { Simple_data_type `smallint }
+  | Kw_char { Simple_data_type (`char None) }
+  | Kw_char Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`char (Some ui)) }
+  | Kw_integer { Simple_data_type `integer }
+  | Kw_long { Simple_data_type `long }
+  | Kw_bigint { Simple_data_type `bigint }
+  | Kw_biginteger { Simple_data_type (`biginteger None) }
+  | Kw_biginteger Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`biginteger (Some ui)) }
+  | Kw_float { Simple_data_type `float }
+  | Kw_real { Simple_data_type `real }
+  | Kw_double { Simple_data_type `double }
+  | Kw_bigdecimal { Simple_data_type (`bigdecimal (None, None)) }
+  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, None)) }
+  | Kw_bigdecimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`bigdecimal (Some ui, Some prec)) }
+  | Kw_decimal { Simple_data_type (`decimal (None, None)) }
+  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, None)) }
+  | Kw_decimal Tok_lparen ui = unsigned_integer Tok_comma prec = unsigned_integer Tok_rparen { Simple_data_type (`decimal (Some ui, Some prec)) }
+  | Kw_date { Simple_data_type `date }
+  | Kw_time { Simple_data_type `time }
+  | Kw_timestamp { Simple_data_type (`timestamp None) }
+  | Kw_timestamp Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`timestamp (Some ui)) }
+  | Kw_object { Simple_data_type (`object' None) }
+  | Kw_object Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`object' (Some ui)) }
+  | Kw_blob { Simple_data_type (`blob None) }
+  | Kw_blob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`blob (Some ui)) }
+  | Kw_clob { Simple_data_type (`clob None) }
+  | Kw_clob Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`clob (Some ui)) }
+  | Kw_json { Simple_data_type `json }
+  | Kw_varbinary { Simple_data_type (`varbinary None) }
+  | Kw_varbinary Tok_lparen ui = unsigned_integer Tok_rparen { Simple_data_type (`varbinary (Some ui)) }
+  | Kw_geometry { Simple_data_type `geometry }
+  | Kw_geography { Simple_data_type `geography }
+  | Kw_xml { Simple_data_type `xml }
+;;
       (* literals *)
 unsigned_integer:
 | Tok_unsigned_integer { Unsigned_integer ($1, ()) }

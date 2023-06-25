@@ -418,6 +418,39 @@ and 'a window_frame_bound =
       ]
       * 'a
 
+and 'a simple_data_type =
+  | Simple_data_type of
+      [ `string of 'a unsigned_integer option
+      | `varchar of 'a unsigned_integer option
+      | `boolean
+      | `byte
+      | `tinyint
+      | `short
+      | `smallint
+      | `char of 'a unsigned_integer option
+      | `integer
+      | `long
+      | `bigint
+      | `biginteger of 'a unsigned_integer option
+      | `float
+      | `real
+      | `double
+      | `bigdecimal of 'a unsigned_integer option * 'a unsigned_integer option
+      | `decimal of 'a unsigned_integer option * 'a unsigned_integer option
+      | `date
+      | `time
+      | `timestamp of 'a unsigned_integer option
+      | `object' of 'a unsigned_integer option
+      | `blob of 'a unsigned_integer option
+      | `clob of 'a unsigned_integer option
+      | `json
+      | `varbinary of 'a unsigned_integer option
+      | `geometry
+      | `geography
+      | `xml
+      ]
+      * 'a
+
 type ext = unit
 
 type entry = ext directly_executable_statement

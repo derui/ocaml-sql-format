@@ -93,6 +93,31 @@ type token =
   | Kw_dense_rank
   | Kw_percent_rank
   | Kw_cume_dist
+  | Kw_string
+  | Kw_varchar
+  | Kw_boolean
+  | Kw_byte
+  | Kw_tinyint
+  | Kw_short
+  | Kw_smallint
+  | Kw_char
+  | Kw_integer
+  | Kw_long
+  | Kw_bigint
+  | Kw_biginteger
+  | Kw_float
+  | Kw_real
+  | Kw_double
+  | Kw_bigdecimal
+  | Kw_decimal
+  | Kw_object
+  | Kw_blob
+  | Kw_clob
+  | Kw_json
+  | Kw_varbinary
+  | Kw_geometry
+  | Kw_geography
+  | Kw_xml
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
