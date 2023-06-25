@@ -43,6 +43,8 @@ and not_op = [ `not' ] option [@@deriving show, eq]
 
 type 'a identifier = Identifier of string * 'a
 
+and 'a unsigned_integer = Unsigned_integer of Literal.unsigned_integer * 'a
+
 and 'a unsigned_value_expression_primary =
   | Unsigned_value_expression_primary of
       [ `parameter_qmark
@@ -327,8 +329,14 @@ and 'a value_expression_primary =
 
 and 'a unescaped_function =
   | Unescaped_function of
-      [ `text_aggregate_function of 'a text_aggregate_function
-      | `standard_aggregate_function of 'a standard_aggregate_function
+      [ `text_aggregate_function of
+        'a text_aggregate_function
+        * 'a filter_clause option
+        * 'a window_specification option
+      | `standard_aggregate_function of
+        'a standard_aggregate_function
+        * 'a filter_clause option
+        * 'a window_specification option
       ]
 
 and 'a derived_column =
@@ -366,6 +374,34 @@ and standard_aggregate_functions =
   | `some
   | `any
   ]
+
+and 'a filter_clause = Filter_clause of 'a boolean_primary * 'a
+
+and 'a window_specification =
+  | Window_specification of
+      'a expression list
+      * 'a order_by_clause option
+      * 'a window_frame option
+      * 'a
+
+and 'a window_frame =
+  | Window_frame of
+      { typ : [ `range | `rows ]
+      ; bound :
+          [ `between of 'a window_frame_bound * 'a window_frame_bound
+          | `raw of 'a window_frame_bound
+          ]
+      ; metadata : 'a
+      }
+
+and 'a window_frame_bound =
+  | Window_frame_bound of
+      [ `bounding of
+        [ `unbounded | `bounded of 'a unsigned_integer ]
+        * [ `following | `preceding ]
+      | `current
+      ]
+      * 'a
 
 type ext = unit
 

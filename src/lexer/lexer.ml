@@ -342,6 +342,73 @@ let kw_var_pop =
   [%sedlex.regexp?
     Chars "vV", Chars "aA", Chars "rR", '_', Chars "pP", Chars "oO", Chars "pP"]
 
+let kw_filter =
+  [%sedlex.regexp?
+    Chars "fF", Chars "iI", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
+
+let kw_over = [%sedlex.regexp? Chars "oO", Chars "vV", Chars "eE", Chars "rR"]
+
+let kw_partition =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_range =
+  [%sedlex.regexp? Chars "rR", Chars "aA", Chars "nN", Chars "gG", Chars "eE"]
+
+let kw_unbounded =
+  [%sedlex.regexp?
+    ( Chars "uU"
+    , Chars "nN"
+    , Chars "bB"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "nN"
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_following =
+  [%sedlex.regexp?
+    ( Chars "fF"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "oO"
+    , Chars "wW"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_preceding =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "eE"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_current =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -462,6 +529,14 @@ let rec token buf =
   | kw_stddev_samp -> Kw_stddev_samp
   | kw_var_samp -> Kw_var_samp
   | kw_var_pop -> Kw_var_pop
+  | kw_filter -> Kw_filter
+  | kw_over -> Kw_over
+  | kw_partition -> Kw_partition
+  | kw_range -> Kw_range
+  | kw_unbounded -> Kw_unbounded
+  | kw_following -> Kw_following
+  | kw_preceding -> Kw_preceding
+  | kw_current -> Kw_current
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

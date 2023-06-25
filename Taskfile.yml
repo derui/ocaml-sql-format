@@ -8,11 +8,20 @@ tasks:
     cmds:
       - dune build
     silent: true
+  build-tool:
+    cmds:
+      - dune build tool
+    silent: true
 
   gentest:
     cmds:
       - _build/default/tool/test_gen/test_gen.exe {{.USER_WORKING_DIR}}/test/files/{{.FILE}} {{.NAME}}  > ./test/{{.FILE}}.ml
-    deps: [build]
+    deps: [build-tool]
+
+  keyword:
+    cmds:
+      - _build/default/tool/kw_to_sedlex/kw_to_sedlex.exe {{.KW}}
+    deps: [build-tool]
 
   test:
     cmds:

@@ -28,6 +28,8 @@ let comparison_operator () = Comparison_operator.((module Make () : S))
 
 let character () = Character.((module Make () : S))
 
+let unsigned_integer () = Unsigned_integer.((module Make () : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
@@ -594,6 +596,16 @@ and unescaped_function () =
                 type t = A.ext A.standard_aggregate_function
 
                 let generate = standard_aggregate_function
+              end)
+              (struct
+                type t = A.ext A.filter_clause
+
+                let generate = filter_clause
+              end)
+              (struct
+                type t = A.ext A.window_specification
+
+                let generate = window_specification
               end) : S))
 
 and text_aggregate_function () =
@@ -666,6 +678,49 @@ and unsigned_value_expression_primary () =
 
                 let generate = unescaped_function
               end) : S))
+
+and filter_clause () =
+  Filter_clause.(
+    (module Make (struct
+      type t = A.ext A.boolean_primary
+
+      let generate = boolean_primary
+    end) : S))
+
+and window_specification () =
+  Window_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.expression
+
+                let generate = expression
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
+              end)
+              (struct
+                type t = A.ext A.window_frame
+
+                let generate = window_frame
+              end) : S))
+
+and window_frame () =
+  Window_frame.(
+    (module Make (struct
+      type t = A.ext A.window_frame_bound
+
+      let generate = window_frame_bound
+    end) : S))
+
+and window_frame_bound () =
+  Window_frame_bound.(
+    (module Make (struct
+      type t = A.ext A.unsigned_integer
+
+      let generate = unsigned_integer
+    end) : S))
 
 let directly_executable_statement () =
   Directly_executable_statement.(

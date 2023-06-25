@@ -93,6 +93,14 @@ include (
       | Kw_stddev_samp -> Fmt.string f @@ as_keyword "stddev_samp" keyword
       | Kw_var_samp -> Fmt.string f @@ as_keyword "var_samp" keyword
       | Kw_var_pop -> Fmt.string f @@ as_keyword "var_pop" keyword
+      | Kw_filter -> Fmt.string f @@ as_keyword "filter" keyword
+      | Kw_over -> Fmt.string f @@ as_keyword "over" keyword
+      | Kw_partition -> Fmt.string f @@ as_keyword "partition" keyword
+      | Kw_range -> Fmt.string f @@ as_keyword "range" keyword
+      | Kw_unbounded -> Fmt.string f @@ as_keyword "unbounded" keyword
+      | Kw_following -> Fmt.string f @@ as_keyword "following" keyword
+      | Kw_preceding -> Fmt.string f @@ as_keyword "preceding" keyword
+      | Kw_current -> Fmt.string f @@ as_keyword "current" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

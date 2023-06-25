@@ -80,6 +80,14 @@ type token =
   | Kw_stddev_samp
   | Kw_var_samp
   | Kw_var_pop
+  | Kw_filter
+  | Kw_over
+  | Kw_partition
+  | Kw_range
+  | Kw_unbounded
+  | Kw_following
+  | Kw_preceding
+  | Kw_current
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

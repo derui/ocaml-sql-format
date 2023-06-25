@@ -1,0 +1,3 @@
+(executable
+  (name kw_to_sedlex)
+  (modules kw_to_sedlex))

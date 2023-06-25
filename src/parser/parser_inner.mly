@@ -120,6 +120,14 @@ open Types.Ast
 %token Kw_stddev_samp
 %token Kw_var_samp
 %token Kw_var_pop
+%token Kw_filter
+%token Kw_over
+%token Kw_partition
+%token Kw_range
+%token Kw_unbounded
+%token Kw_following
+%token Kw_preceding
+%token Kw_current
 
 %token Tok_eof
 
@@ -505,8 +513,8 @@ nested_expression:
 ;;
 
 unescaped_function:
-| f = text_aggregate_function {Unescaped_function (`text_aggregate_function f)}
-| f = standard_aggregate_function {Unescaped_function (`standard_aggregate_function f)}
+| f = text_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`text_aggregate_function (f, filter, window))}
+| f = standard_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`standard_aggregate_function (f, filter, window))}
 ;;
 
 text_aggregate_function:
@@ -571,7 +579,57 @@ standard_aggregate_function:
 | Kw_any {`any}
 ;;
 
+filter_clause:
+  | Kw_filter Tok_lparen Kw_where e = boolean_primary Tok_rparen {Filter_clause (e, ())}
+;;
+
+window_specification:
+| Kw_over Tok_lparen; Kw_partition Kw_by; expr = separated_nonempty_list(Tok_comma, expression);
+  order_by = option(order_by_clause);
+  frame = option(window_frame) Tok_rparen {
+              Window_specification (expr, order_by, frame, ())
+            }
+
+| Kw_over Tok_lparen; order_by = option(order_by_clause); frame = option(window_frame) Tok_rparen {
+                                                                      Window_specification ([], order_by, frame, ())
+                                                                    }
+;;
+
+window_frame:
+| Kw_range Kw_between; s = window_frame_bound; Kw_and; e = window_frame_bound { Window_frame {
+                                                                                    typ = `range;
+                                                                                    bound = `between (s, e);
+                                                                                    metadata = ()
+                                                             } }
+| Kw_rows Kw_between; s = window_frame_bound; Kw_and; e = window_frame_bound { Window_frame {
+                                                                                    typ = `rows;
+                                                                                    bound = `between (s, e);
+                                                                                    metadata = ()
+                                                             } }
+| Kw_range bound = window_frame_bound { Window_frame {
+                                           typ = `range;
+                                           bound =`raw bound;
+                                           metadata= ()
+                    } }
+| Kw_rows bound = window_frame_bound { Window_frame {
+                                           typ = `rows;
+                                           bound = `raw bound;
+                                           metadata = ()
+                    } }
+;;
+
+window_frame_bound:
+| Kw_unbounded Kw_following {Window_frame_bound (`bounding (`unbounded, `following), ())}
+| Kw_unbounded Kw_preceding {Window_frame_bound (`bounding (`unbounded, `preceding), ())}
+| i = unsigned_integer Kw_following {Window_frame_bound (`bounding (`bounded i, `following), ())}
+| i = unsigned_integer Kw_preceding {Window_frame_bound (`bounding (`bounded i, `preceding), ())}
+| Kw_current Kw_row {Window_frame_bound (`current, ())}
+;;
       (* literals *)
+unsigned_integer:
+| Tok_unsigned_integer { Unsigned_integer ($1, ()) }
+;;
+
 non_numeric_literal:
   | Tok_string { Non_numeric_literal (`string $1, ())}
   | Tok_typed_string {Non_numeric_literal (`typed_string $1, ())}
