@@ -409,6 +409,61 @@ let kw_current =
     , Chars "nN"
     , Chars "tT" )]
 
+let kw_row_number =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "oO"
+    , Chars "wW"
+    , '_'
+    , Chars "nN"
+    , Chars "uU"
+    , Chars "mM"
+    , Chars "bB"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_rank = [%sedlex.regexp? Chars "rR", Chars "aA", Chars "nN", Chars "kK"]
+
+let kw_dense_rank =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "__"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "kK" )]
+
+let kw_percent_rank =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "cC"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "kK" )]
+
+let kw_cume_dist =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "mM"
+    , Chars "eE"
+    , '_'
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -537,6 +592,11 @@ let rec token buf =
   | kw_following -> Kw_following
   | kw_preceding -> Kw_preceding
   | kw_current -> Kw_current
+  | kw_row_number -> Kw_row_number
+  | kw_rank -> Kw_rank
+  | kw_dense_rank -> Kw_dense_rank
+  | kw_percent_rank -> Kw_percent_rank
+  | kw_cume_dist -> Kw_cume_dist
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

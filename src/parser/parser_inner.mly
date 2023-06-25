@@ -128,6 +128,11 @@ open Types.Ast
 %token Kw_following
 %token Kw_preceding
 %token Kw_current
+%token Kw_row_number
+%token Kw_rank
+%token Kw_dense_rank
+%token Kw_percent_rank
+%token Kw_cume_dist
 
 %token Tok_eof
 
@@ -515,6 +520,7 @@ nested_expression:
 unescaped_function:
 | f = text_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`text_aggregate_function (f, filter, window))}
 | f = standard_aggregate_function; filter = option(filter_clause); window = option(window_specification) {Unescaped_function (`standard_aggregate_function (f, filter, window))}
+| f = analytic_aggregate_function; filter = option(filter_clause); window = window_specification {Unescaped_function (`analytic_aggregate_function (f, filter, window))}
 ;;
 
 text_aggregate_function:
@@ -625,6 +631,19 @@ window_frame_bound:
 | i = unsigned_integer Kw_preceding {Window_frame_bound (`bounding (`bounded i, `preceding), ())}
 | Kw_current Kw_row {Window_frame_bound (`current, ())}
 ;;
+
+analytic_aggregate_function:
+| kw = analytic_aggregate_function_name Tok_lparen Tok_rparen { Analytic_aggregate_function (kw, ())}
+;;
+
+%inline analytic_aggregate_function_name:
+| Kw_row_number {`row_number}
+| Kw_rank {`rank}
+| Kw_dense_rank {`dense_rank}
+| Kw_percent_rank {`percent_rank}
+| Kw_cume_dist {`cume_dist}
+;;
+
       (* literals *)
 unsigned_integer:
 | Tok_unsigned_integer { Unsigned_integer ($1, ()) }

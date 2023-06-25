@@ -7,7 +7,8 @@ module Make
     (TAF : GEN with type t = ext text_aggregate_function)
     (SAF : GEN with type t = ext standard_aggregate_function)
     (Filter_clause : GEN with type t = ext filter_clause)
-    (Window_spec : GEN with type t = ext window_specification) : S = struct
+    (Window_spec : GEN with type t = ext window_specification)
+    (AAF : GEN with type t = ext analytic_aggregate_function) : S = struct
   type t = ext unescaped_function
 
   let print f t ~option =
@@ -46,4 +47,18 @@ module Make
           let module Window_spec = (val Window_spec.generate ()) in
           Window_spec.print f v ~option)
         window
+    | Unescaped_function (`analytic_aggregate_function (aaf, filter, window)) ->
+      let module AAF = (val AAF.generate ()) in
+      AAF.print f aaf ~option;
+
+      Option.iter
+        (fun v ->
+          Fmt.string f " ";
+          let module Filter_clause = (val Filter_clause.generate ()) in
+          Filter_clause.print f v ~option)
+        filter;
+
+      Fmt.string f " ";
+      let module Window_spec = (val Window_spec.generate ()) in
+      Window_spec.print f window ~option
 end

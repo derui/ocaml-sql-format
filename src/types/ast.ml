@@ -337,6 +337,10 @@ and 'a unescaped_function =
         'a standard_aggregate_function
         * 'a filter_clause option
         * 'a window_specification option
+      | `analytic_aggregate_function of
+        'a analytic_aggregate_function
+        * 'a filter_clause option
+        * 'a window_specification
       ]
 
 and 'a derived_column =
@@ -373,6 +377,17 @@ and standard_aggregate_functions =
   | `var_pop
   | `some
   | `any
+  ]
+
+and 'a analytic_aggregate_function =
+  | Analytic_aggregate_function of analytic_aggregate_functions * 'a
+
+and analytic_aggregate_functions =
+  [ `row_number
+  | `rank
+  | `dense_rank
+  | `percent_rank
+  | `cume_dist
   ]
 
 and 'a filter_clause = Filter_clause of 'a boolean_primary * 'a

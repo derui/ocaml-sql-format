@@ -30,6 +30,9 @@ let character () = Character.((module Make () : S))
 
 let unsigned_integer () = Unsigned_integer.((module Make () : S))
 
+let analytic_aggregate_function () =
+  Analytic_aggregate_function.((module Make () : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
@@ -606,6 +609,11 @@ and unescaped_function () =
                 type t = A.ext A.window_specification
 
                 let generate = window_specification
+              end)
+              (struct
+                type t = A.ext A.analytic_aggregate_function
+
+                let generate = analytic_aggregate_function
               end) : S))
 
 and text_aggregate_function () =

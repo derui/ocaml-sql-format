@@ -101,6 +101,11 @@ include (
       | Kw_following -> Fmt.string f @@ as_keyword "following" keyword
       | Kw_preceding -> Fmt.string f @@ as_keyword "preceding" keyword
       | Kw_current -> Fmt.string f @@ as_keyword "current" keyword
+      | Kw_row_number -> Fmt.string f @@ as_keyword "row_number" keyword
+      | Kw_rank -> Fmt.string f @@ as_keyword "rank" keyword
+      | Kw_dense_rank -> Fmt.string f @@ as_keyword "dense_rank" keyword
+      | Kw_percent_rank -> Fmt.string f @@ as_keyword "percent_rank" keyword
+      | Kw_cume_dist -> Fmt.string f @@ as_keyword "cume_dist" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

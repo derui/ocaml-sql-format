@@ -88,6 +88,11 @@ type token =
   | Kw_following
   | Kw_preceding
   | Kw_current
+  | Kw_row_number
+  | Kw_rank
+  | Kw_dense_rank
+  | Kw_percent_rank
+  | Kw_cume_dist
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
