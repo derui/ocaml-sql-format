@@ -145,6 +145,10 @@ include (
       | Kw_epoch -> Fmt.string f @@ as_keyword "epoch" keyword
       | Kw_dow -> Fmt.string f @@ as_keyword "dow" keyword
       | Kw_doy -> Fmt.string f @@ as_keyword "doy" keyword
+      | Kw_trim -> Fmt.string f @@ as_keyword "trim" keyword
+      | Kw_leading -> Fmt.string f @@ as_keyword "leading" keyword
+      | Kw_trailing -> Fmt.string f @@ as_keyword "trailing" keyword
+      | Kw_both -> Fmt.string f @@ as_keyword "both" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

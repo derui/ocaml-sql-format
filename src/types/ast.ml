@@ -481,6 +481,14 @@ and 'a function' =
           | `dow
           | `doy
           ]
+      | `trim of
+        [ `leading of 'a expression option
+        | `trailing of 'a expression option
+        | `both of 'a expression option
+        | `no_trimmer of 'a expression
+        ]
+        option
+        * 'a expression
       ]
       * 'a
 

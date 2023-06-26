@@ -89,4 +89,39 @@ module Make
       Fmt.string f " ";
       Expr.print f e ~option;
       Printer_token.print f Tok_rparen ~option
+    | Function (`trim (trimmer, e), _) ->
+      Printer_token.print f Kw_trim ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Expr = (val Expr.generate ()) in
+      Option.iter
+        (fun v ->
+          (match v with
+          | `leading te ->
+            Printer_token.print f Kw_leading ~option;
+            Option.iter
+              (fun v ->
+                Fmt.string f " ";
+                Expr.print f v ~option)
+              te
+          | `trailing te ->
+            Printer_token.print f Kw_trailing ~option;
+            Option.iter
+              (fun v ->
+                Fmt.string f " ";
+                Expr.print f v ~option)
+              te
+          | `both te ->
+            Printer_token.print f Kw_both ~option;
+            Option.iter
+              (fun v ->
+                Fmt.string f " ";
+                Expr.print f v ~option)
+              te
+          | `no_trimmer te -> Expr.print f te ~option);
+          Fmt.string f " ";
+          Printer_token.print f Kw_from ~option;
+          Fmt.string f " ")
+        trimmer;
+      Expr.print f e ~option;
+      Printer_token.print f Tok_rparen ~option
 end

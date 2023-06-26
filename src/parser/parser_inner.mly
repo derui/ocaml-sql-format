@@ -172,6 +172,10 @@ open Types.Ast
 %token Kw_epoch
 %token Kw_dow
 %token Kw_doy
+%token Kw_leading
+%token Kw_trailing
+%token Kw_both
+%token Kw_trim
 
 %token Tok_eof
 
@@ -753,6 +757,7 @@ function_:
                                                            Function (`substring (e, `list l), ())
                                                                          }
 | f = function_extract { f }
+| f = function_trim { f }
 ;;
 
 %inline function_extract:
@@ -766,6 +771,14 @@ function_:
 | Kw_extract Tok_lparen Kw_epoch Kw_from e = expression Tok_rparen {Function (`extract (e, `epoch), ())}
 | Kw_extract Tok_lparen Kw_dow Kw_from e = expression Tok_rparen {Function (`extract (e, `dow), ())}
 | Kw_extract Tok_lparen Kw_doy Kw_from e = expression Tok_rparen {Function (`extract (e, `doy), ())}
+;;
+
+%inline function_trim:
+| Kw_trim Tok_lparen Kw_leading te = option(expression) Kw_from e = expression Tok_rparen {Function (`trim (Some (`leading te), e), ())}
+| Kw_trim Tok_lparen Kw_trailing te = option(expression) Kw_from e = expression Tok_rparen {Function (`trim (Some (`trailing te), e), ())}
+| Kw_trim Tok_lparen Kw_both te = option(expression) Kw_from e = expression Tok_rparen {Function (`trim (Some (`both te), e), ())}
+| Kw_trim Tok_lparen te = expression Kw_from e = expression Tok_rparen {Function (`trim ( Some (`no_trimmer te), e), ())}
+| Kw_trim Tok_lparen e = expression Tok_rparen {Function (`trim (None, e), ())}
 ;;
       (* literals *)
 unsigned_integer:

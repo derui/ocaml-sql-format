@@ -128,11 +128,15 @@ type token =
   | Kw_epoch
   | Kw_dow
   | Kw_doy
+  | Kw_leading
+  | Kw_trailing
+  | Kw_both
   (* functions *)
   | Kw_convert
   | Kw_cast
   | Kw_substring
   | Kw_extract
+  | Kw_trim
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

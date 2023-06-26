@@ -692,6 +692,31 @@ let kw_dow = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "wW"]
 
 let kw_doy = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "yY"]
 
+let kw_trim = [%sedlex.regexp? Chars "tT", Chars "rR", Chars "iI", Chars "mM"]
+
+let kw_leading =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_trailing =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "iI"
+    , Chars "lL"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_both = [%sedlex.regexp? Chars "bB", Chars "oO", Chars "tT", Chars "hH"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -864,6 +889,10 @@ let rec token buf =
   | kw_epoch -> Kw_epoch
   | kw_dow -> Kw_dow
   | kw_doy -> Kw_doy
+  | kw_trim -> Kw_trim
+  | kw_leading -> Kw_leading
+  | kw_trailing -> Kw_trailing
+  | kw_both -> Kw_both
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
