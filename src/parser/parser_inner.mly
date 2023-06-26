@@ -176,6 +176,8 @@ open Types.Ast
 %token Kw_trailing
 %token Kw_both
 %token Kw_trim
+%token Kw_to_chars
+%token Kw_to_bytes
 
 %token Tok_eof
 
@@ -758,6 +760,14 @@ function_:
                                                                          }
 | f = function_extract { f }
 | f = function_trim { f }
+| Kw_to_chars Tok_lparen e = expression Tok_comma s = Tok_string opt = option(pair(Tok_comma, expression)) Tok_rparen {
+                                                                       let opt = Option.map snd opt in
+                                                                       Function (`to_chars (e, s, opt), ())
+                                                                       }
+| Kw_to_bytes Tok_lparen e = expression Tok_comma s = Tok_string opt = option(pair(Tok_comma, expression)) Tok_rparen {
+                                                                       let opt = Option.map snd opt in
+                                                                       Function (`to_bytes (e, s, opt), ())
+                                                                       }
 ;;
 
 %inline function_extract:

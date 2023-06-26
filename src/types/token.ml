@@ -137,6 +137,8 @@ type token =
   | Kw_substring
   | Kw_extract
   | Kw_trim
+  | Kw_to_chars
+  | Kw_to_bytes
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

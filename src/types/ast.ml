@@ -489,6 +489,8 @@ and 'a function' =
         ]
         option
         * 'a expression
+      | `to_chars of 'a expression * Literal.sql_string * 'a expression option
+      | `to_bytes of 'a expression * Literal.sql_string * 'a expression option
       ]
       * 'a
 

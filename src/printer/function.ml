@@ -124,4 +124,34 @@ module Make
         trimmer;
       Expr.print f e ~option;
       Printer_token.print f Tok_rparen ~option
+    | Function (`to_chars (e, str, opt), _) ->
+      Printer_token.print f Kw_to_chars ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Expr = (val Expr.generate ()) in
+      Expr.print f e ~option;
+      Printer_token.print f Tok_comma ~option;
+      Fmt.string f str;
+
+      Option.iter
+        (fun v ->
+          Printer_token.print f Tok_comma ~option;
+          Fmt.string f " ";
+          Expr.print f v ~option)
+        opt;
+      Printer_token.print f Tok_rparen ~option
+    | Function (`to_bytes (e, str, opt), _) ->
+      Printer_token.print f Kw_to_bytes ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Expr = (val Expr.generate ()) in
+      Expr.print f e ~option;
+      Printer_token.print f Tok_comma ~option;
+      Fmt.string f str;
+
+      Option.iter
+        (fun v ->
+          Printer_token.print f Tok_comma ~option;
+          Fmt.string f " ";
+          Expr.print f v ~option)
+        opt;
+      Printer_token.print f Tok_rparen ~option
 end

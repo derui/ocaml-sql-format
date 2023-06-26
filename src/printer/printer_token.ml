@@ -149,6 +149,8 @@ include (
       | Kw_leading -> Fmt.string f @@ as_keyword "leading" keyword
       | Kw_trailing -> Fmt.string f @@ as_keyword "trailing" keyword
       | Kw_both -> Fmt.string f @@ as_keyword "both" keyword
+      | Kw_to_chars -> Fmt.string f @@ as_keyword "to_chars" keyword
+      | Kw_to_bytes -> Fmt.string f @@ as_keyword "to_bytes" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

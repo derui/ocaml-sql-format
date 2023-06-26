@@ -717,6 +717,28 @@ let kw_trailing =
 
 let kw_both = [%sedlex.regexp? Chars "bB", Chars "oO", Chars "tT", Chars "hH"]
 
+let kw_to_chars =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "oO"
+    , '_'
+    , Chars "cC"
+    , Chars "hH"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "sS" )]
+
+let kw_to_bytes =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "oO"
+    , '_'
+    , Chars "bB"
+    , Chars "yY"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "sS" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -893,6 +915,8 @@ let rec token buf =
   | kw_leading -> Kw_leading
   | kw_trailing -> Kw_trailing
   | kw_both -> Kw_both
+  | kw_to_chars -> Kw_to_chars
+  | kw_to_bytes -> Kw_to_bytes
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
