@@ -135,6 +135,16 @@ include (
       | Kw_cast -> Fmt.string f @@ as_keyword "cast" keyword
       | Kw_substring -> Fmt.string f @@ as_keyword "substring" keyword
       | Kw_extract -> Fmt.string f @@ as_keyword "extract" keyword
+      | Kw_year -> Fmt.string f @@ as_keyword "year" keyword
+      | Kw_month -> Fmt.string f @@ as_keyword "month" keyword
+      | Kw_day -> Fmt.string f @@ as_keyword "day" keyword
+      | Kw_hour -> Fmt.string f @@ as_keyword "hour" keyword
+      | Kw_minute -> Fmt.string f @@ as_keyword "minute" keyword
+      | Kw_second -> Fmt.string f @@ as_keyword "second" keyword
+      | Kw_quarter -> Fmt.string f @@ as_keyword "quarter" keyword
+      | Kw_epoch -> Fmt.string f @@ as_keyword "epoch" keyword
+      | Kw_dow -> Fmt.string f @@ as_keyword "dow" keyword
+      | Kw_doy -> Fmt.string f @@ as_keyword "doy" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

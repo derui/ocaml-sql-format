@@ -66,4 +66,27 @@ module Make
       Data_type.print f d ~option;
       Printer_token.print f Tok_rparen ~option
     | Function ((`substring _ as t), _) -> print_substring f t ~option
+    | Function (`extract (e, key), _) ->
+      Printer_token.print f Kw_extract ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Expr = (val Expr.generate ()) in
+      let kw =
+        match key with
+        | `year -> Kw_year
+        | `month -> Kw_month
+        | `day -> Kw_day
+        | `hour -> Kw_hour
+        | `minute -> Kw_minute
+        | `second -> Kw_second
+        | `quarter -> Kw_quarter
+        | `epoch -> Kw_epoch
+        | `dow -> Kw_dow
+        | `doy -> Kw_doy
+      in
+      Printer_token.print f kw ~option;
+      Fmt.string f " ";
+      Printer_token.print f Kw_from ~option;
+      Fmt.string f " ";
+      Expr.print f e ~option;
+      Printer_token.print f Tok_rparen ~option
 end

@@ -162,6 +162,16 @@ open Types.Ast
 %token Kw_cast
 %token Kw_substring
 %token Kw_extract
+%token Kw_year
+%token Kw_month
+%token Kw_day
+%token Kw_hour
+%token Kw_minute
+%token Kw_second
+%token Kw_quarter
+%token Kw_epoch
+%token Kw_dow
+%token Kw_doy
 
 %token Tok_eof
 
@@ -742,6 +752,20 @@ function_:
 | Kw_substring Tok_lparen e = expression Tok_comma l = separated_nonempty_list(Tok_comma, expression) Tok_rparen {
                                                            Function (`substring (e, `list l), ())
                                                                          }
+| f = function_extract { f }
+;;
+
+%inline function_extract:
+| Kw_extract Tok_lparen Kw_year Kw_from e = expression Tok_rparen {Function (`extract (e, `year), ())}
+| Kw_extract Tok_lparen Kw_month Kw_from e = expression Tok_rparen {Function (`extract (e, `month), ())}
+| Kw_extract Tok_lparen Kw_day Kw_from e = expression Tok_rparen {Function (`extract (e, `day), ())}
+| Kw_extract Tok_lparen Kw_hour Kw_from e = expression Tok_rparen {Function (`extract (e, `hour), ())}
+| Kw_extract Tok_lparen Kw_minute Kw_from e = expression Tok_rparen {Function (`extract (e, `minute), ())}
+| Kw_extract Tok_lparen Kw_second Kw_from e = expression Tok_rparen {Function (`extract (e, `second), ())}
+| Kw_extract Tok_lparen Kw_quarter Kw_from e = expression Tok_rparen {Function (`extract (e, `quarter), ())}
+| Kw_extract Tok_lparen Kw_epoch Kw_from e = expression Tok_rparen {Function (`extract (e, `epoch), ())}
+| Kw_extract Tok_lparen Kw_dow Kw_from e = expression Tok_rparen {Function (`extract (e, `dow), ())}
+| Kw_extract Tok_lparen Kw_doy Kw_from e = expression Tok_rparen {Function (`extract (e, `doy), ())}
 ;;
       (* literals *)
 unsigned_integer:

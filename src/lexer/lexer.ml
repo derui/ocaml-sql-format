@@ -658,6 +658,40 @@ let kw_extract =
     , Chars "cC"
     , Chars "tT" )]
 
+let kw_year = [%sedlex.regexp? Chars "yY", Chars "eE", Chars "aA", Chars "rR"]
+
+let kw_month =
+  [%sedlex.regexp? Chars "mM", Chars "oO", Chars "nN", Chars "tT", Chars "hH"]
+
+let kw_day = [%sedlex.regexp? Chars "dD", Chars "aA", Chars "yY"]
+
+let kw_hour = [%sedlex.regexp? Chars "hH", Chars "oO", Chars "uU", Chars "rR"]
+
+let kw_minute =
+  [%sedlex.regexp?
+    Chars "mM", Chars "iI", Chars "nN", Chars "uU", Chars "tT", Chars "eE"]
+
+let kw_second =
+  [%sedlex.regexp?
+    Chars "sS", Chars "eE", Chars "cC", Chars "oO", Chars "nN", Chars "dD"]
+
+let kw_quarter =
+  [%sedlex.regexp?
+    ( Chars "qQ"
+    , Chars "uU"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_epoch =
+  [%sedlex.regexp? Chars "eE", Chars "pP", Chars "oO", Chars "cC", Chars "hH"]
+
+let kw_dow = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "wW"]
+
+let kw_doy = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "yY"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -820,6 +854,16 @@ let rec token buf =
   | kw_cast -> Kw_cast
   | kw_substring -> Kw_substring
   | kw_extract -> Kw_extract
+  | kw_year -> Kw_year
+  | kw_month -> Kw_month
+  | kw_day -> Kw_day
+  | kw_hour -> Kw_hour
+  | kw_minute -> Kw_minute
+  | kw_second -> Kw_second
+  | kw_quarter -> Kw_quarter
+  | kw_epoch -> Kw_epoch
+  | kw_dow -> Kw_dow
+  | kw_doy -> Kw_doy
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

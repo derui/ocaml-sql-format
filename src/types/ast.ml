@@ -468,6 +468,19 @@ and 'a function' =
         * [ `from_for of 'a expression * 'a expression option
           | `list of 'a expression list
           ]
+      | `extract of
+        'a expression
+        * [ `year
+          | `month
+          | `day
+          | `hour
+          | `minute
+          | `second
+          | `quarter
+          | `epoch
+          | `dow
+          | `doy
+          ]
       ]
       * 'a
 

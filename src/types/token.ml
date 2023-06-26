@@ -118,6 +118,16 @@ type token =
   | Kw_geometry
   | Kw_geography
   | Kw_xml
+  | Kw_year
+  | Kw_month
+  | Kw_day
+  | Kw_hour
+  | Kw_minute
+  | Kw_second
+  | Kw_quarter
+  | Kw_epoch
+  | Kw_dow
+  | Kw_doy
   (* functions *)
   | Kw_convert
   | Kw_cast
