@@ -919,6 +919,43 @@ let kw_timestampdiff =
     , Chars "fF"
     , Chars "fF" )]
 
+let kw_user = [%sedlex.regexp? Chars "uU", Chars "sS", Chars "eE", Chars "rR"]
+
+let kw_xmlconcat =
+  [%sedlex.regexp?
+    ( Chars "xX"
+    , Chars "mM"
+    , Chars "lL"
+    , Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "cC"
+    , Chars "aA"
+    , Chars "tT" )]
+
+let kw_xmlcomment =
+  [%sedlex.regexp?
+    ( Chars "xX"
+    , Chars "mM"
+    , Chars "lL"
+    , Chars "cC"
+    , Chars "oO"
+    , Chars "mM"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_xmltext =
+  [%sedlex.regexp?
+    ( Chars "xX"
+    , Chars "mM"
+    , Chars "lL"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "xX"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1108,6 +1145,10 @@ let rec token buf =
   | kw_sql_tsi_year -> Kw_sql_tsi_year
   | kw_timestampadd -> Kw_timestampadd
   | kw_timestampdiff -> Kw_timestampdiff
+  | kw_user -> Kw_user
+  | kw_xmlconcat -> Kw_xmlconcat
+  | kw_xmlcomment -> Kw_xmlcomment
+  | kw_xmltext -> Kw_xmltext
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

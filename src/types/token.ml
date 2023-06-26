@@ -150,6 +150,10 @@ type token =
   | Kw_to_bytes
   | Kw_timestampadd
   | Kw_timestampdiff
+  | Kw_user
+  | Kw_xmlconcat
+  | Kw_xmlcomment
+  | Kw_xmltext
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

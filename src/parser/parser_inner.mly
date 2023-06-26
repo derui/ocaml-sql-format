@@ -189,6 +189,10 @@ open Types.Ast
 %token Kw_sql_tsi_year
 %token Kw_timestampadd
 %token Kw_timestampdiff
+%token Kw_user
+%token Kw_xmlconcat
+%token Kw_xmlcomment
+%token Kw_xmltext
 
 %token Tok_eof
 
@@ -787,6 +791,8 @@ function_:
   ti = time_interval Tok_comma e2 = expression; Tok_comma e3 = expression Tok_rparen {
                                                                        Function (`timestampdiff (ti, e2, e3), ())
                                                                        }
+| Kw_left Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`left e, ())}
+| Kw_right Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`right e, ())}
 ;;
 
 %inline function_extract:

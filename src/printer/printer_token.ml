@@ -164,6 +164,10 @@ include (
       | Kw_sql_tsi_year -> Fmt.string f @@ as_keyword "sql_tsi_year" keyword
       | Kw_timestampadd -> Fmt.string f @@ as_keyword "timestampadd" keyword
       | Kw_timestampdiff -> Fmt.string f @@ as_keyword "timestampdiff" keyword
+      | Kw_user -> Fmt.string f @@ as_keyword "user" keyword
+      | Kw_xmlconcat -> Fmt.string f @@ as_keyword "xmlconcat" keyword
+      | Kw_xmlcomment -> Fmt.string f @@ as_keyword "xmlcomment" keyword
+      | Kw_xmltext -> Fmt.string f @@ as_keyword "xmltext" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

@@ -57,6 +57,21 @@ module Make
     Expr.print f e2 ~option;
     Printer_token.print f Tok_rparen ~option
 
+  let print_normal_fun kw f t ~option =
+    Printer_token.print f kw ~option;
+    Printer_token.print f Tok_lparen ~option;
+    let module Expr = (val Expr.generate ()) in
+    (match t with
+    | [] -> ()
+    | fst :: rest ->
+      Expr.print f fst ~option;
+      List.iter
+        (fun v ->
+          Printer_token.print f Tok_comma ~option;
+          Expr.print f v ~option)
+        rest);
+    Printer_token.print f Tok_rparen ~option
+
   let print f t ~option =
     match t with
     | Function (`convert (e, d), _) ->
@@ -173,4 +188,6 @@ module Make
       print_timestamp Kw_timestampadd f v ~option
     | Function (`timestampdiff v, _) ->
       print_timestamp Kw_timestampdiff f v ~option
+    | Function (`left v, _) -> print_normal_fun Kw_left f v ~option
+    | Function (`right v, _) -> print_normal_fun Kw_right f v ~option
 end

@@ -493,6 +493,8 @@ and 'a function' =
       | `to_bytes of 'a expression * Literal.sql_string * 'a expression option
       | `timestampadd of 'a time_interval * 'a expression * 'a expression
       | `timestampdiff of 'a time_interval * 'a expression * 'a expression
+      | `left of 'a expression list
+      | `right of 'a expression list
       ]
       * 'a
 
