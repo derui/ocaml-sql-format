@@ -4,8 +4,10 @@ let () =
   String.iteri
     (fun i c ->
       let kw_c =
-        Printf.sprintf "Chars \"%c%c\"" (Char.lowercase_ascii c)
-          (Char.uppercase_ascii c)
+        if c = '_' then Printf.sprintf "'_'"
+        else
+          Printf.sprintf "Chars \"%c%c\"" (Char.lowercase_ascii c)
+            (Char.uppercase_ascii c)
       in
       ary.(i) <- kw_c)
     kw;

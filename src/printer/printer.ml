@@ -63,6 +63,8 @@ let data_type () =
                 let generate = identifier
               end) : S))
 
+let time_interval () = Time_interval.((module Make () : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
@@ -777,6 +779,11 @@ and function' () =
                 type t = A.ext A.data_type
 
                 let generate = data_type
+              end)
+              (struct
+                type t = A.ext A.time_interval
+
+                let generate = time_interval
               end) : S))
 
 let directly_executable_statement () =

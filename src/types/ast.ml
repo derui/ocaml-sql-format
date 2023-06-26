@@ -491,6 +491,22 @@ and 'a function' =
         * 'a expression
       | `to_chars of 'a expression * Literal.sql_string * 'a expression option
       | `to_bytes of 'a expression * Literal.sql_string * 'a expression option
+      | `timestampadd of 'a time_interval * 'a expression * 'a expression
+      | `timestampdiff of 'a time_interval * 'a expression * 'a expression
+      ]
+      * 'a
+
+and 'a time_interval =
+  | Time_interval of
+      [ `frac_second
+      | `second
+      | `minute
+      | `hour
+      | `day
+      | `week
+      | `month
+      | `quarter
+      | `year
       ]
       * 'a
 

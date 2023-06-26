@@ -739,6 +739,186 @@ let kw_to_bytes =
     , Chars "eE"
     , Chars "sS" )]
 
+let kw_sql_tsi_frac_second =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "fF"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "cC"
+    , '_'
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "dD" )]
+
+let kw_sql_tsi_second =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "dD" )]
+
+let kw_sql_tsi_minute =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "mM"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "uU"
+    , Chars "tT"
+    , Chars "eE" )]
+
+let kw_sql_tsi_hour =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "hH"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "rR" )]
+
+let kw_sql_tsi_day =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "dD"
+    , Chars "aA"
+    , Chars "yY" )]
+
+let kw_sql_tsi_week =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "wW"
+    , Chars "eE"
+    , Chars "eE"
+    , Chars "kK" )]
+
+let kw_sql_tsi_month =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "mM"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "hH" )]
+
+let kw_sql_tsi_quarter =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "qQ"
+    , Chars "uU"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_sql_tsi_year =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "qQ"
+    , Chars "lL"
+    , '_'
+    , Chars "tT"
+    , Chars "sS"
+    , Chars "iI"
+    , '_'
+    , Chars "yY"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "rR" )]
+
+let kw_timestampadd =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP"
+    , Chars "aA"
+    , Chars "dD"
+    , Chars "dD" )]
+
+let kw_timestampdiff =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "fF"
+    , Chars "fF" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -917,6 +1097,17 @@ let rec token buf =
   | kw_both -> Kw_both
   | kw_to_chars -> Kw_to_chars
   | kw_to_bytes -> Kw_to_bytes
+  | kw_sql_tsi_frac_second -> Kw_sql_tsi_frac_second
+  | kw_sql_tsi_second -> Kw_sql_tsi_second
+  | kw_sql_tsi_minute -> Kw_sql_tsi_minute
+  | kw_sql_tsi_hour -> Kw_sql_tsi_hour
+  | kw_sql_tsi_day -> Kw_sql_tsi_day
+  | kw_sql_tsi_week -> Kw_sql_tsi_week
+  | kw_sql_tsi_month -> Kw_sql_tsi_month
+  | kw_sql_tsi_quarter -> Kw_sql_tsi_quarter
+  | kw_sql_tsi_year -> Kw_sql_tsi_year
+  | kw_timestampadd -> Kw_timestampadd
+  | kw_timestampdiff -> Kw_timestampdiff
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

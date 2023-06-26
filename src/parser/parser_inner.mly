@@ -178,6 +178,17 @@ open Types.Ast
 %token Kw_trim
 %token Kw_to_chars
 %token Kw_to_bytes
+%token Kw_sql_tsi_frac_second
+%token Kw_sql_tsi_second
+%token Kw_sql_tsi_minute
+%token Kw_sql_tsi_hour
+%token Kw_sql_tsi_day
+%token Kw_sql_tsi_week
+%token Kw_sql_tsi_month
+%token Kw_sql_tsi_quarter
+%token Kw_sql_tsi_year
+%token Kw_timestampadd
+%token Kw_timestampdiff
 
 %token Tok_eof
 
@@ -768,6 +779,14 @@ function_:
                                                                        let opt = Option.map snd opt in
                                                                        Function (`to_bytes (e, s, opt), ())
                                                                        }
+| Kw_timestampadd Tok_lparen;
+  ti = time_interval Tok_comma e2 = expression; Tok_comma e3 = expression Tok_rparen {
+                                                                       Function (`timestampadd (ti, e2, e3), ())
+                                                                       }
+| Kw_timestampdiff Tok_lparen;
+  ti = time_interval Tok_comma e2 = expression; Tok_comma e3 = expression Tok_rparen {
+                                                                       Function (`timestampdiff (ti, e2, e3), ())
+                                                                       }
 ;;
 
 %inline function_extract:
@@ -789,6 +808,18 @@ function_:
 | Kw_trim Tok_lparen Kw_both te = option(expression) Kw_from e = expression Tok_rparen {Function (`trim (Some (`both te), e), ())}
 | Kw_trim Tok_lparen te = expression Kw_from e = expression Tok_rparen {Function (`trim ( Some (`no_trimmer te), e), ())}
 | Kw_trim Tok_lparen e = expression Tok_rparen {Function (`trim (None, e), ())}
+;;
+
+%inline time_interval:
+| Kw_sql_tsi_frac_second { Time_interval (`frac_second, ()) }
+| Kw_sql_tsi_second { Time_interval (`second, ()) }
+| Kw_sql_tsi_minute { Time_interval (`minute, ()) }
+| Kw_sql_tsi_hour { Time_interval (`hour, ()) }
+| Kw_sql_tsi_day { Time_interval (`day, ()) }
+| Kw_sql_tsi_week { Time_interval (`week, ()) }
+| Kw_sql_tsi_month { Time_interval (`month, ()) }
+| Kw_sql_tsi_quarter { Time_interval (`quarter, ()) }
+| Kw_sql_tsi_year { Time_interval (`year, ()) }
 ;;
       (* literals *)
 unsigned_integer:

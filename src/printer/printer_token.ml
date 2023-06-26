@@ -151,6 +151,19 @@ include (
       | Kw_both -> Fmt.string f @@ as_keyword "both" keyword
       | Kw_to_chars -> Fmt.string f @@ as_keyword "to_chars" keyword
       | Kw_to_bytes -> Fmt.string f @@ as_keyword "to_bytes" keyword
+      | Kw_sql_tsi_frac_second ->
+        Fmt.string f @@ as_keyword "sql_tsi_frac_second" keyword
+      | Kw_sql_tsi_second -> Fmt.string f @@ as_keyword "sql_tsi_second" keyword
+      | Kw_sql_tsi_hour -> Fmt.string f @@ as_keyword "sql_tsi_hour" keyword
+      | Kw_sql_tsi_minute -> Fmt.string f @@ as_keyword "sql_tsi_minute" keyword
+      | Kw_sql_tsi_day -> Fmt.string f @@ as_keyword "sql_tsi_day" keyword
+      | Kw_sql_tsi_week -> Fmt.string f @@ as_keyword "sql_tsi_week" keyword
+      | Kw_sql_tsi_month -> Fmt.string f @@ as_keyword "sql_tsi_month" keyword
+      | Kw_sql_tsi_quarter ->
+        Fmt.string f @@ as_keyword "sql_tsi_quarter" keyword
+      | Kw_sql_tsi_year -> Fmt.string f @@ as_keyword "sql_tsi_year" keyword
+      | Kw_timestampadd -> Fmt.string f @@ as_keyword "timestampadd" keyword
+      | Kw_timestampdiff -> Fmt.string f @@ as_keyword "timestampdiff" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

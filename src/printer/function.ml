@@ -6,7 +6,8 @@ module type S = PRINTER with type t = ext function'
 
 module Make
     (Expr : GEN with type t = ext expression)
-    (Data_type : GEN with type t = ext data_type) : S = struct
+    (Data_type : GEN with type t = ext data_type)
+    (Time_interval : GEN with type t = ext time_interval) : S = struct
   type t = ext function'
 
   let print_substring f t ~option =
@@ -41,6 +42,20 @@ module Make
           Expr.print f v ~option)
         l;
       Printer_token.print f Tok_rparen ~option
+
+  let print_timestamp kw f (ti, e1, e2) ~option =
+    let module TI = (val Time_interval.generate ()) in
+    Printer_token.print f kw ~option;
+    Printer_token.print f Tok_lparen ~option;
+    TI.print f ti ~option;
+    Printer_token.print f Tok_comma ~option;
+    Fmt.string f " ";
+    let module Expr = (val Expr.generate ()) in
+    Expr.print f e1 ~option;
+    Printer_token.print f Tok_comma ~option;
+    Fmt.string f " ";
+    Expr.print f e2 ~option;
+    Printer_token.print f Tok_rparen ~option
 
   let print f t ~option =
     match t with
@@ -154,4 +169,8 @@ module Make
           Expr.print f v ~option)
         opt;
       Printer_token.print f Tok_rparen ~option
+    | Function (`timestampadd v, _) ->
+      print_timestamp Kw_timestampadd f v ~option
+    | Function (`timestampdiff v, _) ->
+      print_timestamp Kw_timestampdiff f v ~option
 end

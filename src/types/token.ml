@@ -131,6 +131,15 @@ type token =
   | Kw_leading
   | Kw_trailing
   | Kw_both
+  | Kw_sql_tsi_frac_second
+  | Kw_sql_tsi_second
+  | Kw_sql_tsi_minute
+  | Kw_sql_tsi_hour
+  | Kw_sql_tsi_day
+  | Kw_sql_tsi_week
+  | Kw_sql_tsi_month
+  | Kw_sql_tsi_quarter
+  | Kw_sql_tsi_year
   (* functions *)
   | Kw_convert
   | Kw_cast
@@ -139,6 +148,8 @@ type token =
   | Kw_trim
   | Kw_to_chars
   | Kw_to_bytes
+  | Kw_timestampadd
+  | Kw_timestampdiff
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
