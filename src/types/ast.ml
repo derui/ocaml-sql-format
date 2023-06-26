@@ -463,6 +463,11 @@ and 'a function' =
   | Function of
       [ `convert of 'a expression * 'a data_type
       | `cast of 'a expression * 'a data_type
+      | `substring of
+        'a expression
+        * [ `from_for of 'a expression * 'a expression option
+          | `list of 'a expression list
+          ]
       ]
       * 'a
 

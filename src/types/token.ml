@@ -121,6 +121,8 @@ type token =
   (* functions *)
   | Kw_convert
   | Kw_cast
+  | Kw_substring
+  | Kw_extract
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

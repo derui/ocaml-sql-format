@@ -160,6 +160,8 @@ open Types.Ast
 %token Kw_xml
 %token Kw_convert
 %token Kw_cast
+%token Kw_substring
+%token Kw_extract
 
 %token Tok_eof
 
@@ -733,6 +735,13 @@ data_type:
 function_:
 | Kw_convert Tok_lparen e = expression Tok_comma d = data_type  Tok_rparen { Function (`convert (e, d), ()) }
 | Kw_cast Tok_lparen e = expression Kw_as d = data_type  Tok_rparen { Function (`cast (e, d), ()) }
+| Kw_substring Tok_lparen e = expression Kw_from f = expression for_ = option(pair(Kw_for, expression)) Tok_rparen {
+                                                         let from' = Option.map snd for_ in
+                                                         Function (`substring (e, `from_for (f, from')), ())
+                                                                         }
+| Kw_substring Tok_lparen e = expression Tok_comma l = separated_nonempty_list(Tok_comma, expression) Tok_rparen {
+                                                           Function (`substring (e, `list l), ())
+                                                                         }
 ;;
       (* literals *)
 unsigned_integer:

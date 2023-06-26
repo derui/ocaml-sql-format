@@ -636,6 +636,28 @@ let kw_convert =
 
 let kw_cast = [%sedlex.regexp? Chars "cC", Chars "aA", Chars "sS", Chars "tT"]
 
+let kw_substring =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "uU"
+    , Chars "bB"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_extract =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "xX"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "cC"
+    , Chars "tT" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -796,6 +818,8 @@ let rec token buf =
   | kw_xml -> Kw_xml
   | kw_convert -> Kw_convert
   | kw_cast -> Kw_cast
+  | kw_substring -> Kw_substring
+  | kw_extract -> Kw_extract
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
