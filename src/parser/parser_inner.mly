@@ -793,6 +793,16 @@ function_:
                                                                        }
 | Kw_left Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`left e, ())}
 | Kw_right Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`right e, ())}
+| Kw_char Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`char e, ())}
+| Kw_user Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`user e, ())}
+| Kw_year Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`year e, ())}
+| Kw_month Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`month e, ())}
+| Kw_hour Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`hour e, ())}
+| Kw_minute Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`minute e, ())}
+| Kw_second Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`second e, ())}
+| Kw_xmlconcat Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmlconcat e, ())}
+| Kw_xmlcomment Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmlcomment e, ())}
+| Kw_xmltext Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmltext e, ())}
 ;;
 
 %inline function_extract:

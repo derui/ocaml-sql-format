@@ -190,4 +190,14 @@ module Make
       print_timestamp Kw_timestampdiff f v ~option
     | Function (`left v, _) -> print_normal_fun Kw_left f v ~option
     | Function (`right v, _) -> print_normal_fun Kw_right f v ~option
+    | Function (`char v, _) -> print_normal_fun Kw_char f v ~option
+    | Function (`user v, _) -> print_normal_fun Kw_user f v ~option
+    | Function (`year v, _) -> print_normal_fun Kw_year f v ~option
+    | Function (`month v, _) -> print_normal_fun Kw_month f v ~option
+    | Function (`hour v, _) -> print_normal_fun Kw_hour f v ~option
+    | Function (`minute v, _) -> print_normal_fun Kw_minute f v ~option
+    | Function (`second v, _) -> print_normal_fun Kw_second f v ~option
+    | Function (`xmlconcat v, _) -> print_normal_fun Kw_xmlconcat f v ~option
+    | Function (`xmlcomment v, _) -> print_normal_fun Kw_xmlcomment f v ~option
+    | Function (`xmltext v, _) -> print_normal_fun Kw_xmltext f v ~option
 end

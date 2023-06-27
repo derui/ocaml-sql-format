@@ -495,6 +495,16 @@ and 'a function' =
       | `timestampdiff of 'a time_interval * 'a expression * 'a expression
       | `left of 'a expression list
       | `right of 'a expression list
+      | `char of 'a expression list
+      | `user of 'a expression list
+      | `year of 'a expression list
+      | `month of 'a expression list
+      | `hour of 'a expression list
+      | `minute of 'a expression list
+      | `second of 'a expression list
+      | `xmlconcat of 'a expression list
+      | `xmlcomment of 'a expression list
+      | `xmltext of 'a expression list
       ]
       * 'a
 
