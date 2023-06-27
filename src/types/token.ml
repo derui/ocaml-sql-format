@@ -140,6 +140,7 @@ type token =
   | Kw_sql_tsi_month
   | Kw_sql_tsi_quarter
   | Kw_sql_tsi_year
+  | Kw_insert
   (* functions *)
   | Kw_convert
   | Kw_cast
@@ -154,6 +155,7 @@ type token =
   | Kw_xmlconcat
   | Kw_xmlcomment
   | Kw_xmltext
+  | Kw_translate
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

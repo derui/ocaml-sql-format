@@ -956,6 +956,22 @@ let kw_xmltext =
     , Chars "xX"
     , Chars "tT" )]
 
+let kw_insert =
+  [%sedlex.regexp?
+    Chars "iI", Chars "nN", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
+
+let kw_translate =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1149,6 +1165,8 @@ let rec token buf =
   | kw_xmlconcat -> Kw_xmlconcat
   | kw_xmlcomment -> Kw_xmlcomment
   | kw_xmltext -> Kw_xmltext
+  | kw_insert -> Kw_insert
+  | kw_translate -> Kw_translate
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

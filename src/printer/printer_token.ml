@@ -168,6 +168,8 @@ include (
       | Kw_xmlconcat -> Fmt.string f @@ as_keyword "xmlconcat" keyword
       | Kw_xmlcomment -> Fmt.string f @@ as_keyword "xmlcomment" keyword
       | Kw_xmltext -> Fmt.string f @@ as_keyword "xmltext" keyword
+      | Kw_insert -> Fmt.string f @@ as_keyword "insert" keyword
+      | Kw_translate -> Fmt.string f @@ as_keyword "translate" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

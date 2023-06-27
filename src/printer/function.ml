@@ -200,4 +200,6 @@ module Make
     | Function (`xmlconcat v, _) -> print_normal_fun Kw_xmlconcat f v ~option
     | Function (`xmlcomment v, _) -> print_normal_fun Kw_xmlcomment f v ~option
     | Function (`xmltext v, _) -> print_normal_fun Kw_xmltext f v ~option
+    | Function (`insert v, _) -> print_normal_fun Kw_insert f v ~option
+    | Function (`translate v, _) -> print_normal_fun Kw_translate f v ~option
 end

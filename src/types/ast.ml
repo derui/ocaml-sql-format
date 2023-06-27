@@ -505,6 +505,8 @@ and 'a function' =
       | `xmlconcat of 'a expression list
       | `xmlcomment of 'a expression list
       | `xmltext of 'a expression list
+      | `insert of 'a expression list
+      | `translate of 'a expression list
       ]
       * 'a
 

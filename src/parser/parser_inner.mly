@@ -193,6 +193,8 @@ open Types.Ast
 %token Kw_xmlconcat
 %token Kw_xmlcomment
 %token Kw_xmltext
+%token Kw_insert
+%token Kw_translate
 
 %token Tok_eof
 
@@ -803,6 +805,8 @@ function_:
 | Kw_xmlconcat Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmlconcat e, ())}
 | Kw_xmlcomment Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmlcomment e, ())}
 | Kw_xmltext Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmltext e, ())}
+| Kw_insert Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`insert e, ())}
+| Kw_translate Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`translate e, ())}
 ;;
 
 %inline function_extract:
