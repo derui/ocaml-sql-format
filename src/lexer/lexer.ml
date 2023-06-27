@@ -972,6 +972,17 @@ let kw_translate =
     , Chars "tT"
     , Chars "eE" )]
 
+let kw_position =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "oO"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1167,6 +1178,7 @@ let rec token buf =
   | kw_xmltext -> Kw_xmltext
   | kw_insert -> Kw_insert
   | kw_translate -> Kw_translate
+  | kw_position -> Kw_position
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

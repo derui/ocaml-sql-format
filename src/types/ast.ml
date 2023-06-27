@@ -507,6 +507,7 @@ and 'a function' =
       | `xmltext of 'a expression list
       | `insert of 'a expression list
       | `translate of 'a expression list
+      | `position of 'a common_value_expression * 'a common_value_expression
       ]
       * 'a
 

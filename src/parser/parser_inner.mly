@@ -195,6 +195,7 @@ open Types.Ast
 %token Kw_xmltext
 %token Kw_insert
 %token Kw_translate
+%token Kw_position
 
 %token Tok_eof
 
@@ -807,6 +808,7 @@ function_:
 | Kw_xmltext Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`xmltext e, ())}
 | Kw_insert Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`insert e, ())}
 | Kw_translate Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`translate e, ())}
+| Kw_position Tok_lparen s = common_value_expression Kw_in e = common_value_expression Tok_rparen {Function (`position (s, e), ())}
 ;;
 
 %inline function_extract:

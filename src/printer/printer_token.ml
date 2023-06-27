@@ -170,6 +170,7 @@ include (
       | Kw_xmltext -> Fmt.string f @@ as_keyword "xmltext" keyword
       | Kw_insert -> Fmt.string f @@ as_keyword "insert" keyword
       | Kw_translate -> Fmt.string f @@ as_keyword "translate" keyword
+      | Kw_position -> Fmt.string f @@ as_keyword "position" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

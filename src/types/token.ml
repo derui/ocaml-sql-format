@@ -156,6 +156,7 @@ type token =
   | Kw_xmlcomment
   | Kw_xmltext
   | Kw_translate
+  | Kw_position
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

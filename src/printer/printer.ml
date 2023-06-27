@@ -784,6 +784,11 @@ and function' () =
                 type t = A.ext A.time_interval
 
                 let generate = time_interval
+              end)
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
               end) : S))
 
 let directly_executable_statement () =

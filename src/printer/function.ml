@@ -7,7 +7,8 @@ module type S = PRINTER with type t = ext function'
 module Make
     (Expr : GEN with type t = ext expression)
     (Data_type : GEN with type t = ext data_type)
-    (Time_interval : GEN with type t = ext time_interval) : S = struct
+    (Time_interval : GEN with type t = ext time_interval)
+    (Cve : GEN with type t = ext common_value_expression) : S = struct
   type t = ext function'
 
   let print_substring f t ~option =
@@ -202,4 +203,14 @@ module Make
     | Function (`xmltext v, _) -> print_normal_fun Kw_xmltext f v ~option
     | Function (`insert v, _) -> print_normal_fun Kw_insert f v ~option
     | Function (`translate v, _) -> print_normal_fun Kw_translate f v ~option
+    | Function (`position (s, e), _) ->
+      Printer_token.print f Kw_position ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Cve = (val Cve.generate ()) in
+      Cve.print f s ~option;
+      Fmt.string f " ";
+      Printer_token.print f Kw_in ~option;
+      Fmt.string f " ";
+      Cve.print f e ~option;
+      Printer_token.print f Tok_rparen ~option
 end
