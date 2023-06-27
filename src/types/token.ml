@@ -159,6 +159,7 @@ type token =
   | Kw_translate
   | Kw_position
   | Kw_listagg
+  | Kw_current_date
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

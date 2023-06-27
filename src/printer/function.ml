@@ -234,4 +234,8 @@ module Make
       let module Order_by = (val Order_by.generate ()) in
       Order_by.print f order_by ~option;
       Printer_token.print f Tok_rparen ~option
+    | Function (`current_date, _) ->
+      Printer_token.print f Kw_current_date ~option;
+      Printer_token.print f Tok_lparen ~option;
+      Printer_token.print f Tok_rparen ~option
 end

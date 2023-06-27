@@ -510,6 +510,7 @@ and 'a function' =
       | `position of 'a common_value_expression * 'a common_value_expression
       | `listagg of
         'a expression * Literal.sql_string option * 'a order_by_clause
+      | `current_date
       ]
       * 'a
 

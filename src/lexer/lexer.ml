@@ -997,6 +997,21 @@ let kw_within =
   [%sedlex.regexp?
     Chars "wW", Chars "iI", Chars "tT", Chars "hH", Chars "iI", Chars "nN"]
 
+let kw_current_date =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "dD"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1195,6 +1210,7 @@ let rec token buf =
   | kw_position -> Kw_position
   | kw_listagg -> Kw_listagg
   | kw_within -> Kw_within
+  | kw_current_date -> Kw_current_date
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

@@ -173,6 +173,7 @@ include (
       | Kw_position -> Fmt.string f @@ as_keyword "position" keyword
       | Kw_listagg -> Fmt.string f @@ as_keyword "listagg" keyword
       | Kw_within -> Fmt.string f @@ as_keyword "within" keyword
+      | Kw_current_date -> Fmt.string f @@ as_keyword "current_date" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

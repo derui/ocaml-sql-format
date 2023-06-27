@@ -198,6 +198,7 @@ open Types.Ast
 %token Kw_position
 %token Kw_listagg
 %token Kw_within
+%token Kw_current_date
 
 %token Tok_eof
 
@@ -816,6 +817,7 @@ function_:
   {
     let str = Option.map snd str in
     Function (`listagg (e, str, order_by), ())}
+| Kw_current_date option(pair(Tok_lparen, Tok_rparen)) {Function (`current_date, ())}
 ;;
 
 %inline function_extract:
