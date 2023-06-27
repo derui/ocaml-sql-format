@@ -8,7 +8,8 @@ module Make
     (Expr : GEN with type t = ext expression)
     (Data_type : GEN with type t = ext data_type)
     (Time_interval : GEN with type t = ext time_interval)
-    (Cve : GEN with type t = ext common_value_expression) : S = struct
+    (Cve : GEN with type t = ext common_value_expression)
+    (Order_by : GEN with type t = ext order_by_clause) : S = struct
   type t = ext function'
 
   let print_substring f t ~option =
@@ -212,5 +213,25 @@ module Make
       Printer_token.print f Kw_in ~option;
       Fmt.string f " ";
       Cve.print f e ~option;
+      Printer_token.print f Tok_rparen ~option
+    | Function (`listagg (e, str, order_by), _) ->
+      Printer_token.print f Kw_listagg ~option;
+      Printer_token.print f Tok_lparen ~option;
+      let module Expr = (val Expr.generate ()) in
+      Expr.print f e ~option;
+      Option.iter
+        (fun v ->
+          Printer_token.print f Tok_comma ~option;
+          Fmt.string f v)
+        str;
+      Printer_token.print f Tok_rparen ~option;
+      Fmt.string f " ";
+      Printer_token.print f Kw_within ~option;
+      Fmt.string f " ";
+      Printer_token.print f Kw_group ~option;
+      Fmt.string f " ";
+      Printer_token.print f Tok_lparen ~option;
+      let module Order_by = (val Order_by.generate ()) in
+      Order_by.print f order_by ~option;
       Printer_token.print f Tok_rparen ~option
 end

@@ -789,6 +789,11 @@ and function' () =
                 type t = A.ext A.common_value_expression
 
                 let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
               end) : S))
 
 let directly_executable_statement () =

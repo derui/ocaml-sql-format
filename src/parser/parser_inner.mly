@@ -196,6 +196,8 @@ open Types.Ast
 %token Kw_insert
 %token Kw_translate
 %token Kw_position
+%token Kw_listagg
+%token Kw_within
 
 %token Tok_eof
 
@@ -809,6 +811,11 @@ function_:
 | Kw_insert Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`insert e, ())}
 | Kw_translate Tok_lparen e = separated_list(Tok_comma, expression) Tok_rparen {Function (`translate e, ())}
 | Kw_position Tok_lparen s = common_value_expression Kw_in e = common_value_expression Tok_rparen {Function (`position (s, e), ())}
+| Kw_listagg Tok_lparen e = expression str = option(pair(Tok_comma, Tok_string)) Tok_rparen;
+  Kw_within Kw_group Tok_lparen order_by = order_by_clause Tok_rparen
+  {
+    let str = Option.map snd str in
+    Function (`listagg (e, str, order_by), ())}
 ;;
 
 %inline function_extract:

@@ -141,6 +141,7 @@ type token =
   | Kw_sql_tsi_quarter
   | Kw_sql_tsi_year
   | Kw_insert
+  | Kw_within
   (* functions *)
   | Kw_convert
   | Kw_cast
@@ -157,6 +158,7 @@ type token =
   | Kw_xmltext
   | Kw_translate
   | Kw_position
+  | Kw_listagg
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

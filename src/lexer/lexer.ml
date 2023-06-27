@@ -983,6 +983,20 @@ let kw_position =
     , Chars "oO"
     , Chars "nN" )]
 
+let kw_listagg =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "gG"
+    , Chars "gG" )]
+
+let kw_within =
+  [%sedlex.regexp?
+    Chars "wW", Chars "iI", Chars "tT", Chars "hH", Chars "iI", Chars "nN"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1179,6 +1193,8 @@ let rec token buf =
   | kw_insert -> Kw_insert
   | kw_translate -> Kw_translate
   | kw_position -> Kw_position
+  | kw_listagg -> Kw_listagg
+  | kw_within -> Kw_within
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

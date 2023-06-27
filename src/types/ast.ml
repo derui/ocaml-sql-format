@@ -508,6 +508,8 @@ and 'a function' =
       | `insert of 'a expression list
       | `translate of 'a expression list
       | `position of 'a common_value_expression * 'a common_value_expression
+      | `listagg of
+        'a expression * Literal.sql_string option * 'a order_by_clause
       ]
       * 'a
 
