@@ -65,6 +65,8 @@ let data_type () =
 
 let time_interval () = Time_interval.((module Make () : S))
 
+let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
