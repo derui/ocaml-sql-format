@@ -1066,5 +1066,6 @@ unsigned_numeric_literal:
 ;;
 
 identifier:
-  | Tok_ident { Identifier ($1, ())}
+  | Tok_ident { Identifier (`literal $1, ())}
+  | non_reserved_identifier { Identifier (`non_reserved $1, ())}
 ;;

@@ -18,6 +18,8 @@ module Literal = struct
     | `timestamp of string
     ]
   [@@deriving show, eq]
+
+  type identifier = string [@@deriving show, eq]
 end
 
 (* no-info types *)
@@ -41,7 +43,12 @@ and row_variant_ =
 
 and not_op = [ `not' ] option [@@deriving show, eq]
 
-type 'a identifier = Identifier of string * 'a
+type 'a identifier =
+  | Identifier of
+      [ `literal of Literal.identifier
+      | `non_reserved of 'a non_reserved_identifier
+      ]
+      * 'a
 
 and 'a non_reserved_identifier =
   | Non_reserved_identifier of

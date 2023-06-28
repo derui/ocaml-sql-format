@@ -1,28 +1,10 @@
 module A = Types.Ast
 module Options = Options
 
-let identifier () = Identifier.((module Make () : S))
-
 let non_numeric_literal () = Non_numeric_literal.((module Make () : S))
 
 let unsigned_numeric_literal () =
   Unsigned_numeric_literal.((module Make () : S))
-
-let column_list () =
-  Column_list.(
-    (module Make (struct
-      type t = A.ext A.identifier
-
-      let generate = identifier
-    end) : S))
-
-let into_clause () =
-  Into_clause.(
-    (module Make (struct
-      type t = A.ext A.identifier
-
-      let generate = identifier
-    end) : S))
 
 let comparison_operator () = Comparison_operator.((module Make () : S))
 
@@ -49,6 +31,26 @@ let basic_data_type () =
       let generate = simple_data_type
     end) : S))
 
+let time_interval () = Time_interval.((module Make () : S))
+
+let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
+
+let non_reserved_identifier () =
+  Non_reserved_identifier.(
+    (module Make (struct
+      type t = A.ext A.basic_non_reserved
+
+      let generate = basic_non_reserved
+    end) : S))
+
+let identifier () =
+  Identifier.(
+    (module Make (struct
+      type t = A.ext A.non_reserved_identifier
+
+      let generate = non_reserved_identifier
+    end) : S))
+
 let data_type () =
   Data_type.(
     (module Make
@@ -63,16 +65,20 @@ let data_type () =
                 let generate = identifier
               end) : S))
 
-let time_interval () = Time_interval.((module Make () : S))
-
-let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
-
-let non_reserved_identifier () =
-  Non_reserved_identifier.(
+let column_list () =
+  Column_list.(
     (module Make (struct
-      type t = A.ext A.basic_non_reserved
+      type t = A.ext A.identifier
 
-      let generate = basic_non_reserved
+      let generate = identifier
+    end) : S))
+
+let into_clause () =
+  Into_clause.(
+    (module Make (struct
+      type t = A.ext A.identifier
+
+      let generate = identifier
     end) : S))
 
 let rec query_expression () =
