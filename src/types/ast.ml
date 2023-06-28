@@ -653,6 +653,7 @@ and 'a function' =
         * 'a filter_clause option
       | `current_timestamp of 'a unsigned_integer option
       | `current_time of 'a unsigned_integer option
+      | `session_user
       ]
       * 'a
 

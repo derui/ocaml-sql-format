@@ -267,6 +267,7 @@ open Types.Ast
 %token Kw_format
 %token Kw_yaml
 %token Kw_policy
+%token Kw_session_user
 
 %token Tok_eof
 
@@ -902,6 +903,7 @@ function_:
 | Kw_current_time Tok_lparen int = unsigned_integer Tok_rparen {Function (`current_time (Some int), ())}
 | Kw_current_timestamp {Function (`current_timestamp None, ())}
 | Kw_current_time {Function (`current_time None, ())}
+| Kw_session_user {Function (`session_user, ())}
 ;;
 
 %inline function_extract:

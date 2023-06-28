@@ -243,6 +243,7 @@ include (
       | Kw_format -> Fmt.string f @@ as_keyword "format" keyword
       | Kw_yaml -> Fmt.string f @@ as_keyword "yaml" keyword
       | Kw_policy -> Fmt.string f @@ as_keyword "policy" keyword
+      | Kw_session_user -> Fmt.string f @@ as_keyword "session_user" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

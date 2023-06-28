@@ -1560,6 +1560,21 @@ let kw_current_time =
     , Chars "mM"
     , Chars "eE" )]
 
+let kw_session_user =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN"
+    , '_'
+    , Chars "uU"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "rR" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1827,6 +1842,7 @@ let rec token buf =
   | kw_format -> Kw_format
   | kw_yaml -> Kw_yaml
   | kw_policy -> Kw_policy
+  | kw_session_user -> Kw_session_user
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

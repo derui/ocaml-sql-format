@@ -299,4 +299,6 @@ module Make
           UI.print f v ~option;
           Printer_token.print f Tok_rparen ~option)
         ui
+    | Function (`session_user, _) ->
+      Printer_token.print f Kw_session_user ~option
 end
