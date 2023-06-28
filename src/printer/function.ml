@@ -11,7 +11,8 @@ module Make
     (Cve : GEN with type t = ext common_value_expression)
     (Order_by : GEN with type t = ext order_by_clause)
     (Filter : GEN with type t = ext filter_clause)
-    (I : GEN with type t = ext identifier) : S = struct
+    (I : GEN with type t = ext identifier)
+    (UI : GEN with type t = ext unsigned_integer) : S = struct
   type t = ext function'
 
   let print_substring f t ~option =
@@ -280,4 +281,22 @@ module Make
           let module Filter = (val Filter.generate ()) in
           Filter.print f v ~option)
         filter
+    | Function (`current_timestamp ui, _) ->
+      Printer_token.print f Kw_current_timestamp ~option;
+      Option.iter
+        (fun v ->
+          Printer_token.print f Tok_lparen ~option;
+          let module UI = (val UI.generate ()) in
+          UI.print f v ~option;
+          Printer_token.print f Tok_rparen ~option)
+        ui
+    | Function (`current_time ui, _) ->
+      Printer_token.print f Kw_current_time ~option;
+      Option.iter
+        (fun v ->
+          Printer_token.print f Tok_lparen ~option;
+          let module UI = (val UI.generate ()) in
+          UI.print f v ~option;
+          Printer_token.print f Tok_rparen ~option)
+        ui
 end

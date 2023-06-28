@@ -1525,6 +1525,41 @@ let kw_policy =
   [%sedlex.regexp?
     Chars "pP", Chars "oO", Chars "lL", Chars "iI", Chars "cC", Chars "yY"]
 
+let kw_current_timestamp =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP" )]
+
+let kw_current_time =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1724,6 +1759,8 @@ let rec token buf =
   | kw_listagg -> Kw_listagg
   | kw_within -> Kw_within
   | kw_current_date -> Kw_current_date
+  | kw_current_timestamp -> Kw_current_timestamp
+  | kw_current_time -> Kw_current_time
   | kw_exception -> Kw_exception
   | kw_serial -> Kw_serial
   | kw_index -> Kw_index

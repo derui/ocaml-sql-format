@@ -226,6 +226,8 @@ type token =
   | Kw_position
   | Kw_listagg
   | Kw_current_date
+  | Kw_current_timestamp
+  | Kw_current_time
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

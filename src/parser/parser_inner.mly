@@ -199,6 +199,8 @@ open Types.Ast
 %token Kw_listagg
 %token Kw_within
 %token Kw_current_date
+%token Kw_current_timestamp
+%token Kw_current_time
 %token Kw_exception
 %token Kw_serial
 %token Kw_index
@@ -896,6 +898,10 @@ function_:
   order_by = option(order_by_clause);
   Tok_rparen;
   filter = option(filter_clause) {Function (`call (ident, Some `Distinct, e, order_by, filter), ())}
+| Kw_current_timestamp Tok_lparen int = unsigned_integer Tok_rparen {Function (`current_timestamp (Some int), ())}
+| Kw_current_time Tok_lparen int = unsigned_integer Tok_rparen {Function (`current_time (Some int), ())}
+| Kw_current_timestamp {Function (`current_timestamp None, ())}
+| Kw_current_time {Function (`current_time None, ())}
 ;;
 
 %inline function_extract:

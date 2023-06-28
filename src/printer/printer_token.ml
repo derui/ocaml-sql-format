@@ -174,6 +174,9 @@ include (
       | Kw_listagg -> Fmt.string f @@ as_keyword "listagg" keyword
       | Kw_within -> Fmt.string f @@ as_keyword "within" keyword
       | Kw_current_date -> Fmt.string f @@ as_keyword "current_date" keyword
+      | Kw_current_timestamp ->
+        Fmt.string f @@ as_keyword "current_timestamp" keyword
+      | Kw_current_time -> Fmt.string f @@ as_keyword "current_time" keyword
       | Kw_exception -> Fmt.string f @@ as_keyword "exception" keyword
       | Kw_serial -> Fmt.string f @@ as_keyword "serial" keyword
       | Kw_index -> Fmt.string f @@ as_keyword "index" keyword

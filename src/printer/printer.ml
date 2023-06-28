@@ -820,6 +820,11 @@ and function' () =
                 type t = A.ext A.identifier
 
                 let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.unsigned_integer
+
+                let generate = unsigned_integer
               end) : S))
 
 let directly_executable_statement () =
