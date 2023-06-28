@@ -67,6 +67,14 @@ let time_interval () = Time_interval.((module Make () : S))
 
 let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
 
+let non_reserved_identifier () =
+  Non_reserved_identifier.(
+    (module Make (struct
+      type t = A.ext A.basic_non_reserved
+
+      let generate = basic_non_reserved
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

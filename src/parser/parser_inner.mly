@@ -919,6 +919,17 @@ function_:
 | Kw_sql_tsi_year { Time_interval (`year, ()) }
 ;;
 
+non_reserved_identifier:
+  | Kw_exception { Non_reserved_identifier (`exception',()) }
+  | Kw_serial { Non_reserved_identifier (`serial,()) }
+  | Kw_object { Non_reserved_identifier (`object',()) }
+  | Kw_index { Non_reserved_identifier (`index,()) }
+  | Kw_json { Non_reserved_identifier (`json,()) }
+  | Kw_geometry { Non_reserved_identifier (`geometry,()) }
+  | Kw_geography { Non_reserved_identifier (`geography,()) }
+  | basic = basic_non_reserved { Non_reserved_identifier (`basic basic, ()) }
+;;
+
 basic_non_reserved:
   | Kw_instead  {Basic_non_reserved (`instead, ())}
   | Kw_view  {Basic_non_reserved (`view, ())}
