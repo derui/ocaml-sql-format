@@ -174,6 +174,72 @@ include (
       | Kw_listagg -> Fmt.string f @@ as_keyword "listagg" keyword
       | Kw_within -> Fmt.string f @@ as_keyword "within" keyword
       | Kw_current_date -> Fmt.string f @@ as_keyword "current_date" keyword
+      | Kw_exception -> Fmt.string f @@ as_keyword "exception" keyword
+      | Kw_serial -> Fmt.string f @@ as_keyword "serial" keyword
+      | Kw_index -> Fmt.string f @@ as_keyword "index" keyword
+      | Kw_instead -> Fmt.string f @@ as_keyword "instead" keyword
+      | Kw_view -> Fmt.string f @@ as_keyword "view" keyword
+      | Kw_enabled -> Fmt.string f @@ as_keyword "enabled" keyword
+      | Kw_disabled -> Fmt.string f @@ as_keyword "disabled" keyword
+      | Kw_key -> Fmt.string f @@ as_keyword "key" keyword
+      | Kw_document -> Fmt.string f @@ as_keyword "document" keyword
+      | Kw_content -> Fmt.string f @@ as_keyword "content" keyword
+      | Kw_empty -> Fmt.string f @@ as_keyword "empty" keyword
+      | Kw_ordinality -> Fmt.string f @@ as_keyword "ordinality" keyword
+      | Kw_path -> Fmt.string f @@ as_keyword "path" keyword
+      | Kw_querystring -> Fmt.string f @@ as_keyword "querystring" keyword
+      | Kw_namespace -> Fmt.string f @@ as_keyword "namespace" keyword
+      | Kw_result -> Fmt.string f @@ as_keyword "result" keyword
+      | Kw_accesspattern -> Fmt.string f @@ as_keyword "accesspattern" keyword
+      | Kw_auto_increment -> Fmt.string f @@ as_keyword "auto_increment" keyword
+      | Kw_wellformed -> Fmt.string f @@ as_keyword "wellformed" keyword
+      | Kw_texttable -> Fmt.string f @@ as_keyword "texttable" keyword
+      | Kw_arraytable -> Fmt.string f @@ as_keyword "arraytable" keyword
+      | Kw_jsontable -> Fmt.string f @@ as_keyword "jsontable" keyword
+      | Kw_selector -> Fmt.string f @@ as_keyword "selector" keyword
+      | Kw_skip -> Fmt.string f @@ as_keyword "skip" keyword
+      | Kw_width -> Fmt.string f @@ as_keyword "width" keyword
+      | Kw_passing -> Fmt.string f @@ as_keyword "passing" keyword
+      | Kw_name -> Fmt.string f @@ as_keyword "name" keyword
+      | Kw_columns -> Fmt.string f @@ as_keyword "columns" keyword
+      | Kw_nulls -> Fmt.string f @@ as_keyword "nulls" keyword
+      | Kw_objecttable -> Fmt.string f @@ as_keyword "objecttable" keyword
+      | Kw_version -> Fmt.string f @@ as_keyword "version" keyword
+      | Kw_including -> Fmt.string f @@ as_keyword "including" keyword
+      | Kw_excluding -> Fmt.string f @@ as_keyword "excluding" keyword
+      | Kw_xmldeclaration -> Fmt.string f @@ as_keyword "xmldeclaration" keyword
+      | Kw_variadic -> Fmt.string f @@ as_keyword "variadic" keyword
+      | Kw_raise -> Fmt.string f @@ as_keyword "raise" keyword
+      | Kw_chain -> Fmt.string f @@ as_keyword "chain" keyword
+      | Kw_jsonarray_agg -> Fmt.string f @@ as_keyword "jsonarray_agg" keyword
+      | Kw_jsonobject -> Fmt.string f @@ as_keyword "jsonobject" keyword
+      | Kw_preserve -> Fmt.string f @@ as_keyword "preserve" keyword
+      | Kw_upsert -> Fmt.string f @@ as_keyword "upsert" keyword
+      | Kw_after -> Fmt.string f @@ as_keyword "after" keyword
+      | Kw_type -> Fmt.string f @@ as_keyword "type" keyword
+      | Kw_translator -> Fmt.string f @@ as_keyword "translator" keyword
+      | Kw_jaas -> Fmt.string f @@ as_keyword "jaas" keyword
+      | Kw_condition -> Fmt.string f @@ as_keyword "condition" keyword
+      | Kw_mask -> Fmt.string f @@ as_keyword "mask" keyword
+      | Kw_access -> Fmt.string f @@ as_keyword "access" keyword
+      | Kw_control -> Fmt.string f @@ as_keyword "control" keyword
+      | Kw_none -> Fmt.string f @@ as_keyword "none" keyword
+      | Kw_data -> Fmt.string f @@ as_keyword "data" keyword
+      | Kw_database -> Fmt.string f @@ as_keyword "database" keyword
+      | Kw_privileges -> Fmt.string f @@ as_keyword "privileges" keyword
+      | Kw_role -> Fmt.string f @@ as_keyword "role" keyword
+      | Kw_schema -> Fmt.string f @@ as_keyword "schema" keyword
+      | Kw_use -> Fmt.string f @@ as_keyword "use" keyword
+      | Kw_repository -> Fmt.string f @@ as_keyword "repository" keyword
+      | Kw_rename -> Fmt.string f @@ as_keyword "rename" keyword
+      | Kw_domain -> Fmt.string f @@ as_keyword "domain" keyword
+      | Kw_usage -> Fmt.string f @@ as_keyword "usage" keyword
+      | Kw_explain -> Fmt.string f @@ as_keyword "explain" keyword
+      | Kw_analyze -> Fmt.string f @@ as_keyword "analyze" keyword
+      | Kw_text -> Fmt.string f @@ as_keyword "text" keyword
+      | Kw_format -> Fmt.string f @@ as_keyword "format" keyword
+      | Kw_yaml -> Fmt.string f @@ as_keyword "yaml" keyword
+      | Kw_policy -> Fmt.string f @@ as_keyword "policy" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

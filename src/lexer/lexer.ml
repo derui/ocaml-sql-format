@@ -1012,6 +1012,519 @@ let kw_current_date =
     , Chars "tT"
     , Chars "eE" )]
 
+let kw_exception =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "xX"
+    , Chars "cC"
+    , Chars "eE"
+    , Chars "pP"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_serial =
+  [%sedlex.regexp?
+    Chars "sS", Chars "eE", Chars "rR", Chars "iI", Chars "aA", Chars "lL"]
+
+let kw_index =
+  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "dD", Chars "eE", Chars "xX"]
+
+let kw_instead =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "dD" )]
+
+let kw_view = [%sedlex.regexp? Chars "vV", Chars "iI", Chars "eE", Chars "wW"]
+
+let kw_enabled =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_disabled =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_key = [%sedlex.regexp? Chars "kK", Chars "eE", Chars "yY"]
+
+let kw_document =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "oO"
+    , Chars "cC"
+    , Chars "uU"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_content =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_empty =
+  [%sedlex.regexp? Chars "eE", Chars "mM", Chars "pP", Chars "tT", Chars "yY"]
+
+let kw_ordinality =
+  [%sedlex.regexp?
+    ( Chars "oO"
+    , Chars "rR"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "yY" )]
+
+let kw_path = [%sedlex.regexp? Chars "pP", Chars "aA", Chars "tT", Chars "hH"]
+
+let kw_querystring =
+  [%sedlex.regexp?
+    ( Chars "qQ"
+    , Chars "uU"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "yY"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_namespace =
+  [%sedlex.regexp?
+    ( Chars "nN"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "pP"
+    , Chars "aA"
+    , Chars "cC"
+    , Chars "eE" )]
+
+let kw_result =
+  [%sedlex.regexp?
+    Chars "rR", Chars "eE", Chars "sS", Chars "uU", Chars "lL", Chars "tT"]
+
+let kw_accesspattern =
+  [%sedlex.regexp?
+    ( Chars "aA"
+    , Chars "cC"
+    , Chars "cC"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "sS"
+    , Chars "pP"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "nN" )]
+
+let kw_auto_increment =
+  [%sedlex.regexp?
+    ( Chars "aA"
+    , Chars "uU"
+    , Chars "tT"
+    , Chars "oO"
+    , '_'
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "cC"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_wellformed =
+  [%sedlex.regexp?
+    ( Chars "wW"
+    , Chars "eE"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "fF"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_texttable =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "eE"
+    , Chars "xX"
+    , Chars "tT"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_arraytable =
+  [%sedlex.regexp?
+    ( Chars "aA"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "yY"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_jsontable =
+  [%sedlex.regexp?
+    ( Chars "jJ"
+    , Chars "sS"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_selector =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "eE"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "tT"
+    , Chars "oO"
+    , Chars "rR" )]
+
+let kw_skip = [%sedlex.regexp? Chars "sS", Chars "kK", Chars "iI", Chars "pP"]
+
+let kw_width =
+  [%sedlex.regexp? Chars "wW", Chars "iI", Chars "dD", Chars "tT", Chars "hH"]
+
+let kw_passing =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "aA"
+    , Chars "sS"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_name = [%sedlex.regexp? Chars "nN", Chars "aA", Chars "mM", Chars "eE"]
+
+let kw_columns =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "uU"
+    , Chars "mM"
+    , Chars "nN"
+    , Chars "sS" )]
+
+let kw_nulls =
+  [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "sS"]
+
+let kw_objecttable =
+  [%sedlex.regexp?
+    ( Chars "oO"
+    , Chars "bB"
+    , Chars "jJ"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "tT"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_version =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_including =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "cC"
+    , Chars "lL"
+    , Chars "uU"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_excluding =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "xX"
+    , Chars "cC"
+    , Chars "lL"
+    , Chars "uU"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_xmldeclaration =
+  [%sedlex.regexp?
+    ( Chars "xX"
+    , Chars "mM"
+    , Chars "lL"
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_variadic =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "aA"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "cC" )]
+
+let kw_raise =
+  [%sedlex.regexp? Chars "rR", Chars "aA", Chars "iI", Chars "sS", Chars "eE"]
+
+let kw_chain =
+  [%sedlex.regexp? Chars "cC", Chars "hH", Chars "aA", Chars "iI", Chars "nN"]
+
+let kw_jsonarray_agg =
+  [%sedlex.regexp?
+    ( Chars "jJ"
+    , Chars "sS"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "yY"
+    , '_'
+    , Chars "aA"
+    , Chars "gG"
+    , Chars "gG" )]
+
+let kw_jsonobject =
+  [%sedlex.regexp?
+    ( Chars "jJ"
+    , Chars "sS"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "oO"
+    , Chars "bB"
+    , Chars "jJ"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "tT" )]
+
+let kw_preserve =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "vV"
+    , Chars "eE" )]
+
+let kw_upsert =
+  [%sedlex.regexp?
+    Chars "uU", Chars "pP", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
+
+let kw_after =
+  [%sedlex.regexp? Chars "aA", Chars "fF", Chars "tT", Chars "eE", Chars "rR"]
+
+let kw_type = [%sedlex.regexp? Chars "tT", Chars "yY", Chars "pP", Chars "eE"]
+
+let kw_translator =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "oO"
+    , Chars "rR" )]
+
+let kw_jaas = [%sedlex.regexp? Chars "jJ", Chars "aA", Chars "aA", Chars "sS"]
+
+let kw_condition =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_mask = [%sedlex.regexp? Chars "mM", Chars "aA", Chars "sS", Chars "kK"]
+
+let kw_access =
+  [%sedlex.regexp?
+    Chars "aA", Chars "cC", Chars "cC", Chars "eE", Chars "sS", Chars "sS"]
+
+let kw_control =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "oO"
+    , Chars "lL" )]
+
+let kw_none = [%sedlex.regexp? Chars "nN", Chars "oO", Chars "nN", Chars "eE"]
+
+let kw_data = [%sedlex.regexp? Chars "dD", Chars "aA", Chars "tT", Chars "aA"]
+
+let kw_database =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "aA"
+    , Chars "sS"
+    , Chars "eE" )]
+
+let kw_privileges =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "vV"
+    , Chars "iI"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "gG"
+    , Chars "eE"
+    , Chars "sS" )]
+
+let kw_role = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "lL", Chars "eE"]
+
+let kw_schema =
+  [%sedlex.regexp?
+    Chars "sS", Chars "cC", Chars "hH", Chars "eE", Chars "mM", Chars "aA"]
+
+let kw_use = [%sedlex.regexp? Chars "uU", Chars "sS", Chars "eE"]
+
+let kw_repository =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "pP"
+    , Chars "oO"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "yY" )]
+
+let kw_rename =
+  [%sedlex.regexp?
+    Chars "rR", Chars "eE", Chars "nN", Chars "aA", Chars "mM", Chars "eE"]
+
+let kw_domain =
+  [%sedlex.regexp?
+    Chars "dD", Chars "oO", Chars "mM", Chars "aA", Chars "iI", Chars "nN"]
+
+let kw_usage =
+  [%sedlex.regexp? Chars "uU", Chars "sS", Chars "aA", Chars "gG", Chars "eE"]
+
+let kw_explain =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "xX"
+    , Chars "pP"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "iI"
+    , Chars "nN" )]
+
+let kw_analyze =
+  [%sedlex.regexp?
+    ( Chars "aA"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "yY"
+    , Chars "zZ"
+    , Chars "eE" )]
+
+let kw_text = [%sedlex.regexp? Chars "tT", Chars "eE", Chars "xX", Chars "tT"]
+
+let kw_format =
+  [%sedlex.regexp?
+    Chars "fF", Chars "oO", Chars "rR", Chars "mM", Chars "aA", Chars "tT"]
+
+let kw_yaml = [%sedlex.regexp? Chars "yY", Chars "aA", Chars "mM", Chars "lL"]
+
+let kw_policy =
+  [%sedlex.regexp?
+    Chars "pP", Chars "oO", Chars "lL", Chars "iI", Chars "cC", Chars "yY"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1211,6 +1724,72 @@ let rec token buf =
   | kw_listagg -> Kw_listagg
   | kw_within -> Kw_within
   | kw_current_date -> Kw_current_date
+  | kw_exception -> Kw_exception
+  | kw_serial -> Kw_serial
+  | kw_index -> Kw_index
+  | kw_instead -> Kw_instead
+  | kw_view -> Kw_view
+  | kw_enabled -> Kw_enabled
+  | kw_disabled -> Kw_disabled
+  | kw_key -> Kw_key
+  | kw_document -> Kw_document
+  | kw_content -> Kw_content
+  | kw_empty -> Kw_empty
+  | kw_ordinality -> Kw_ordinality
+  | kw_path -> Kw_path
+  | kw_querystring -> Kw_querystring
+  | kw_namespace -> Kw_namespace
+  | kw_result -> Kw_result
+  | kw_accesspattern -> Kw_accesspattern
+  | kw_auto_increment -> Kw_auto_increment
+  | kw_wellformed -> Kw_wellformed
+  | kw_texttable -> Kw_texttable
+  | kw_arraytable -> Kw_arraytable
+  | kw_jsontable -> Kw_jsontable
+  | kw_selector -> Kw_selector
+  | kw_skip -> Kw_skip
+  | kw_width -> Kw_width
+  | kw_passing -> Kw_passing
+  | kw_name -> Kw_name
+  | kw_columns -> Kw_columns
+  | kw_nulls -> Kw_nulls
+  | kw_objecttable -> Kw_objecttable
+  | kw_version -> Kw_version
+  | kw_including -> Kw_including
+  | kw_excluding -> Kw_excluding
+  | kw_xmldeclaration -> Kw_xmldeclaration
+  | kw_variadic -> Kw_variadic
+  | kw_raise -> Kw_raise
+  | kw_chain -> Kw_chain
+  | kw_jsonarray_agg -> Kw_jsonarray_agg
+  | kw_jsonobject -> Kw_jsonobject
+  | kw_preserve -> Kw_preserve
+  | kw_upsert -> Kw_upsert
+  | kw_after -> Kw_after
+  | kw_type -> Kw_type
+  | kw_translator -> Kw_translator
+  | kw_jaas -> Kw_jaas
+  | kw_condition -> Kw_condition
+  | kw_mask -> Kw_mask
+  | kw_access -> Kw_access
+  | kw_control -> Kw_control
+  | kw_none -> Kw_none
+  | kw_data -> Kw_data
+  | kw_database -> Kw_database
+  | kw_privileges -> Kw_privileges
+  | kw_role -> Kw_role
+  | kw_schema -> Kw_schema
+  | kw_use -> Kw_use
+  | kw_repository -> Kw_repository
+  | kw_rename -> Kw_rename
+  | kw_domain -> Kw_domain
+  | kw_usage -> Kw_usage
+  | kw_explain -> Kw_explain
+  | kw_analyze -> Kw_analyze
+  | kw_text -> Kw_text
+  | kw_format -> Kw_format
+  | kw_yaml -> Kw_yaml
+  | kw_policy -> Kw_policy
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

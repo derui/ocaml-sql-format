@@ -43,6 +43,133 @@ and not_op = [ `not' ] option [@@deriving show, eq]
 
 type 'a identifier = Identifier of string * 'a
 
+and 'a non_reserved_identifier =
+  | Non_reserved_identifier of
+      [ `exception'
+      | `serial
+      | `object'
+      | `index
+      | `json
+      | `geometry
+      | `geography
+      | `basic of 'a basic_non_reserved
+      ]
+      * 'a
+
+and 'a basic_non_reserved =
+  | Basic_non_reserved of
+      [ `instead
+      | `view
+      | `enabled
+      | `disabled
+      | `key
+      | `textagg
+      | `count
+      | `count_big
+      | `row_number
+      | `rank
+      | `dense_rank
+      | `sum
+      | `avg
+      | `min
+      | `max
+      | `every
+      | `stddev_pop
+      | `stddev_samp
+      | `var_samp
+      | `var_pop
+      | `document
+      | `content
+      | `trim
+      | `empty
+      | `ordinality
+      | `path
+      | `first
+      | `last
+      | `next
+      | `substring
+      | `extract
+      | `to_chars
+      | `to_bytes
+      | `timestampadd
+      | `timestampdiff
+      | `querystring
+      | `namespace
+      | `result
+      | `accesspattern
+      | `auto_increment
+      | `wellformed
+      | `sql_tsi_frac_second
+      | `sql_tsi_second
+      | `sql_tsi_minute
+      | `sql_tsi_hour
+      | `sql_tsi_day
+      | `sql_tsi_week
+      | `sql_tsi_month
+      | `sql_tsi_quarter
+      | `sql_tsi_year
+      | `texttable
+      | `arraytable
+      | `jsontable
+      | `selector
+      | `skip
+      | `width
+      | `passing
+      | `name
+      | `encoding
+      | `columns
+      | `delimiter
+      | `quote
+      | `header
+      | `nulls
+      | `objecttable
+      | `version
+      | `including
+      | `excluding
+      | `xmldeclaration
+      | `variadic
+      | `raise
+      | `chain
+      | `jsonarray_agg
+      | `jsonobject
+      | `preserve
+      | `upsert
+      | `after
+      | `type'
+      | `translator
+      | `jaas
+      | `condition
+      | `mask
+      | `access
+      | `control
+      | `none
+      | `data
+      | `database
+      | `privileges
+      | `role
+      | `schema
+      | `use
+      | `repository
+      | `rename
+      | `domain
+      | `usage
+      | `position
+      | `current
+      | `unbounded
+      | `preceding
+      | `following
+      | `listagg
+      | `explain
+      | `analyze
+      | `text
+      | `format
+      | `yaml
+      | `epoch
+      | `quarter
+      | `policy
+      ]
+      * 'a
+
 and 'a unsigned_integer = Unsigned_integer of Literal.unsigned_integer * 'a
 
 and 'a unsigned_value_expression_primary =
