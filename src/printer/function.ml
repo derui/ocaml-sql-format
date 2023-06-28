@@ -9,7 +9,9 @@ module Make
     (Data_type : GEN with type t = ext data_type)
     (Time_interval : GEN with type t = ext time_interval)
     (Cve : GEN with type t = ext common_value_expression)
-    (Order_by : GEN with type t = ext order_by_clause) : S = struct
+    (Order_by : GEN with type t = ext order_by_clause)
+    (Filter : GEN with type t = ext filter_clause)
+    (I : GEN with type t = ext identifier) : S = struct
   type t = ext function'
 
   let print_substring f t ~option =
@@ -238,4 +240,44 @@ module Make
       Printer_token.print f Kw_current_date ~option;
       Printer_token.print f Tok_lparen ~option;
       Printer_token.print f Tok_rparen ~option
+    | Function (`call (ident, qualifier, e, order_by, filter), _) ->
+      let module I = (val I.generate ()) in
+      I.print f ident ~option;
+      Printer_token.print f Tok_lparen ~option;
+
+      Option.iter
+        (fun v ->
+          let kw =
+            match v with
+            | `All -> Kw_all
+            | `Distinct -> Kw_distinct
+          in
+          Printer_token.print f kw ~option)
+        qualifier;
+
+      (match e with
+      | [] -> ()
+      | fst :: rest ->
+        let module Expr = (val Expr.generate ()) in
+        Expr.print f fst ~option;
+        List.iter
+          (fun e ->
+            Printer_token.print f Tok_comma ~option;
+            Expr.print f e ~option)
+          rest);
+
+      Option.iter
+        (fun v ->
+          let module Order_by = (val Order_by.generate ()) in
+          Fmt.string f " ";
+          Order_by.print f v ~option)
+        order_by;
+      Printer_token.print f Tok_rparen ~option;
+
+      Option.iter
+        (fun v ->
+          Fmt.string f " ";
+          let module Filter = (val Filter.generate ()) in
+          Filter.print f v ~option)
+        filter
 end

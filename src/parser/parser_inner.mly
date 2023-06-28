@@ -884,6 +884,18 @@ function_:
     let str = Option.map snd str in
     Function (`listagg (e, str, order_by), ())}
 | Kw_current_date option(pair(Tok_lparen, Tok_rparen)) {Function (`current_date, ())}
+| ident = identifier Tok_lparen; e = separated_list(Tok_comma, expression);
+  order_by = option(order_by_clause);
+  Tok_rparen;
+  filter = option(filter_clause) {Function (`call (ident, None, e, order_by, filter), ())}
+| ident = identifier Tok_lparen; Kw_all e = separated_list(Tok_comma, expression);
+  order_by = option(order_by_clause);
+  Tok_rparen;
+  filter = option(filter_clause) {Function (`call (ident, Some `All, e, order_by, filter), ())}
+| ident = identifier Tok_lparen; Kw_distinct e = separated_list(Tok_comma, expression);
+  order_by = option(order_by_clause);
+  Tok_rparen;
+  filter = option(filter_clause) {Function (`call (ident, Some `Distinct, e, order_by, filter), ())}
 ;;
 
 %inline function_extract:

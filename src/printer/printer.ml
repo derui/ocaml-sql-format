@@ -810,6 +810,16 @@ and function' () =
                 type t = A.ext A.order_by_clause
 
                 let generate = order_by_clause
+              end)
+              (struct
+                type t = A.ext A.filter_clause
+
+                let generate = filter_clause
+              end)
+              (struct
+                type t = A.ext A.identifier
+
+                let generate = identifier
               end) : S))
 
 let directly_executable_statement () =

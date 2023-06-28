@@ -645,6 +645,12 @@ and 'a function' =
       | `listagg of
         'a expression * Literal.sql_string option * 'a order_by_clause
       | `current_date
+      | `call of
+        'a identifier
+        * qualifier option
+        * 'a expression list
+        * 'a order_by_clause option
+        * 'a filter_clause option
       ]
       * 'a
 
