@@ -24,7 +24,6 @@ module Make
         column_list;
       Printer_token.print f Kw_as ~option;
       Fmt.string f " ";
-      Printer_token.print f Tok_lparen ~option;
-      P.print f q ~option;
-      Printer_token.print f Tok_rparen ~option
+      let pf = Sfmt.parens ~indent:() ~option @@ P.print ~option in
+      pf f q
 end

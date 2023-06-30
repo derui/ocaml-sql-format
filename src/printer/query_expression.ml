@@ -16,15 +16,16 @@ module Make
       (match with_list with
       | [] -> ()
       | fst :: rest ->
-        Printer_token.print f Kw_with ~option;
+        Printer_token.print ~option f Kw_with;
         Fmt.string f " ";
         let module W = (val W.generate ()) in
-        W.print f fst ~option;
+        W.print ~option f fst;
         List.iter
           (fun v ->
-            Printer_token.print f Tok_comma ~option;
-            W.print f v ~option)
+            Format.pp_force_newline f ();
+            Printer_token.print ~option f Tok_comma;
+            W.print ~option f v)
           rest;
-        Fmt.string f " ");
-      P.print f e ~option
+        Format.pp_force_newline f ());
+      P.print ~option f e
 end
