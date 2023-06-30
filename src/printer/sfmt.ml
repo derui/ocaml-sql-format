@@ -7,6 +7,10 @@ let newline fmt _ = Format.pp_force_newline fmt ()
 (* insert [size] spaces as string. This function do not insert break, only insert spaces *)
 let indent size fmt _ = Fmt.string fmt (String.make size ' ')
 
+let comma ~option fmt _ =
+  Printer_token.print ~option fmt Tok_comma;
+  Fmt.string fmt " "
+
 (** [parens ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
 let parens ?indent:need_indent ~option pf fmt v =
   Printer_token.print fmt Tok_lparen ~option;

@@ -10,16 +10,16 @@ module Make (I : GEN with type t = ext identifier) : S = struct
     match t with
     | Column_list (list, _) ->
       let module I = (val I.generate ()) in
-      Printer_token.print f Tok_lparen ~option;
-
-      (match list with
-      | [] -> failwith "Invalid parsing"
-      | fst :: rest ->
-        I.print f fst ~option;
-        List.iter
-          (fun v ->
-            I.print f v ~option;
-            Fmt.string f " ")
-          rest);
-      Printer_token.print f Tok_rparen ~option
+      let pf fmt () =
+        match list with
+        | [] -> failwith "Invalid parsing"
+        | fst :: rest ->
+          I.print fmt fst ~option;
+          List.iter
+            (fun v ->
+              Sfmt.comma ~option fmt ();
+              I.print fmt v ~option)
+            rest
+      in
+      Sfmt.parens ~option pf f ()
 end
