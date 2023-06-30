@@ -23,7 +23,7 @@ module Make
         List.iter
           (fun v ->
             Format.pp_force_newline f ();
-            Printer_token.print ~option f Tok_comma;
+            Sfmt.comma ~option f ();
             W.print ~option f v)
           rest;
         Format.pp_force_newline f ());
