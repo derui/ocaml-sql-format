@@ -17,7 +17,7 @@ module Make
       TP.print f p ~option;
       List.iter
         (fun v ->
-          Fmt.string f " ";
+          Sfmt.newline f ();
           match v with
           | `cross (kw, primary) ->
             let kw =
@@ -48,10 +48,12 @@ module Make
             Fmt.string f " ";
             let module TR = (val TR.generate ()) in
             TR.print f e ~option;
-            Fmt.string f " ";
-            Printer_token.print f Kw_on ~option;
-            Fmt.string f " ";
-            let module C = (val C.generate ()) in
-            C.print f c ~option)
+            let pf f _ =
+              Printer_token.print f Kw_on ~option;
+              Fmt.string f " ";
+              let module C = (val C.generate ()) in
+              C.print f c ~option
+            in
+            Sfmt.force_vbox option.indent_size pf f ())
         list
 end

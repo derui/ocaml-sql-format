@@ -6,8 +6,8 @@ let actual =
   select * from
   a
   cross join f
-  union join g
-  inner join b on a.id = b.id
+  union join g as v
+  inner join b as b_2 on a.id = b.id
   join b on a.id = b.id
   left outer join c on a.id = c.id
   full join d on a.id = d.id
@@ -24,7 +24,17 @@ let%expect_test "from_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
     {|
-      SELECT
-          *
-      FROM
-          a CROSS JOIN f UNION JOIN g INNER JOIN b ON a.id = b.id JOIN b ON a.id = b.id LEFT JOIN c ON a.id = c.id FULL JOIN d ON a.id = d.id |}]
+    SELECT
+        *
+    FROM
+        a
+        CROSS JOIN f
+        UNION JOIN g AS v
+        INNER JOIN b AS b_2
+            ON a.id = b.id
+        JOIN b
+            ON a.id = b.id
+        LEFT JOIN c
+            ON a.id = c.id
+        FULL JOIN d
+            ON a.id = d.id |}]
