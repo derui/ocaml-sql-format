@@ -16,7 +16,7 @@ module Make (P : GEN with type t = ext query_primary) : S = struct
       List.iter
         (fun (qualifiler, v) ->
           Fmt.string f " ";
-          Printer_token.print f Kw_union ~option;
+          Printer_token.print f Kw_intersect ~option;
 
           Option.iter
             (fun v ->
