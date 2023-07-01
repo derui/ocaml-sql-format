@@ -24,11 +24,15 @@ let%expect_test "where_10 for formatting" =
           *
       FROM
           "table" AS b WHERE b EXISTS (
-      SELECT
-          1
-      FROM
-          a) AND NOT b EXISTS (
-      SELECT
-          3
-      FROM
-          b) |}]
+
+          SELECT
+              1
+          FROM
+              a
+      ) AND NOT b EXISTS (
+
+          SELECT
+              3
+          FROM
+              b
+      ) |}]

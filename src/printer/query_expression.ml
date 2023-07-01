@@ -27,6 +27,6 @@ module Make
             Sfmt.comma ~option f ();
             W.print ~option f v)
           rest;
-        Format.pp_force_newline f ());
+        Sfmt.newline f ());
       P.print ~option f e
 end
