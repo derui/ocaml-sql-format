@@ -22,8 +22,8 @@ let%expect_test "select_8 for formatting" =
   [%expect
     {|
       SELECT
-          TEXTAGG ( FOR a AS t1, b AS t2 DELIMITER ',' QUOTE 'a' ENCODING "euc-jp") AS v,
-          TEXTAGG ( FOR a AS t1, b AS t2 DELIMITER ',' NO QUOTE ORDER BY t2) AS v2,
-          TEXTAGG ( FOR a AS t1, b AS t2 DELIMITER ',') AS v3
+          TEXTAGG (FOR a AS t1, b AS t2 DELIMITER ',' QUOTE 'a' ENCODING "euc-jp") AS v,
+          TEXTAGG (FOR a AS t1, b AS t2 DELIMITER ',' NO QUOTE ORDER BY t2) AS v2,
+          TEXTAGG (FOR a AS t1, b AS t2 DELIMITER ',') AS v3
       FROM
           a |}]

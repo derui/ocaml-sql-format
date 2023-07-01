@@ -18,7 +18,6 @@ module Make
       Printer_token.print f Kw_textagg ~option;
       Fmt.string f " ";
       Printer_token.print f Tok_lparen ~option;
-      Fmt.string f " ";
       Printer_token.print f Kw_for ~option;
       Fmt.string f " ";
       let module Derived = (val Derived.generate ()) in
