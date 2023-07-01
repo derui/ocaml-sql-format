@@ -25,20 +25,20 @@ let%expect_test "select_4 for formatting" =
     WITH a AS (
         SELECT
                 1
-              FROM b
+             FROM b
     )
 
     , "abc" (e) AS (
         SELECT
                 2
-              FROM c
+             FROM c
     )
 
     , multi_column (e, b, f) AS (
         SELECT
                 3
-              FROM d
+             FROM d
     )
     SELECT
         *
-      FROM a,"abc" |}]
+     FROM a,"abc" |}]

@@ -29,5 +29,4 @@ let parens ?indent:need_indent ~option pf fmt v =
 let force_vbox ~(option : Options.t) pf fmt v =
   newline fmt ();
   indent option.indent_size fmt ();
-  (Fmt.vbox ~indent:option.indent_size pf) fmt v;
-  newline fmt ()
+  (Fmt.vbox ~indent:option.indent_size pf) fmt v

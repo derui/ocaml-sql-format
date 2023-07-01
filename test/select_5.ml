@@ -18,9 +18,7 @@ let%expect_test "select_5 for formatting" =
   [%expect
     {|
       SELECT
+          *  FROM a WHERE a BETWEEN (SELECT
+          1) AND (SELECT
           *
-        FROM a WHERE a BETWEEN (SELECT
-          1
-      ) AND (SELECT
-          *
-        FROM b) |}]
+       FROM b) |}]

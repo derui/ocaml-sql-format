@@ -19,4 +19,4 @@ let%expect_test "where with between in from for formatting" =
     {|
       SELECT
           a,b
-        FROM test_table WHERE b BETWEEN 50 AND 60 OR b NOT BETWEEN 1 AND 5 |}]
+       FROM test_table WHERE b BETWEEN 50 AND 60 OR b NOT BETWEEN 1 AND 5 |}]

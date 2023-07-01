@@ -17,6 +17,5 @@ let%expect_test "limit in from for formatting" =
   [%expect
     {|
       SELECT
-          a,b
-        FROM test_table
+          a,b  FROM test_table
       LIMIT 5 OFFSET 8 |}]

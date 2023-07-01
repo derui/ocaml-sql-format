@@ -17,4 +17,4 @@ let%expect_test "select into for formatting" =
   [%expect {|
     SELECT
         *
-     INTO "some_table name" |}]
+    INTO "some_table name" |}]

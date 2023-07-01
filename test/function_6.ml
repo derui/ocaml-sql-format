@@ -24,4 +24,4 @@ let%expect_test "function_6 for formatting" =
     {|
       SELECT
           TO_CHARS(abc,'c'),TO_CHARS(abc,'c', 123),TO_BYTES(abc,'c'),TO_BYTES(abc,'c', 123)
-        FROM a |}]
+       FROM a |}]

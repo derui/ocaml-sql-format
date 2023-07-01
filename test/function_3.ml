@@ -25,4 +25,4 @@ let%expect_test "funciton_3 for formatting" =
     {|
       SELECT
           SUBSTRING(e FROM 3),SUBSTRING(e FROM 3 FOR 5),SUBSTRING(e, 3),SUBSTRING(e, 3, 4),SUBSTRING(e, 3, 4, 5)
-        FROM a |}]
+       FROM a |}]
