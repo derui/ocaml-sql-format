@@ -23,22 +23,26 @@ let%expect_test "select_4 for formatting" =
   [%expect
     {|
     WITH a AS (
+
         SELECT
-                1
-             FROM b
+            1
+        FROM b
     )
 
     , "abc" (e) AS (
+
         SELECT
-                2
-             FROM c
+            2
+        FROM c
     )
 
     , multi_column (e, b, f) AS (
+
         SELECT
-                3
-             FROM d
+            3
+        FROM d
     )
+
     SELECT
         *
-     FROM a,"abc" |}]
+    FROM a,"abc" |}]

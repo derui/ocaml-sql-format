@@ -24,4 +24,4 @@ let%expect_test "function_9 for formatting" =
     {|
       SELECT
           INSERT(),INSERT('a','2'),TRANSLATE(),TRANSLATE('a','2')
-       FROM a |}]
+      FROM a |}]

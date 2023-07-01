@@ -13,7 +13,6 @@ module Make
   let print f t ~option =
     match t with
     | From_clause ({ tables; group_by; having; where }, _) ->
-      Fmt.string f " ";
       Printer_token.print f ~option Types.Token.Kw_from;
       Fmt.string f " ";
 

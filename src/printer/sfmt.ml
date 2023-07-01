@@ -11,22 +11,20 @@ let comma ~option fmt _ =
   Printer_token.print ~option fmt Tok_comma;
   Fmt.string fmt " "
 
+(** [force_vbox ~option fmt pf v] wraps box with [pf]. *)
+let force_vbox width pf fmt v =
+  newline fmt ();
+  indent width fmt ();
+  (Fmt.vbox ~indent:0 pf) fmt v
+
 (** [parens ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
 let parens ?indent:need_indent ~option pf fmt v =
   Printer_token.print fmt Tok_lparen ~option;
   match need_indent with
   | Some _ ->
-    newline fmt ();
-    indent option.indent_size fmt ();
-    (Fmt.vbox ~indent:option.indent_size pf) fmt v;
+    (force_vbox option.indent_size pf) fmt v;
     newline fmt ();
     Printer_token.print fmt Tok_rparen ~option
   | None ->
     pf fmt v;
     Printer_token.print fmt Tok_rparen ~option
-
-(** [force_vbox ~option fmt pf v] wraps box with [pf]. *)
-let force_vbox ~(option : Options.t) pf fmt v =
-  newline fmt ();
-  indent option.indent_size fmt ();
-  (Fmt.vbox ~indent:option.indent_size pf) fmt v

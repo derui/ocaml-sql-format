@@ -22,9 +22,8 @@ module Make
         W.print ~option f fst;
         List.iter
           (fun v ->
-            Format.pp_force_newline f ();
-            if option.need_newline_with_element then
-              Format.pp_force_newline f ();
+            Sfmt.newline f ();
+            if option.need_newline_with_element then Sfmt.newline f ();
             Sfmt.comma ~option f ();
             W.print ~option f v)
           rest;

@@ -18,6 +18,9 @@ let%expect_test "select into for formatting" =
   [%expect
     {|
     SELECT
-        * INTO "some_table name" UNION SELECT
+        *
+    INTO "some_table name" UNION
+
+    SELECT
         t.b
-     FROM "table" AS t |}]
+    FROM "table" AS t |}]

@@ -28,4 +28,4 @@ let%expect_test "funciton_5 for formatting" =
     {|
       SELECT
           TRIM('abc'),TRIM(LEADING FROM 'abc'),TRIM(TRAILING FROM 'abc'),TRIM(BOTH FROM 'abc'),TRIM(LEADING 'a' FROM 'abc'),TRIM(TRAILING ' ' FROM 'abc'),TRIM(BOTH e FROM 'abc'),TRIM('a' FROM 'abc')
-       FROM a |}]
+      FROM a |}]

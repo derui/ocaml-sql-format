@@ -30,4 +30,4 @@ let%expect_test "funciton_4 for formatting" =
     {|
       SELECT
           EXTRACT(YEAR FROM 'abc'),EXTRACT(MONTH FROM 'abc'),EXTRACT(DAY FROM 'abc'),EXTRACT(HOUR FROM 'abc'),EXTRACT(MINUTE FROM 'abc'),EXTRACT(SECOND FROM 'abc'),EXTRACT(QUARTER FROM 'abc'),EXTRACT(EPOCH FROM 'abc'),EXTRACT(DOW FROM 'abc'),EXTRACT(DOY FROM 'abc')
-       FROM a |}]
+      FROM a |}]

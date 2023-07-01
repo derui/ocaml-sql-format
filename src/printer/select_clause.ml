@@ -39,5 +39,5 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
             rest
         | `select_list [] -> assert false
       in
-      Sfmt.force_vbox ~option pf f ()
+      Sfmt.force_vbox option.indent_size pf f ()
 end

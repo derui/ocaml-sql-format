@@ -16,5 +16,6 @@ let%expect_test "limit in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect {|
       SELECT
-          a,b  FROM test_table
+          a,b
+      FROM test_table
       LIMIT 5 |}]
