@@ -20,4 +20,6 @@ let%expect_test "where with between in from for formatting" =
       SELECT
           a,b
       FROM
-          test_table WHERE b LIKE_REGEX 'abad' OR c NOT LIKE_REGEX ab |}]
+          test_table
+      WHERE
+          b LIKE_REGEX 'abad' OR c NOT LIKE_REGEX ab |}]

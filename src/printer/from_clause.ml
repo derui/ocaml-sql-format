@@ -31,8 +31,8 @@ module Make
 
       Option.iter
         (fun v ->
+          Sfmt.newline f ();
           let module Where = (val Where.generate ()) in
-          Fmt.string f " ";
           Where.print f ~option v)
         where;
 

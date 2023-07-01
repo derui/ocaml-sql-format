@@ -20,14 +20,16 @@ let%expect_test "select_5 for formatting" =
       SELECT
           *
       FROM
-          a WHERE a BETWEEN (
+          a
+      WHERE
+          a BETWEEN (
 
-                                SELECT
-                                    1
-                            ) AND (
+                        SELECT
+                            1
+                    ) AND (
 
-                                      SELECT
-                                          *
-                                      FROM
-                                          b
-                                  ) |}]
+                              SELECT
+                                  *
+                              FROM
+                                  b
+                          ) |}]
