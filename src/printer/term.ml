@@ -10,16 +10,19 @@ module Make (Vep : GEN with type t = ext value_expression_primary) : S = struct
   let print f t ~option =
     match t with
     | Term (primary, primaries, _) ->
-      let module Vep = (val Vep.generate ()) in
-      Vep.print f primary ~option;
+      let pf f _ =
+        let module Vep = (val Vep.generate ()) in
+        Vep.print f primary ~option;
 
-      List.iter
-        (fun (op, primary) ->
-          Fmt.string f " ";
-          (match op with
-          | `star -> Printer_token.print f Op_star ~option
-          | `slash -> Printer_token.print f Op_slash ~option);
-          Fmt.string f " ";
-          Vep.print f primary ~option)
-        primaries
+        List.iter
+          (fun (op, primary) ->
+            Fmt.sp f ();
+            (match op with
+            | `star -> Printer_token.print f Op_star ~option
+            | `slash -> Printer_token.print f Op_slash ~option);
+            Fmt.string f " ";
+            Vep.print f primary ~option)
+          primaries
+      in
+      Sfmt.term_box pf f ()
 end

@@ -21,6 +21,7 @@ let%expect_test "function_11 for formatting" =
   [%expect
     {|
       SELECT
-          LISTAGG('abc') WITHIN GROUP (ORDER BY a,b DESC),LISTAGG("array",'foo') WITHIN GROUP (ORDER BY a ASC)
+          LISTAGG('abc') WITHIN GROUP (ORDER BY a,b DESC),LISTAGG("array",'foo') WITHIN GROUP (ORDER BY
+                                                          a ASC)
       FROM
           a |}]

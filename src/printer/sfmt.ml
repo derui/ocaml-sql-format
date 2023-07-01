@@ -11,11 +11,14 @@ let comma ~option fmt _ =
   Printer_token.print ~option fmt Tok_comma;
   Fmt.string fmt " "
 
-(** [force_vbox ~option fmt pf v] wraps box with [pf]. *)
+(** [force_vbox fmt pf v] wraps box with [pf]. *)
 let force_vbox width pf fmt v =
   newline fmt ();
   indent width fmt ();
   (Fmt.vbox ~indent:0 pf) fmt v
+
+(** [term_box fmt pf v] wraps hovbox with [pf]. *)
+let term_box pf fmt v = (Fmt.hovbox ~indent:0 pf) fmt v
 
 (** [parens ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
 let parens ?indent:need_indent ~option pf fmt v =

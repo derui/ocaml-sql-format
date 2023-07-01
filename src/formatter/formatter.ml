@@ -33,7 +33,7 @@ let rec parse lexbuf (checkpoint : Types.Ast.entry list I.checkpoint) =
       (Exception.Syntax_error
          (None, "invalid syntax (parser rejected the input)"))
 
-let format option lexbuf =
+let format (option : Options.t) lexbuf =
   let checkpoint =
     Parser.Parser.Incremental.entries @@ fst
     @@ Sedlexing.lexing_positions lexbuf
@@ -41,6 +41,7 @@ let format option lexbuf =
   let result = parse lexbuf checkpoint in
   let buffer = Buffer.create 16 in
   let formatter = Format.formatter_of_buffer buffer in
+  Format.pp_set_margin formatter option.max_line_length;
   List.iter (Entry_printer.print formatter ~option) result;
   Format.pp_print_flush formatter ();
   Buffer.to_bytes buffer |> String.of_bytes
