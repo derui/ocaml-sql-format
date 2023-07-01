@@ -26,8 +26,9 @@ module Make
       let module Subquery = (val Subquery.generate ()) in
       Subquery.print f s ~option
     | Table_primary (`joined joined, _) ->
-      Printer_token.print f Tok_lparen ~option;
-      let module JT = (val JT.generate ()) in
-      JT.print f joined ~option;
-      Printer_token.print f Tok_rparen ~option
+      let pf f _ =
+        let module JT = (val JT.generate ()) in
+        JT.print f joined ~option
+      in
+      Sfmt.parens ~indent:() ~option pf f ()
 end

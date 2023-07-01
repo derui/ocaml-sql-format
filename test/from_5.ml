@@ -22,6 +22,8 @@ let%expect_test "from_5 for formatting" =
           *
       FROM
           a
-          CROSS JOIN (b AS "t"
-          LEFT JOIN c
-              ON a.id = b.id) |}]
+          CROSS JOIN (
+              b AS "t"
+              LEFT JOIN c
+                  ON a.id = b.id
+          ) |}]
