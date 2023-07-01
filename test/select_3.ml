@@ -17,5 +17,9 @@ let%expect_test "select into for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
     {|
-    SELECT * INTO "some_table name" UNION
-    SELECT t.b  FROM "table" AS t |}]
+    SELECT
+        *
+     INTO "some_table name" UNION
+    SELECT
+        t.b
+      FROM "table" AS t |}]

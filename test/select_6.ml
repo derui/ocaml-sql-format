@@ -22,4 +22,7 @@ let%test_unit "select_6 for AST" =
 let%expect_test "select_6 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT CASE a * 10 WHEN 15 THEN 11 WHEN c THEN 12 ELSE 13 END AS v  FROM a |}]
+    {|
+      SELECT
+          CASE a * 10 WHEN 15 THEN 11 WHEN c THEN 12 ELSE 13 END AS v
+        FROM a |}]

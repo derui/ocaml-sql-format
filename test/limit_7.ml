@@ -17,5 +17,7 @@ let%expect_test "limit in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
     {|
-      SELECT a,b  FROM test_table
+      SELECT
+          a,b
+        FROM test_table
       OFFSET 8 ROW FETCH NEXT 15 ROW ONLY |}]

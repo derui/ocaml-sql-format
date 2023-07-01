@@ -19,4 +19,7 @@ let%test_unit "function_11 for AST" =
 let%expect_test "function_11 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT LISTAGG('abc') WITHIN GROUP (ORDER BY a,b DESC),LISTAGG("array",'foo') WITHIN GROUP (ORDER BY a ASC)  FROM a |}]
+    {|
+      SELECT
+          LISTAGG('abc') WITHIN GROUP (ORDER BY a,b DESC),LISTAGG("array",'foo') WITHIN GROUP (ORDER BY a ASC)
+        FROM a |}]

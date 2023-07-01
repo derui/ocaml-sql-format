@@ -20,4 +20,13 @@ let%test_unit "where_7 for AST" =
 let%expect_test "where_7 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM "table" AS b WHERE b <= ALL (SELECT c * 151  FROM table_c) OR b >= SOME (SELECT c * 151  FROM table_c) AND b < ANY (SELECT c * 151  FROM table_c) |}]
+    {|
+      SELECT
+          *
+        FROM "table" AS b WHERE b <= ALL (SELECT
+          c * 151
+        FROM table_c) OR b >= SOME (SELECT
+          c * 151
+        FROM table_c) AND b < ANY (SELECT
+          c * 151
+        FROM table_c) |}]

@@ -15,4 +15,8 @@ let%test_unit "where with quantified in from for AST" =
 
 let%expect_test "where with quantified in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| SELECT a,b  FROM test_table WHERE b <= ANY (5+2) |}]
+  [%expect
+    {|
+    SELECT
+        a,b
+      FROM test_table WHERE b <= ANY (5+2) |}]

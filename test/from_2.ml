@@ -16,4 +16,8 @@ let%test_unit "multiple tables in from for AST" =
 
 let%expect_test "multiple tables in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| SELECT *  FROM test_table AS abc,ident AS "next",third |}]
+  [%expect
+    {|
+    SELECT
+        *
+      FROM test_table AS abc,ident AS "next",third |}]

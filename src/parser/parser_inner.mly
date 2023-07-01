@@ -366,7 +366,7 @@ sort_key:
   | expression { Sort_key ($1, ()) }
 ;;
 
-sub_query_term:
+%inline sub_query_term:
   | Kw_intersect query_primary { (None, $2) }
   | Kw_intersect Kw_all query_primary { (Some `All, $3) }
   | Kw_intersect Kw_distinct query_primary { (Some `Distinct, $3) }
@@ -378,6 +378,7 @@ query_term:
 
 query_primary:
   | query {Query_primary ($1, ())}
+  | Tok_lparen q = query Tok_rparen {Query_primary (q, ())}
 ;;
 
 query:

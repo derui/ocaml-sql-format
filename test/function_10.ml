@@ -20,4 +20,7 @@ let%test_unit "function_10 for AST" =
 let%expect_test "function_10 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT POSITION('a' IN 'abcdef'),POSITION('abcdefd' IN 5),POSITION('abcdefd' IN c.de)  FROM a |}]
+    {|
+      SELECT
+          POSITION('a' IN 'abcdef'),POSITION('abcdefd' IN 5),POSITION('abcdefd' IN c.de)
+        FROM a |}]

@@ -14,4 +14,7 @@ let%test_unit "select into for AST" =
 
 let%expect_test "select into for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| SELECT * INTO "some_table name" |}]
+  [%expect {|
+    SELECT
+        *
+     INTO "some_table name" |}]

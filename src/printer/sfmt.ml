@@ -24,3 +24,10 @@ let parens ?indent:need_indent ~option pf fmt v =
   | None ->
     pf fmt v;
     Printer_token.print fmt Tok_rparen ~option
+
+(** [force_vbox ~option fmt pf v] wraps box with [pf]. *)
+let force_vbox ~(option : Options.t) pf fmt v =
+  newline fmt ();
+  indent option.indent_size fmt ();
+  (Fmt.vbox ~indent:option.indent_size pf) fmt v;
+  newline fmt ()

@@ -14,4 +14,8 @@ let%test_unit "having in from for AST" =
 
 let%expect_test "having in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| SELECT a,b  FROM test_table GROUP BY a HAVING b |}]
+  [%expect
+    {|
+    SELECT
+        a,b
+      FROM test_table GROUP BY a HAVING b |}]

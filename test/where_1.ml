@@ -16,4 +16,7 @@ let%test_unit "where in from for AST" =
 let%expect_test "where in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT a,b  FROM test_table WHERE b IS NULL AND c IS NOT NULL GROUP BY test_table.a,test_table.b |}]
+    {|
+      SELECT
+          a,b
+        FROM test_table WHERE b IS NULL AND c IS NOT NULL GROUP BY test_table.a,test_table.b |}]

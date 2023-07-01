@@ -25,4 +25,7 @@ let%test_unit "funciton_5 for AST" =
 let%expect_test "funciton_5 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT TRIM('abc'),TRIM(LEADING FROM 'abc'),TRIM(TRAILING FROM 'abc'),TRIM(BOTH FROM 'abc'),TRIM(LEADING 'a' FROM 'abc'),TRIM(TRAILING ' ' FROM 'abc'),TRIM(BOTH e FROM 'abc'),TRIM('a' FROM 'abc')  FROM a |}]
+    {|
+      SELECT
+          TRIM('abc'),TRIM(LEADING FROM 'abc'),TRIM(TRAILING FROM 'abc'),TRIM(BOTH FROM 'abc'),TRIM(LEADING 'a' FROM 'abc'),TRIM(TRAILING ' ' FROM 'abc'),TRIM(BOTH e FROM 'abc'),TRIM('a' FROM 'abc')
+        FROM a |}]

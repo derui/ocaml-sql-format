@@ -16,4 +16,7 @@ let%test_unit "where with between in from for AST" =
 let%expect_test "where with between in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT a,b  FROM test_table WHERE b BETWEEN 50 AND 60 OR b NOT BETWEEN 1 AND 5 |}]
+    {|
+      SELECT
+          a,b
+        FROM test_table WHERE b BETWEEN 50 AND 60 OR b NOT BETWEEN 1 AND 5 |}]

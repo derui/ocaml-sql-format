@@ -19,4 +19,11 @@ let%test_unit "where_10 for AST" =
 let%expect_test "where_10 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM "table" AS b WHERE b EXISTS (SELECT 1  FROM a) AND NOT b EXISTS (SELECT 3  FROM b) |}]
+    {|
+      SELECT
+          *
+        FROM "table" AS b WHERE b EXISTS (SELECT
+          1
+        FROM a) AND NOT b EXISTS (SELECT
+          3
+        FROM b) |}]

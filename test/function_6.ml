@@ -21,4 +21,7 @@ let%test_unit "function_6 for AST" =
 let%expect_test "function_6 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT TO_CHARS(abc,'c'),TO_CHARS(abc,'c', 123),TO_BYTES(abc,'c'),TO_BYTES(abc,'c', 123)  FROM a |}]
+    {|
+      SELECT
+          TO_CHARS(abc,'c'),TO_CHARS(abc,'c', 123),TO_BYTES(abc,'c'),TO_BYTES(abc,'c', 123)
+        FROM a |}]

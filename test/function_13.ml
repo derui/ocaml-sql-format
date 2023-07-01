@@ -22,4 +22,7 @@ let%test_unit "function_13 for AST" =
 let%expect_test "function_13 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT sample(),test(1,3,'a'),COUNT(ALL 3),session(DISTINCT ORDER BY e DESC),session(DISTINCT ORDER BY e DESC) FILTER (WHERE v > 50)  FROM a |}]
+    {|
+      SELECT
+          sample(),test(1,3,'a'),COUNT(ALL 3),session(DISTINCT ORDER BY e DESC),session(DISTINCT ORDER BY e DESC) FILTER (WHERE v > 50)
+        FROM a |}]

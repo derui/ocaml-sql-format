@@ -17,5 +17,7 @@ let%expect_test "order by in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
     {|
-      SELECT a,b  FROM test_table
+      SELECT
+          a,b
+        FROM test_table
       ORDER BY a,b DESC NULL LAST,c NULL FIRST |}]

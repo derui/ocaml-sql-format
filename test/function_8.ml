@@ -41,4 +41,7 @@ let%test_unit "function_8 for AST" =
 let%expect_test "function_8 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT LEFT(),LEFT('a','2'),RIGHT(),RIGHT('a','2'),CHAR(),CHAR('a','2'),USER(),USER('a','2'),YEAR(),YEAR('a','2'),MONTH(),MONTH('a','2'),HOUR(),HOUR('a','2'),MINUTE(),MINUTE('a','2'),SECOND(),SECOND('a','2'),XMLCONCAT(),XMLCONCAT('a','2'),XMLCOMMENT(),XMLCOMMENT('a','2'),XMLTEXT(),XMLTEXT('a','2')  FROM a |}]
+    {|
+      SELECT
+          LEFT(),LEFT('a','2'),RIGHT(),RIGHT('a','2'),CHAR(),CHAR('a','2'),USER(),USER('a','2'),YEAR(),YEAR('a','2'),MONTH(),MONTH('a','2'),HOUR(),HOUR('a','2'),MINUTE(),MINUTE('a','2'),SECOND(),SECOND('a','2'),XMLCONCAT(),XMLCONCAT('a','2'),XMLCOMMENT(),XMLCOMMENT('a','2'),XMLTEXT(),XMLTEXT('a','2')
+        FROM a |}]

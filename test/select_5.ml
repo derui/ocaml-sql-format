@@ -16,4 +16,11 @@ let%test_unit "select_5 for AST" =
 let%expect_test "select_5 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT *  FROM a WHERE a BETWEEN (SELECT 1) AND (SELECT *  FROM b) |}]
+    {|
+      SELECT
+          *
+        FROM a WHERE a BETWEEN (SELECT
+          1
+      ) AND (SELECT
+          *
+        FROM b) |}]

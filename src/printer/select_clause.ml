@@ -8,12 +8,12 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
 
   let print f t ~option =
     match t with
-    | Select_clause (qualifier, select_list, _) -> (
+    | Select_clause (qualifier, select_list, _) ->
       Printer_token.print f ~option Types.Token.Kw_select;
-      Fmt.string f " ";
 
       Option.iter
         (fun v ->
+          Fmt.string f " ";
           let kw =
             match v with
             | `All -> Types.Token.Kw_all
@@ -23,18 +23,21 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
           Fmt.string f " ")
         qualifier;
 
-      match select_list with
-      | `asterisk -> Fmt.string f "*"
-      | `select_list [ fst ] ->
-        let module SS = (val SS.generate ()) in
-        SS.print f ~option fst
-      | `select_list (fst :: rest) ->
-        let module SS = (val SS.generate ()) in
-        SS.print f ~option fst;
-        List.iter
-          (fun v ->
-            Printer_token.print f ~option Types.Token.Tok_comma;
-            SS.print f ~option v)
-          rest
-      | `select_list [] -> assert false)
+      let pf fmt _ =
+        match select_list with
+        | `asterisk -> Fmt.string fmt "*"
+        | `select_list [ fst ] ->
+          let module SS = (val SS.generate ()) in
+          SS.print fmt ~option fst
+        | `select_list (fst :: rest) ->
+          let module SS = (val SS.generate ()) in
+          SS.print fmt ~option fst;
+          List.iter
+            (fun v ->
+              Printer_token.print fmt ~option Types.Token.Tok_comma;
+              SS.print fmt ~option v)
+            rest
+        | `select_list [] -> assert false
+      in
+      Sfmt.force_vbox ~option pf f ()
 end

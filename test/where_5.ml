@@ -21,4 +21,7 @@ let%test_unit "where with between in from for AST" =
 let%expect_test "where with between in from for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT a,b  FROM test_table WHERE b LIKE '%abad' OR c NOT LIKE 'abc%' OR d SIMILAR TO 'abc%' OR e NOT SIMILAR TO 'abc%' OR c SIMILAR TO 'abc%' ESCAPE 'f' OR c SIMILAR TO 'abc%' ESCAPE 'f' |}]
+    {|
+      SELECT
+          a,b
+        FROM test_table WHERE b LIKE '%abad' OR c NOT LIKE 'abc%' OR d SIMILAR TO 'abc%' OR e NOT SIMILAR TO 'abc%' OR c SIMILAR TO 'abc%' ESCAPE 'f' OR c SIMILAR TO 'abc%' ESCAPE 'f' |}]

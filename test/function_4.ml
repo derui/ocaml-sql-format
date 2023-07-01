@@ -27,4 +27,7 @@ let%test_unit "funciton_4 for AST" =
 let%expect_test "funciton_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
-    {| SELECT EXTRACT(YEAR FROM 'abc'),EXTRACT(MONTH FROM 'abc'),EXTRACT(DAY FROM 'abc'),EXTRACT(HOUR FROM 'abc'),EXTRACT(MINUTE FROM 'abc'),EXTRACT(SECOND FROM 'abc'),EXTRACT(QUARTER FROM 'abc'),EXTRACT(EPOCH FROM 'abc'),EXTRACT(DOW FROM 'abc'),EXTRACT(DOY FROM 'abc')  FROM a |}]
+    {|
+      SELECT
+          EXTRACT(YEAR FROM 'abc'),EXTRACT(MONTH FROM 'abc'),EXTRACT(DAY FROM 'abc'),EXTRACT(HOUR FROM 'abc'),EXTRACT(MINUTE FROM 'abc'),EXTRACT(SECOND FROM 'abc'),EXTRACT(QUARTER FROM 'abc'),EXTRACT(EPOCH FROM 'abc'),EXTRACT(DOW FROM 'abc'),EXTRACT(DOY FROM 'abc')
+        FROM a |}]
