@@ -24,9 +24,9 @@ module Make
           Printer_token.print f kw ~option;
           Fmt.string f " ")
         prefix;
-      Printer_token.print f Tok_lparen ~option;
-      QExpr.print f expr ~option;
-      Printer_token.print f Tok_rparen ~option;
+      Sfmt.parens ~indent:() ~option
+        (fun f _ -> QExpr.print ~option f expr)
+        f ();
       Fmt.string f " ";
       Printer_token.print f Kw_as ~option;
       Fmt.string f " ";
