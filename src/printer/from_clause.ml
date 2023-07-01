@@ -14,18 +14,21 @@ module Make
     match t with
     | From_clause ({ tables; group_by; having; where }, _) ->
       Printer_token.print f ~option Types.Token.Kw_from;
-      Fmt.string f " ";
 
-      (match tables with
-      | [] -> assert false
-      | fst :: rest ->
-        let module Table_reference = (val Table_reference.generate ()) in
-        Table_reference.print f ~option fst;
-        List.iter
-          (fun v ->
-            Printer_token.print f ~option Types.Token.Tok_comma;
-            Table_reference.print f ~option v)
-          rest);
+      let pf f _ =
+        match tables with
+        | [] -> assert false
+        | fst :: rest ->
+          let module Table_reference = (val Table_reference.generate ()) in
+          Table_reference.print f ~option fst;
+          List.iter
+            (fun v ->
+              Fmt.comma f ();
+              Table_reference.print f ~option v)
+            rest
+      in
+      Sfmt.force_vbox option.indent_size pf f ();
+
       Option.iter
         (fun v ->
           let module Where = (val Where.generate ()) in

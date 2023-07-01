@@ -17,7 +17,9 @@ let%test_unit "function_12 for AST" =
 
 let%expect_test "function_12 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {|
+  [%expect
+    {|
     SELECT
         CURRENT_DATE(),CURRENT_DATE()
-    FROM a |}]
+    FROM
+        a |}]

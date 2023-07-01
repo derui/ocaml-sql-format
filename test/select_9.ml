@@ -36,4 +36,6 @@ let%expect_test "select_9 for formatting" =
     {|
       SELECT
           COUNT(*) AS v,COUNT_BIG(*) AS v1,COUNT(v) AS v14,COUNT_BIG(a) AS v15,SUM(ALL e) AS v2,AVG(DISTINCT e) AS v3,AVG(DISTINCT e) AS v4,MIN(e) AS v5,MAX(e) AS v6,EVERY(e) AS v7,STDDEV_POP(e) AS v8,STDDEV_SAMP(e) AS v9,VAR_SAMP(e) AS v10,VAR_POP(e) AS v11,SOME(b.e) AS v12,ANY(e) AS v13
-      FROM a,b |}]
+      FROM
+          a,
+          b |}]

@@ -19,5 +19,6 @@ let%expect_test "limit in from for formatting" =
     {|
       SELECT
           a,b
-      FROM test_table
+      FROM
+          test_table
       OFFSET 8 ROW FETCH FIRST ROW ONLY |}]

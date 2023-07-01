@@ -22,10 +22,13 @@ let%expect_test "where_10 for formatting" =
     {|
       SELECT
           *
-      FROM "table" AS b WHERE b EXISTS (
+      FROM
+          "table" AS b WHERE b EXISTS (
       SELECT
           1
-      FROM a) AND NOT b EXISTS (
+      FROM
+          a) AND NOT b EXISTS (
       SELECT
           3
-      FROM b) |}]
+      FROM
+          b) |}]

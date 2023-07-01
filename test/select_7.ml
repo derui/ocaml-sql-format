@@ -28,4 +28,5 @@ let%expect_test "select_7 for formatting" =
     {|
       SELECT
           CASE WHEN 15 = 15 THEN 11 WHEN c > 1 THEN 12 ELSE 13 END AS v,CASE e WHEN a THEN 3 END AS e
-      FROM a |}]
+      FROM
+          a |}]

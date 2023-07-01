@@ -23,4 +23,5 @@ let%expect_test "select into for formatting" =
 
     SELECT
         t.b
-    FROM "table" AS t |}]
+    FROM
+        "table" AS t |}]

@@ -18,4 +18,6 @@ let%expect_test "select_13 for formatting" =
     SELECT
         *
     INTO cd
-    FROM a,b |}]
+    FROM
+        a,
+        b |}]

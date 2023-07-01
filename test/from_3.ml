@@ -20,13 +20,20 @@ let%expect_test "from_3 for formatting" =
     {|
       SELECT
           *
-      FROM a,TABLE (
-      SELECT
-          a,b,c
-      FROM e) AS t,LATERAL (
-      SELECT
-          c,d,f
-      FROM e) AS v_v,(
-      SELECT
-          abc
-      FROM f) AS e |}]
+      FROM
+          a,
+          TABLE (
+          SELECT
+              a,b,c
+          FROM
+              e) AS t,
+          LATERAL (
+          SELECT
+              c,d,f
+          FROM
+              e) AS v_v,
+          (
+          SELECT
+              abc
+          FROM
+              f) AS e |}]

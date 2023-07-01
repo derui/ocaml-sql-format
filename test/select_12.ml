@@ -21,7 +21,10 @@ let%expect_test "select_12 for formatting" =
     {|
     SELECT ALL
         *
-    FROM a,b INTERSECT ALL
+    FROM
+        a,
+        b INTERSECT ALL
     SELECT DISTINCT
         *
-    FROM c |}]
+    FROM
+        c |}]
