@@ -14,6 +14,11 @@ let%test_unit "column for AST" =
 
 let%expect_test "column for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {|
+  [%expect
+    {|
     SELECT
-        abc AS a_b_c,b,c,d,e |}]
+        abc AS a_b_c,
+        b,
+        c,
+        d,
+        e |}]

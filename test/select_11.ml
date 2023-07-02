@@ -24,10 +24,10 @@ let%expect_test "select_11 for formatting" =
   [%expect
     {|
       SELECT
-          ROW_NUMBER() OVER () AS v,RANK() OVER (PARTITION BY e) AS v2,DENSE_RANK() OVER (PARTITION BY
-                                                                       e ORDER BY
-
-                                                                       a DESC) AS v3,
+          ROW_NUMBER() OVER () AS v,
+          RANK() OVER (PARTITION BY e) AS v2,
+          DENSE_RANK() OVER (PARTITION BY e ORDER BY
+              a DESC) AS v3,
           PERCENT_RANK() FILTER (WHERE e < 1500) OVER (PARTITION BY e RANGE UNBOUNDED FOLLOWING) AS v4,
           CUME_DIST() OVER (PARTITION BY e ROWS 3 FOLLOWING) AS v4
       FROM

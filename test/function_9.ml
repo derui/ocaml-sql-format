@@ -23,6 +23,9 @@ let%expect_test "function_9 for formatting" =
   [%expect
     {|
       SELECT
-          INSERT(),INSERT('a','2'),TRANSLATE(),TRANSLATE('a','2')
+          INSERT(),
+          INSERT('a','2'),
+          TRANSLATE(),
+          TRANSLATE('a','2')
       FROM
           a |}]

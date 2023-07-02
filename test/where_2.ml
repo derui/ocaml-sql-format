@@ -18,7 +18,8 @@ let%expect_test "where with and/or in from for formatting" =
   [%expect
     {|
       SELECT
-          a,b
+          a,
+          b
       FROM
           test_table
       WHERE

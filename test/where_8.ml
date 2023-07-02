@@ -44,7 +44,12 @@ let%expect_test "where_8 for formatting" =
               )
           AND b NOT IN (
                   SELECT
-                      a,b,c,d,e,"f g"
+                      a,
+                      b,
+                      c,
+                      d,
+                      e,
+                      "f g"
                   FROM
                       table_d
               ) |}]

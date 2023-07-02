@@ -18,7 +18,8 @@ let%expect_test "order by in from for formatting" =
   [%expect
     {|
       SELECT
-          a,b
+          a,
+          b
       FROM
           test_table
       ORDER BY

@@ -34,6 +34,7 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
           List.iter
             (fun v ->
               Printer_token.print fmt ~option Types.Token.Tok_comma;
+              Fmt.cut f ();
               SS.print fmt ~option v)
             rest
         | `select_list [] -> assert false

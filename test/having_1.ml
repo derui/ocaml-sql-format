@@ -17,6 +17,7 @@ let%expect_test "having in from for formatting" =
   [%expect
     {|
     SELECT
-        a,b
+        a,
+        b
     FROM
         test_table GROUP BY a HAVING b |}]

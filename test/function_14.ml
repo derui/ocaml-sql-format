@@ -24,7 +24,10 @@ let%expect_test "function_14 for formatting" =
   [%expect
     {|
       SELECT
-          CURRENT_TIMESTAMP,CURRENT_TIME,CURRENT_TIMESTAMP(3),CURRENT_TIME(4),
+          CURRENT_TIMESTAMP,
+          CURRENT_TIME,
+          CURRENT_TIMESTAMP(3),
+          CURRENT_TIME(4),
           SESSION_USER
       FROM
           a |}]
