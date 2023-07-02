@@ -19,8 +19,7 @@ module Make (SS : GEN with type t = ext select_sublist) : S = struct
             | `All -> Types.Token.Kw_all
             | `Distinct -> Types.Token.Kw_distinct
           in
-          Printer_token.print f ~option kw;
-          Fmt.string f " ")
+          Printer_token.print f ~option kw)
         qualifier;
 
       let pf fmt _ =
