@@ -28,7 +28,6 @@ let%expect_test "where_8 for formatting" =
           "table" AS b
       WHERE
               b IN (
-
                   SELECT
                       c * 151
                   FROM
@@ -44,7 +43,6 @@ let%expect_test "where_8 for formatting" =
                   4
               )
           AND b NOT IN (
-
                   SELECT
                       a,b,c,d,e,"f g"
                   FROM

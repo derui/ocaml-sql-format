@@ -25,7 +25,6 @@ let%expect_test "select_12 for formatting" =
         a,
         b
     INTERSECT ALL
-
     SELECT DISTINCT
         *
     FROM

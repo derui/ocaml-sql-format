@@ -12,24 +12,20 @@ module Make
   let print f t ~option =
     match t with
     | Query (clause, into, from, _) ->
-      let pf f () =
-        let module Select = (val Select.generate ()) in
-        Select.print f clause ~option;
+      let module Select = (val Select.generate ()) in
+      Select.print f clause ~option;
 
-        Option.iter
-          (fun v ->
-            let module Into = (val Into.generate ()) in
-            Fmt.cut f ();
-            Into.print f ~option v)
-          into;
+      Option.iter
+        (fun v ->
+          let module Into = (val Into.generate ()) in
+          Sfmt.newline f ();
+          Into.print f ~option v)
+        into;
 
-        Option.iter
-          (fun v ->
-            let module From = (val From.generate ()) in
-            Fmt.cut f ();
-            From.print f ~option v)
-          from
-      in
-      (* select query should be wrapped by box *)
-      Sfmt.force_vbox 0 pf f ()
+      Option.iter
+        (fun v ->
+          let module From = (val From.generate ()) in
+          Sfmt.newline f ();
+          From.print f ~option v)
+        from
 end

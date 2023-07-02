@@ -23,21 +23,18 @@ let%expect_test "from_3 for formatting" =
       FROM
           a,
           TABLE (
-
               SELECT
                   a,b,c
               FROM
                   e
           ) AS t,
           LATERAL (
-
               SELECT
                   c,d,f
               FROM
                   e
           ) AS v_v,
           (
-
               SELECT
                   abc
               FROM

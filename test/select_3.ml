@@ -20,7 +20,6 @@ let%expect_test "select into for formatting" =
     SELECT
         *
     INTO "some_table name" UNION
-
     SELECT
         t.b
     FROM
