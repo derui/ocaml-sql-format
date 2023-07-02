@@ -15,7 +15,7 @@ module Make (P : GEN with type t = ext query_primary) : S = struct
 
       List.iter
         (fun (qualifiler, v) ->
-          Fmt.string f " ";
+          Sfmt.newline f ();
           Printer_token.print f Kw_intersect ~option;
 
           Option.iter
@@ -28,8 +28,7 @@ module Make (P : GEN with type t = ext query_primary) : S = struct
                 | `Distinct -> Kw_distinct
               in
               Printer_token.print f kw ~option;
-
-              Fmt.string f " ")
+              Sfmt.newline f ())
             qualifiler;
 
           P.print f v ~option)
