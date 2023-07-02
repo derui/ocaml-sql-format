@@ -34,8 +34,15 @@ let%expect_test "where_8 for formatting" =
                   FROM
                       table_c
               )
-           OR b IN (1, 34, 'abc')
-          AND c NOT IN (3, 4)
+           OR b IN (
+                  1,
+                  34,
+                  'abc'
+              )
+          AND c NOT IN (
+                  3,
+                  4
+              )
           AND b NOT IN (
 
                   SELECT
