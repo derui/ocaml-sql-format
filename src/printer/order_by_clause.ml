@@ -22,7 +22,7 @@ module Make (SS : GEN with type t = ext sort_specification) : S = struct
         List.iter
           (fun v ->
             Printer_token.print f Tok_comma ~option;
-            Sfmt.newline f ();
+            Fmt.cut f ();
             SS.print f v ~option)
           rest
       in
