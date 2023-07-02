@@ -12,37 +12,43 @@ module Make
 
   let print f t ~option =
     match t with
+    | Window_specification ([], None, None, _) ->
+      Printer_token.print f Kw_over ~option;
+      Fmt.string f " ";
+      Sfmt.parens ~option Fmt.nop f ()
     | Window_specification (expr, order_by, window_frame, _) ->
       Printer_token.print f Kw_over ~option;
       Fmt.string f " ";
-      Printer_token.print f Tok_lparen ~option;
-      (match expr with
-      | [] -> ()
-      | fst :: rest ->
-        Printer_token.print f Kw_partition ~option;
-        Fmt.string f " ";
-        Printer_token.print f Kw_by ~option;
-        Fmt.string f " ";
-        let module Expr = (val Expr.generate ()) in
-        Expr.print f fst ~option;
-        List.iter
+      let pf f _ =
+        (match expr with
+        | [] -> ()
+        | fst :: rest ->
+          Printer_token.print f Kw_partition ~option;
+          Fmt.string f " ";
+          Printer_token.print f Kw_by ~option;
+          Fmt.string f " ";
+          let module Expr = (val Expr.generate ()) in
+          Expr.print f fst ~option;
+          List.iter
+            (fun v ->
+              Printer_token.print f Tok_comma ~option;
+              Expr.print f v ~option)
+            rest);
+
+        Option.iter
           (fun v ->
-            Printer_token.print f Tok_comma ~option;
-            Expr.print f v ~option)
-          rest);
+            let module Order = (val Order.generate ()) in
+            Fmt.cut f ();
+            Order.print f v ~option)
+          order_by;
 
-      Option.iter
-        (fun v ->
-          let module Order = (val Order.generate ()) in
-          Fmt.string f " ";
-          Order.print f v ~option)
-        order_by;
+        Option.iter
+          (fun v ->
+            let module WF = (val WF.generate ()) in
+            Fmt.cut f ();
+            WF.print f v ~option)
+          window_frame
+      in
 
-      Option.iter
-        (fun v ->
-          let module WF = (val WF.generate ()) in
-          Fmt.string f " ";
-          WF.print f v ~option)
-        window_frame;
-      Printer_token.print f Tok_rparen ~option
+      Sfmt.parens ~indent:() ~option pf f ()
 end

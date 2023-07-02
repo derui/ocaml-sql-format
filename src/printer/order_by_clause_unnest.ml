@@ -14,7 +14,7 @@ module Make (SS : GEN with type t = ext sort_specification) : S = struct
       Printer_token.print f Kw_order ~option;
       Fmt.string f " ";
       Printer_token.print f Kw_by ~option;
-      Fmt.sp f ();
+      Fmt.string f " ";
 
       let module SS = (val SS.generate ()) in
       SS.print f first ~option;
@@ -22,7 +22,7 @@ module Make (SS : GEN with type t = ext sort_specification) : S = struct
       List.iter
         (fun v ->
           Printer_token.print f Tok_comma ~option;
-          Fmt.sp f ();
+          Fmt.string f " ";
           SS.print f v ~option)
         rest
 end
