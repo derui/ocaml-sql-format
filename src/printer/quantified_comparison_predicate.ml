@@ -25,9 +25,7 @@ module Make
       in
       Printer_token.print f kw ~option;
       Fmt.string f " ";
-      Printer_token.print f Tok_lparen ~option;
-      Expr.print f e ~option;
-      Printer_token.print f Tok_rparen ~option
+      Sfmt.parens ~option (fun f _ -> Expr.print f e ~option) f e
     | Quantified_comparison_predicate (op, kw, `query q, _) ->
       let module Co = (val Co.generate ()) in
       let module Subquery = (val Subquery.generate ()) in
