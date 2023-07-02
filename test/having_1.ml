@@ -20,4 +20,7 @@ let%expect_test "having in from for formatting" =
         a,
         b
     FROM
-        test_table GROUP BY a HAVING b |}]
+        test_table
+    GROUP BY
+        a
+    HAVING b |}]

@@ -39,14 +39,14 @@ module Make
       Option.iter
         (fun v ->
           let module Group_by = (val Group_by.generate ()) in
-          Fmt.string f " ";
+          Sfmt.newline f ();
           Group_by.print f ~option v)
         group_by;
 
       Option.iter
         (fun v ->
           let module Having = (val Having.generate ()) in
-          Fmt.string f " ";
+          Sfmt.newline f ();
           Having.print f ~option v)
         having
 end

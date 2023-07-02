@@ -15,24 +15,25 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
       List.iter
         (fun exp ->
           Printer_token.print f ~option Tok_comma;
+          Fmt.cut f ();
           Expr.print f ~option exp)
         rest
 
   let print f t ~option =
     match t with
-    | Group_by_clause (t, _) -> (
+    | Group_by_clause (t, _) ->
       Printer_token.print f ~option Kw_group;
       Fmt.string f " ";
       Printer_token.print f ~option Kw_by;
-      Fmt.string f " ";
 
-      match t with
-      | `rollup v ->
-        Fmt.string f " ";
-        Printer_token.print f ~option Kw_rollup;
-        Fmt.string f " ";
-        Printer_token.print f ~option Tok_lparen;
-        print_exps f option v;
-        Printer_token.print f ~option Tok_rparen
-      | `default v -> print_exps f option v)
+      let pf f _ =
+        match t with
+        | `rollup v ->
+          Fmt.string f " ";
+          Printer_token.print f ~option Kw_rollup;
+          Fmt.string f " ";
+          Sfmt.parens ~indent:() ~option (fun f _ -> print_exps f option v) f ()
+        | `default v -> print_exps f option v
+      in
+      Sfmt.force_vbox option.indent_size pf f ()
 end

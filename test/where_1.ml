@@ -24,4 +24,7 @@ let%expect_test "where in from for formatting" =
           test_table
       WHERE
               b IS NULL
-          AND c IS NOT NULL GROUP BY test_table.a,test_table.b |}]
+          AND c IS NOT NULL
+      GROUP BY
+          test_table.a,
+          test_table.b |}]
