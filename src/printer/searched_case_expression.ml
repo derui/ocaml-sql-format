@@ -13,8 +13,10 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
       Printer_token.print f Kw_case ~option;
       Fmt.string f " ";
       let module Expr = (val Expr.generate ()) in
-      List.iter
-        (fun (w, t) ->
+      let pf f _ =
+        (match list with
+        | [] -> failwith "Invalid syntax"
+        | (w, t) :: list ->
           Printer_token.print f Kw_when ~option;
           Fmt.string f " ";
           Expr.print f w ~option;
@@ -22,15 +24,28 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
           Printer_token.print f Kw_then ~option;
           Fmt.string f " ";
           Expr.print f t ~option;
-          Fmt.string f " ")
-        list;
 
-      Option.iter
-        (fun e ->
-          Printer_token.print f Kw_else ~option;
-          Fmt.string f " ";
-          Expr.print f e ~option;
-          Fmt.string f " ")
-        els;
+          List.iter
+            (fun (w, t) ->
+              Sfmt.newline f ();
+              Printer_token.print f Kw_when ~option;
+              Fmt.string f " ";
+              Expr.print f w ~option;
+              Fmt.string f " ";
+              Printer_token.print f Kw_then ~option;
+              Fmt.string f " ";
+              Expr.print f t ~option)
+            list);
+
+        Option.iter
+          (fun e ->
+            Sfmt.newline f ();
+            Printer_token.print f Kw_else ~option;
+            Fmt.string f " ";
+            Expr.print f e ~option)
+          els
+      in
+      Sfmt.force_vbox option.indent_size pf f ();
+      Sfmt.newline f ();
       Printer_token.print f Kw_end ~option
 end
