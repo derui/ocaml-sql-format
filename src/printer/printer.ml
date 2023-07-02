@@ -205,11 +205,17 @@ and query_term () =
 
 and query_primary () =
   Query_primary.(
-    (module Make (struct
-      type t = A.ext A.query
+    (module Make
+              (struct
+                type t = A.ext A.query
 
-      let generate = query
-    end) : S))
+                let generate = query
+              end)
+              (struct
+                type t = A.ext A.query_expression_body
+
+                let generate = query_expression_body
+              end) : S))
 
 and query () =
   Query.(

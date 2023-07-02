@@ -25,15 +25,15 @@ module Make
       let module Unl = (val Unl.generate ()) in
       Unl.print f l ~option
     | Value_expression_primary
-        (`unsigned_value_expression_primary (exp, indices), _) ->
+        (`unsigned_value_expression_primary (exp, index), _) ->
       let module Expr = (val Expr.generate ()) in
       let module Nve = (val Nve.generate ()) in
       Expr.print f exp ~option;
 
-      List.iter
+      Option.iter
         (fun exp ->
           Printer_token.print f Tok_lsbrace ~option;
           Nve.print f exp ~option;
           Printer_token.print f Tok_rsbrace ~option)
-        indices
+        index
 end

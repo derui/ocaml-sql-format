@@ -377,8 +377,8 @@ query_term:
 ;;
 
 query_primary:
-  | query {Query_primary ($1, ())}
-  | Tok_lparen q = query Tok_rparen {Query_primary (q, ())}
+  | query {Query_primary (`query $1, ())}
+  | Tok_lparen q = query_expression_body Tok_rparen {Query_primary (`nested q, ())}
 ;;
 
 query:
@@ -616,7 +616,7 @@ term:
 value_expression_primary:
   | non_numeric_literal { Value_expression_primary (`non_numeric_literal $1, ())}
   | option(plus_or_minus) unsigned_numeric_literal { Value_expression_primary (`unsigned_numeric_literal ($1, $2), ()) }
-  | unsigned_value_expression_primary list(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Value_expression_primary (`unsigned_value_expression_primary ($1, $2), ()) }
+  | unsigned_value_expression_primary option(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Value_expression_primary (`unsigned_value_expression_primary ($1, $2), ()) }
 ;;
 
 unsigned_value_expression_primary:
@@ -630,9 +630,7 @@ unsigned_value_expression_primary:
   | f = unescaped_function { Unsigned_value_expression_primary (`unescaped_function f, ()) }
       (* need implementation:
          - escaped function
-         - unescaped Function
          - array expression constructor
-         - case expression
        *)
       (* end value expressions *)
 ;;
@@ -650,7 +648,7 @@ searched_case_expression:
 ;;
 
 nested_expression:
-  | Tok_lparen; list = separated_nonempty_list(Tok_comma, expression) option(Tok_comma) Tok_rparen { Nested_expression (list, ()) }
+  | Tok_lparen; list = separated_nonempty_list(Tok_comma, expression); option(Tok_comma) Tok_rparen { Nested_expression (list, ()) }
 ;;
 
 unescaped_function:

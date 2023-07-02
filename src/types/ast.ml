@@ -298,7 +298,9 @@ and 'a query_term =
   | Query_term of
       'a query_primary * (qualifier option * 'a query_primary) list * 'a
 
-and 'a query_primary = Query_primary of 'a query * 'a
+and 'a query_primary =
+  | Query_primary of
+      [ `query of 'a query | `nested of 'a query_expression_body ] * 'a
 
 and 'a query =
   | Query of
@@ -457,7 +459,8 @@ and 'a value_expression_primary =
       | `unsigned_numeric_literal of
         [ `plus | `minus ] option * 'a unsigned_numeric_literal
       | `unsigned_value_expression_primary of
-        'a unsigned_value_expression_primary * 'a numeric_value_expression list
+        'a unsigned_value_expression_primary
+        * 'a numeric_value_expression option
       ]
       * 'a
 

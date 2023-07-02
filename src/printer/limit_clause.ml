@@ -19,7 +19,6 @@ module Make
       Option.iter
         (function
           | `comma param ->
-            Fmt.string f " ";
             Printer_token.print f Tok_comma ~option;
             Fmt.string f " ";
             IP.print f param ~option
