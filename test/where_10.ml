@@ -32,8 +32,8 @@ let%expect_test "where_10 for formatting" =
                       a
               )
           AND NOT b EXISTS (
-                      SELECT
-                          3
-                      FROM
-                          b
-                  ) |}]
+                  SELECT
+                      3
+                  FROM
+                      b
+              ) |}]

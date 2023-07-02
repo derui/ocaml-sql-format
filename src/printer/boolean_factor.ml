@@ -10,10 +10,13 @@ module Make (B : GEN with type t = ext boolean_primary) : S = struct
     let module B = (val B.generate ()) in
     match t with
     | Boolean_factor (primary, not_op, _) ->
-      Option.iter
-        (fun _ ->
-          Printer_token.print f Kw_not ~option;
-          Fmt.string f " ")
-        not_op;
-      B.print f primary ~option
+      let pf f _ =
+        Option.iter
+          (fun _ ->
+            Printer_token.print f Kw_not ~option;
+            Fmt.string f " ")
+          not_op;
+        B.print f primary ~option
+      in
+      Sfmt.term_box pf f ()
 end
