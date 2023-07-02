@@ -32,8 +32,7 @@ let%expect_test "select_10 for formatting" =
       SELECT
           COUNT(*) OVER () AS v,
           TEXTAGG (FOR a AS t1, b AS t2 DELIMITER ',') OVER (PARTITION BY e) AS v2,
-          COUNT(*) OVER (PARTITION BY expr ORDER BY
-              bc) AS v3,
+          COUNT(*) OVER (PARTITION BY expr ORDER BY bc) AS v3,
           COUNT(*) FILTER (WHERE a = 3) AS v4,
           COUNT(*) FILTER (WHERE b > 4) OVER ( RANGE CURRENT ROW) AS v5,
           COUNT(*) OVER ( RANGE UNBOUNDED FOLLOWING) AS v6,

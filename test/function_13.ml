@@ -27,9 +27,7 @@ let%expect_test "function_13 for formatting" =
           sample(),
           test(1,3,'a'),
           COUNT(ALL 3),
-          session(DISTINCT ORDER BY
-              e DESC),
-          session(DISTINCT ORDER BY
-              e DESC) FILTER (WHERE v > 50)
+          session(DISTINCT ORDER BY e DESC),
+          session(DISTINCT ORDER BY e DESC) FILTER (WHERE v > 50)
       FROM
           a |}]

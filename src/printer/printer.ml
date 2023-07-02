@@ -141,6 +141,14 @@ and order_by_clause () =
       let generate = sort_specification
     end) : S))
 
+and order_by_clause_unnest () =
+  Order_by_clause_unnest.(
+    (module Make (struct
+      type t = A.ext A.sort_specification
+
+      let generate = sort_specification
+    end) : S))
+
 and sort_specification () =
   Sort_specification.(
     (module Make (struct
@@ -690,7 +698,7 @@ and text_aggregate_function () =
               (struct
                 type t = A.ext A.order_by_clause
 
-                let generate = order_by_clause
+                let generate = order_by_clause_unnest
               end)
               (struct
                 type t = A.ext A.derived_column
@@ -759,7 +767,7 @@ and window_specification () =
               (struct
                 type t = A.ext A.order_by_clause
 
-                let generate = order_by_clause
+                let generate = order_by_clause_unnest
               end)
               (struct
                 type t = A.ext A.window_frame
@@ -809,7 +817,7 @@ and function' () =
               (struct
                 type t = A.ext A.order_by_clause
 
-                let generate = order_by_clause
+                let generate = order_by_clause_unnest
               end)
               (struct
                 type t = A.ext A.filter_clause

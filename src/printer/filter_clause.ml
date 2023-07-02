@@ -11,13 +11,14 @@ module Make (BP : GEN with type t = ext boolean_primary) : S = struct
     match t with
     | Filter_clause (bp, _) ->
       Printer_token.print f Kw_filter ~option;
-      Fmt.string f " ";
-      Printer_token.print f Tok_lparen ~option;
-      Printer_token.print f Kw_where ~option;
+      Fmt.sp f ();
 
-      let module BP = (val BP.generate ()) in
-      Fmt.string f " ";
-      BP.print f bp ~option;
+      let pf f _ =
+        Printer_token.print f Kw_where ~option;
 
-      Printer_token.print f Tok_rparen ~option
+        let module BP = (val BP.generate ()) in
+        Fmt.string f " ";
+        BP.print f bp ~option
+      in
+      Sfmt.parens ~option pf f ()
 end
