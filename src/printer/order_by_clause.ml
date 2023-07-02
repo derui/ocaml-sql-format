@@ -11,16 +11,20 @@ module Make (SS : GEN with type t = ext sort_specification) : S = struct
     match t with
     | Order_by_clause ([], _) -> failwith "Invalid syntax"
     | Order_by_clause (first :: rest, _) ->
-      let module SS = (val SS.generate ()) in
       Printer_token.print f Kw_order ~option;
       Fmt.string f " ";
       Printer_token.print f Kw_by ~option;
-      Fmt.string f " ";
-      SS.print f first ~option;
 
-      List.iter
-        (fun v ->
-          Printer_token.print f Tok_comma ~option;
-          SS.print f v ~option)
-        rest
+      let pf f _ =
+        let module SS = (val SS.generate ()) in
+        SS.print f first ~option;
+
+        List.iter
+          (fun v ->
+            Printer_token.print f Tok_comma ~option;
+            Sfmt.newline f ();
+            SS.print f v ~option)
+          rest
+      in
+      Sfmt.force_vbox option.indent_size pf f ()
 end
