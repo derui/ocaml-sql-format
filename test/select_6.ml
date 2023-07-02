@@ -8,7 +8,11 @@ let actual =
  when 15 then 11
  when c then 12
  else 13
+ end as v,
+  case a * 10
+  when 5 then 1
  end as v
+
 from a
 |}
 
@@ -21,9 +25,4 @@ let%test_unit "select_6 for AST" =
 
 let%expect_test "select_6 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
-      SELECT
-          CASE a * 10 WHEN 15 THEN 11 WHEN c THEN 12 ELSE 13 END AS v
-      FROM
-          a |}]
+  [%expect {||}]
