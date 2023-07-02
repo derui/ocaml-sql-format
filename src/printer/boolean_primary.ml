@@ -19,46 +19,49 @@ module Make
   let print f t ~option =
     match t with
     | Boolean_primary (value, predicate, _) ->
-      let module Cve = (val Cve.generate ()) in
-      Cve.print f value ~option;
+      let pf f _ =
+        let module Cve = (val Cve.generate ()) in
+        Cve.print f value ~option;
 
-      Option.iter
-        (function
-          | `comparison (_ as v) ->
-            let module Comp = (val Comp.generate ()) in
-            Fmt.string f " ";
-            Comp.print f v ~option
-          | `is_null (_ as v) ->
-            let module Is_null = (val Is_null.generate ()) in
-            Fmt.string f " ";
-            Is_null.print f v ~option
-          | `between (_ as v) ->
-            let module Between = (val Between.generate ()) in
-            Fmt.string f " ";
-            Between.print f v ~option
-          | `like_regex (_ as v) ->
-            let module Like_regex = (val Like_regex.generate ()) in
-            Fmt.string f " ";
-            Like_regex.print f v ~option
-          | `match' (_ as v) ->
-            let module Match = (val Match.generate ()) in
-            Fmt.string f " ";
-            Match.print f v ~option
-          | `quantified (_ as v) ->
-            let module Quantified = (val Quantified.generate ()) in
-            Fmt.string f " ";
-            Quantified.print f v ~option
-          | `in' (_ as v) ->
-            let module In = (val In.generate ()) in
-            Fmt.string f " ";
-            In.print f v ~option
-          | `is_distinct (_ as v) ->
-            let module Is_distinct = (val Is_distinct.generate ()) in
-            Fmt.string f " ";
-            Is_distinct.print f v ~option
-          | `exists (_ as v) ->
-            let module Exists = (val Exists.generate ()) in
-            Fmt.string f " ";
-            Exists.print f v ~option)
-        predicate
+        Option.iter
+          (function
+            | `comparison (_ as v) ->
+              let module Comp = (val Comp.generate ()) in
+              Fmt.sp f ();
+              Comp.print f v ~option
+            | `is_null (_ as v) ->
+              let module Is_null = (val Is_null.generate ()) in
+              Fmt.sp f ();
+              Is_null.print f v ~option
+            | `between (_ as v) ->
+              let module Between = (val Between.generate ()) in
+              Fmt.sp f ();
+              Between.print f v ~option
+            | `like_regex (_ as v) ->
+              let module Like_regex = (val Like_regex.generate ()) in
+              Fmt.sp f ();
+              Like_regex.print f v ~option
+            | `match' (_ as v) ->
+              let module Match = (val Match.generate ()) in
+              Fmt.sp f ();
+              Match.print f v ~option
+            | `quantified (_ as v) ->
+              let module Quantified = (val Quantified.generate ()) in
+              Fmt.sp f ();
+              Quantified.print f v ~option
+            | `in' (_ as v) ->
+              let module In = (val In.generate ()) in
+              Fmt.sp f ();
+              In.print f v ~option
+            | `is_distinct (_ as v) ->
+              let module Is_distinct = (val Is_distinct.generate ()) in
+              Fmt.sp f ();
+              Is_distinct.print f v ~option
+            | `exists (_ as v) ->
+              let module Exists = (val Exists.generate ()) in
+              Fmt.sp f ();
+              Exists.print f v ~option)
+          predicate
+      in
+      Sfmt.term_box pf f ()
 end
