@@ -22,4 +22,9 @@ let%expect_test "where with and/or in from for formatting" =
       FROM
           test_table
       WHERE
-          b = 3 AND c >= 5 AND NOT d != 5 OR e < 'far' OR f <= 5 AND g <> 510 |}]
+              b = 3
+          AND c >= 5
+          AND NOT d != 5
+           OR e < 'far'
+           OR f <= 5
+          AND g <> 510 |}]

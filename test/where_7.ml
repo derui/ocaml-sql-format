@@ -26,19 +26,21 @@ let%expect_test "where_7 for formatting" =
       FROM
           "table" AS b
       WHERE
-          b <= ALL (
+              b <= ALL (
 
               SELECT
                   c * 151
               FROM
                   table_c
-          ) OR b >= SOME (
+          )
+           OR b >= SOME (
 
               SELECT
                   c * 151
               FROM
                   table_c
-          ) AND b < ANY (
+          )
+          AND b < ANY (
 
               SELECT
                   c * 151

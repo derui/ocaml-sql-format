@@ -14,7 +14,7 @@ module Make (B : GEN with type t = ext boolean_factor) : S = struct
 
       List.iter
         (fun v ->
-          Fmt.string f " ";
+          Fmt.cut f ();
           Printer_token.print f Kw_and ~option;
           Fmt.string f " ";
           B.print f v ~option)
