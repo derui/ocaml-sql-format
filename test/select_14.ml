@@ -4,7 +4,8 @@ module P = Parser.Parser
 let actual =
   {|
   select
- very_looooooooooooooooooooooooooooooooooooong_identifier * very_loooooooooooooooooooooooooooooooooooooooooong / very_loooooooooooooooooooooooooooooooooong
+ very_looooooooooooooooooooooooooooooooooooong_identifier * very_loooooooooooooooooooooooooooooooooooooooooong / very_loooooooooooooooooooooooooooooooooong +  very_looooooooooooooooooooooooooooooooooooong_identifier * very_loooooooooooooooooooooooooooooooooooooooooong / very_loooooooooooooooooooooooooooooooooong
+
 from a
 |}
 
@@ -23,5 +24,8 @@ let%expect_test "select_14 for formatting" =
         very_looooooooooooooooooooooooooooooooooooong_identifier
         * very_loooooooooooooooooooooooooooooooooooooooooong
         / very_loooooooooooooooooooooooooooooooooong
+        + very_looooooooooooooooooooooooooooooooooooong_identifier
+          * very_loooooooooooooooooooooooooooooooooooooooooong
+          / very_loooooooooooooooooooooooooooooooooong
     FROM
         a |}]

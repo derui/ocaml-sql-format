@@ -10,14 +10,22 @@ module Make (Term : GEN with type t = ext term) : S = struct
   let print f t ~option =
     match t with
     | Numeric_value_expression (term, terms, _) ->
-      let module Term = (val Term.generate ()) in
-      Term.print f term ~option;
+      let pf f _ =
+        let module Term = (val Term.generate ()) in
+        Term.print f term ~option;
 
-      List.iter
-        (fun (op, term) ->
-          (match op with
-          | `plus -> Printer_token.print f Op_plus ~option
-          | `minus -> Printer_token.print f Op_minus ~option);
-          Term.print f term ~option)
-        terms
+        List.iter
+          (fun (op, term) ->
+            let kw =
+              match op with
+              | `plus -> Op_plus
+              | `minus -> Op_minus
+            in
+            Fmt.sp f ();
+            Printer_token.print ~option f kw;
+            Fmt.string f " ";
+            Term.print f term ~option)
+          terms
+      in
+      Sfmt.term_box pf f ()
 end
