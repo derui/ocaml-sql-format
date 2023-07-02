@@ -12,6 +12,5 @@ module Make (Con : GEN with type t = ext condition) : S = struct
     | Having_clause (t, _f) ->
       let module Con = (val Con.generate ()) in
       Printer_token.print f ~option Kw_having;
-      Fmt.string f " ";
-      Con.print f ~option t
+      Sfmt.force_vbox option.indent_size (fun f _ -> Con.print f ~option t) f ()
 end
