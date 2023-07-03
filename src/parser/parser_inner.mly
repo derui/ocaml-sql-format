@@ -527,11 +527,8 @@ subquery:
 
 quantified_comparison_predicate:
   | comparison_operator Kw_any;  q = subquery  { Quantified_comparison_predicate ($1, `any, `query q, ()) }
-  | comparison_operator Kw_some;  q = subquery  { Quantified_comparison_predicate ($1, `some, `query q, ()) }
+  | comparison_operator Kw_some; q = subquery  { Quantified_comparison_predicate ($1, `some, `query q, ()) }
   | comparison_operator Kw_all;  q = subquery  { Quantified_comparison_predicate ($1, `all, `query q, ()) }
-  | comparison_operator Kw_any Tok_lparen e = expression Tok_rparen { Quantified_comparison_predicate ($1, `any, `expr e, ()) }
-  | comparison_operator Kw_some Tok_lparen e = expression Tok_rparen { Quantified_comparison_predicate ($1, `some, `expr e, ()) }
-  | comparison_operator Kw_all Tok_lparen e = expression Tok_rparen { Quantified_comparison_predicate ($1, `all, `expr e, ()) }
 ;;
 
 character:
@@ -624,9 +621,9 @@ unsigned_value_expression_primary:
   | Tok_dollar Tok_unsigned_integer { Unsigned_value_expression_primary (`parameter_dollar $2, ())  }
   | identifier { Unsigned_value_expression_primary (`parameter_identifier $1, ()) }
   | subquery { Unsigned_value_expression_primary (`parameter_subquery $1, ()) }
+  | nested_expression { Unsigned_value_expression_primary (`nested_expression $1, ()) }
   | case_expression { Unsigned_value_expression_primary (`case_expression $1, ()) }
   | searched_case_expression { Unsigned_value_expression_primary (`searched_case_expression $1, ()) }
-  | nested_expression { Unsigned_value_expression_primary (`nested_expression $1, ()) }
   | f = unescaped_function { Unsigned_value_expression_primary (`unescaped_function f, ()) }
       (* need implementation:
          - escaped function

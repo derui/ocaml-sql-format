@@ -23,4 +23,4 @@ let%expect_test "where with quantified in from for formatting" =
     FROM
         test_table
     WHERE
-        b <= ANY (5 + 2) |}]
+        b <= ANY(5 + 2) |}]

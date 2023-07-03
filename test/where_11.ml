@@ -4,7 +4,7 @@ module P = Parser.Parser
 let actual =
   {|
   SELECT * from "table"
-where ((b > 1 AND b > 3) OR (c > 3 AND c < 500)) AND d > 3
+where (b > 1 AND b > 3) OR (c > 3 AND c < 500) AND d > 3
 |}
 
 let option = F.Options.default
@@ -16,4 +16,13 @@ let%test_unit "where_11 for AST" =
 
 let%expect_test "where_11 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        *
+    FROM
+        "table"
+    WHERE
+        (b > 1AND b > 3)
+        OR  (c > 3AND c < 500)
+        AND d > 3 |}]

@@ -27,13 +27,13 @@ let%expect_test "where_8 for formatting" =
       FROM
           "table" AS b
       WHERE
-              b IN (
-                  SELECT
-                      c * 151
-                  FROM
-                      table_c
-              )
-           OR b IN (
+          b IN (
+              SELECT
+                  c * 151
+              FROM
+                  table_c
+          )
+          OR  b IN (
                   1,
                   34,
                   'abc'
