@@ -616,7 +616,7 @@ term:
 value_expression_primary:
   | non_numeric_literal { Value_expression_primary (`non_numeric_literal $1, ())}
   | option(plus_or_minus) unsigned_numeric_literal { Value_expression_primary (`unsigned_numeric_literal ($1, $2), ()) }
-  | unsigned_value_expression_primary option(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Value_expression_primary (`unsigned_value_expression_primary ($1, $2), ()) }
+  | unsigned_value_expression_primary list(delimited(Tok_lsbrace, numeric_value_expression, Tok_rsbrace)) { Value_expression_primary (`unsigned_value_expression_primary ($1, $2), ()) }
 ;;
 
 unsigned_value_expression_primary:

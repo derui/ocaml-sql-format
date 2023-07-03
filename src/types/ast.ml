@@ -459,8 +459,7 @@ and 'a value_expression_primary =
       | `unsigned_numeric_literal of
         [ `plus | `minus ] option * 'a unsigned_numeric_literal
       | `unsigned_value_expression_primary of
-        'a unsigned_value_expression_primary
-        * 'a numeric_value_expression option
+        'a unsigned_value_expression_primary * 'a numeric_value_expression list
       ]
       * 'a
 
