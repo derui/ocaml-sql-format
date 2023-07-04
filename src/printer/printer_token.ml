@@ -10,7 +10,6 @@ include (
     type t = token
 
     let print f t ~option:{ Options.keyword; _ } =
-      let module L = Types.Ast.Literal in
       match t with
       | Kw_all -> Fmt.string f @@ as_keyword "all" keyword
       | Kw_select -> Fmt.string f @@ as_keyword "select" keyword
@@ -244,16 +243,19 @@ include (
       | Kw_yaml -> Fmt.string f @@ as_keyword "yaml" keyword
       | Kw_policy -> Fmt.string f @@ as_keyword "policy" keyword
       | Kw_session_user -> Fmt.string f @@ as_keyword "session_user" keyword
+      | Kw_interval -> Fmt.string f @@ as_keyword "interval" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v
       | Tok_all_in_group v -> Fmt.string f v
       | Tok_string v -> Fmt.string f v
+      | Tok_national_string v -> Fmt.string f v
+      | Tok_unicode_string v -> Fmt.string f v
       | Tok_typed_string v -> Fmt.string f v
       | Tok_bin_string v -> Fmt.string f v
-      | Tok_unsigned_integer (L.Unsigned_integer v) -> Fmt.string f v
-      | Tok_approximate_numeric (L.Approximate_numeric v) -> Fmt.string f v
-      | Tok_decimal_numeric (L.Decimal_numeric v) -> Fmt.string f v
+      | Tok_unsigned_integer v -> Fmt.string f v
+      | Tok_exact_numeric_literal v -> Fmt.string f v
+      | Tok_approximate_numeric_literal v -> Fmt.string f v
       | Tok_period -> Fmt.string f "."
       | Tok_comma -> Fmt.string f ","
       | Tok_colon -> Fmt.string f ":"
@@ -264,6 +266,7 @@ include (
       | Tok_rsbrace -> Fmt.string f "]"
       | Tok_qmark -> Fmt.string f "?"
       | Tok_semicolon -> Fmt.string f ";"
+      | Tok_quote -> Fmt.string f "'"
       | Op_plus -> Fmt.string f "+"
       | Op_minus -> Fmt.string f "-"
       | Op_star -> Fmt.string f "*"

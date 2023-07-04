@@ -11,17 +11,20 @@ module Make (Expr : GEN with type t = ext expression) : S = struct
     match t with
     | Nested_expression (list, _) ->
       Printer_token.print f Tok_lparen ~option;
-      let module Expr = (val Expr.generate ()) in
-      (match list with
-      | [] -> failwith "invalid syntax"
-      | e :: rest ->
-        Expr.print f e ~option;
 
-        List.iter
-          (fun e ->
-            Printer_token.print f Tok_comma ~option;
-            Fmt.string f " ";
-            Expr.print f e ~option)
-          rest);
-      Printer_token.print f Tok_rparen ~option
+      Sfmt.parens ~option
+        (fun f _ ->
+          let module Expr = (val Expr.generate ()) in
+          match list with
+          | [] -> failwith "invalid syntax"
+          | e :: rest ->
+            Expr.print f e ~option;
+
+            List.iter
+              (fun e ->
+                Printer_token.print f Tok_comma ~option;
+                Fmt.string f " ";
+                Expr.print f e ~option)
+              rest)
+        f ()
 end

@@ -8,5 +8,5 @@ module Make () : S = struct
 
   let print f t ~option:_ =
     match t with
-    | Unsigned_integer (Literal.Unsigned_integer v, _) -> Fmt.string f v
+    | Unsigned_integer (v, _) -> Fmt.string f v
 end

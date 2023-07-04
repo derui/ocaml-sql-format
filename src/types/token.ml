@@ -208,6 +208,7 @@ type token =
   | Kw_format
   | Kw_yaml
   | Kw_policy
+  | Kw_interval
   (* functions *)
   | Kw_convert
   | Kw_cast
@@ -233,11 +234,13 @@ type token =
   | Tok_ident of string
   | Tok_all_in_group of string
   | Tok_string of string
+  | Tok_national_string of string
+  | Tok_unicode_string of string
   | Tok_typed_string of string
   | Tok_bin_string of string
-  | Tok_unsigned_integer of Ast.Literal.unsigned_integer
-  | Tok_approximate_numeric of Ast.Literal.approximate_numeric
-  | Tok_decimal_numeric of Ast.Literal.decimal_numeric
+  | Tok_exact_numeric_literal of string
+  | Tok_approximate_numeric_literal of string
+  | Tok_unsigned_integer of string
   | Tok_lparen
   | Tok_rparen
   | Tok_period
@@ -250,6 +253,7 @@ type token =
   | Tok_rsbrace
   | Tok_qmark
   | Tok_semicolon
+  | Tok_quote
   (* operators *)
   | Op_plus
   | Op_minus

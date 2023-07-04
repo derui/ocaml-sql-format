@@ -1,27 +1,3 @@
-module Literal = struct
-  type unsigned_integer = Unsigned_integer of string [@@deriving show, eq]
-
-  and approximate_numeric = Approximate_numeric of string
-  [@@deriving show, eq]
-
-  and decimal_numeric = Decimal_numeric of string [@@deriving show, eq]
-
-  type sql_string = string [@@deriving show, eq]
-
-  type typed_string = string [@@deriving show, eq]
-
-  type bin_string = string [@@deriving show, eq]
-
-  type datetime_string =
-    [ `date of string
-    | `time of string
-    | `timestamp of string
-    ]
-  [@@deriving show, eq]
-
-  type identifier = string [@@deriving show, eq]
-end
-
 (* no-info types *)
 type qualifier =
   [ `Distinct
@@ -43,12 +19,25 @@ and row_variant_ =
 
 and not_op = [ `not' ] option [@@deriving show, eq]
 
+and sign =
+  [ `plus
+  | `minus
+  ]
+[@@deriving show, eq]
+
+and non_second_primary_datetime_field =
+  [ `year
+  | `month
+  | `day
+  | `hour
+  | `minute
+  ]
+[@@deriving show, eq]
+
+(* literals *)
 type 'a identifier =
   | Identifier of
-      [ `literal of Literal.identifier
-      | `non_reserved of 'a non_reserved_identifier
-      ]
-      * 'a
+      [ `literal of string | `non_reserved of 'a non_reserved_identifier ] * 'a
 
 and 'a non_reserved_identifier =
   | Non_reserved_identifier of
@@ -177,12 +166,107 @@ and 'a basic_non_reserved =
       ]
       * 'a
 
-and 'a unsigned_integer = Unsigned_integer of Literal.unsigned_integer * 'a
+and 'a non_numeric_literal =
+  | Non_numeric_literal of
+      [ `string of string
+      | `typed_string of string
+      | `bin_string of string
+      | `TRUE
+      | `FALSE
+      | `UNKNOWN
+      | `NULL
+      | `datetime_string of string
+      ]
+      * 'a
+
+(* does not handle structure of unsigned numeric literal. exact and approximate should be handle in lexer. *)
+and 'a unsigned_numeric_literal = Unsigned_numeric_literal of string * 'a
+
+and 'a signed_numeric_literal =
+  | Signed_numeric_literal of sign option * 'a unsigned_numeric_literal * 'a
+
+and 'a unsigned_integer = Unsigned_integer of string * 'a
+
+and 'a signed_integer =
+  | Signed_integer of sign option * 'a unsigned_integer * 'a
+
+and 'a character_string_literal = Character_string_literal of string * 'a
+
+and 'a national_character_string_literal =
+  | National_character_string_literal of string * 'a
+
+and 'a unicode_character_string_literal =
+  | Unicode_character_string_literal of string * 'a
+
+and 'a binary_string_literal = Binary_string_literal of string * 'a
+
+and 'a datetime_literal =
+  | Datetime_literal of
+      [ `date of 'a date_literal
+      | `time of 'a time_literal
+      | `timestamp of 'a timestamp_literal
+      ]
+      * 'a
+
+(* does not handle structure of datetime literal in current formatter *)
+and 'a date_literal = Date_literal of string * 'a
+
+and 'a time_literal = Time_literal of string * 'a
+
+and 'a timestamp_literal = Timestamp_literal of string * 'a
+
+and 'a interval_literal =
+  | Interval_literal of sign option * string * 'a interval_qualifier * 'a
+
+and 'a interval_qualifier =
+  | Interval_qualifier of
+      [ `single of
+        [ `primary of
+          non_second_primary_datetime_field * 'a unsigned_integer option
+        | `second of 'a unsigned_integer * 'a unsigned_integer option
+        ]
+      | `start_end of
+        (non_second_primary_datetime_field * 'a unsigned_integer option)
+        * ([ `primary of non_second_primary_datetime_field | `second ]
+          * 'a unsigned_integer option)
+      ]
+      * 'a
+
+and 'a boolean_literal =
+  | Boolean_literal of [ `true' | `false' | `unknown ] * 'a
+
+and 'a general_literal =
+  | General_literal of
+      [ `character of 'a character_string_literal
+      | `national of 'a national_character_string_literal
+      | `unicode of 'a unicode_character_string_literal
+      | `binary of 'a binary_string_literal
+      | `datetime of 'a datetime_literal
+      | `interval of 'a interval_literal
+      | `boolean of 'a boolean_literal
+      ]
+      * 'a
+
+and 'a unsigned_literal =
+  | Unsigned_literal of
+      [ `numeric of 'a unsigned_numeric_literal
+      | `general of 'a general_literal
+      ]
+      * 'a
+
+and 'a literal =
+  | Literal of
+      [ `numeric of 'a signed_numeric_literal | `general of 'a general_literal ]
+      * 'a
+
+(* statements *)
+type 'a directly_executable_statement =
+  | Directly_executable_statement of 'a query_expression * 'a
 
 and 'a unsigned_value_expression_primary =
   | Unsigned_value_expression_primary of
       [ `parameter_qmark
-      | `parameter_dollar of Literal.unsigned_integer
+      | `parameter_dollar of 'a unsigned_integer
       | `parameter_identifier of 'a identifier
       | `parameter_subquery of 'a subquery
       | `case_expression of 'a case_expression
@@ -204,30 +288,6 @@ and 'a searched_case_expression =
       ('a expression * 'a expression) list * 'a expression option * 'a
 
 and 'a nested_expression = Nested_expression of 'a expression list * 'a
-
-and 'a non_numeric_literal =
-  | Non_numeric_literal of
-      [ `string of Literal.sql_string
-      | `typed_string of Literal.typed_string
-      | `bin_string of Literal.bin_string
-      | `TRUE
-      | `FALSE
-      | `UNKNOWN
-      | `NULL
-      | `datetime_string of Literal.datetime_string
-      ]
-      * 'a
-
-and 'a unsigned_numeric_literal =
-  | Unsigned_numeric_literal of
-      [ `unsigned of Literal.unsigned_integer
-      | `approximate of Literal.approximate_numeric
-      | `decimal of Literal.decimal_numeric
-      ]
-      * 'a
-
-and 'a directly_executable_statement =
-  | Directly_executable_statement of 'a query_expression * 'a
 
 and 'a query_expression =
   | Query_expression of
@@ -273,7 +333,7 @@ and 'a limit_clause =
 
 and 'a integer_parameter =
   | Integer_parameter of
-      [ `unsigned_integer of Literal.unsigned_integer
+      [ `unsigned_integer of 'a unsigned_integer
       | `expression of 'a unsigned_value_expression_primary
       ]
       * 'a
@@ -430,7 +490,7 @@ and 'a in_predicate =
       * not_op
       * 'a
 
-and 'a character = Character of Literal.sql_string * 'a
+and 'a character = Character of string * 'a
 
 and 'a subquery = Subquery of [ `query of 'a query_expression ] * 'a
 
@@ -625,8 +685,8 @@ and 'a function' =
         ]
         option
         * 'a expression
-      | `to_chars of 'a expression * Literal.sql_string * 'a expression option
-      | `to_bytes of 'a expression * Literal.sql_string * 'a expression option
+      | `to_chars of 'a expression * string * 'a expression option
+      | `to_bytes of 'a expression * string * 'a expression option
       | `timestampadd of 'a time_interval * 'a expression * 'a expression
       | `timestampdiff of 'a time_interval * 'a expression * 'a expression
       | `left of 'a expression list
@@ -644,8 +704,7 @@ and 'a function' =
       | `insert of 'a expression list
       | `translate of 'a expression list
       | `position of 'a common_value_expression * 'a common_value_expression
-      | `listagg of
-        'a expression * Literal.sql_string option * 'a order_by_clause
+      | `listagg of 'a expression * string option * 'a order_by_clause
       | `current_date
       | `call of
         'a identifier

@@ -1,5 +1,4 @@
 open Types.Token
-module L = Types.Ast.Literal
 
 let kw_select =
   [%sedlex.regexp?
@@ -1575,6 +1574,17 @@ let kw_session_user =
     , Chars "eE"
     , Chars "rR" )]
 
+let kw_interval =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "vV"
+    , Chars "aA"
+    , Chars "lL" )]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1585,11 +1595,12 @@ let digit = [%sedlex.regexp? '0' .. '9']
 
 let unsigned_integer = [%sedlex.regexp? Plus digit]
 
-let approximate_numeric =
+let exact_numeric_literal =
   [%sedlex.regexp?
-    digit, '.', unsigned_integer, Chars "eE", Opt (Chars "+-"), unsigned_integer]
+    unsigned_integer, Opt ('.', unsigned_integer) | '.', unsigned_integer]
 
-let decimal_numeric = [%sedlex.regexp? Star digit, '.', unsigned_integer]
+let approximate_numeric_literal =
+  [%sedlex.regexp? exact_numeric_literal, Chars "eE", unsigned_integer]
 
 let id_part =
   [%sedlex.regexp? ('@' | '#' | letter), Star (letter | '_' | digit)]
@@ -1601,16 +1612,28 @@ let identifier = [%sedlex.regexp? quoted_id, Star ('.', quoted_id)]
 
 let all_in_group = [%sedlex.regexp? identifier, '.', '*']
 
-let string =
-  [%sedlex.regexp? Opt (Chars "EN"), "'", Star ("''" | Sub (any, "'")), "'"]
+let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
+
+let national_string =
+  [%sedlex.regexp? Chars "nN", "'", Star ("''" | Sub (any, "'")), "'"]
+
+let string = [%sedlex.regexp? "'", Star ("''" | Sub (any, "'")), "'"]
+
+let unicode_representation = [%sedlex.regexp? Rep (hexit, 4) | Rep (hexit, 6)]
+
+let unicode_string =
+  [%sedlex.regexp?
+    ( Chars "uU"
+    , "&"
+    , "'"
+    , Star ("''" | Sub (any, "'") | unicode_representation)
+    , "'" )]
 
 let escaped_type = [%sedlex.regexp? '{', "d" | "t" | "ts" | "b"]
 
 let typed_string = [%sedlex.regexp? escaped_type, string, '}']
 
-let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
-
-let bin_string = [%sedlex.regexp? Chars "xX", '"', Star (hexit, hexit), '"']
+let bin_string = [%sedlex.regexp? "X", "'", Plus (Rep (hexit, 2)), "'"]
 
 let rec token buf =
   match%sedlex buf with
@@ -1843,6 +1866,23 @@ let rec token buf =
   | kw_yaml -> Kw_yaml
   | kw_policy -> Kw_policy
   | kw_session_user -> Kw_session_user
+  | kw_interval -> Kw_interval
+  | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
+  | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
+  | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
+  | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
+  | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
+  | all_in_group -> Tok_all_in_group (Sedlexing.Utf8.lexeme buf)
+  | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
+  | unsigned_integer -> Tok_unsigned_integer (Sedlexing.Utf8.lexeme buf)
+  | exact_numeric_literal ->
+    Tok_exact_numeric_literal (Sedlexing.Utf8.lexeme buf)
+  | approximate_numeric_literal ->
+    Tok_approximate_numeric_literal (Sedlexing.Utf8.lexeme buf)
+  | space -> token buf
+  | newline ->
+    Sedlexing.new_line buf;
+    token buf
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period
@@ -1855,6 +1895,7 @@ let rec token buf =
   | ']' -> Tok_rsbrace
   | '?' -> Tok_qmark
   | ';' -> Tok_semicolon
+  | '\'' -> Tok_quote
   | '+' -> Op_plus
   | '-' -> Op_minus
   | '*' -> Op_star
@@ -1869,19 +1910,4 @@ let rec token buf =
   | "<>" -> Op_ne
   | "!=" -> Op_ne2
   | eof -> Tok_eof
-  | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
-  | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
-  | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
-  | all_in_group -> Tok_all_in_group (Sedlexing.Utf8.lexeme buf)
-  | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
-  | unsigned_integer ->
-    Tok_unsigned_integer (L.Unsigned_integer (Sedlexing.Utf8.lexeme buf))
-  | approximate_numeric ->
-    Tok_approximate_numeric (L.Approximate_numeric (Sedlexing.Utf8.lexeme buf))
-  | decimal_numeric ->
-    Tok_decimal_numeric (L.Decimal_numeric (Sedlexing.Utf8.lexeme buf))
-  | space -> token buf
-  | newline ->
-    Sedlexing.new_line buf;
-    token buf
   | _ -> failwith "Malformed source"
