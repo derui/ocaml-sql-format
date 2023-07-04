@@ -1155,9 +1155,8 @@ start_field:
 ;;
 
 end_field:
-  | f = non_second_primary_datetime_field { (`primary f, None) }
-  | f = non_second_primary_datetime_field Tok_lparen prec = unsigned_integer Tok_rparen { (`primary f, Some prec) }
-  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { (`second, Some prec) }
+  | f = non_second_primary_datetime_field { `primary f }
+  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { `second (Some prec) }
 ;;
 
 single_datetime_field:

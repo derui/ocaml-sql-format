@@ -223,12 +223,13 @@ and 'a interval_qualifier =
       [ `single of
         [ `primary of
           non_second_primary_datetime_field * 'a unsigned_integer option
-        | `second of 'a unsigned_integer * 'a unsigned_integer option
+        | `second of 'a unsigned_integer option * 'a unsigned_integer option
         ]
       | `start_end of
         (non_second_primary_datetime_field * 'a unsigned_integer option)
-        * ([ `primary of non_second_primary_datetime_field | `second ]
-          * 'a unsigned_integer option)
+        * [ `primary of non_second_primary_datetime_field
+          | `second of 'a unsigned_integer option
+          ]
       ]
       * 'a
 
