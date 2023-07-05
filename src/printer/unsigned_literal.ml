@@ -1,4 +1,5 @@
-open Types.Ast
+open Types.Literal
+open Types.Ext
 open Intf
 
 module type S = PRINTER with type t = ext unsigned_literal

@@ -1,4 +1,5 @@
 module A = Types.Ast
+module L = Types.Literal
 module Options = Options
 
 let non_numeric_literal () = Non_numeric_literal.((module Make () : S))
@@ -38,7 +39,7 @@ let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
 let non_reserved_identifier () =
   Non_reserved_identifier.(
     (module Make (struct
-      type t = A.ext A.basic_non_reserved
+      type t = A.ext L.basic_non_reserved
 
       let generate = basic_non_reserved
     end) : S))
@@ -46,7 +47,7 @@ let non_reserved_identifier () =
 let identifier () =
   Identifier.(
     (module Make (struct
-      type t = A.ext A.non_reserved_identifier
+      type t = A.ext L.non_reserved_identifier
 
       let generate = non_reserved_identifier
     end) : S))
@@ -77,6 +78,14 @@ let into_clause () =
   Into_clause.(
     (module Make (struct
       type t = A.ext A.identifier
+
+      let generate = identifier
+    end) : S))
+
+let asterisked_identifier_chain () =
+  Asterisked_identifier_chain.(
+    (module Make (struct
+      type t = A.ext L.identifier
 
       let generate = identifier
     end) : S))

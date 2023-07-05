@@ -1,25 +1,21 @@
 open Types.Ast
+open Types.Literal
+open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext select_sublist
 
 module Make
-    (I : GEN with type t = ext identifier)
-    (Expr : GEN with type t = ext expression) : S = struct
+    (DC : GEN with type t = ext derived_column)
+    (Q : GEN with type t = ext qualified_asterisk) : S = struct
   type t = ext select_sublist
 
   let print f t ~option =
     match t with
-    | Select_sublist (`All_in_group s, _) -> Fmt.string f s
-    | Select_sublist (`Select_derived_column (exp, alias), _) ->
-      let module Expr = (val Expr.generate ()) in
-      Expr.print f exp ~option;
-      Option.iter
-        (fun ident ->
-          let module I = (val I.generate ()) in
-          Fmt.string f " ";
-          Printer_token.print f Types.Token.Kw_as ~option;
-          Fmt.string f " ";
-          I.print f ident ~option)
-        alias
+    | Select_sublist (`derived d, _) ->
+      let module DC = (val DC.generate ()) in
+      DC.print ~option f d
+    | Select_sublist (`qualified q, _) ->
+      let module Q = (val Q.generate ()) in
+      Q.print f q ~option
 end

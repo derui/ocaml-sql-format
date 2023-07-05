@@ -286,6 +286,69 @@ entry:
                  | directly_executable_statement { $1 }
 ;;
 
+(** Start table expression *)
+(** End   table expression *)
+
+(** Start names and identifiers *)
+%inline column_name:
+   | i = identifier { i }
+;;
+(** End   names and identifiers *)
+
+(** Start table reference *)
+
+column_name_list:
+| c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
+;;
+
+(** End   table reference *)
+
+(** Start Query specification *)
+query_specification:
+  | Kw_select q = option(set_qualifier) l = select_list t = table_expression { Query_specification (q, l, t, ()) }
+;;
+
+select_list:
+| Op_star { Select_list (`asterisk, ()) }
+| f = select_sublist l = list(pair(Tok_comma, select_sublist)) {
+                             let l = List.map snd l in
+                             Select_list (`list (f, l), ()) }
+;;
+
+select_sublist:
+| d = derived_column {Select_sublist (`derived d, ())}
+| d = qualified_asterisk {Select_sublist (`asterisk d, ())}
+;;
+
+qualified_asterisk:
+| c = asterisked_identifier_chain Tok_period Op_star { Qualified_asterisk (`chain c) }
+| c = all_field_reference { Qualified_asterisk (`all c) }
+;;
+
+asterisked_identifier_chain:
+| i = identifier l = list(pair(Tok_period, identifier)) {Asterisked_identifier_chain (i,List.map snd l, ())}
+;;
+
+derived_column:
+| e = value_expression c = option(as_clause) {Derived_column (e, c, ())}
+;;
+
+as_clause:
+| option(Kw_as) c = column_name {As_clause (c, ()) }
+;;
+
+all_field_reference:
+| e = value_expression_primary Tok_period Op_star { All_field_reference (e, None, ()) }
+| e = value_expression_primary Tok_period Op_star;
+  Kw_as Tok_lparen a = all_fields_column_name_list Tok_rparen  { All_field_reference (e, Some a, ()) }
+;;
+
+all_fields_column_name_list:
+| l = column_name_list { All_fields_column_name_list (l, ()) }
+;;
+
+(** End   Query specification *)
+
 directly_executable_statement:
                  | query_expression { Directly_executable_statement ($1, ()) }
 ;;
@@ -455,25 +518,6 @@ table_name:
   | identifier pair(option(Kw_as), identifier) { ($1, Some (snd $2)) }
   | identifier { ($1, None) }
     (* end table reference *)
-;;
-
-select_list:
-  | Op_star { `asterisk }
-  | separated_nonempty_list(Tok_comma, select_sublist) { `select_list $1 }
-;;
-
-select_sublist:
-  | Tok_all_in_group {Select_sublist (`All_in_group $1, ())}
-  | expression option(pair(option(Kw_as), identifier)) {
-        let alias = match $2 with
-          | None -> None
-          | Some (_, ident) -> Some ident
-        in
-        Select_sublist (`Select_derived_column ($1, alias), ()) }
-;;
-
-derived_column:
-  | expression alias = option(pair(Kw_as, identifier)) {Derived_column ($1, Option.map snd alias, ()) }
 ;;
 
 expression:

@@ -1,5 +1,7 @@
-open Types.Ast
+open Types.Basic
 open Types.Token
+open Types.Literal
+open Types.Ext
 open Intf
 
 module type S = PRINTER with type t = ext interval_qualifier
