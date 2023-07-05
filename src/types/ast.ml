@@ -104,16 +104,7 @@ and 'a query_primary =
   | Query_primary of
       [ `query of 'a query | `nested of 'a query_expression_body ] * 'a
 
-and 'a query = Query of 'a into_clause option * 'a from_clause option * 'a
-
-and 'a from_clause_ =
-  { tables : 'a table_reference list
-  ; where : 'a where_clause option
-  ; group_by : 'a group_by_clause option
-  ; having : 'a having_clause option
-  }
-
-and 'a from_clause = From_clause of 'a from_clause_ * 'a
+and 'a query = Query of 'a
 
 and 'a where_clause = Where_clause of 'a condition * 'a
 
@@ -125,31 +116,9 @@ and 'a having_clause = Having_clause of 'a condition * 'a
 
 and 'a into_clause = Into_clause of 'a identifier * 'a
 
-and 'a joined_table =
-  | Joined_table of
-      'a table_primary
-      * [ `cross of [ `cross | `union ] * 'a table_primary
-        | `qualified of
-          [ `left | `right | `full | `inner ] option
-          * 'a table_reference
-          * 'a condition
-        ]
-        list
-      * 'a
-
-and 'a table_primary =
-  | Table_primary of
-      [ `table_name of 'a identifier * 'a identifier option
-      | `table_subquery of 'a table_subquery
-      | `joined of 'a joined_table
-      ]
-      * 'a
-
 and 'a table_subquery =
   | Table_subquery of
       [ `table | `lateral ] option * 'a query_expression * 'a identifier * 'a
-
-and 'a table_reference = Table_reference of 'a joined_table * 'a
 
 and 'a expression = Expression of 'a condition * 'a
 
@@ -495,7 +464,23 @@ and 'a all_field_column_name_list =
 and 'a column_name_list =
   | Column_name_list of 'a identifier * 'a identifier list * 'a
 
-and 'a table_expression = Table_expression of 'a (* TODO *)
+and 'a table_expression =
+  | Table_expression of
+      'a from_clause
+      * 'a where_clause option
+      * 'a group_by_clause option
+      * 'a having_clause option
+      * 'a window_clause option
+      * 'a
+
+and 'a from_clause = From_clause of 'a table_reference_list * 'a
+
+and 'a table_reference_list =
+  | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
+
+and 'a table_reference = Table_reference of 'a (* TODO *)
+
+and 'a window_clause = Window_clause of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
 

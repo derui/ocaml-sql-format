@@ -286,14 +286,32 @@ entry:
                  | directly_executable_statement { $1 }
 ;;
 
-(** Start table expression *)
-(** End   table expression *)
-
 (** Start names and identifiers *)
 %inline column_name:
    | i = identifier { i }
 ;;
 (** End   names and identifiers *)
+
+
+(** Start table expression *)
+table_expression:
+  | from = from_clause;
+    where = option(where_clause);
+    group_by = option(group_by_clause);
+    having = option(having_clause);
+    window = option(window_clause) { Table_expression (from, where, group_by, having, window, ()) }
+;;
+(** End   table expression *)
+
+(** Start from clause *)
+from_clause:
+| Kw_from l = table_reference_list {From_clause (l, ())}
+;;
+
+table_reference_list:
+| fl = table_reference rest = list(pair(Tok_comma, table_reference)) {Table_reference_list (fl, rest, ())}
+;;
+(** End   from clause *)
 
 (** Start table reference *)
 
@@ -464,10 +482,6 @@ into_clause:
 
 sub_select_clause:
   | from_clause; where = option(where_clause); group_by = option(group_by_clause); having = option(having_clause) { From_clause ({tables = $1; where; having; group_by}, ()) }
-;;
-
-from_clause:
-  | Kw_from separated_nonempty_list(Tok_comma, table_reference)  { $2 }
 ;;
 
 group_by_clause:
