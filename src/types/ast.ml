@@ -477,15 +477,15 @@ and 'a as_clause = As_clause of 'a identifier * 'a
 and 'a qualified_asterisk =
   | Qualified_asterisk of
       [ `chain of 'a asterisked_identifier_chain
-      | `all of 'a all_field_reference
+      | `all of 'a all_fields_reference
       ]
       * 'a
 
 and 'a asterisked_identifier_chain =
   | Asterisked_identifier_chain of 'a identifier * 'a identifier list * 'a
 
-and 'a all_field_reference =
-  | All_field_reference of
+and 'a all_fields_reference =
+  | All_fields_reference of
       'a value_expression_primary * 'a all_field_column_name_list option * 'a
 
 and 'a all_field_column_name_list =
@@ -493,7 +493,7 @@ and 'a all_field_column_name_list =
       (** table reference *)
 
 and 'a column_name_list =
-  | Column_name_list of 'a identifier * 'a identifier list * 'a (* TODO *)
+  | Column_name_list of 'a identifier * 'a identifier list * 'a
 
 and 'a table_expression = Table_expression of 'a (* TODO *)
 

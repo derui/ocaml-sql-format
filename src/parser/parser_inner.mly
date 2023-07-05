@@ -322,7 +322,7 @@ select_sublist:
 
 qualified_asterisk:
 | c = asterisked_identifier_chain Tok_period Op_star { Qualified_asterisk (`chain c) }
-| c = all_field_reference { Qualified_asterisk (`all c) }
+| c = all_fields_reference { Qualified_asterisk (`all c) }
 ;;
 
 asterisked_identifier_chain:
@@ -337,10 +337,10 @@ as_clause:
 | option(Kw_as) c = column_name {As_clause (c, ()) }
 ;;
 
-all_field_reference:
-| e = value_expression_primary Tok_period Op_star { All_field_reference (e, None, ()) }
+all_fields_reference:
+| e = value_expression_primary Tok_period Op_star { All_fields_reference (e, None, ()) }
 | e = value_expression_primary Tok_period Op_star;
-  Kw_as Tok_lparen a = all_fields_column_name_list Tok_rparen  { All_field_reference (e, Some a, ()) }
+  Kw_as Tok_lparen a = all_fields_column_name_list Tok_rparen  { All_fields_reference (e, Some a, ()) }
 ;;
 
 all_fields_column_name_list:

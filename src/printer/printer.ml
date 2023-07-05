@@ -82,12 +82,50 @@ let into_clause () =
       let generate = identifier
     end) : S))
 
-let asterisked_identifier_chain () =
+let rec asterisked_identifier_chain () =
   Asterisked_identifier_chain.(
     (module Make (struct
       type t = A.ext L.identifier
 
       let generate = identifier
+    end) : S))
+
+and derived_column () =
+  Derived_column.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.as_clause
+
+                let generate = as_clause
+              end) : S))
+
+and as_clause () =
+  As_clause.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and column_name_list () =
+  Column_name_list.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and all_field_column_name_list () =
+  All_field_column_name_list.(
+    (module Make (struct
+      type t = A.ext A.column_name_list
+
+      let generate = column_name_list
     end) : S))
 
 let rec query_expression () =
@@ -643,20 +681,6 @@ and nested_expression () =
 
       let generate = expression
     end) : S))
-
-and derived_column () =
-  Derived_column.(
-    (module Make
-              (struct
-                type t = A.ext A.identifier
-
-                let generate = identifier
-              end)
-              (struct
-                type t = A.ext A.expression
-
-                let generate = expression
-              end) : S))
 
 and unescaped_function () =
   Unescaped_function.(

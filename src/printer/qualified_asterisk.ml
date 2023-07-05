@@ -5,7 +5,7 @@ module type S = PRINTER with type t = ext qualified_asterisk
 
 module Make
     (Chain : GEN with type t = ext asterisked_identifier_chain)
-    (All : GEN with type t = ext all_field_reference) : S = struct
+    (All : GEN with type t = ext all_fields_reference) : S = struct
   type t = ext qualified_asterisk
 
   let print f t ~option =
