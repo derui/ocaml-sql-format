@@ -233,6 +233,7 @@ type token =
   | Kw_tablesample
   | Kw_bernoulli
   | Kw_system
+  | Kw_repeatable
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -247,6 +247,7 @@ include (
       | Kw_tablesample -> Fmt.string f @@ as_keyword "tablesample" keyword
       | Kw_bernoulli -> Fmt.string f @@ as_keyword "bernoulli" keyword
       | Kw_system -> Fmt.string f @@ as_keyword "system" keyword
+      | Kw_repeatable -> Fmt.string f @@ as_keyword "repeatable" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

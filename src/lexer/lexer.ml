@@ -1611,6 +1611,19 @@ let kw_bernoulli =
     , Chars "lL"
     , Chars "iI" )]
 
+let kw_repeatable =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "pP"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
 let kw_system =
   [%sedlex.regexp?
     Chars "sS", Chars "yY", Chars "sS", Chars "tT", Chars "eE", Chars "mM"]
@@ -1900,6 +1913,7 @@ let rec token buf =
   | kw_tablesample -> Kw_tablesample
   | kw_bernoulli -> Kw_bernoulli
   | kw_system -> Kw_system
+  | kw_repeatable -> Kw_repeatable
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

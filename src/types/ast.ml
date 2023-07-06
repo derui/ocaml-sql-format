@@ -480,7 +480,8 @@ and 'a sample_clause =
       * 'a repeatable_clause option
       * 'a
 
-and 'a repeatable_clause = Repeatable_clause of 'a (* TODO *)
+and 'a repeatable_clause =
+  | Repeatable_clause of 'a numeric_value_expression * 'a
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
