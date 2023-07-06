@@ -193,15 +193,7 @@ and 'a subquery = Subquery of [ `query of 'a query_expression ] * 'a
 and 'a comparison_operator =
   | Comparison_operator of [ `eq | `ne | `ne2 | `ge | `gt | `le | `lt ] * 'a
 
-and 'a common_value_expression =
-  | Common_value_expression of
-      'a numeric_value_expression
-      * ([ `amp | `concat ] * 'a numeric_value_expression) list
-      * 'a
-
-and 'a numeric_value_expression =
-  | Numeric_value_expression of
-      'a term * ([ `plus | `minus ] * 'a term) list * 'a
+and 'a common_value_expression = Common_value_expression of 'a
 
 and 'a term =
   | Term of
@@ -209,15 +201,7 @@ and 'a term =
       * ([ `star | `slash ] * 'a value_expression_primary) list
       * 'a
 
-and 'a value_expression_primary =
-  | Value_expression_primary of
-      [ `non_numeric_literal of 'a non_numeric_literal
-      | `unsigned_numeric_literal of
-        [ `plus | `minus ] option * 'a unsigned_numeric_literal
-      | `unsigned_value_expression_primary of
-        'a unsigned_value_expression_primary * 'a numeric_value_expression list
-      ]
-      * 'a
+and 'a value_expression_primary = Value_expression_primary of 'a
 
 and 'a unescaped_function =
   | Unescaped_function of
@@ -489,11 +473,20 @@ and 'a table_primary = Table_primary of 'a (* TODO *)
 
 and 'a joined_table = Joined_table of 'a (* TODO *)
 
-and 'a sample_clause = Sample_clause of 'a (* TODO *)
+and 'a sample_clause =
+  | Sample_clause of
+      [ `bernoulli | `system ]
+      * 'a numeric_value_expression
+      * 'a repeatable_clause option
+      * 'a
+
+and 'a repeatable_clause = Repeatable_clause of 'a (* TODO *)
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
+
+and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
 
 type ext = Ext.ext
 

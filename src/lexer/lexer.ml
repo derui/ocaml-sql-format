@@ -1585,6 +1585,36 @@ let kw_interval =
     , Chars "aA"
     , Chars "lL" )]
 
+let kw_tablesample =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_bernoulli =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "nN"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "iI" )]
+
+let kw_system =
+  [%sedlex.regexp?
+    Chars "sS", Chars "yY", Chars "sS", Chars "tT", Chars "eE", Chars "mM"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1867,6 +1897,9 @@ let rec token buf =
   | kw_policy -> Kw_policy
   | kw_session_user -> Kw_session_user
   | kw_interval -> Kw_interval
+  | kw_tablesample -> Kw_tablesample
+  | kw_bernoulli -> Kw_bernoulli
+  | kw_system -> Kw_system
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

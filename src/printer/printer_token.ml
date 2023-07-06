@@ -244,6 +244,9 @@ include (
       | Kw_policy -> Fmt.string f @@ as_keyword "policy" keyword
       | Kw_session_user -> Fmt.string f @@ as_keyword "session_user" keyword
       | Kw_interval -> Fmt.string f @@ as_keyword "interval" keyword
+      | Kw_tablesample -> Fmt.string f @@ as_keyword "tablesample" keyword
+      | Kw_bernoulli -> Fmt.string f @@ as_keyword "bernoulli" keyword
+      | Kw_system -> Fmt.string f @@ as_keyword "system" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

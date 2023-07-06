@@ -230,6 +230,9 @@ type token =
   | Kw_current_timestamp
   | Kw_current_time
   | Kw_session_user
+  | Kw_tablesample
+  | Kw_bernoulli
+  | Kw_system
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

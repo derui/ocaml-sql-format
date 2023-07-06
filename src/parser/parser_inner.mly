@@ -272,6 +272,9 @@ open Types.Ast
 %token Kw_policy
 %token Kw_session_user
 %token Kw_interval
+%token Kw_tablesample
+%token Kw_bernoulli
+%token Kw_system
 
 %token Tok_eof
 
@@ -318,6 +321,11 @@ table_reference_list:
 table_reference:
 | t = table_primary  s = option(sample_clause) { Table_reference (`primary t,s ,() ) }
 | t = joined_table  s = option(sample_clause) { Table_reference (`joined t,s ,() ) }
+;;
+
+sample_clause:
+| Kw_tablesample Kw_bernoulli Tok_lparen v = numeric_value_expression Tok_rparen r = option(repeatable_clause) { Sample_clause (`bernoulli, v, r, ()) }
+| Kw_tablesample Kw_system Tok_lparen v = numeric_value_expression Tok_rparen r = option(repeatable_clause) { Sample_clause (`system, v, r, ()) }
 ;;
 
 column_name_list:
