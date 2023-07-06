@@ -337,6 +337,10 @@ only_spec:
 | Kw_only e = delimited(Tok_lparen, table_or_query_name, Tok_rparen) {Only_spec (e, ())}
 ;;
 
+lateral_derived_table:
+| Kw_lateral q = table_subquery { Lateral_derived_table (q, ())}
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;

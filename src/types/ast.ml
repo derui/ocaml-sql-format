@@ -116,10 +116,6 @@ and 'a having_clause = Having_clause of 'a condition * 'a
 
 and 'a into_clause = Into_clause of 'a identifier * 'a
 
-and 'a table_subquery =
-  | Table_subquery of
-      [ `table | `lateral ] option * 'a query_expression * 'a identifier * 'a
-
 and 'a expression = Expression of 'a condition * 'a
 
 and 'a condition = Condition of 'a boolean_value_expression * 'a
@@ -484,6 +480,10 @@ and 'a repeatable_clause =
   | Repeatable_clause of 'a numeric_value_expression * 'a
 
 and 'a only_spec = Only_spec of 'a table_or_query_name * 'a
+
+and 'a lateral_derived_table = Lateral_derived_table of 'a table_subquery * 'a
+
+and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)
 
