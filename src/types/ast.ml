@@ -483,6 +483,10 @@ and 'a sample_clause =
 and 'a repeatable_clause =
   | Repeatable_clause of 'a numeric_value_expression * 'a
 
+and 'a only_spec = Only_spec of 'a table_or_query_name * 'a
+
+and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)
+
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)

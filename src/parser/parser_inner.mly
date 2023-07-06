@@ -333,6 +333,10 @@ repeatable_clause:
 | Kw_repeatable Tok_lparen e = numeric_value_expression Tok_rparen {Repeatable_clause (e, ())}
 ;;
 
+only_spec:
+| Kw_only e = delimited(Tok_lparen, table_or_query_name, Tok_rparen) {Only_spec (e, ())}
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;
