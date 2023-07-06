@@ -315,6 +315,11 @@ table_reference_list:
 
 (** Start table reference *)
 
+table_reference:
+| t = table_primary  s = option(sample_clause) { Table_reference (`primary t,s ,() ) }
+| t = joined_table  s = option(sample_clause) { Table_reference (`joined t,s ,() ) }
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;

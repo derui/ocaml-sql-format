@@ -478,7 +478,18 @@ and 'a from_clause = From_clause of 'a table_reference_list * 'a
 and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
 
-and 'a table_reference = Table_reference of 'a (* TODO *)
+and 'a table_reference =
+  | Table_reference of
+      [ `primary of 'a table_primary | `joined of 'a joined_table ]
+      * 'a sample_clause option
+      * 'a
+(* TODO *)
+
+and 'a table_primary = Table_primary of 'a (* TODO *)
+
+and 'a joined_table = Joined_table of 'a (* TODO *)
+
+and 'a sample_clause = Sample_clause of 'a (* TODO *)
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
