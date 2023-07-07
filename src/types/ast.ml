@@ -490,6 +490,8 @@ and 'a collection_derived_table =
 and 'a table_function_derived_table =
   | Table_function_derived_table of 'a collection_value_expression * 'a
 
+and 'a derived_table = Derived_table of 'a table_subquery * 'a
+
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)

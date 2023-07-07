@@ -350,6 +350,10 @@ table_function_derived_table:
 | Kw_table Tok_lparen e = collection_value_expression Tok_rparen {Table_function_derived_table (e, ())}
 ;;
 
+derived_table:
+| q = table_subquery {Derived_table (q, ())}
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;
