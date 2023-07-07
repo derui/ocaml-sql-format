@@ -276,6 +276,7 @@ open Types.Ast
 %token Kw_bernoulli
 %token Kw_system
 %token Kw_repeatable
+%token Kw_unnest
 
 %token Tok_eof
 
@@ -317,7 +318,7 @@ table_reference_list:
 ;;
 (** End   from clause *)
 
-(** Start table reference *)
+(** Start 7.6 table reference *)
 
 table_reference:
 | t = table_primary  s = option(sample_clause) { Table_reference (`primary t,s ,() ) }
@@ -341,11 +342,15 @@ lateral_derived_table:
 | Kw_lateral q = table_subquery { Lateral_derived_table (q, ())}
 ;;
 
+collection_derived_table:
+| Kw_unnest Tok_lparen e = collection_value_expression Tok_rparen o = option(pair(Kw_with, Kw_ordinality)) {Collection_derived_table (e, Option.map (fun _ -> `ordinality) o, ())}
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;
 
-(** End   table reference *)
+(** End   7.6 table reference *)
 
 (** Start Query specification *)
 query_specification:

@@ -483,6 +483,10 @@ and 'a only_spec = Only_spec of 'a table_or_query_name * 'a
 
 and 'a lateral_derived_table = Lateral_derived_table of 'a table_subquery * 'a
 
+and 'a collection_derived_table =
+  | Collection_derived_table of
+      'a collection_value_expression * [ `ordinality ] option * 'a
+
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)
@@ -492,6 +496,9 @@ and 'a window_clause = Window_clause of 'a (* TODO *)
 and 'a value_expression = Value_expression of 'a (* TODO *)
 
 and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
+
+and 'a collection_value_expression =
+  | Collection_value_expression of 'a (* TODO *)
 
 type ext = Ext.ext
 

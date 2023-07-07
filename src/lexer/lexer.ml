@@ -1628,6 +1628,10 @@ let kw_system =
   [%sedlex.regexp?
     Chars "sS", Chars "yY", Chars "sS", Chars "tT", Chars "eE", Chars "mM"]
 
+let kw_unnest =
+  [%sedlex.regexp?
+    Chars "uU", Chars "nN", Chars "nN", Chars "eE", Chars "sS", Chars "tT"]
+
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1914,6 +1918,7 @@ let rec token buf =
   | kw_bernoulli -> Kw_bernoulli
   | kw_system -> Kw_system
   | kw_repeatable -> Kw_repeatable
+  | kw_unnest -> Kw_unnest
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
