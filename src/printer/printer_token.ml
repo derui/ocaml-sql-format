@@ -249,6 +249,7 @@ include (
       | Kw_system -> Fmt.string f @@ as_keyword "system" keyword
       | Kw_repeatable -> Fmt.string f @@ as_keyword "repeatable" keyword
       | Kw_unnest -> Fmt.string f @@ as_keyword "unnest" keyword
+      | Kw_module -> Fmt.string f @@ as_keyword "module" keyword
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
       | Tok_ident v -> Fmt.string f v

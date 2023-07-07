@@ -128,6 +128,44 @@ and all_field_column_name_list () =
       let generate = column_name_list
     end) : S))
 
+and table_name () =
+  Table_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and query_name () =
+  Query_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and schema_name () =
+  Schema_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and table_or_query_name () =
+  Table_or_query_name.(
+    (module Make
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.query_name
+
+                let generate = query_name
+              end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

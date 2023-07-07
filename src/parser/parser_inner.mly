@@ -295,6 +295,28 @@ entry:
 %inline column_name:
    | i = identifier { i }
 ;;
+
+local_or_schema_qualifier:
+| Kw_module { `module' }
+| s = schema_name { `schema s }
+;;
+
+local_or_schema_qualifier_name:
+| q = option(pair(local_or_schema_qualifier, Tok_period)) i = identifier { (Option.map fst q, i) }
+;;
+
+schema_name:
+| c = option(pair(identifier, Tok_period)) n = identifier { Schema_name (Option.map fst c, n) }
+;;
+
+table_name:
+   | i = local_or_schema_qualifier_name { Table_name (i, ()) }
+;;
+
+query_name:
+   | i = identifier { Query_name (i, ()) }
+;;
+
 (** End   names and identifiers *)
 
 
@@ -352,6 +374,11 @@ table_function_derived_table:
 
 derived_table:
 | q = table_subquery {Derived_table (q, ())}
+;;
+
+table_or_query_name:
+| q = query_name {Table_or_query_name (`query q, ())}
+| q = table_name {Table_or_query_name (`table q, ())}
 ;;
 
 column_name_list:

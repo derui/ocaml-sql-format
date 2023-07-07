@@ -492,9 +492,19 @@ and 'a table_function_derived_table =
 
 and 'a derived_table = Derived_table of 'a table_subquery * 'a
 
-and 'a table_subquery = Table_subquery of 'a (* TODO *)
+and 'a table_or_query_name =
+  | Table_or_query_name of
+      [ `table of 'a table_name | `query of 'a query_name ] * 'a
 
-and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)
+and 'a table_name =
+  | Table_name of
+      [ `module' | `schema of 'a schema_name ] option * 'a identifier * 'a
+
+and 'a schema_name = Schema_name of 'a identifier option * 'a identifier * 'a
+
+and 'a query_name = Query_name of 'a identifier * 'a
+
+and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
