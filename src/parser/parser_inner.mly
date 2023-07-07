@@ -346,6 +346,10 @@ collection_derived_table:
 | Kw_unnest Tok_lparen e = collection_value_expression Tok_rparen o = option(pair(Kw_with, Kw_ordinality)) {Collection_derived_table (e, Option.map (fun _ -> `ordinality) o, ())}
 ;;
 
+table_function_derived_table:
+| Kw_table Tok_lparen e = collection_value_expression Tok_rparen {Table_function_derived_table (e, ())}
+;;
+
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }
 ;;

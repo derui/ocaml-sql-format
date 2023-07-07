@@ -487,6 +487,9 @@ and 'a collection_derived_table =
   | Collection_derived_table of
       'a collection_value_expression * [ `ordinality ] option * 'a
 
+and 'a table_function_derived_table =
+  | Table_function_derived_table of 'a collection_value_expression * 'a
+
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a table_or_query_name = Table_or_query_name of 'a (* TODO *)
