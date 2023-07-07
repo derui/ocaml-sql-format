@@ -380,6 +380,9 @@ table_or_query_name:
 | q = query_name {Table_or_query_name (`query q, ())}
 | q = table_name {Table_or_query_name (`table q, ())}
 ;;
+derived_column_list:
+| l = column_name_list {Derived_column_list (l, ())}
+;;
 
 column_name_list:
 | c = column_name l = list(pair(Tok_comma, column_name)) { Column_name_list (c, List.map snd l, ()) }

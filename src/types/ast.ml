@@ -463,7 +463,6 @@ and 'a table_reference =
       [ `primary of 'a table_primary | `joined of 'a joined_table ]
       * 'a sample_clause option
       * 'a
-(* TODO *)
 
 and 'a table_primary = Table_primary of 'a (* TODO *)
 
@@ -503,6 +502,8 @@ and 'a table_name =
 and 'a schema_name = Schema_name of 'a identifier option * 'a identifier * 'a
 
 and 'a query_name = Query_name of 'a identifier * 'a
+
+and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
 
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 

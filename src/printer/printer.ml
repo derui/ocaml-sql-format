@@ -130,11 +130,17 @@ and all_field_column_name_list () =
 
 and table_name () =
   Table_name.(
-    (module Make (struct
-      type t = A.ext L.identifier
+    (module Make
+              (struct
+                type t = A.ext L.identifier
 
-      let generate = identifier
-    end) : S))
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end) : S))
 
 and query_name () =
   Query_name.(
@@ -165,6 +171,14 @@ and table_or_query_name () =
 
                 let generate = query_name
               end) : S))
+
+and derived_column_list () =
+  Derived_column_list.(
+    (module Make (struct
+      type t = A.ext A.column_name_list
+
+      let generate = column_name_list
+    end) : S))
 
 let rec query_expression () =
   Query_expression.(
