@@ -15,7 +15,7 @@ open Intf
 
 module type S = PRINTER with type t = ext %%TYPE%%
 
-module Make () : S = struct
+module Make (V: GEN with type t = ext xxx) : S = struct
   type t = ext %%TYPE%%
 
   let print f t ~option =
