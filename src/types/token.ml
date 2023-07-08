@@ -243,6 +243,7 @@ type token =
   | Kw_ties
   | Kw_others
   | Kw_exclude
+  | Kw_window
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

@@ -316,7 +316,13 @@ and group_by_clause () =
       let generate = grouping_element_list
     end) : S))
 
-and window_clause () = Window_clause.((module Make () : S))
+and window_clause () =
+  Window_clause.(
+    (module Make (struct
+      type t = A.ext A.window_definition_list
+
+      let generate = window_definition_list
+    end) : S))
 
 and window_definition_list () =
   Window_definition_list.(

@@ -284,6 +284,7 @@ open Types.Ast
 %token Kw_sets
 %token Kw_ties
 %token Kw_others
+%token Kw_window
 
 %token Tok_eof
 
@@ -737,6 +738,10 @@ window_definition:
 window_definition_list:
   | fl = window_definition;
     list = list(pair(Tok_comma, window_definition)) {Window_definition_list (fl, List.map snd list, _)}
+;;
+
+window_clause:
+| Kw_window list = window_definition_list {Window_clause (list, _)}
 ;;
 
 (** End   7.11 Window clause *)

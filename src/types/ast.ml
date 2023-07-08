@@ -233,7 +233,7 @@ and 'a collate_clause = Collate_clause of 'a collate_name * 'a
 
 and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
 
-and 'a window_clause = Window_clause of 'a (* TODO *)
+and 'a window_clause = Window_clause of 'a window_definition_list * 'a
 
 and 'a window_definition_list =
   | Window_definition_list of
