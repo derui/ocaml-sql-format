@@ -469,7 +469,8 @@ and 'a rollup_list =
   | Rollup_list of 'a ordinary_grouping_set_list * 'a (* TODO *)
 
 and 'a ordinary_grouping_set_list =
-  | Ordinary_grouping_set_list of 'a (* TODO *)
+  | Ordinary_grouping_set_list of
+      'a ordinary_grouping_set * 'a ordinary_grouping_set list * 'a
 
 and 'a ordinary_grouping_set =
   | Ordinary_grouping_set of

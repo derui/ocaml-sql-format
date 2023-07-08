@@ -451,6 +451,10 @@ ordinary_grouping_set:
 | l = delimited(Tok_lparen, grouping_column_reference_list, Tok_rparen) {Ordinary_grouping_set (`list l, ())}
 ;;
 
+ordinary_grouping_set_list:
+| fe = ordinary_grouping_set l = list(pair(Tok_comma, ordinary_grouping_set)) {Ordinary_grouping_set_list (fe, List.map snd l, ())}
+;;
+
 empty_grouping_set:
 | Tok_lparen Tok_rparen { Empty_grouping_set () }
 ;;
