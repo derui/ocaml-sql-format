@@ -248,7 +248,8 @@ and 'a window_specification_detail =
 
 and 'a existing_window_name = Existing_window_name of 'a identifier * 'a
 
-and 'a window_partition_clause = Window_partition_clause of 'a (* TODO *)
+and 'a window_partition_clause =
+  | Window_partition_clause of 'a window_partition_column_reference_list * 'a
 
 and 'a window_partition_column_reference_list =
   | Window_partition_column_reference_list of

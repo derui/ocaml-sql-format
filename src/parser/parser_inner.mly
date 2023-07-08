@@ -644,17 +644,24 @@ having_clause:
 new_window_name:
 | i = identifier { New_window_name (i, ()) }
 ;;
+
 existing_window_name:
 | i = identifier { Existing_window_name (i, ()) }
 ;;
+
 window_partition_column_reference:
 | c = column_reference collate = option(collate_clause) { Window_partition_column_reference (c, collate, ()) }
 ;;
+
 window_partition_column_reference_list:
 | fe = window_partition_column_reference;
   list = list(pair(Tok_comma, window_partition_column_reference)) {
              Window_partition_column_reference_list (fe, List.map snd l, ())
            }
+;;
+
+window_partition_clause:
+| Kw_partition Kw_by l = window_partition_column_reference_list {Window_partition_clause (l, ())}
 ;;
 (** End   7.11 Window clause *)
 
