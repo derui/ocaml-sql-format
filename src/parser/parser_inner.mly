@@ -321,6 +321,10 @@ schema_qualified_name:
 | s = option(pair(schema_name, Tok_period)) i = identifier {Schema_qualified_name (Option.fst s, i, ())}
 ;;
 
+collate_name:
+| i = schema_qualified_name {Collate_name (i, ())}
+;;
+
 (** End   names and identifiers *)
 
 
@@ -486,6 +490,9 @@ search_condition:
 | e = boolean_value_expression {Search_condition (e, ())}
 ;;
 (** End   8.19 Search condition *)
+
+(** Start 10.7 collate clause *)
+(** End   10.7 collate clause *)
 
 
 directly_executable_statement:
