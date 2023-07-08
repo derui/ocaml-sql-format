@@ -270,6 +270,22 @@ and ordinary_grouping_set () =
                 let generate = grouping_column_reference_list
               end) : S))
 
+and ordinary_grouping_set_list () =
+  Ordinary_grouping_set_list.(
+    (module Make (struct
+      type t = A.ext A.ordinary_grouping_set
+
+      let generate = ordinary_grouping_set
+    end) : S))
+
+and rollup_list () =
+  Rollup_list.(
+    (module Make (struct
+      type t = A.ext A.ordinary_grouping_set_list
+
+      let generate = ordinary_grouping_set_list
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

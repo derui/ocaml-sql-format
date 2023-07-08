@@ -465,8 +465,7 @@ and 'a grouping_element_list =
 
 and 'a grouping_element = Grouping_element of 'a (* TODO *)
 
-and 'a rollup_list =
-  | Rollup_list of 'a ordinary_grouping_set_list * 'a (* TODO *)
+and 'a rollup_list = Rollup_list of 'a ordinary_grouping_set_list * 'a
 
 and 'a ordinary_grouping_set_list =
   | Ordinary_grouping_set_list of

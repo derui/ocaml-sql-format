@@ -455,6 +455,10 @@ ordinary_grouping_set_list:
 | fe = ordinary_grouping_set l = list(pair(Tok_comma, ordinary_grouping_set)) {Ordinary_grouping_set_list (fe, List.map snd l, ())}
 ;;
 
+rollup_list:
+| Kw_rollup l = delimited(Tok_lparen, ordinary_grouping_set_list, Tok_rparen) { Rollup_list (l, ()) }
+;;
+
 empty_grouping_set:
 | Tok_lparen Tok_rparen { Empty_grouping_set () }
 ;;
