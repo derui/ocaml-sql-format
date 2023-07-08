@@ -298,6 +298,10 @@ entry:
    | i = identifier { i }
 ;;
 
+identifier_chain:
+| i = identifier l = list(identifier) {Identifier_chain (i, l, ())}
+;;
+
 local_or_schema_qualifier:
 | Kw_module { `module' }
 | s = schema_name { `schema s }

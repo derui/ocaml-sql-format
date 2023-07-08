@@ -204,6 +204,14 @@ and collate_clause () =
       let generate = collate_name
     end) : S))
 
+and identifier_chain () =
+  Identifier_chain.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
 and derived_column_list () =
   Derived_column_list.(
     (module Make (struct
