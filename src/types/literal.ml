@@ -1,9 +1,7 @@
 open Basic
 
 (** literals *)
-type 'a identifier =
-  | Identifier of
-      [ `literal of string | `non_reserved of 'a non_reserved_identifier ] * 'a
+type 'a identifier = Identifier of string * 'a
 
 and 'a non_reserved_identifier =
   | Non_reserved_identifier of

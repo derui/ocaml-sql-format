@@ -1679,15 +1679,19 @@ let exact_numeric_literal =
 let approximate_numeric_literal =
   [%sedlex.regexp? exact_numeric_literal, Chars "eE", unsigned_integer]
 
-let id_part =
-  [%sedlex.regexp? ('@' | '#' | letter), Star (letter | '_' | digit)]
+let identifier_start = [%sedlex.regexp? lu | ll | lt | lm | lo | nl]
 
-let quoted_id =
-  [%sedlex.regexp? id_part | '"', Star ("\"\"" | Sub (any, '"')), '"']
+let identifier_extend = [%sedlex.regexp? mn | mc | nd | pc | cf]
 
-let identifier = [%sedlex.regexp? quoted_id, Star ('.', quoted_id)]
+let identifier_part = [%sedlex.regexp? identifier_start | identifier_extend]
 
-let all_in_group = [%sedlex.regexp? identifier, '.', '*']
+let regular_identifier =
+  [%sedlex.regexp? identifier_start, Star identifier_part]
+
+let delimited_identifier =
+  [%sedlex.regexp? '"', Star ("\"\"" | Sub (any, '"')), '"']
+
+let identifier = [%sedlex.regexp? regular_identifier | delimited_identifier]
 
 let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
 
@@ -1959,7 +1963,6 @@ let rec token buf =
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
   | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
   | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
-  | all_in_group -> Tok_all_in_group (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | unsigned_integer -> Tok_unsigned_integer (Sedlexing.Utf8.lexeme buf)
   | exact_numeric_literal ->

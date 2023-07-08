@@ -4,13 +4,10 @@ open Intf
 
 module type S = PRINTER with type t = ext identifier
 
-module Make (Non : GEN with type t = ext non_reserved_identifier) : S = struct
+module Make () : S = struct
   type t = ext identifier
 
-  let print f t ~option =
+  let print f t ~option:_ =
     match t with
-    | Identifier (`literal i, _) -> Fmt.string f i
-    | Identifier (`non_reserved v, _) ->
-      let module Non = (val Non.generate ()) in
-      Non.print f v ~option
+    | Identifier (i, _) -> Fmt.string f i
 end
