@@ -220,8 +220,6 @@ and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
-and 'a window_clause = Window_clause of 'a (* TODO *)
-
 and 'a boolean_value_expression = Boolean_value_expression of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
@@ -234,3 +232,11 @@ and 'a collection_value_expression =
 and 'a collate_clause = Collate_clause of 'a collate_name * 'a
 
 and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
+
+and 'a window_clause = Window_clause of 'a (* TODO *)
+
+and 'a window_definition_list = Window_definition_list of 'a (* TODO *)
+
+and 'a window_definition = Window_definition of 'a (* TODO *)
+
+and 'a new_window_name = New_window_name of 'a identifier * 'a

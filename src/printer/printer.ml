@@ -315,3 +315,11 @@ and group_by_clause () =
 
       let generate = grouping_element_list
     end) : S))
+
+and window_clause () = Window_clause.((module Make () : S))
+
+and window_definition_list () = Window_definition_list.((module Make () : S))
+
+and window_definition () = Window_definition.((module Make () : S))
+
+and new_window_name () = New_window_name.((module Make () : S))

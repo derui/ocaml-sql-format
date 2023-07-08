@@ -640,6 +640,12 @@ having_clause:
 ;;
 (** End   7.10 having clause *)
 
+(** Start 7.11 Window clause *)
+new_window_name:
+| i = identifier { New_window_name (i, ()) }
+;;
+(** End   7.11 Window clause *)
+
 
 (** Start 7.12 Query specification *)
 query_specification:
