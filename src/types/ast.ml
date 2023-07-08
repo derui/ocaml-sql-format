@@ -276,7 +276,9 @@ and 'a window_frame_start =
 and 'a window_frame_preceding =
   | Window_frame_preceding of 'a unsigned_value_specification * 'a
 
-and 'a window_frame_between = Window_frame_between of 'a (* TODO *)
+and 'a window_frame_between =
+  | Window_frame_between of
+      'a window_frame_bound_1 * 'a window_frame_bound_2 * 'a
 
 and 'a window_frame_bound_1 =
   | Window_frame_bound_1 of 'a window_frame_bound * 'a

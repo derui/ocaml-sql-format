@@ -694,6 +694,10 @@ window_frame_preceding:
   | v = unsigned_value_specification Kw_preceding {Window_frame_preceding (v, _)}
 ;;
 
+window_frame_between:
+  | Kw_between b1 = window_frame_bound_1 Kw_and b2= window_frame_bound_2 {Window_frame_between (b1, b2, _)}
+;;
+
 window_frame_start:
   | Kw_unbounded Kw_preceding {Window_frame_start (`unbounded, _)}
   | v = window_frame_preceding {Window_frame_start (`preceding v, _)}

@@ -397,7 +397,19 @@ and window_frame_preceding () =
       let generate = unsigned_value_specification
     end) : S))
 
-and window_frame_between () = Window_frame_between.((module Make () : S))
+and window_frame_between () =
+  Window_frame_between.(
+    (module Make
+              (struct
+                type t = A.ext A.window_frame_bound_1
+
+                let generate = window_frame_bound_1
+              end)
+              (struct
+                type t = A.ext A.window_frame_bound_2
+
+                let generate = window_frame_bound_2
+              end) : S))
 
 and window_frame_bound_1 () =
   Window_frame_bound_1.(
