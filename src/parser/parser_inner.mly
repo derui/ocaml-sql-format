@@ -440,6 +440,14 @@ where_clause:
 (** End   7.8 where clause *)
 
 (** Start 7.9 Group by clause *)
+grouping_element:
+| v = ordinary_grouping_set { Grouping_element (`ordinary v, ()) }
+| v = rollup_list { Grouping_element (`rollup v, ()) }
+| v = cube_list { Grouping_element (`cube v, ()) }
+| v = grouping_sets_specification { Grouping_element (`spec v, ()) }
+| v = empty_grouping_set { Grouping_element (`empty v, ()) }
+;;
+
 grouping_column_reference:
 | c = column_reference collate = option(collate_clause) {Grouping_column_reference (c, collate, ())}
 ;;

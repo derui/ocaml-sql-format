@@ -463,7 +463,15 @@ and 'a grouping_element_list =
   | Grouping_element_list of
       'a grouping_element * 'a grouping_element list * 'a (* TODO *)
 
-and 'a grouping_element = Grouping_element of 'a (* TODO *)
+and 'a grouping_element =
+  | Grouping_element of
+      [ `ordinary of 'a ordinary_grouping_set
+      | `rollup of 'a rollup_list
+      | `cube of 'a cube_list
+      | `spec of 'a grouping_sets_specification
+      | `empty of 'a empty_grouping_set
+      ]
+      * 'a
 
 and 'a rollup_list = Rollup_list of 'a ordinary_grouping_set_list * 'a
 
