@@ -321,3 +321,23 @@ and 'a unsigned_value_specification =
   | Unsigned_value_specification of 'a (* TODO *)
 
 and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)
+
+and 'a cross_join = Cross_join of 'a (* TODO *)
+
+and 'a qualified_join = Qualified_join of 'a (* TODO *)
+
+and 'a natural_join = Natural_join of 'a (* TODO *)
+
+and 'a union_join = Union_join of 'a (* TODO *)
+
+and 'a join_specification = Join_specification of 'a (* TODO *)
+
+and 'a join_condition = Join_condition of 'a (* TODO *)
+
+and 'a named_columns_join = Named_columns_join of 'a (* TODO *)
+
+and 'a join_type = Join_type of 'a (* TODO *)
+
+and 'a outer_join_type = Outer_join_type of 'a (* TODO *)
+
+and 'a join_column_list = Join_column_list of 'a (* TODO *)

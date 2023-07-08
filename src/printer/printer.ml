@@ -745,3 +745,25 @@ and table_function_derived_table () =
     end) : S))
 
 and value_expression () = Value_expression.((module Make () : S))
+
+and joined_table () = Joined_table.((module Make () : S))
+
+and cross_join () = Cross_join.((module Make () : S))
+
+and qualified_join () = Qualified_join.((module Make () : S))
+
+and natural_join () = Natural_join.((module Make () : S))
+
+and union_join () = Union_join.((module Make () : S))
+
+and join_specification () = Join_specification.((module Make () : S))
+
+and join_condition () = Join_condition.((module Make () : S))
+
+and named_columns_join () = Named_columns_join.((module Make () : S))
+
+and join_type () = Join_type.((module Make () : S))
+
+and outer_join_type () = Outer_join_type.((module Make () : S))
+
+and join_column_list () = Join_column_list.((module Make () : S))
