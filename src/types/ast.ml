@@ -488,6 +488,19 @@ and 'a grouping_column_reference_list =
   | Grouping_column_reference_list of
       'a grouping_column_reference * 'a grouping_column_reference list * 'a
 
+and 'a grouping_set =
+  | Grouping_set of
+      [ `ordinary of 'a ordinary_grouping_set
+      | `rollup of 'a rollup_list
+      | `cube of 'a cube_list
+      | `spec of 'a grouping_sets_specification
+      | `empty of 'a empty_grouping_set
+      ]
+      * 'a
+
+and 'a grouping_sets_specification =
+  | Grouping_sets_specification of 'a (* TODO *)
+
 and 'a empty_grouping_set = Empty_grouping_set of 'a
 
 and 'a column_reference =

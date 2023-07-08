@@ -464,6 +464,14 @@ cube_list:
 | Kw_cube l = delimited(Tok_lparen, ordinary_grouping_set_list, Tok_rparen) { Cube_list (l, ()) }
 ;;
 
+grouping_set:
+| v = ordinary_grouping_set { Grouping_set (`ordinary v, ()) }
+| v = rollup_list { Grouping_set (`rollup v, ()) }
+| v = cube_list { Grouping_set (`cube v, ()) }
+| v = grouping_sets_specification { Grouping_set (`spec v, ()) }
+| v = empty_grouping_set { Grouping_set (`empty v, ()) }
+;;
+
 empty_grouping_set:
 | Tok_lparen Tok_rparen { Empty_grouping_set () }
 ;;
