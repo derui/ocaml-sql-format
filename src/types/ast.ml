@@ -116,10 +116,7 @@ and 'a into_clause = Into_clause of 'a identifier * 'a
 
 and 'a expression = Expression of 'a condition * 'a
 
-and 'a condition = Condition of 'a boolean_value_expression * 'a
-
-and 'a boolean_value_expression =
-  | Boolean_value_expression of 'a boolean_term * 'a boolean_term list * 'a
+and 'a condition = Condition of 'a
 
 and 'a boolean_term =
   | Boolean_term of 'a boolean_factor * 'a boolean_factor list * 'a
@@ -526,11 +523,13 @@ and 'a query_name = Query_name of 'a identifier * 'a
 
 and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
 
-and 'a search_condition = Search_condition of 'a (* TODO *)
+and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
+
+and 'a boolean_value_expression = Boolean_value_expression of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
 

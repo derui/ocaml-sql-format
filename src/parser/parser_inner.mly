@@ -467,6 +467,13 @@ all_fields_column_name_list:
 
 (** End   7.12 Query specification *)
 
+(** Start 8.19 Search condition *)
+search_condition:
+| e = boolean_value_expression {Search_condition (e, ())}
+;;
+(** End   8.19 Search condition *)
+
+
 directly_executable_statement:
                  | query_expression { Directly_executable_statement ($1, ()) }
 ;;
