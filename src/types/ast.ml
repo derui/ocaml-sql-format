@@ -501,6 +501,9 @@ and 'a grouping_set =
 and 'a grouping_sets_specification =
   | Grouping_sets_specification of 'a (* TODO *)
 
+and 'a grouping_set_list =
+  | Grouping_set_list of 'a grouping_set * 'a grouping_set list * 'a
+
 and 'a empty_grouping_set = Empty_grouping_set of 'a
 
 and 'a column_reference =

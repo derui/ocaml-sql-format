@@ -472,6 +472,10 @@ grouping_set:
 | v = empty_grouping_set { Grouping_set (`empty v, ()) }
 ;;
 
+grouping_set_list:
+| fe = grouping_set l = list(pair(Tok_comma, grouping_set)) {Grouping_set_list (fe, List.map snd l, ())}
+;;
+
 empty_grouping_set:
 | Tok_lparen Tok_rparen { Empty_grouping_set () }
 ;;
