@@ -456,8 +456,7 @@ and 'a table_reference_list =
 
 (* START group by clause *)
 and 'a group_by_clause =
-  | Group_by_clause of
-      qualifier option * 'a grouping_element_list * 'a (* TODO *)
+  | Group_by_clause of qualifier option * 'a grouping_element_list * 'a
 
 and 'a grouping_element_list =
   | Grouping_element_list of 'a grouping_element * 'a grouping_element list * 'a

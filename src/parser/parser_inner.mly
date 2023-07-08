@@ -440,6 +440,12 @@ where_clause:
 (** End   7.8 where clause *)
 
 (** Start 7.9 Group by clause *)
+group_by_clause:
+| Kw_group Kw_by l = grouping_element_list {Group_by_clause (None, l, ())}
+| Kw_group Kw_by Kw_all l = grouping_element_list {Group_by_clause (Some `All, l, ())}
+| Kw_group Kw_distinct l = grouping_element_list {Group_by_clause (Some `Distinct, l, ())}
+;;
+
 grouping_element:
 | v = ordinary_grouping_set { Grouping_element (`ordinary v, ()) }
 | v = rollup_list { Grouping_element (`rollup v, ()) }
