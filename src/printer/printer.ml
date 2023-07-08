@@ -368,6 +368,14 @@ and grouping_element () =
                 let generate = empty_grouping_set
               end) : S))
 
+and grouping_element_list () =
+  Grouping_element_list.(
+    (module Make (struct
+      type t = A.ext A.grouping_element
+
+      let generate = grouping_element
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

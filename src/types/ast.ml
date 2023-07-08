@@ -460,8 +460,7 @@ and 'a group_by_clause =
       qualifier option * 'a grouping_element_list * 'a (* TODO *)
 
 and 'a grouping_element_list =
-  | Grouping_element_list of
-      'a grouping_element * 'a grouping_element list * 'a (* TODO *)
+  | Grouping_element_list of 'a grouping_element * 'a grouping_element list * 'a
 
 and 'a grouping_element =
   | Grouping_element of

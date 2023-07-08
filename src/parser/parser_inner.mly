@@ -447,6 +447,9 @@ grouping_element:
 | v = grouping_sets_specification { Grouping_element (`spec v, ()) }
 | v = empty_grouping_set { Grouping_element (`empty v, ()) }
 ;;
+grouping_element_list:
+| c = grouping_element l = list(pair(Tok_comma, grouping_element)) { Grouping_element_list (c, List.map snd l, ()) }
+;;
 
 grouping_column_reference:
 | c = column_reference collate = option(collate_clause) {Grouping_column_reference (c, collate, ())}
