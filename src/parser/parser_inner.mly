@@ -285,7 +285,7 @@ open Types.Ast
 
 %token Tok_eof
 
-%start <Types.Ast.entry list> entries
+%start <Types.Entry.t list> entries
 %%
 
 entries:
@@ -293,8 +293,134 @@ entries:
 ;;
 
 entry:
-                 | directly_executable_statement { $1 }
+                 | query_specification { $1 }
 ;;
+
+(** Start 5.3 literal *)
+literal:
+  | l = signed_numeric_literal { Literal (`numeric l, ()) }
+  | l = general_literal { Literal (`general l, ()) }
+;;
+
+unsigned_literal:
+  | l = unsigned_numeric_literal { Unsigned_literal (`numeric l, ()) }
+  | l = general_literal { Unsigned_literal (`general l, ()) }
+;;
+
+general_literal:
+  | l = character_string_literal { General_literal (`character l, ()) }
+  | l = national_character_string_literal { General_literal (`national l, ()) }
+  | l = unicode_character_string_literal { General_literal (`string l, ()) }
+  | l = binary_string_literal { General_literal (`binary l, ()) }
+  | l = datetime_literal { General_literal (`datetime l, ()) }
+  | l = interval_literal { General_literal (`interval l, ()) }
+  | l = boolean_literal { General_literal (`boolean l, ()) }
+;;
+
+character_string_literal:
+| s = Tok_string { Character_string_Literal (s, ()) }
+;;
+
+national_character_string_literal:
+| s = Tok_national_string { National_character_string_Literal (s, ()) }
+;;
+
+unicode_character_string_literal:
+| s = Tok_unicode_string { Unicode_character_string_Literal (s, ()) }
+;;
+
+binary_string_literal:
+| s = Tok_bin_string { Binary_string_Literal (s, ()) }
+;;
+
+signed_numeric_literal:
+  | Op_plus l = unsigned_numeric_literal { Signed_numeric_literal (Some `plus l, ()) }
+  | Op_minus l = unsigned_numeric_literal { Signed_numeric_literal (Some `minus l, ()) }
+  | unsigned_numeric_literal { Signed_numeric_literal (None, l, ()) }
+;;
+
+
+unsigned_numeric_literal:
+  | l = Tok_exact_numeric_literal { Unsigned_numeric_literal (l, ()) }
+  | l = Tok_approximate_numeric_literal { Unsigned_numeric_literal (l, ()) }
+;;
+
+unsigned_integer:
+| Tok_unsigned_integer { Unsigned_integer ($1, ()) }
+;;
+
+signed_integer:
+| Op_plus u = unsigned_integer { Signed_integer (Some `plus , u, ()) }
+| Op_minus u = unsigned_integer { Signed_integer (Some `minus , u, ()) }
+| u = unsigned_integer { Signed_integer (None , u, ()) }
+;;
+datetime_literal:
+  | date_literal { Datetime_literal (`date l, ())}
+  | time_literal { Datetime_literal (`time l, ())}
+  | timestamp_literal { Datetime_literal (`timestamp l, ())}
+;;
+
+date_literal:
+  | Kw_date; s = Tok_string { Date_literal (s, ()) }
+;;
+time_literal:
+  | Kw_time s = Tok_string {Time_literal (s, ())}
+;;
+timestamp_literal:
+  | Kw_timestamp s = Tok_string { Timestamp_literal (s, ()) }
+;;
+
+interval_literal:
+  | Kw_interval sign = option(plus_or_minus) s = interval_string q = interval_qualifier { Interval_literal (sign, s, q, ())}
+;;
+
+interval_string:
+| Tok_quote s = Tok_string Tok_quote { s }
+;;
+
+interval_qualifier:
+| f = single_datetime_field { f }
+| f = start_field Kw_to e = end_field { Interval_qualifier (`start_end (f, e), ()) }
+;;
+
+start_field:
+  | f = non_second_primary_datetime_field { (f, None) }
+  | f = non_second_primary_datetime_field Tok_lparen prec = unsigned_integer Tok_rparen { (f, Some prec) }
+;;
+
+end_field:
+  | f = non_second_primary_datetime_field { `primary f }
+  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { `second (Some prec) }
+;;
+
+single_datetime_field:
+  | f = non_second_primary_datetime_field { Interval_qualifier (`single (`primary (f, None)), ()) }
+  | f = non_second_primary_datetime_field Tok_lparen prec = unsigned_integer;
+    Tok_rparen {
+        Interval_qualifier (`single (`primary (f, Some prec)), ())
+      }
+  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { Interval_qualifier (`single (`second (Some prec, None)), ()) }
+  | Kw_second Tok_lparen prec = unsigned_integer Tok_comma seconds_prec = unsigned_integer Tok_rparen
+                                                                            {
+                                                                              Interval_qualifier (`single (`second (Some prec, Some seconds_prec)), ())
+                                                                            }
+;;
+
+non_second_primary_datetime_field:
+  | Kw_year { `year }
+  | Kw_month { `month }
+  | Kw_day { `day }
+  | Kw_hour { `hour }
+  | Kw_minute { `minute }
+;;
+
+boolean_literal:
+  | Kw_true {Boolean_literal (`true', ())}
+  | Kw_false {Boolean_literal (`false', ())}
+  | Kw_unknown {Boolean_literal (`unknown, ())}
+;;
+
+(** End   5.3 literal *)
 
 (** Start names and identifiers *)
 identifier:
@@ -695,129 +821,3 @@ basic_non_reserved:
   | Kw_quarter  {Basic_non_reserved (`quarter, ())}
   | Kw_policy {Basic_non_reserved (`policy, ())}
 ;;
-
-(** Start 5.3 literal *)
-literal:
-  | l = signed_numeric_literal { Literal (`numeric l, ()) }
-  | l = general_literal { Literal (`general l, ()) }
-;;
-
-unsigned_literal:
-  | l = unsigned_numeric_literal { Unsigned_literal (`numeric l, ()) }
-  | l = general_literal { Unsigned_literal (`general l, ()) }
-;;
-
-general_literal:
-  | l = character_string_literal { General_literal (`character l, ()) }
-  | l = national_character_string_literal { General_literal (`national l, ()) }
-  | l = unicode_character_string_literal { General_literal (`string l, ()) }
-  | l = binary_string_literal { General_literal (`binary l, ()) }
-  | l = datetime_literal { General_literal (`datetime l, ()) }
-  | l = interval_literal { General_literal (`interval l, ()) }
-  | l = boolean_literal { General_literal (`boolean l, ()) }
-;;
-
-character_string_literal:
-| s = Tok_string { Character_string_Literal (s, ()) }
-;;
-
-national_character_string_literal:
-| s = Tok_national_string { National_character_string_Literal (s, ()) }
-;;
-
-unicode_character_string_literal:
-| s = Tok_unicode_string { Unicode_character_string_Literal (s, ()) }
-;;
-
-binary_string_literal:
-| s = Tok_bin_string { Binary_string_Literal (s, ()) }
-;;
-
-signed_numeric_literal:
-  | Op_plus l = unsigned_numeric_literal { Signed_numeric_literal (Some `plus l, ()) }
-  | Op_minus l = unsigned_numeric_literal { Signed_numeric_literal (Some `minus l, ()) }
-  | unsigned_numeric_literal { Signed_numeric_literal (None, l, ()) }
-;;
-
-
-unsigned_numeric_literal:
-  | l = Tok_exact_numeric_literal { Unsigned_numeric_literal (l, ()) }
-  | l = Tok_approximate_numeric_literal { Unsigned_numeric_literal (l, ()) }
-;;
-
-unsigned_integer:
-| Tok_unsigned_integer { Unsigned_integer ($1, ()) }
-;;
-
-signed_integer:
-| Op_plus u = unsigned_integer { Signed_integer (Some `plus , u, ()) }
-| Op_minus u = unsigned_integer { Signed_integer (Some `minus , u, ()) }
-| u = unsigned_integer { Signed_integer (None , u, ()) }
-;;
-datetime_literal:
-  | date_literal { Datetime_literal (`date l, ())}
-  | time_literal { Datetime_literal (`time l, ())}
-  | timestamp_literal { Datetime_literal (`timestamp l, ())}
-;;
-
-date_literal:
-  | Kw_date; s = Tok_string { Date_literal (s, ()) }
-;;
-time_literal:
-  | Kw_time s = Tok_string {Time_literal (s, ())}
-;;
-timestamp_literal:
-  | Kw_timestamp s = Tok_string { Timestamp_literal (s, ()) }
-;;
-
-interval_literal:
-  | Kw_interval sign = option(plus_or_minus) s = interval_string q = interval_qualifier { Interval_literal (sign, s, q, ())}
-;;
-
-interval_string:
-| Tok_quote s = Tok_string Tok_quote { s }
-;;
-
-interval_qualifier:
-| f = single_datetime_field { f }
-| f = start_field Kw_to e = end_field { Interval_qualifier (`start_end (f, e), ()) }
-;;
-
-start_field:
-  | f = non_second_primary_datetime_field { (f, None) }
-  | f = non_second_primary_datetime_field Tok_lparen prec = unsigned_integer Tok_rparen { (f, Some prec) }
-;;
-
-end_field:
-  | f = non_second_primary_datetime_field { `primary f }
-  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { `second (Some prec) }
-;;
-
-single_datetime_field:
-  | f = non_second_primary_datetime_field { Interval_qualifier (`single (`primary (f, None)), ()) }
-  | f = non_second_primary_datetime_field Tok_lparen prec = unsigned_integer;
-    Tok_rparen {
-        Interval_qualifier (`single (`primary (f, Some prec)), ())
-      }
-  | Kw_second Tok_lparen prec = unsigned_integer Tok_rparen { Interval_qualifier (`single (`second (Some prec, None)), ()) }
-  | Kw_second Tok_lparen prec = unsigned_integer Tok_comma seconds_prec = unsigned_integer Tok_rparen
-                                                                            {
-                                                                              Interval_qualifier (`single (`second (Some prec, Some seconds_prec)), ())
-                                                                            }
-;;
-
-non_second_primary_datetime_field:
-  | Kw_year { `year }
-  | Kw_month { `month }
-  | Kw_day { `day }
-  | Kw_hour { `hour }
-  | Kw_minute { `minute }
-;;
-
-boolean_literal:
-  | Kw_true {Boolean_literal (`true', ())}
-  | Kw_false {Boolean_literal (`false', ())}
-  | Kw_unknown {Boolean_literal (`unknown, ())}
-;;
-
-(** End   5.3 literal *)

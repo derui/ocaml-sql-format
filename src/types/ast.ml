@@ -1,7 +1,9 @@
 open Basic
 open Literal
 
-(** START query specification *)
+type ext = Ext.ext
+
+(* START query specification *)
 type 'a query_specification =
   | Query_specification of
       qualifier option * 'a select_list * 'a table_expression * 'a
@@ -232,7 +234,3 @@ and 'a collection_value_expression =
 and 'a collate_clause = Collate_clause of 'a collate_name * 'a
 
 and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
-
-type ext = Ext.ext
-
-type entry = ext query_specification
