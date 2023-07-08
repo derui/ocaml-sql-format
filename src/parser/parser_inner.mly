@@ -644,6 +644,9 @@ having_clause:
 new_window_name:
 | i = identifier { New_window_name (i, ()) }
 ;;
+existing_window_name:
+| i = identifier { Existing_window_name (i, ()) }
+;;
 (** End   7.11 Window clause *)
 
 

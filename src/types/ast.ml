@@ -240,3 +240,42 @@ and 'a window_definition_list = Window_definition_list of 'a (* TODO *)
 and 'a window_definition = Window_definition of 'a (* TODO *)
 
 and 'a new_window_name = New_window_name of 'a identifier * 'a
+
+and 'a window_specification = Window_specification of 'a (* TODO *)
+
+and 'a window_specification_detail =
+  | Window_specification_detail of 'a (* TODO *)
+
+and 'a existing_window_name = Existing_window_name of 'a identifier * 'a
+
+and 'a window_partition_clause = Window_partition_clause of 'a (* TODO *)
+
+and 'a window_partition_column_reference_list =
+  | Window_partition_column_reference_list of 'a (* TODO *)
+
+and 'a window_partition_column_reference =
+  | Window_partition_column_reference of 'a (* TODO *)
+
+and 'a window_order_clause = Window_order_clause of 'a (* TODO *)
+
+and 'a window_frame_clause = Window_frame_clause of 'a (* TODO *)
+
+and 'a window_frame_units = Window_frame_units of 'a (* TODO *)
+
+and 'a window_frame_extent = Window_frame_extent of 'a (* TODO *)
+
+and 'a window_frame_start = Window_frame_start of 'a (* TODO *)
+
+and 'a window_frame_preceding = Window_frame_preceding of 'a (* TODO *)
+
+and 'a window_frame_between = Window_frame_between of 'a (* TODO *)
+
+and 'a window_frame_bound_1 = Window_frame_bound_1 of 'a (* TODO *)
+
+and 'a window_frame_bound_2 = Window_frame_bound_2 of 'a (* TODO *)
+
+and 'a window_frame_bound = Window_frame_bound of 'a (* TODO *)
+
+and 'a window_frame_following = Window_frame_following of 'a (* TODO *)
+
+and 'a window_frame_exclusion = Window_frame_exclusion of 'a (* TODO *)

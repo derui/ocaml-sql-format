@@ -322,4 +322,55 @@ and window_definition_list () = Window_definition_list.((module Make () : S))
 
 and window_definition () = Window_definition.((module Make () : S))
 
-and new_window_name () = New_window_name.((module Make () : S))
+and new_window_name () =
+  New_window_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and window_specification () = Window_specification.((module Make () : S))
+
+and window_specification_detail () =
+  Window_specification_detail.((module Make () : S))
+
+and existing_window_name () =
+  Existing_window_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and window_partition_clause () = Window_partition_clause.((module Make () : S))
+
+and window_partition_column_reference_list () =
+  Window_partition_column_reference_list.((module Make () : S))
+
+and window_partition_column_reference () =
+  Window_partition_column_reference.((module Make () : S))
+
+and window_order_clause () = Window_order_clause.((module Make () : S))
+
+and window_frame_clause () = Window_frame_clause.((module Make () : S))
+
+and window_frame_units () = Window_frame_units.((module Make () : S))
+
+and window_frame_extent () = Window_frame_extent.((module Make () : S))
+
+and window_frame_start () = Window_frame_start.((module Make () : S))
+
+and window_frame_preceding () = Window_frame_preceding.((module Make () : S))
+
+and window_frame_between () = Window_frame_between.((module Make () : S))
+
+and window_frame_bound_1 () = Window_frame_bound_1.((module Make () : S))
+
+and window_frame_bound_2 () = Window_frame_bound_2.((module Make () : S))
+
+and window_frame_bound () = Window_frame_bound.((module Make () : S))
+
+and window_frame_following () = Window_frame_following.((module Make () : S))
+
+and window_frame_exclusion () = Window_frame_exclusion.((module Make () : S))
