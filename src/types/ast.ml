@@ -464,7 +464,28 @@ and 'a table_reference =
       * 'a sample_clause option
       * 'a
 
-and 'a table_primary = Table_primary of 'a (* TODO *)
+and 'a table_primary =
+  | Table_primary of
+      [ `table_or_query of
+        'a table_or_query_name
+        * ('a identifier * 'a derived_column_list option) option
+      | `derived of
+        'a derived_table * 'a identifier * 'a derived_column_list option
+      | `lateral of
+        'a lateral_derived_table * 'a identifier * 'a derived_column_list option
+      | `collection of
+        'a collection_derived_table
+        * 'a identifier
+        * 'a derived_column_list option
+      | `table_function of
+        'a table_function_derived_table
+        * 'a identifier
+        * 'a derived_column_list option
+      | `only of
+        'a only_spec * ('a identifier * 'a derived_column_list option) option
+      | `joined of 'a joined_table
+      ]
+      * 'a
 
 and 'a joined_table = Joined_table of 'a (* TODO *)
 

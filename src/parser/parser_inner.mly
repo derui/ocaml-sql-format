@@ -356,6 +356,27 @@ repeatable_clause:
 | Kw_repeatable Tok_lparen e = numeric_value_expression Tok_rparen {Repeatable_clause (e, ())}
 ;;
 
+table_primary:
+| t = table_or_query_name { Table_primary (`table_or_query (t, None), ()) }
+| t = table_or_query_name n = pair(option(Kw_as), identifier) { Table_primary (`table_or_query (t, Some (snd n, None)), ()) }
+| t = table_or_query_name n = pair(option(Kw_as), identifier);
+  l = delimited(Tok_lparen, derived_column_list, Tok_rparen) { Table_primary (`table_or_query (t, Some (snd n, Some l)), ()) }
+| t = derived_table option(Kw_as) n = identifier;
+ l = option(delimited(Tok_lparen, derived_column_list, Tok_rparen)) { Table_primary (`derived (t, n, l), ()) }
+| t = lateral_derived_table option(Kw_as) n = identifier;
+ l = option(delimited(Tok_lparen, derived_column_list, Tok_rparen)) { Table_primary (`lateral (t, n, l), ()) }
+| t = collection_derived_table option(Kw_as) n = identifier;
+ l = option(delimited(Tok_lparen, derived_column_list, Tok_rparen)) { Table_primary (`collection (t, n, l), ()) }
+| t = table_function_derived_table option(Kw_as) n = identifier;
+ l = option(delimited(Tok_lparen, derived_column_list, Tok_rparen)) { Table_primary (`table_function (t, n, l), ()) }
+(* -- only spec  *)
+| t = only_spec { Table_primary (`only (t, None), ()) }
+| t = only_spec n = pair(option(Kw_as), identifier) { Table_primary (`only (t, Some (snd n, None)), ()) }
+| t = only_spec n = pair(option(Kw_as), identifier);
+  l = delimited(Tok_lparen, derived_column_list, Tok_rparen) { Table_primary (`only (t, Some (snd n, Some l)), ()) }
+| jt = delimited(Tok_lparen, joined_table, Tok_rparen) { Table_primary (`joined jt, ()) }
+;;
+
 only_spec:
 | Kw_only e = delimited(Tok_lparen, table_or_query_name, Tok_rparen) {Only_spec (e, ())}
 ;;
