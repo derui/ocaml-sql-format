@@ -375,7 +375,24 @@ and window_partition_column_reference () =
 
 and window_order_clause () = Window_order_clause.((module Make () : S))
 
-and window_frame_clause () = Window_frame_clause.((module Make () : S))
+and window_frame_clause () =
+  Window_frame_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.window_frame_units
+
+                let generate = window_frame_units
+              end)
+              (struct
+                type t = A.ext A.window_frame_extent
+
+                let generate = window_frame_extent
+              end)
+              (struct
+                type t = A.ext A.window_frame_exclusion
+
+                let generate = window_frame_exclusion
+              end) : S))
 
 and window_frame_units () = Window_frame_units.((module Make () : S))
 

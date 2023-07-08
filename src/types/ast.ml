@@ -263,7 +263,12 @@ and 'a window_partition_column_reference =
 
 and 'a window_order_clause = Window_order_clause of 'a (* TODO *)
 
-and 'a window_frame_clause = Window_frame_clause of 'a (* TODO *)
+and 'a window_frame_clause =
+  | Window_frame_clause of
+      'a window_frame_units
+      * 'a window_frame_extent
+      * 'a window_frame_exclusion option
+      * 'a
 
 and 'a window_frame_units = Window_frame_units of [ `rows | `range ] * 'a
 

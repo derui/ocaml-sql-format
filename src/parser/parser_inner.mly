@@ -715,6 +715,13 @@ window_frame_extent:
   | v = window_frame_between {Window_frame_extent (`between v, _)}
 ;;
 
+window_frame_clause:
+  | u = window_frame_unit;
+    extent = window_frame_extent;
+    exclusion = option(window_frame_exclusion)
+    {Window_frame_clause (u, extent, exclusion, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 
