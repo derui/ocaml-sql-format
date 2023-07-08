@@ -463,7 +463,22 @@ and 'a rollup_list =
 and 'a ordinary_grouping_set_list =
   | Ordinary_grouping_set_list of 'a (* TODO *)
 
+and 'a ordinary_grouping_set = Ordinary_grouping_set of 'a (* TODO *)
+
+and 'a grouping_column_reference =
+  | Grouping_column_reference of
+      'a column_reference * 'a collate_reference * 'a (* TODO *)
+
+and 'a grouping_column_reference_list =
+  | Grouping_column_reference_list of
+      'a grouping_column_reference list * 'a (* TODO *)
+
 and 'a empty_grouping_set = Empty_grouping_set of 'a (* TODO *)
+
+and 'a collate_reference =
+  | Collate_reference of 'a collate_name * 'a (* TODO *)
+
+and 'a column_reference = Column_reference of 'a (* TODO *)
 
 and 'a where_clause = Where_clause of 'a search_condition * 'a
 
@@ -532,6 +547,11 @@ and 'a table_name =
       [ `module' | `schema of 'a schema_name ] option * 'a identifier * 'a
 
 and 'a schema_name = Schema_name of 'a identifier option * 'a identifier * 'a
+
+and 'a schema_qualified_name =
+  | Schema_qualified_name of 'a schema_name option * 'a identifier * 'a
+
+and 'a collate_name = Collate_name of 'a schema_qualified_name * 'a
 
 and 'a query_name = Query_name of 'a identifier * 'a
 

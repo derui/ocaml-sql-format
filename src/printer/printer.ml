@@ -174,6 +174,20 @@ and table_or_query_name () =
                 let generate = query_name
               end) : S))
 
+and schema_qualified_name () =
+  Schema_qualified_name.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end) : S))
+
 and derived_column_list () =
   Derived_column_list.(
     (module Make (struct

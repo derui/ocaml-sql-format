@@ -317,6 +317,10 @@ query_name:
    | i = identifier { Query_name (i, ()) }
 ;;
 
+schema_qualified_name:
+| s = option(pair(schema_name, Tok_period)) i = identifier {Schema_qualified_name (Option.fst s, i, ())}
+;;
+
 (** End   names and identifiers *)
 
 
