@@ -447,6 +447,7 @@ and 'a from_clause = From_clause of 'a table_reference_list * 'a
 and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
 
+(* START group by clause *)
 and 'a group_by_clause =
   | Group_by_clause of
       qualifier option * 'a grouping_element_list * 'a (* TODO *)
@@ -473,7 +474,7 @@ and 'a grouping_column_reference_list =
   | Grouping_column_reference_list of
       'a grouping_column_reference * 'a grouping_column_reference list * 'a
 
-and 'a empty_grouping_set = Empty_grouping_set of 'a (* TODO *)
+and 'a empty_grouping_set = Empty_grouping_set of 'a
 
 and 'a column_reference =
   | Column_reference of
@@ -481,11 +482,17 @@ and 'a column_reference =
       | `module' of 'a identifier * 'a identifier
       ]
       * 'a
+(* END group by clause *)
 
+(* START where clause  *)
 and 'a where_clause = Where_clause of 'a search_condition * 'a
+(* END where clause  *)
 
+(* START having clause  *)
 and 'a having_clause = Having_clause of 'a search_condition * 'a
+(* END having clause  *)
 
+(* START table reference  *)
 and 'a table_reference =
   | Table_reference of
       [ `primary of 'a table_primary | `joined of 'a joined_table ]
@@ -561,6 +568,7 @@ and 'a collate_name = Collate_name of 'a schema_qualified_name * 'a
 and 'a query_name = Query_name of 'a identifier * 'a
 
 and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
+(* END table reference  *)
 
 and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
