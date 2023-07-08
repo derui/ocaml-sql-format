@@ -415,7 +415,19 @@ and window_frame_bound_2 () =
       let generate = window_frame_bound
     end) : S))
 
-and window_frame_bound () = Window_frame_bound.((module Make () : S))
+and window_frame_bound () =
+  Window_frame_bound.(
+    (module Make
+              (struct
+                type t = A.ext A.window_frame_start
+
+                let generate = window_frame_start
+              end)
+              (struct
+                type t = A.ext A.window_frame_following
+
+                let generate = window_frame_following
+              end) : S))
 
 and window_frame_following () =
   Window_frame_following.(

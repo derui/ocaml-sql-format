@@ -284,7 +284,13 @@ and 'a window_frame_bound_1 =
 and 'a window_frame_bound_2 =
   | Window_frame_bound_2 of 'a window_frame_bound * 'a
 
-and 'a window_frame_bound = Window_frame_bound of 'a (* TODO *)
+and 'a window_frame_bound =
+  | Window_frame_bound of
+      [ `start of 'a window_frame_start
+      | `unbounded
+      | `following of 'a window_frame_following
+      ]
+      * 'a
 
 and 'a window_frame_following =
   | Window_frame_following of 'a unsigned_value_specification * 'a

@@ -700,6 +700,12 @@ window_frame_start:
   | Kw_current Kw_row {Window_frame_start (`current, _)}
 ;;
 
+window_frame_bound:
+  | v = window_frame_start {Window_frame_bound (`start v, _)}
+  | Kw_unbounded Kw_following {Window_frame_bound (`unbounded, _)}
+  | v = window_frame_following {Window_frame_bound (`following v, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 
