@@ -282,6 +282,8 @@ open Types.Ast
 %token Kw_cube
 %token Kw_grouping
 %token Kw_sets
+%token Kw_ties
+%token Kw_others
 
 %token Tok_eof
 
@@ -667,6 +669,13 @@ window_partition_clause:
 window_frame_units:
 | Kw_rows { Window_frame_units (`rows, ()) }
 | Kw_range { Window_frame_units (`range, ()) }
+;;
+
+window_frame_exclusion:
+| Kw_exclude Kw_current Kw_row { Window_frame_exclusion (`current_row, ()) }
+| Kw_exclude Kw_group { Window_frame_exclusion (`group, ()) }
+| Kw_exclude Kw_ties { Window_frame_exclusion (`ties, ()) }
+| Kw_exclude Kw_no Kw_others { Window_frame_exclusion (`no_others, ()) }
 ;;
 (** End   7.11 Window clause *)
 

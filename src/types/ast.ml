@@ -283,4 +283,6 @@ and 'a window_frame_bound = Window_frame_bound of 'a (* TODO *)
 
 and 'a window_frame_following = Window_frame_following of 'a (* TODO *)
 
-and 'a window_frame_exclusion = Window_frame_exclusion of 'a (* TODO *)
+and 'a window_frame_exclusion =
+  | Window_frame_exclusion of
+      [ `current_row | `group | `ties | `no_others ] * 'a (* TODO *)

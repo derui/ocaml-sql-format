@@ -1661,6 +1661,22 @@ let kw_grouping =
 
 let kw_sets = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT", Chars "sS"]
 
+let kw_ties = [%sedlex.regexp? Chars "tT", Chars "iI", Chars "eE", Chars "sS"]
+
+let kw_others =
+  [%sedlex.regexp?
+    Chars "oO", Chars "tT", Chars "hH", Chars "eE", Chars "rR", Chars "sS"]
+
+let kw_exclude =
+  [%sedlex.regexp?
+    ( Chars "eE"
+    , Chars "xX"
+    , Chars "cC"
+    , Chars "lL"
+    , Chars "uU"
+    , Chars "dD"
+    , Chars "eE" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -1958,6 +1974,9 @@ let rec token buf =
   | kw_cube -> Kw_cube
   | kw_grouping -> Kw_grouping
   | kw_sets -> Kw_sets
+  | kw_ties -> Kw_ties
+  | kw_others -> Kw_others
+  | kw_exclude -> Kw_exclude
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

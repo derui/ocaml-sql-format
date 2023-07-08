@@ -254,6 +254,9 @@ include (
       | Kw_cube -> Fmt.string f @@ as_keyword "cube" keyword
       | Kw_grouping -> Fmt.string f @@ as_keyword "grouping" keyword
       | Kw_sets -> Fmt.string f @@ as_keyword "sets" keyword
+      | Kw_ties -> Fmt.string f @@ as_keyword "ties" keyword
+      | Kw_others -> Fmt.string f @@ as_keyword "others" keyword
+      | Kw_exclude -> Fmt.string f @@ as_keyword "exclude" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -9,5 +9,24 @@ module Make () : S = struct
 
   let print f t ~option =
     match t with
-    | Window_frame_exclusion _ -> failwith "TODO: need implementation"
+    | Window_frame_exclusion (`current_row, _) ->
+      Printer_token.print ~option f Kw_exclude;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_current;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_row
+    | Window_frame_exclusion (`group, _) ->
+      Printer_token.print ~option f Kw_exclude;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_group
+    | Window_frame_exclusion (`ties, _) ->
+      Printer_token.print ~option f Kw_exclude;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_ties
+    | Window_frame_exclusion (`no_others, _) ->
+      Printer_token.print ~option f Kw_exclude;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_no;
+      Fmt.string f " ";
+      Printer_token.print ~option f Kw_others
 end

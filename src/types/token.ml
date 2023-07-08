@@ -240,6 +240,9 @@ type token =
   | Kw_cube
   | Kw_grouping
   | Kw_sets
+  | Kw_ties
+  | Kw_others
+  | Kw_exclude
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
