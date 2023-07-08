@@ -241,7 +241,8 @@ and 'a window_definition = Window_definition of 'a (* TODO *)
 
 and 'a new_window_name = New_window_name of 'a identifier * 'a
 
-and 'a window_specification = Window_specification of 'a (* TODO *)
+and 'a window_specification =
+  | Window_specification of 'a window_specification_detail * 'a
 
 and 'a window_specification_detail =
   | Window_specification_detail of

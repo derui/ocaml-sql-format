@@ -716,10 +716,7 @@ window_frame_extent:
 ;;
 
 window_frame_clause:
-  | u = window_frame_unit;
-    extent = window_frame_extent;
-    exclusion = option(window_frame_exclusion)
-    {Window_frame_clause (u, extent, exclusion, _)}
+  | v = delimited(Tok_lparen ,window_specification_detail, Tok_rparen) {Window_specification (v, _)}
 
 window_specification_detail:
   | v = option(identifier);

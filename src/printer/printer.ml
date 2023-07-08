@@ -330,7 +330,13 @@ and new_window_name () =
       let generate = identifier
     end) : S))
 
-and window_specification () = Window_specification.((module Make () : S))
+and window_specification () =
+  Window_specification.(
+    (module Make (struct
+      type t = A.ext A.window_specification_detail
+
+      let generate = window_specification_detail
+    end) : S))
 
 and window_specification_detail () =
   Window_specification_detail.(
