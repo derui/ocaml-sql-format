@@ -4,7 +4,7 @@ open Intf
 
 module type S = PRINTER with type t = ext where_clause
 
-module Make (Cond : GEN with type t = ext condition) : S = struct
+module Make (Cond : GEN with type t = ext search_condition) : S = struct
   type t = ext where_clause
 
   let print f t ~option =

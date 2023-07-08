@@ -106,8 +106,6 @@ and 'a query_primary =
 
 and 'a query = Query of 'a
 
-and 'a where_clause = Where_clause of 'a condition * 'a
-
 and 'a group_by_clause =
   | Group_by_clause of
       [ `rollup of 'a expression list | `default of 'a expression list ] * 'a
@@ -458,6 +456,8 @@ and 'a from_clause = From_clause of 'a table_reference_list * 'a
 and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
 
+and 'a where_clause = Where_clause of 'a search_condition * 'a
+
 and 'a table_reference =
   | Table_reference of
       [ `primary of 'a table_primary | `joined of 'a joined_table ]
@@ -525,6 +525,8 @@ and 'a schema_name = Schema_name of 'a identifier option * 'a identifier * 'a
 and 'a query_name = Query_name of 'a identifier * 'a
 
 and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
+
+and 'a search_condition = Search_condition of 'a (* TODO *)
 
 and 'a table_subquery = Table_subquery of 'a (* TODO *)
 

@@ -320,7 +320,7 @@ query_name:
 (** End   names and identifiers *)
 
 
-(** Start table expression *)
+(** Start 7.4 table expression *)
 table_expression:
   | from = from_clause;
     where = option(where_clause);
@@ -328,9 +328,9 @@ table_expression:
     having = option(having_clause);
     window = option(window_clause) { Table_expression (from, where, group_by, having, window, ()) }
 ;;
-(** End   table expression *)
+(** End   7.4 table expression *)
 
-(** Start from clause *)
+(** Start 7.5 from clause *)
 from_clause:
 | Kw_from l = table_reference_list {From_clause (l, ())}
 ;;
@@ -338,7 +338,7 @@ from_clause:
 table_reference_list:
 | fl = table_reference rest = list(pair(Tok_comma, table_reference)) {Table_reference_list (fl, rest, ())}
 ;;
-(** End   from clause *)
+(** End   7.5 from clause *)
 
 (** Start 7.6 table reference *)
 
@@ -411,7 +411,17 @@ column_name_list:
 
 (** End   7.6 table reference *)
 
-(** Start Query specification *)
+(** Start 7.8 where clause *)
+where_clause:
+| Kw_where s = search_condition {Where_clause (s, ())}
+;;
+(** End   7.8 where clause *)
+
+(** Start 7.9 Group by clause *)
+(** End   7.9 Group by clause *)
+
+
+(** Start 7.12 Query specification *)
 query_specification:
   | Kw_select q = option(set_qualifier) l = select_list t = table_expression { Query_specification (q, l, t, ()) }
 ;;
@@ -455,7 +465,7 @@ all_fields_column_name_list:
 | l = column_name_list { All_fields_column_name_list (l, ()) }
 ;;
 
-(** End   Query specification *)
+(** End   7.12 Query specification *)
 
 directly_executable_statement:
                  | query_expression { Directly_executable_statement ($1, ()) }
