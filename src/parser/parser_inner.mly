@@ -437,6 +437,9 @@ where_clause:
 (** End   7.8 where clause *)
 
 (** Start 7.9 Group by clause *)
+grouping_column_reference:
+| c = column_reference collate = option(collate_clause) {Grouping_column_reference (c, collate, ())}
+;;
 
 empty_grouping_set:
 | Tok_lparen Tok_rparen { Empty_grouping_set () }

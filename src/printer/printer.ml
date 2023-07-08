@@ -234,6 +234,20 @@ and derived_column_list () =
       let generate = column_name_list
     end) : S))
 
+and grouping_column_reference () =
+  Grouping_column_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.column_reference
+
+                let generate = column_reference
+              end)
+              (struct
+                type t = A.ext A.collate_clause
+
+                let generate = collate_clause
+              end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

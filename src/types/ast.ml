@@ -467,7 +467,7 @@ and 'a ordinary_grouping_set = Ordinary_grouping_set of 'a (* TODO *)
 
 and 'a grouping_column_reference =
   | Grouping_column_reference of
-      'a column_reference * 'a collate_clause * 'a (* TODO *)
+      'a column_reference * 'a collate_clause option * 'a
 
 and 'a grouping_column_reference_list =
   | Grouping_column_reference_list of
