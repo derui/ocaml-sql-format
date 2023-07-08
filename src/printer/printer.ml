@@ -333,7 +333,28 @@ and new_window_name () =
 and window_specification () = Window_specification.((module Make () : S))
 
 and window_specification_detail () =
-  Window_specification_detail.((module Make () : S))
+  Window_specification_detail.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.window_partition_clause
+
+                let generate = window_partition_clause
+              end)
+              (struct
+                type t = A.ext A.window_order_clause
+
+                let generate = window_order_clause
+              end)
+              (struct
+                type t = A.ext A.window_frame_clause
+
+                let generate = window_frame_clause
+              end) : S))
 
 and existing_window_name () =
   Existing_window_name.(

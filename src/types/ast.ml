@@ -244,7 +244,12 @@ and 'a new_window_name = New_window_name of 'a identifier * 'a
 and 'a window_specification = Window_specification of 'a (* TODO *)
 
 and 'a window_specification_detail =
-  | Window_specification_detail of 'a (* TODO *)
+  | Window_specification_detail of
+      'a identifier option
+      * 'a window_partition_clause option
+      * 'a window_order_clause option
+      * 'a window_frame_clause option
+      * 'a
 
 and 'a existing_window_name = Existing_window_name of 'a identifier * 'a
 

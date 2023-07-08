@@ -720,6 +720,13 @@ window_frame_clause:
     extent = window_frame_extent;
     exclusion = option(window_frame_exclusion)
     {Window_frame_clause (u, extent, exclusion, _)}
+
+window_specification_detail:
+  | v = option(identifier);
+    partition = option(window_partition_clause);
+    order = option(window_order_clause);
+    frame = option(window_frame_clause);
+    { Window_specification_detail (v, partition, order, frame, _) }
 ;;
 
 window_order_clause:
