@@ -420,6 +420,12 @@ where_clause:
 (** Start 7.9 Group by clause *)
 (** End   7.9 Group by clause *)
 
+(** Start 7.10 having clause *)
+having_clause:
+| Kw_having e = search_condition {Having_clause (e, ())}
+;;
+(** End   7.10 having clause *)
+
 
 (** Start 7.12 Query specification *)
 query_specification:

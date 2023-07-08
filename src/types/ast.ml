@@ -110,8 +110,6 @@ and 'a group_by_clause =
   | Group_by_clause of
       [ `rollup of 'a expression list | `default of 'a expression list ] * 'a
 
-and 'a having_clause = Having_clause of 'a condition * 'a
-
 and 'a into_clause = Into_clause of 'a identifier * 'a
 
 and 'a expression = Expression of 'a condition * 'a
@@ -454,6 +452,8 @@ and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
 
 and 'a where_clause = Where_clause of 'a search_condition * 'a
+
+and 'a having_clause = Having_clause of 'a search_condition * 'a
 
 and 'a table_reference =
   | Table_reference of
