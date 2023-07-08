@@ -248,6 +248,14 @@ and grouping_column_reference () =
                 let generate = collate_clause
               end) : S))
 
+and grouping_column_reference_list () =
+  Grouping_column_reference_list.(
+    (module Make (struct
+      type t = A.ext A.grouping_column_reference
+
+      let generate = grouping_column_reference
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

@@ -471,7 +471,7 @@ and 'a grouping_column_reference =
 
 and 'a grouping_column_reference_list =
   | Grouping_column_reference_list of
-      'a grouping_column_reference list * 'a (* TODO *)
+      'a grouping_column_reference * 'a grouping_column_reference list * 'a
 
 and 'a empty_grouping_set = Empty_grouping_set of 'a (* TODO *)
 
