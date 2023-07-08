@@ -271,7 +271,8 @@ and 'a window_frame_extent = Window_frame_extent of 'a (* TODO *)
 
 and 'a window_frame_start = Window_frame_start of 'a (* TODO *)
 
-and 'a window_frame_preceding = Window_frame_preceding of 'a (* TODO *)
+and 'a window_frame_preceding =
+  | Window_frame_preceding of 'a unsigned_value_specification * 'a
 
 and 'a window_frame_between = Window_frame_between of 'a (* TODO *)
 

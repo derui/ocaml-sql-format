@@ -383,7 +383,13 @@ and window_frame_extent () = Window_frame_extent.((module Make () : S))
 
 and window_frame_start () = Window_frame_start.((module Make () : S))
 
-and window_frame_preceding () = Window_frame_preceding.((module Make () : S))
+and window_frame_preceding () =
+  Window_frame_preceding.(
+    (module Make (struct
+      type t = A.ext A.unsigned_value_specification
+
+      let generate = unsigned_value_specification
+    end) : S))
 
 and window_frame_between () = Window_frame_between.((module Make () : S))
 

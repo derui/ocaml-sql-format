@@ -689,6 +689,11 @@ window_frame_bound_1:
 window_frame_bound_2:
   | v = window_frame_bound {Window_frame_bound_2 (v, _)}
 ;;
+
+window_frame_preceding:
+  | v = unsigned_value_specification Kw_preceding {Window_frame_preceding (v, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 
