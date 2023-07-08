@@ -541,3 +541,207 @@ and unsigned_value_specification () =
   Unsigned_value_specification.((module Make () : S))
 
 and sort_specification_list () = Sort_specification_list.((module Make () : S))
+
+and table_expression () =
+  Table_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.from_clause
+
+                let generate = from_clause
+              end)
+              (struct
+                type t = A.ext A.where_clause
+
+                let generate = where_clause
+              end)
+              (struct
+                type t = A.ext A.group_by_clause
+
+                let generate = group_by_clause
+              end)
+              (struct
+                type t = A.ext A.having_clause
+
+                let generate = having_clause
+              end)
+              (struct
+                type t = A.ext A.window_clause
+
+                let generate = window_clause
+              end) : S))
+
+and having_clause () =
+  Having_clause.(
+    (module Make (struct
+      type t = A.ext A.search_condition
+
+      let generate = search_condition
+    end) : S))
+
+and where_clause () =
+  Where_clause.(
+    (module Make (struct
+      type t = A.ext A.search_condition
+
+      let generate = search_condition
+    end) : S))
+
+and from_clause () =
+  From_clause.(
+    (module Make (struct
+      type t = A.ext A.table_reference_list
+
+      let generate = table_reference_list
+    end) : S))
+
+and table_reference_list () =
+  Table_reference_list.(
+    (module Make (struct
+      type t = A.ext A.table_reference
+
+      let generate = table_reference
+    end) : S))
+
+and search_condition () =
+  Search_condition.(
+    (module Make (struct
+      type t = A.ext A.boolean_value_expression
+
+      let generate = boolean_value_expression
+    end) : S))
+
+and boolean_value_expression () =
+  Boolean_value_expression.((module Make () : S))
+
+and table_reference () =
+  Table_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.table_primary
+
+                let generate = table_primary
+              end)
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
+              end)
+              (struct
+                type t = A.ext A.sample_clause
+
+                let generate = sample_clause
+              end) : S))
+
+and sample_clause () =
+  Sample_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.numeric_value_expression
+
+                let generate = numeric_value_expression
+              end)
+              (struct
+                type t = A.ext A.repeatable_clause
+
+                let generate = repeatable_clause
+              end) : S))
+
+and repeatable_clause () =
+  Repeatable_clause.(
+    (module Make (struct
+      type t = A.ext A.numeric_value_expression
+
+      let generate = numeric_value_expression
+    end) : S))
+
+and table_primary () =
+  Table_primary.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.table_or_query_name
+
+                let generate = table_or_query_name
+              end)
+              (struct
+                type t = A.ext A.derived_table
+
+                let generate = derived_table
+              end)
+              (struct
+                type t = A.ext A.lateral_derived_table
+
+                let generate = lateral_derived_table
+              end)
+              (struct
+                type t = A.ext A.collection_derived_table
+
+                let generate = collection_derived_table
+              end)
+              (struct
+                type t = A.ext A.table_function_derived_table
+
+                let generate = table_function_derived_table
+              end)
+              (struct
+                type t = A.ext A.only_spec
+
+                let generate = only_spec
+              end)
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
+              end)
+              (struct
+                type t = A.ext A.derived_column_list
+
+                let generate = derived_column_list
+              end) : S))
+
+and derived_table () =
+  Derived_table.(
+    (module Make (struct
+      type t = A.ext A.table_subquery
+
+      let generate = table_subquery
+    end) : S))
+
+and only_spec () =
+  Only_spec.(
+    (module Make (struct
+      type t = A.ext A.table_or_query_name
+
+      let generate = table_or_query_name
+    end) : S))
+
+and lateral_derived_table () =
+  Lateral_derived_table.(
+    (module Make (struct
+      type t = A.ext A.table_subquery
+
+      let generate = table_subquery
+    end) : S))
+
+and collection_derived_table () =
+  Collection_derived_table.(
+    (module Make (struct
+      type t = A.ext A.collection_value_expression
+
+      let generate = collection_value_expression
+    end) : S))
+
+and table_function_derived_table () =
+  Table_function_derived_table.(
+    (module Make (struct
+      type t = A.ext A.collection_value_expression
+
+      let generate = collection_value_expression
+    end) : S))
+
+and value_expression () = Value_expression.((module Make () : S))

@@ -53,8 +53,6 @@ and 'a table_expression =
       * 'a having_clause option
       * 'a window_clause option
       * 'a
-
-(* TODO *)
 (* END table expression *)
 
 (* START from clause *)
