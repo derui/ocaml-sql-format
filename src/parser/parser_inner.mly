@@ -650,6 +650,12 @@ existing_window_name:
 window_partition_column_reference:
 | c = column_reference collate = option(collate_clause) { Window_partition_column_reference (c, collate, ()) }
 ;;
+window_partition_column_reference_list:
+| fe = window_partition_column_reference;
+  list = list(pair(Tok_comma, window_partition_column_reference)) {
+             Window_partition_column_reference_list (fe, List.map snd l, ())
+           }
+;;
 (** End   7.11 Window clause *)
 
 

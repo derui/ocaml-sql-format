@@ -346,7 +346,12 @@ and existing_window_name () =
 and window_partition_clause () = Window_partition_clause.((module Make () : S))
 
 and window_partition_column_reference_list () =
-  Window_partition_column_reference_list.((module Make () : S))
+  Window_partition_column_reference_list.(
+    (module Make (struct
+      type t = A.ext A.window_partition_column_reference
+
+      let generate = window_partition_column_reference
+    end) : S))
 
 and window_partition_column_reference () =
   Window_partition_column_reference.(

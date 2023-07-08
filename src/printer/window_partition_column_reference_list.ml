@@ -1,14 +1,21 @@
 open Types.Ast
-open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext window_partition_column_reference_list
 
-module Make () : S = struct
+module Make (C : GEN with type t = ext window_partition_column_reference) : S =
+struct
   type t = ext window_partition_column_reference_list
 
   let print f t ~option =
     match t with
-    | Window_partition_column_reference_list _ ->
-      failwith "TODO: need implementation"
+    | Window_partition_column_reference_list (fe, l, _) ->
+      let module C = (val C.generate ()) in
+      C.print ~option f fe;
+
+      List.iter
+        (fun v ->
+          Sfmt.comma ~option f ();
+          C.print ~option f v)
+        l
 end
