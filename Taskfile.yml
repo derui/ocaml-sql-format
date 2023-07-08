@@ -22,6 +22,10 @@ tasks:
     cmds:
       - _build/default/tool/kw_to_sedlex/kw_to_sedlex.exe {{.KW}}
 
+  new-ast:
+    cmds:
+      - _build/default/tool/gen_tmpl/gen_tmpl.exe {{.CLI_ARGS}}
+
   test:
     cmds:
       - dune runtest {{.CLI_ARGS}}
