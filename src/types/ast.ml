@@ -267,7 +267,10 @@ and 'a window_frame_clause = Window_frame_clause of 'a (* TODO *)
 
 and 'a window_frame_units = Window_frame_units of [ `rows | `range ] * 'a
 
-and 'a window_frame_extent = Window_frame_extent of 'a (* TODO *)
+and 'a window_frame_extent =
+  | Window_frame_extent of
+      [ `start of 'a window_frame_start | `between of 'a window_frame_between ]
+      * 'a
 
 and 'a window_frame_start =
   | Window_frame_start of

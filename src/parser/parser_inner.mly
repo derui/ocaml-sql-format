@@ -710,6 +710,11 @@ window_frame_bound:
   | v = window_frame_following {Window_frame_bound (`following v, _)}
 ;;
 
+window_frame_extent:
+  | v = window_frame_start {Window_frame_extent (`start v, _)}
+  | v = window_frame_between {Window_frame_extent (`between v, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 

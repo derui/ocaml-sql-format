@@ -379,7 +379,19 @@ and window_frame_clause () = Window_frame_clause.((module Make () : S))
 
 and window_frame_units () = Window_frame_units.((module Make () : S))
 
-and window_frame_extent () = Window_frame_extent.((module Make () : S))
+and window_frame_extent () =
+  Window_frame_extent.(
+    (module Make
+              (struct
+                type t = A.ext A.window_frame_start
+
+                let generate = window_frame_start
+              end)
+              (struct
+                type t = A.ext A.window_frame_between
+
+                let generate = window_frame_between
+              end) : S))
 
 and window_frame_start () =
   Window_frame_start.(
