@@ -331,6 +331,11 @@ collate_name:
 | i = schema_qualified_name {Collate_name (i, ())}
 ;;
 
+column_reference:
+| c = identifier_chain {Column_reference (`chain c, ())}
+| Kw_module Tok_period i = identifier Tok_period n = identifier {Column_reference (`module' (i, n), ())}
+;;
+
 (** End   names and identifiers *)
 
 

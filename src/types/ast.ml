@@ -475,7 +475,12 @@ and 'a grouping_column_reference_list =
 
 and 'a empty_grouping_set = Empty_grouping_set of 'a (* TODO *)
 
-and 'a column_reference = Column_reference of 'a (* TODO *)
+and 'a column_reference =
+  | Column_reference of
+      [ `chain of 'a identifier_chain
+      | `module' of 'a identifier * 'a identifier
+      ]
+      * 'a
 
 and 'a where_clause = Where_clause of 'a search_condition * 'a
 

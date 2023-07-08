@@ -204,6 +204,20 @@ and collate_clause () =
       let generate = collate_name
     end) : S))
 
+and column_reference () =
+  Column_reference.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.identifier_chain
+
+                let generate = identifier_chain
+              end) : S))
+
 and identifier_chain () =
   Identifier_chain.(
     (module Make (struct
