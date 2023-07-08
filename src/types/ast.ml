@@ -106,10 +106,6 @@ and 'a query_primary =
 
 and 'a query = Query of 'a
 
-and 'a group_by_clause =
-  | Group_by_clause of
-      [ `rollup of 'a expression list | `default of 'a expression list ] * 'a
-
 and 'a into_clause = Into_clause of 'a identifier * 'a
 
 and 'a expression = Expression of 'a condition * 'a
@@ -450,6 +446,24 @@ and 'a from_clause = From_clause of 'a table_reference_list * 'a
 
 and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
+
+and 'a group_by_clause =
+  | Group_by_clause of
+      qualifier option * 'a grouping_element_list * 'a (* TODO *)
+
+and 'a grouping_element_list =
+  | Grouping_element_list of
+      'a grouping_element * 'a grouping_element list * 'a (* TODO *)
+
+and 'a grouping_element = Grouping_element of 'a (* TODO *)
+
+and 'a rollup_list =
+  | Rollup_list of 'a ordinary_grouping_set_list * 'a (* TODO *)
+
+and 'a ordinary_grouping_set_list =
+  | Ordinary_grouping_set_list of 'a (* TODO *)
+
+and 'a empty_grouping_set = Empty_grouping_set of 'a (* TODO *)
 
 and 'a where_clause = Where_clause of 'a search_condition * 'a
 

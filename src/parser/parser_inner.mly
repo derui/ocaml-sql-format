@@ -418,6 +418,10 @@ where_clause:
 (** End   7.8 where clause *)
 
 (** Start 7.9 Group by clause *)
+
+empty_grouping_set:
+| Tok_lparen Tok_rparen { Empty_grouping_set () }
+;;
 (** End   7.9 Group by clause *)
 
 (** Start 7.10 having clause *)

@@ -52,6 +52,8 @@ let identifier () =
       let generate = non_reserved_identifier
     end) : S))
 
+let empty_grouping_set () = Empty_grouping_set.((module Make () : S))
+
 let data_type () =
   Data_type.(
     (module Make
