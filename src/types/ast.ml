@@ -235,7 +235,9 @@ and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
-and 'a window_definition_list = Window_definition_list of 'a (* TODO *)
+and 'a window_definition_list =
+  | Window_definition_list of
+      'a window_definition * 'a window_definition list * 'a
 
 and 'a window_definition =
   | Window_definition of 'a new_window_name * 'a window_specification * 'a

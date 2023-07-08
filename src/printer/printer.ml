@@ -318,7 +318,13 @@ and group_by_clause () =
 
 and window_clause () = Window_clause.((module Make () : S))
 
-and window_definition_list () = Window_definition_list.((module Make () : S))
+and window_definition_list () =
+  Window_definition_list.(
+    (module Make (struct
+      type t = A.ext A.window_definition
+
+      let generate = window_definition
+    end) : S))
 
 and window_definition () =
   Window_definition.(

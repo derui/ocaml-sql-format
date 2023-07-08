@@ -734,6 +734,11 @@ window_definition:
   | name = new_window_name Kw_as spec = window_specification {Window_definition (name, spec, _)}
 ;;
 
+window_definition_list:
+  | fl = window_definition;
+    list = list(pair(Tok_comma, window_definition)) {Window_definition_list (fl, List.map snd list, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 

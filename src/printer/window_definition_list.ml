@@ -1,13 +1,20 @@
 open Types.Ast
-open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext window_definition_list
 
-module Make () : S = struct
+module Make (Def : GEN with type t = ext window_definition) : S = struct
   type t = ext window_definition_list
 
   let print f t ~option =
     match t with
-    | Window_definition_list _ -> failwith "TODO: need implementation"
+    | Window_definition_list (fl, list, _) ->
+      let module Def = (val Def.generate ()) in
+      Def.print ~option f fl;
+
+      List.iter
+        (fun v ->
+          Sfmt.comma ~option f ();
+          Def.print ~option f v)
+        list
 end
