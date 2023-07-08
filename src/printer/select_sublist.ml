@@ -1,6 +1,4 @@
 open Types.Ast
-open Types.Literal
-open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext select_sublist
