@@ -467,6 +467,8 @@ and 'a grouping_element = Grouping_element of 'a (* TODO *)
 
 and 'a rollup_list = Rollup_list of 'a ordinary_grouping_set_list * 'a
 
+and 'a cube_list = Cube_list of 'a ordinary_grouping_set_list * 'a
+
 and 'a ordinary_grouping_set_list =
   | Ordinary_grouping_set_list of
       'a ordinary_grouping_set * 'a ordinary_grouping_set list * 'a

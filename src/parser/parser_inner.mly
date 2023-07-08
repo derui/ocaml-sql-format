@@ -279,6 +279,7 @@ open Types.Ast
 %token Kw_unnest
 %token Kw_module
 %token Kw_collate
+%token Kw_cube
 
 %token Tok_eof
 
@@ -457,6 +458,10 @@ ordinary_grouping_set_list:
 
 rollup_list:
 | Kw_rollup l = delimited(Tok_lparen, ordinary_grouping_set_list, Tok_rparen) { Rollup_list (l, ()) }
+;;
+
+cube_list:
+| Kw_cube l = delimited(Tok_lparen, ordinary_grouping_set_list, Tok_rparen) { Cube_list (l, ()) }
 ;;
 
 empty_grouping_set:

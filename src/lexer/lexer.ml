@@ -1646,6 +1646,8 @@ let kw_collate =
     , Chars "tT"
     , Chars "eE" )]
 
+let kw_cube = [%sedlex.regexp? Chars "cC", Chars "uU", Chars "bB", Chars "eE"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -1936,6 +1938,7 @@ let rec token buf =
   | kw_unnest -> Kw_unnest
   | kw_module -> Kw_module
   | kw_collate -> Kw_collate
+  | kw_cube -> Kw_cube
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

@@ -286,6 +286,14 @@ and rollup_list () =
       let generate = ordinary_grouping_set_list
     end) : S))
 
+and cube_list () =
+  Cube_list.(
+    (module Make (struct
+      type t = A.ext A.ordinary_grouping_set_list
+
+      let generate = ordinary_grouping_set_list
+    end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

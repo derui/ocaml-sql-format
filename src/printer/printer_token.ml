@@ -251,6 +251,7 @@ include (
       | Kw_unnest -> Fmt.string f @@ as_keyword "unnest" keyword
       | Kw_module -> Fmt.string f @@ as_keyword "module" keyword
       | Kw_collate -> Fmt.string f @@ as_keyword "collate" keyword
+      | Kw_cube -> Fmt.string f @@ as_keyword "cube" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -237,6 +237,7 @@ type token =
   | Kw_unnest
   | Kw_module
   | Kw_collate
+  | Kw_cube
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
