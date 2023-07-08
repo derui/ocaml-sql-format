@@ -499,7 +499,7 @@ and 'a grouping_set =
       * 'a
 
 and 'a grouping_sets_specification =
-  | Grouping_sets_specification of 'a (* TODO *)
+  | Grouping_sets_specification of 'a grouping_set_list * 'a
 
 and 'a grouping_set_list =
   | Grouping_set_list of 'a grouping_set * 'a grouping_set list * 'a

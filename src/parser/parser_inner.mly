@@ -280,6 +280,8 @@ open Types.Ast
 %token Kw_module
 %token Kw_collate
 %token Kw_cube
+%token Kw_grouping
+%token Kw_sets
 
 %token Tok_eof
 
@@ -474,6 +476,10 @@ grouping_set:
 
 grouping_set_list:
 | fe = grouping_set l = list(pair(Tok_comma, grouping_set)) {Grouping_set_list (fe, List.map snd l, ())}
+;;
+
+grouping_sets_specification:
+| Kw_grouping Kw_sets l = delimited(Tok_lparen, grouping_set_list, Tok_rparen) {Grouping_sets_specification (l, ())}
 ;;
 
 empty_grouping_set:

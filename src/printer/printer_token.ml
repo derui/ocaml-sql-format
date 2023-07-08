@@ -252,6 +252,8 @@ include (
       | Kw_module -> Fmt.string f @@ as_keyword "module" keyword
       | Kw_collate -> Fmt.string f @@ as_keyword "collate" keyword
       | Kw_cube -> Fmt.string f @@ as_keyword "cube" keyword
+      | Kw_grouping -> Fmt.string f @@ as_keyword "grouping" keyword
+      | Kw_sets -> Fmt.string f @@ as_keyword "sets" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

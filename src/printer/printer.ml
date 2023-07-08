@@ -294,6 +294,51 @@ and cube_list () =
       let generate = ordinary_grouping_set_list
     end) : S))
 
+and grouping_sets_specification () =
+  Grouping_sets_specification.(
+    (module Make (struct
+      type t = A.ext A.grouping_set_list
+
+      let generate = grouping_set_list
+    end) : S))
+
+and grouping_set_list () =
+  Grouping_set_list.(
+    (module Make (struct
+      type t = A.ext A.grouping_set
+
+      let generate = grouping_set
+    end) : S))
+
+and grouping_set () =
+  Grouping_set.(
+    (module Make
+              (struct
+                type t = A.ext A.ordinary_grouping_set
+
+                let generate = ordinary_grouping_set
+              end)
+              (struct
+                type t = A.ext A.rollup_list
+
+                let generate = rollup_list
+              end)
+              (struct
+                type t = A.ext A.cube_list
+
+                let generate = cube_list
+              end)
+              (struct
+                type t = A.ext A.grouping_sets_specification
+
+                let generate = grouping_sets_specification
+              end)
+              (struct
+                type t = A.ext A.empty_grouping_set
+
+                let generate = empty_grouping_set
+              end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make

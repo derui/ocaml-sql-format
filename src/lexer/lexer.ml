@@ -1648,6 +1648,19 @@ let kw_collate =
 
 let kw_cube = [%sedlex.regexp? Chars "cC", Chars "uU", Chars "bB", Chars "eE"]
 
+let kw_grouping =
+  [%sedlex.regexp?
+    ( Chars "gG"
+    , Chars "rR"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "pP"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_sets = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT", Chars "sS"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -1939,6 +1952,8 @@ let rec token buf =
   | kw_module -> Kw_module
   | kw_collate -> Kw_collate
   | kw_cube -> Kw_cube
+  | kw_grouping -> Kw_grouping
+  | kw_sets -> Kw_sets
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

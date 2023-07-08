@@ -238,6 +238,8 @@ type token =
   | Kw_module
   | Kw_collate
   | Kw_cube
+  | Kw_grouping
+  | Kw_sets
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
