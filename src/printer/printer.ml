@@ -373,7 +373,13 @@ and window_partition_column_reference () =
                 let generate = collate_clause
               end) : S))
 
-and window_order_clause () = Window_order_clause.((module Make () : S))
+and window_order_clause () =
+  Window_order_clause.(
+    (module Make (struct
+      type t = A.ext A.sort_specification_list
+
+      let generate = sort_specification_list
+    end) : S))
 
 and window_frame_clause () =
   Window_frame_clause.(
@@ -482,3 +488,5 @@ and window_frame_exclusion () = Window_frame_exclusion.((module Make () : S))
 
 and unsigned_value_specification () =
   Unsigned_value_specification.((module Make () : S))
+
+and sort_specification_list () = Sort_specification_list.((module Make () : S))

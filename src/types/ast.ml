@@ -261,7 +261,8 @@ and 'a window_partition_column_reference =
   | Window_partition_column_reference of
       'a column_reference * 'a collate_clause option * 'a
 
-and 'a window_order_clause = Window_order_clause of 'a (* TODO *)
+and 'a window_order_clause =
+  | Window_order_clause of 'a sort_specification_list * 'a
 
 and 'a window_frame_clause =
   | Window_frame_clause of
@@ -311,3 +312,5 @@ and 'a window_frame_exclusion =
 
 and 'a unsigned_value_specification =
   | Unsigned_value_specification of 'a (* TODO *)
+
+and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)

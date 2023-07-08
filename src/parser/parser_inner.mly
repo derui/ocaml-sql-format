@@ -722,6 +722,10 @@ window_frame_clause:
     {Window_frame_clause (u, extent, exclusion, _)}
 ;;
 
+window_order_clause:
+  | Kw_order Kw_by v = sort_specification_list {Window_order_clause (v, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 
