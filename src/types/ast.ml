@@ -265,7 +265,7 @@ and 'a window_order_clause = Window_order_clause of 'a (* TODO *)
 
 and 'a window_frame_clause = Window_frame_clause of 'a (* TODO *)
 
-and 'a window_frame_units = Window_frame_units of 'a (* TODO *)
+and 'a window_frame_units = Window_frame_units of [ `rows | `range ] * 'a
 
 and 'a window_frame_extent = Window_frame_extent of 'a (* TODO *)
 

@@ -663,6 +663,11 @@ window_partition_column_reference_list:
 window_partition_clause:
 | Kw_partition Kw_by l = window_partition_column_reference_list {Window_partition_clause (l, ())}
 ;;
+
+window_frame_units:
+| Kw_rows { Window_frame_units (`rows, ()) }
+| Kw_range { Window_frame_units (`range, ()) }
+;;
 (** End   7.11 Window clause *)
 
 

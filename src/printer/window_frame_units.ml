@@ -9,5 +9,11 @@ module Make () : S = struct
 
   let print f t ~option =
     match t with
-    | Window_frame_units _ -> failwith "TODO: need implementation"
+    | Window_frame_units (v, _) ->
+      let kw =
+        match v with
+        | `rows -> Kw_rows
+        | `range -> Kw_range
+      in
+      Printer_token.print ~option f kw
 end
