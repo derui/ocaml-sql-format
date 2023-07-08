@@ -196,6 +196,14 @@ and collate_name () =
       let generate = schema_qualified_name
     end) : S))
 
+and collate_clause () =
+  Collate_clause.(
+    (module Make (struct
+      type t = A.ext A.collate_name
+
+      let generate = collate_name
+    end) : S))
+
 and derived_column_list () =
   Derived_column_list.(
     (module Make (struct

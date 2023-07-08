@@ -572,6 +572,8 @@ and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
 and 'a collection_value_expression =
   | Collection_value_expression of 'a (* TODO *)
 
+and 'a collate_clause = Collate_clause of 'a collate_name * 'a
+
 type ext = Ext.ext
 
 type entry = ext directly_executable_statement

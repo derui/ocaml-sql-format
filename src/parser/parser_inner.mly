@@ -277,6 +277,8 @@ open Types.Ast
 %token Kw_system
 %token Kw_repeatable
 %token Kw_unnest
+%token Kw_module
+%token Kw_collate
 
 %token Tok_eof
 
@@ -492,6 +494,9 @@ search_condition:
 (** End   8.19 Search condition *)
 
 (** Start 10.7 collate clause *)
+collate_clause:
+| Kw_collate n = collate_name {Collate_clause (n, ())}
+;;
 (** End   10.7 collate clause *)
 
 

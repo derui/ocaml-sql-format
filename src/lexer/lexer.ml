@@ -1636,6 +1636,17 @@ let kw_module =
   [%sedlex.regexp?
     Chars "mM", Chars "oO", Chars "dD", Chars "uU", Chars "lL", Chars "eE"]
 
+let kw_collate =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE" )]
+
+(* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
 let newline = [%sedlex.regexp? "\r\n" | "\n" | "\r"]
@@ -1924,6 +1935,7 @@ let rec token buf =
   | kw_repeatable -> Kw_repeatable
   | kw_unnest -> Kw_unnest
   | kw_module -> Kw_module
+  | kw_collate -> Kw_collate
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
