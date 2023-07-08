@@ -694,6 +694,12 @@ window_frame_preceding:
   | v = unsigned_value_specification Kw_preceding {Window_frame_preceding (v, _)}
 ;;
 
+window_frame_start:
+  | Kw_unbounded Kw_preceding {Window_frame_start (`unbounded, _)}
+  | v = window_frame_preceding {Window_frame_start (`preceding v, _)}
+  | Kw_current Kw_row {Window_frame_start (`current, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 
