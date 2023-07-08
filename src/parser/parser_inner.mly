@@ -677,6 +677,10 @@ window_frame_exclusion:
 | Kw_exclude Kw_ties { Window_frame_exclusion (`ties, ()) }
 | Kw_exclude Kw_no Kw_others { Window_frame_exclusion (`no_others, ()) }
 ;;
+
+window_frame_following:
+  | v = unsigned_value_specification Kw_following {Window_frame_following (v, _)}
+;;
 (** End   7.11 Window clause *)
 
 

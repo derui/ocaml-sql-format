@@ -393,6 +393,15 @@ and window_frame_bound_2 () = Window_frame_bound_2.((module Make () : S))
 
 and window_frame_bound () = Window_frame_bound.((module Make () : S))
 
-and window_frame_following () = Window_frame_following.((module Make () : S))
+and window_frame_following () =
+  Window_frame_following.(
+    (module Make (struct
+      type t = A.ext A.unsigned_value_specification
+
+      let generate = unsigned_value_specification
+    end) : S))
 
 and window_frame_exclusion () = Window_frame_exclusion.((module Make () : S))
+
+and unsigned_value_specification () =
+  Unsigned_value_specification.((module Make () : S))
