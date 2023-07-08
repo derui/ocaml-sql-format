@@ -681,6 +681,14 @@ window_frame_exclusion:
 window_frame_following:
   | v = unsigned_value_specification Kw_following {Window_frame_following (v, _)}
 ;;
+
+window_frame_bound_1:
+  | v = window_frame_bound {Window_frame_bound_1 (v, _)}
+;;
+
+window_frame_bound_2:
+  | v = window_frame_bound {Window_frame_bound_2 (v, _)}
+;;
 (** End   7.11 Window clause *)
 
 

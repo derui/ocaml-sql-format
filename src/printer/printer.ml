@@ -387,9 +387,21 @@ and window_frame_preceding () = Window_frame_preceding.((module Make () : S))
 
 and window_frame_between () = Window_frame_between.((module Make () : S))
 
-and window_frame_bound_1 () = Window_frame_bound_1.((module Make () : S))
+and window_frame_bound_1 () =
+  Window_frame_bound_1.(
+    (module Make (struct
+      type t = A.ext A.window_frame_bound
 
-and window_frame_bound_2 () = Window_frame_bound_2.((module Make () : S))
+      let generate = window_frame_bound
+    end) : S))
+
+and window_frame_bound_2 () =
+  Window_frame_bound_2.(
+    (module Make (struct
+      type t = A.ext A.window_frame_bound
+
+      let generate = window_frame_bound
+    end) : S))
 
 and window_frame_bound () = Window_frame_bound.((module Make () : S))
 
