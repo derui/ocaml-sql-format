@@ -647,6 +647,9 @@ new_window_name:
 existing_window_name:
 | i = identifier { Existing_window_name (i, ()) }
 ;;
+window_partition_column_reference:
+| c = column_reference collate = option(collate_clause) { Window_partition_column_reference (c, collate, ()) }
+;;
 (** End   7.11 Window clause *)
 
 

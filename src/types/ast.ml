@@ -254,7 +254,8 @@ and 'a window_partition_column_reference_list =
   | Window_partition_column_reference_list of 'a (* TODO *)
 
 and 'a window_partition_column_reference =
-  | Window_partition_column_reference of 'a (* TODO *)
+  | Window_partition_column_reference of
+      'a column_reference * 'a collate_clause option * 'a
 
 and 'a window_order_clause = Window_order_clause of 'a (* TODO *)
 

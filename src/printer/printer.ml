@@ -349,7 +349,18 @@ and window_partition_column_reference_list () =
   Window_partition_column_reference_list.((module Make () : S))
 
 and window_partition_column_reference () =
-  Window_partition_column_reference.((module Make () : S))
+  Window_partition_column_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.column_reference
+
+                let generate = column_reference
+              end)
+              (struct
+                type t = A.ext A.collate_clause
+
+                let generate = collate_clause
+              end) : S))
 
 and window_order_clause () = Window_order_clause.((module Make () : S))
 
