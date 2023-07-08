@@ -237,7 +237,8 @@ and 'a window_clause = Window_clause of 'a (* TODO *)
 
 and 'a window_definition_list = Window_definition_list of 'a (* TODO *)
 
-and 'a window_definition = Window_definition of 'a (* TODO *)
+and 'a window_definition =
+  | Window_definition of 'a new_window_name * 'a window_specification * 'a
 
 and 'a new_window_name = New_window_name of 'a identifier * 'a
 

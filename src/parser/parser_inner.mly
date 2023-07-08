@@ -730,6 +730,10 @@ window_order_clause:
   | Kw_order Kw_by v = sort_specification_list {Window_order_clause (v, _)}
 ;;
 
+window_definition:
+  | name = new_window_name Kw_as spec = window_specification {Window_definition (name, spec, _)}
+;;
+
 (** End   7.11 Window clause *)
 
 

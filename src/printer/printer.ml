@@ -320,7 +320,19 @@ and window_clause () = Window_clause.((module Make () : S))
 
 and window_definition_list () = Window_definition_list.((module Make () : S))
 
-and window_definition () = Window_definition.((module Make () : S))
+and window_definition () =
+  Window_definition.(
+    (module Make
+              (struct
+                type t = A.ext A.new_window_name
+
+                let generate = new_window_name
+              end)
+              (struct
+                type t = A.ext A.window_specification
+
+                let generate = window_specification
+              end) : S))
 
 and new_window_name () =
   New_window_name.(
