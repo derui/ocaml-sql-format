@@ -440,9 +440,15 @@ where_clause:
 grouping_column_reference:
 | c = column_reference collate = option(collate_clause) {Grouping_column_reference (c, collate, ())}
 ;;
+
 grouping_column_reference_list:
 | c = grouping_column_reference;
   l = list(pair(Tok_comma, grouping_column_reference)) {Grouping_column_reference_list (c, List.map snd l, ())}
+;;
+
+ordinary_grouping_set:
+| c = grouping_column_reference {Ordinary_grouping_set (`column c, ())}
+| l = delimited(Tok_lparen, grouping_column_reference_list, Tok_rparen) {Ordinary_grouping_set (`list l, ())}
 ;;
 
 empty_grouping_set:

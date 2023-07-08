@@ -393,7 +393,7 @@ and 'a time_interval =
       ]
       * 'a
 
-(** query specification *)
+(** START query specification *)
 type 'a query_specification =
   | Query_specification of
       qualifier option * 'a select_list * 'a table_expression * 'a
@@ -432,7 +432,9 @@ and 'a all_field_column_name_list =
 
 and 'a column_name_list =
   | Column_name_list of 'a identifier * 'a identifier list * 'a
+(* END query specification *)
 
+(* START table expression *)
 and 'a table_expression =
   | Table_expression of
       'a from_clause
@@ -442,10 +444,15 @@ and 'a table_expression =
       * 'a window_clause option
       * 'a
 
+(* TODO *)
+(* END table expression *)
+
+(* START from clause *)
 and 'a from_clause = From_clause of 'a table_reference_list * 'a
 
 and 'a table_reference_list =
   | Table_reference_list of 'a table_reference * 'a table_reference list * 'a
+(* END from clause *)
 
 (* START group by clause *)
 and 'a group_by_clause =
@@ -464,7 +471,12 @@ and 'a rollup_list =
 and 'a ordinary_grouping_set_list =
   | Ordinary_grouping_set_list of 'a (* TODO *)
 
-and 'a ordinary_grouping_set = Ordinary_grouping_set of 'a (* TODO *)
+and 'a ordinary_grouping_set =
+  | Ordinary_grouping_set of
+      [ `column of 'a grouping_column_reference
+      | `list of 'a grouping_column_reference_list
+      ]
+      * 'a
 
 and 'a grouping_column_reference =
   | Grouping_column_reference of

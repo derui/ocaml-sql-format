@@ -256,6 +256,20 @@ and grouping_column_reference_list () =
       let generate = grouping_column_reference
     end) : S))
 
+and ordinary_grouping_set () =
+  Ordinary_grouping_set.(
+    (module Make
+              (struct
+                type t = A.ext A.grouping_column_reference
+
+                let generate = grouping_column_reference
+              end)
+              (struct
+                type t = A.ext A.grouping_column_reference_list
+
+                let generate = grouping_column_reference_list
+              end) : S))
+
 let rec query_expression () =
   Query_expression.(
     (module Make
