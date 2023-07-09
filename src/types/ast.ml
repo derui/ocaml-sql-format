@@ -445,7 +445,13 @@ and 'a corresponding_column_list =
 
 and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
 
-and 'a search_or_cycle_clause = Search_or_cycle_clause of 'a (* TODO *)
+and 'a search_or_cycle_clause =
+  | Search_or_cycle_clause of
+      [ `search of 'a search_clause
+      | `cycle of 'a cycle_clause
+      | `search_and_cycle of 'a search_clause * 'a cycle_clause
+      ]
+      * 'a
 
 and 'a search_clause =
   | Search_clause of 'a recursive_search_order * 'a sequence_column * 'a

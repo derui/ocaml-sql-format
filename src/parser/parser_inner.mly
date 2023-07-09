@@ -1016,6 +1016,12 @@ search_clause:
 | Kw_search order = recursive_search_order Kw_set col = sequence_column {Search_clause (order, col, ())}
 ;;
 
+search_or_cycle_clause:
+| clause = search_clause {Search_or_cycle_clause (`search clause, ())}
+| clause = cycle_clause {Search_or_cycle_clause (`cycle clause, ())}
+| search = search_clause cycle = cycle_clause {Search_or_cycle_clause (`search_and_cycle (search, cycle), ())}
+;;
+
 (** End   7.14 search or cycle clause *)
 
 

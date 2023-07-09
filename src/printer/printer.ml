@@ -1188,7 +1188,19 @@ and all_fields_reference () =
                 let generate = all_field_column_name_list
               end) : S))
 
-and search_or_cycle_clause () = Search_or_cycle_clause.((module Make () : S))
+and search_or_cycle_clause () =
+  Search_or_cycle_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.search_clause
+
+                let generate = search_clause
+              end)
+              (struct
+                type t = A.ext A.cycle_clause
+
+                let generate = cycle_clause
+              end) : S))
 
 and search_clause () =
   Search_clause.(
