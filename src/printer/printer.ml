@@ -942,7 +942,24 @@ and query_primary () = Query_primary.((module Make () : S))
 
 and non_join_query_primary () = Non_join_query_primary.((module Make () : S))
 
-and simple_table () = Simple_table.((module Make () : S))
+and simple_table () =
+  Simple_table.(
+    (module Make
+              (struct
+                type t = A.ext A.query_specification
+
+                let generate = query_specification
+              end)
+              (struct
+                type t = A.ext A.table_value_constructor
+
+                let generate = table_value_constructor
+              end)
+              (struct
+                type t = A.ext A.explicit_table
+
+                let generate = explicit_table
+              end) : S))
 
 and explicit_table () =
   Explicit_table.(
@@ -967,3 +984,69 @@ and corresponding_column_list () =
 
       let generate = column_name_list
     end) : S))
+
+and table_value_constructor () = Table_value_constructor.((module Make () : S))
+
+and query_specification () =
+  Query_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.select_list
+
+                let generate = select_list
+              end)
+              (struct
+                type t = A.ext A.table_expression
+
+                let generate = table_expression
+              end) : S))
+
+and select_list () =
+  Select_list.(
+    (module Make (struct
+      type t = A.ext A.select_sublist
+
+      let generate = select_sublist
+    end) : S))
+
+and select_sublist () =
+  Select_sublist.(
+    (module Make
+              (struct
+                type t = A.ext A.derived_column
+
+                let generate = derived_column
+              end)
+              (struct
+                type t = A.ext A.qualified_asterisk
+
+                let generate = qualified_asterisk
+              end) : S))
+
+and qualified_asterisk () =
+  Qualified_asterisk.(
+    (module Make
+              (struct
+                type t = A.ext A.asterisked_identifier_chain
+
+                let generate = asterisked_identifier_chain
+              end)
+              (struct
+                type t = A.ext A.all_fields_reference
+
+                let generate = all_fields_reference
+              end) : S))
+
+and all_fields_reference () =
+  All_fields_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression_primary
+
+                let generate = value_expression_primary
+              end)
+              (struct
+                type t = A.ext A.all_field_column_name_list
+
+                let generate = all_field_column_name_list
+              end) : S))

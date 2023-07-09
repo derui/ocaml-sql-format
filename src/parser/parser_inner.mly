@@ -864,6 +864,12 @@ corresponding_spec:
 explicit_table:
 | Kw_table v = table_or_query_name { Explicit_table (v, ()) }
 ;;
+
+simple_table:
+| v = query_specification { Simple_table (`query v, ()) }
+| v = table_value_constructor { Simple_table (`table v, ()) }
+| v = explicit_table { Simple_table (`explicit v, ()) }
+;;
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)

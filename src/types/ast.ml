@@ -385,7 +385,13 @@ and 'a query_primary = Query_primary of 'a (* TODO *)
 
 and 'a non_join_query_primary = Non_join_query_primary of 'a (* TODO *)
 
-and 'a simple_table = Simple_table of 'a (* TODO *)
+and 'a simple_table =
+  | Simple_table of
+      [ `query of 'a query_specification
+      | `table of 'a table_value_constructor
+      | `explicit of 'a explicit_table
+      ]
+      * 'a
 
 and 'a explicit_table = Explicit_table of 'a table_or_query_name * 'a
 
@@ -394,3 +400,5 @@ and 'a corresponding_spec =
 
 and 'a corresponding_column_list =
   | Corresponding_column_list of 'a column_name_list * 'a
+
+and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
