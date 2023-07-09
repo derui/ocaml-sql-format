@@ -485,6 +485,13 @@ column_reference:
 
 (** End   names and identifiers *)
 
+(** Start 7.2 row value expression *)
+row_value_expression:
+| v = row_value_special_case { Table_row_value_expression (`special v, ()) }
+| v = explicit_row_value_constructor { Table_row_value_expression (`explicit v, ()) }
+;;
+(** End   7.2 row value expression *)
+
 (** Start 7.3 table value constructor *)
 table_value_constructor:
 | Kw_values v = row_value_expression_list {Table_value_constructor (v, _)}

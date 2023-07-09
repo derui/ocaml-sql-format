@@ -1345,8 +1345,23 @@ and table_row_value_expression () =
 and contextually_typed_row_value_expression () =
   Contextually_typed_row_value_expression.((module Make () : S))
 
-and row_value_expression () = Row_value_expression.((module Make () : S))
+and row_value_expression () =
+  Row_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.row_value_special_case
+
+                let generate = row_value_special_case
+              end)
+              (struct
+                type t = A.ext A.explicit_row_value_constructor
+
+                let generate = explicit_row_value_constructor
+              end) : S))
 
 and row_value_predicand () = Row_value_predicand.((module Make () : S))
 
 and row_value_special_case () = Row_value_special_case.((module Make () : S))
+
+and explicit_row_value_constructor () =
+  Explicit_row_value_constructor.((module Make () : S))
