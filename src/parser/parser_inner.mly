@@ -287,6 +287,7 @@ open Types.Ast
 %token Kw_window
 %token Kw_using
 %token Kw_natural
+%token Kw_corresponding
 
 %token Tok_eof
 
@@ -852,6 +853,12 @@ all_fields_column_name_list:
 (** Start 7.13 query expression *)
 corresponding_column_list:
 | l = column_name_list { Corresponding_column_list (l, ()) }
+;;
+
+corresponding_spec:
+| Kw_corresponding { Corresponding_spec (None, ()) }
+| Kw_corresponding Kw_by;
+  v = delimited(Tok_lparen, corresponding_column_list, Tok_rparen) { Corresponding_spec (Some v, ()) }
 ;;
 (** End   7.13 query expression *)
 

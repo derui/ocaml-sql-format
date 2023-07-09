@@ -389,7 +389,8 @@ and 'a simple_table = Simple_table of 'a (* TODO *)
 
 and 'a explicit_table = Explicit_table of 'a (* TODO *)
 
-and 'a corresponding_spec = Corresponding_spec of 'a (* TODO *)
+and 'a corresponding_spec =
+  | Corresponding_spec of 'a corresponding_column_list option * 'a
 
 and 'a corresponding_column_list =
   | Corresponding_column_list of 'a column_name_list * 'a

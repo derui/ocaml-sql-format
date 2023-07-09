@@ -946,7 +946,13 @@ and simple_table () = Simple_table.((module Make () : S))
 
 and explicit_table () = Explicit_table.((module Make () : S))
 
-and corresponding_spec () = Corresponding_spec.((module Make () : S))
+and corresponding_spec () =
+  Corresponding_spec.(
+    (module Make (struct
+      type t = A.ext A.corresponding_column_list
+
+      let generate = corresponding_column_list
+    end) : S))
 
 and corresponding_column_list () =
   Corresponding_column_list.(
