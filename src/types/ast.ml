@@ -457,7 +457,7 @@ and 'a cycle_clause = Cycle_clause of 'a (* TODO *)
 
 and 'a cycle_column_list = Cycle_column_list of 'a (* TODO *)
 
-and 'a cycle_column = Cycle_column of 'a (* TODO *)
+and 'a cycle_column = Cycle_column of 'a identifier * 'a
 
 and 'a cycle_mark_column = Cycle_mark_column of 'a identifier * 'a
 

@@ -981,6 +981,10 @@ cycle_mark_column:
 | e = column_name {Cycle_mark_column (e, ())}
 ;;
 
+cycle_column:
+| e = column_name {Cycle_column (e, ())}
+;;
+
 (** End   7.14 search or cycle clause *)
 
 
