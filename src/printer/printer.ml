@@ -1208,4 +1208,10 @@ and path_column () = Path_column.((module Make () : S))
 
 and cycle_mark_value () = Cycle_mark_value.((module Make () : S))
 
-and non_cycle_mark_value () = Non_cycle_mark_value.((module Make () : S))
+and non_cycle_mark_value () =
+  Non_cycle_mark_value.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))

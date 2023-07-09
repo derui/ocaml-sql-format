@@ -964,6 +964,13 @@ query_expression:
 
 (** End   7.13 query expression *)
 
+(** Start 7.14 search or cycle clause *)
+non_cycle_mark_value:
+| e = value_expression {Non_cycle_mark_value (e, ())}
+;;
+(** End   7.14 search or cycle clause *)
+
+
 (** Start 7.15 subquery *)
 scalar_subquery:
 | q = subquery {Scalar_subquery (q, ())}
