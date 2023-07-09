@@ -944,7 +944,13 @@ and non_join_query_primary () = Non_join_query_primary.((module Make () : S))
 
 and simple_table () = Simple_table.((module Make () : S))
 
-and explicit_table () = Explicit_table.((module Make () : S))
+and explicit_table () =
+  Explicit_table.(
+    (module Make (struct
+      type t = A.ext A.table_or_query_name
+
+      let generate = table_or_query_name
+    end) : S))
 
 and corresponding_spec () =
   Corresponding_spec.(

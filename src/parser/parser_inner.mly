@@ -860,6 +860,10 @@ corresponding_spec:
 | Kw_corresponding Kw_by;
   v = delimited(Tok_lparen, corresponding_column_list, Tok_rparen) { Corresponding_spec (Some v, ()) }
 ;;
+
+explicit_table:
+| Kw_table v = table_or_query_name { Explicit_table (v, ()) }
+;;
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)
