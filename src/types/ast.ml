@@ -530,7 +530,8 @@ and 'a row_value_predicand =
       ]
       * 'a
 
-and 'a row_value_special_case = Row_value_special_case of 'a (* TODO *)
+and 'a row_value_special_case =
+  | Row_value_special_case of 'a nonparenthesized_value_expression_primary * 'a
 
 and 'a explicit_row_value_constructor =
   | Explicit_row_value_constructor of 'a (* TODO *)
@@ -542,3 +543,6 @@ and 'a contextually_typed_row_value_constructor =
 
 and 'a row_value_constructor_predicand =
   | Row_value_constructor_predicand of 'a (* TODO *)
+
+and 'a nonparenthesized_value_expression_primary =
+  | Nonparenthesized_value_expression_primary of 'a (* TODO *)

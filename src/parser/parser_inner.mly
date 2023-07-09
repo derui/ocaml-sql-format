@@ -505,6 +505,10 @@ row_value_predicand:
 | v = row_value_special_case { Row_value_predicand (`special v, ()) }
 | v = row_value_constructor_predicand { Row_value_predicand (`row v, ()) }
 ;;
+
+row_value_special_case:
+| v = nonparenthesized_value_expression_primary { Row_value_special_case (v, ()) }
+;;
 (** End   7.2 row value expression *)
 
 (** Start 7.3 table value constructor *)

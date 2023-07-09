@@ -1395,7 +1395,13 @@ and row_value_predicand () =
                 let generate = row_value_constructor_predicand
               end) : S))
 
-and row_value_special_case () = Row_value_special_case.((module Make () : S))
+and row_value_special_case () =
+  Row_value_special_case.(
+    (module Make (struct
+      type t = A.ext A.nonparenthesized_value_expression_primary
+
+      let generate = nonparenthesized_value_expression_primary
+    end) : S))
 
 and explicit_row_value_constructor () =
   Explicit_row_value_constructor.((module Make () : S))
@@ -1407,3 +1413,6 @@ and contextually_typed_row_value_constructor () =
 
 and row_value_constructor_predicand () =
   Row_value_constructor_predicand.((module Make () : S))
+
+and nonparenthesized_value_expression_primary () =
+  Nonparenthesized_value_expression_primary.((module Make () : S))
