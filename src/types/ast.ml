@@ -493,7 +493,8 @@ and 'a row_value_expression_list =
       'a table_row_value_expression * 'a table_row_value_expression list * 'a
 
 and 'a contextually_typed_table_value_constructor =
-  | Contextually_typed_table_value_constructor of 'a (* TODO *)
+  | Contextually_typed_table_value_constructor of
+      'a contextually_typed_row_value_expression_list * 'a
 
 and 'a contextually_typed_row_value_expression_list =
   | Contextually_typed_row_value_expression_list of 'a (* TODO *)
