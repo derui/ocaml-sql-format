@@ -253,6 +253,7 @@ type token =
   | Kw_set
   | Kw_depth
   | Kw_breadth
+  | Kw_search
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

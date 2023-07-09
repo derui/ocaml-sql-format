@@ -447,7 +447,8 @@ and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
 
 and 'a search_or_cycle_clause = Search_or_cycle_clause of 'a (* TODO *)
 
-and 'a search_clause = Search_clause of 'a (* TODO *)
+and 'a search_clause =
+  | Search_clause of 'a recursive_search_order * 'a sequence_column * 'a
 
 and 'a recursive_search_order =
   | Recursive_search_order of

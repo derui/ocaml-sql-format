@@ -1190,7 +1190,19 @@ and all_fields_reference () =
 
 and search_or_cycle_clause () = Search_or_cycle_clause.((module Make () : S))
 
-and search_clause () = Search_clause.((module Make () : S))
+and search_clause () =
+  Search_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.recursive_search_order
+
+                let generate = recursive_search_order
+              end)
+              (struct
+                type t = A.ext A.sequence_column
+
+                let generate = sequence_column
+              end) : S))
 
 and recursive_search_order () =
   Recursive_search_order.(
