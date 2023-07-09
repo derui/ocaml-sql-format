@@ -365,7 +365,8 @@ and 'a table_subquery = Table_subquery of 'a subquery * 'a
 
 and 'a subquery = Subquery of 'a query_expression * 'a
 
-and 'a query_expression = Query_expression of 'a (* TODO *)
+and 'a query_expression =
+  | Query_expression of 'a with_clause option * 'a query_expression_body * 'a
 
 and 'a with_clause = With_clause of [ `recursive ] option * 'a with_list * 'a
 

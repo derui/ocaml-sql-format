@@ -957,6 +957,9 @@ with_list:
 with_clause:
 | Kw_with kw = option(Kw_recursive);
               list = with_list {With_clause (Option.map (fun _ -> `recursive) kw, list, ())}
+
+query_expression:
+| wl = option(with_list); q = query_expression_body {Query_expression (wl, q, ())}
 ;;
 
 (** End   7.13 query expression *)
