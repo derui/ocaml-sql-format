@@ -762,7 +762,13 @@ and join_condition () = Join_condition.((module Make () : S))
 
 and named_columns_join () = Named_columns_join.((module Make () : S))
 
-and join_type () = Join_type.((module Make () : S))
+and join_type () =
+  Join_type.(
+    (module Make (struct
+      type t = A.ext A.outer_join_type
+
+      let generate = outer_join_type
+    end) : S))
 
 and outer_join_type () = Outer_join_type.((module Make () : S))
 

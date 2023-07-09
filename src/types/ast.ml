@@ -336,7 +336,7 @@ and 'a join_condition = Join_condition of 'a (* TODO *)
 
 and 'a named_columns_join = Named_columns_join of 'a (* TODO *)
 
-and 'a join_type = Join_type of 'a (* TODO *)
+and 'a join_type = Join_type of [ `inner | `outer of 'a outer_join_type ] * 'a
 
 and 'a outer_join_type = Outer_join_type of [ `left | `right | `full ] * 'a
 

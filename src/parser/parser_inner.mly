@@ -572,6 +572,11 @@ outer_join_type:
 | Kw_right { Outer_join_type (`right, ()) }
 | Kw_full { Outer_join_type (`full, ()) }
 ;;
+
+join_type:
+| Kw_inner { Join_type (`inner, ()) }
+| t = outer_join_type option(Kw_outer) { Join_type (`outer t, ()) }
+;;
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)
