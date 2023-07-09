@@ -581,6 +581,9 @@ join_type:
 join_column_list:
 | c = column_name_list { Join_column_list (c, ()) }
 ;;
+named_columns_join:
+| Kw_using v = delimited(Tok_lparen, join_column_list, Tok_rparen) { Named_columns_join (v, ()) }
+;;
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)

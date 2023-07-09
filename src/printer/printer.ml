@@ -760,7 +760,13 @@ and join_specification () = Join_specification.((module Make () : S))
 
 and join_condition () = Join_condition.((module Make () : S))
 
-and named_columns_join () = Named_columns_join.((module Make () : S))
+and named_columns_join () =
+  Named_columns_join.(
+    (module Make (struct
+      type t = A.ext A.join_column_list
+
+      let generate = join_column_list
+    end) : S))
 
 and join_type () =
   Join_type.(

@@ -258,6 +258,7 @@ include (
       | Kw_others -> Fmt.string f @@ as_keyword "others" keyword
       | Kw_exclude -> Fmt.string f @@ as_keyword "exclude" keyword
       | Kw_window -> Fmt.string f @@ as_keyword "window" keyword
+      | Kw_using -> Fmt.string f @@ as_keyword "using" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

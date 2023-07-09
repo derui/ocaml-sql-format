@@ -1681,6 +1681,9 @@ let kw_window =
   [%sedlex.regexp?
     Chars "wW", Chars "iI", Chars "nN", Chars "dD", Chars "oO", Chars "wW"]
 
+let kw_using =
+  [%sedlex.regexp? Chars "uU", Chars "sS", Chars "iI", Chars "nN", Chars "gG"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -1982,6 +1985,7 @@ let rec token buf =
   | kw_others -> Kw_others
   | kw_exclude -> Kw_exclude
   | kw_window -> Kw_window
+  | kw_using -> Kw_using
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

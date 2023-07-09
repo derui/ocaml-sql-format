@@ -334,7 +334,7 @@ and 'a join_specification = Join_specification of 'a (* TODO *)
 
 and 'a join_condition = Join_condition of 'a (* TODO *)
 
-and 'a named_columns_join = Named_columns_join of 'a (* TODO *)
+and 'a named_columns_join = Named_columns_join of 'a join_column_list * 'a
 
 and 'a join_type = Join_type of [ `inner | `outer of 'a outer_join_type ] * 'a
 
