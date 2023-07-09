@@ -849,6 +849,21 @@ all_fields_column_name_list:
 
 (** End   7.12 Query specification *)
 
+(** Start 7.15 subquery *)
+scalar_subquery:
+| q = subquery {Scalar_subquery (q, ())}
+;;
+
+row_subquery:
+| q = subquery {Row_subquery (q, ())}
+;;
+
+table_subquery:
+| q = subquery {Table_subquery (q, ())}
+;;
+
+(** End   7.15 subquery *)
+
 (** Start 8.19 Search condition *)
 search_condition:
 | e = boolean_value_expression {Search_condition (e, ())}

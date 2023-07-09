@@ -223,8 +223,6 @@ and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
 
 and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
-and 'a table_subquery = Table_subquery of 'a (* TODO *)
-
 and 'a boolean_value_expression = Boolean_value_expression of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
@@ -358,3 +356,11 @@ and 'a join_type = Join_type of [ `inner | `outer of 'a outer_join_type ] * 'a
 and 'a outer_join_type = Outer_join_type of [ `left | `right | `full ] * 'a
 
 and 'a join_column_list = Join_column_list of 'a column_name_list * 'a
+
+and 'a scalar_subquery = Scalar_subquery of 'a subquery * 'a
+
+and 'a row_subquery = Row_subquery of 'a subquery * 'a
+
+and 'a table_subquery = Table_subquery of 'a subquery * 'a
+
+and 'a subquery = Subquery of 'a (* TODO *)

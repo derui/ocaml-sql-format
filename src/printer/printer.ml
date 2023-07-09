@@ -888,3 +888,29 @@ and join_column_list () =
 
       let generate = column_name_list
     end) : S))
+
+and scalar_subquery () =
+  Scalar_subquery.(
+    (module Make (struct
+      type t = A.ext A.subquery
+
+      let generate = subquery
+    end) : S))
+
+and row_subquery () =
+  Row_subquery.(
+    (module Make (struct
+      type t = A.ext A.subquery
+
+      let generate = subquery
+    end) : S))
+
+and table_subquery () =
+  Table_subquery.(
+    (module Make (struct
+      type t = A.ext A.subquery
+
+      let generate = subquery
+    end) : S))
+
+and subquery () = Subquery.((module Make () : S))
