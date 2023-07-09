@@ -913,4 +913,12 @@ and table_subquery () =
       let generate = subquery
     end) : S))
 
-and subquery () = Subquery.((module Make () : S))
+and subquery () =
+  Subquery.(
+    (module Make (struct
+      type t = A.ext A.query_expression
+
+      let generate = query_expression
+    end) : S))
+
+and query_expression () = Query_expression.((module Make () : S))

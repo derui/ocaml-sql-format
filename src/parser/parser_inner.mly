@@ -862,6 +862,10 @@ table_subquery:
 | q = subquery {Table_subquery (q, ())}
 ;;
 
+subquery:
+| q = delimited(Tok_lparen, query_expression, Tok_rparen) {Subquery (q, ())}
+;;
+
 (** End   7.15 subquery *)
 
 (** Start 8.19 Search condition *)

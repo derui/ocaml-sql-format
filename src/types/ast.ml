@@ -363,4 +363,6 @@ and 'a row_subquery = Row_subquery of 'a subquery * 'a
 
 and 'a table_subquery = Table_subquery of 'a subquery * 'a
 
-and 'a subquery = Subquery of 'a (* TODO *)
+and 'a subquery = Subquery of 'a query_expression * 'a
+
+and 'a query_expression = Query_expression of 'a (* TODO *)
