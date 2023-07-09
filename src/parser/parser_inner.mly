@@ -954,6 +954,11 @@ with_list:
 | fl = with_list_element; list = list(pair(Tok_comma, with_list_element)) {With_list (fl, List.map snd list, ())}
 ;;
 
+with_clause:
+| Kw_with kw = option(Kw_recursive);
+              list = with_list {With_clause (Option.map (fun _ -> `recursive) kw, list, ())}
+;;
+
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)

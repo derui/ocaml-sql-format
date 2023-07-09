@@ -923,7 +923,13 @@ and subquery () =
 
 and query_expression () = Query_expression.((module Make () : S))
 
-and with_clause () = With_clause.((module Make () : S))
+and with_clause () =
+  With_clause.(
+    (module Make (struct
+      type t = A.ext A.with_list
+
+      let generate = with_list
+    end) : S))
 
 and with_list () =
   With_list.(

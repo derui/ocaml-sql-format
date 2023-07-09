@@ -261,6 +261,7 @@ include (
       | Kw_using -> Fmt.string f @@ as_keyword "using" keyword
       | Kw_natural -> Fmt.string f @@ as_keyword "natural" keyword
       | Kw_corresponding -> Fmt.string f @@ as_keyword "corresponding" keyword
+      | Kw_recursive -> Fmt.string f @@ as_keyword "recursive" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

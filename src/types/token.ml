@@ -247,6 +247,7 @@ type token =
   | Kw_using
   | Kw_natural
   | Kw_corresponding
+  | Kw_recursive
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

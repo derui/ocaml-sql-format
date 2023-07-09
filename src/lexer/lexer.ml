@@ -1710,6 +1710,18 @@ let kw_corresponding =
     , Chars "nN"
     , Chars "gG" )]
 
+let kw_recursive =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "vV"
+    , Chars "eE" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2014,6 +2026,7 @@ let rec token buf =
   | kw_using -> Kw_using
   | kw_natural -> Kw_natural
   | kw_corresponding -> Kw_corresponding
+  | kw_recursive -> Kw_recursive
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
