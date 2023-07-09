@@ -1000,6 +1000,10 @@ cycle_clause:
   Kw_using path = path_column { Cycle_clause (list, mark, mark_value, nmv, path, ()) }
 ;;
 
+sequence_column:
+| e = column_name {Sequence_column (e, ())}
+;;
+
 (** End   7.14 search or cycle clause *)
 
 

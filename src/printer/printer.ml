@@ -1194,7 +1194,13 @@ and search_clause () = Search_clause.((module Make () : S))
 
 and recursive_search_order () = Recursive_search_order.((module Make () : S))
 
-and sequence_column () = Sequence_column.((module Make () : S))
+and sequence_column () =
+  Sequence_column.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
 
 and cycle_clause () =
   Cycle_clause.(

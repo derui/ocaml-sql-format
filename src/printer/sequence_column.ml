@@ -1,13 +1,15 @@
 open Types.Ast
-open Types.Token
+open Types.Literal
 open Intf
 
 module type S = PRINTER with type t = ext sequence_column
 
-module Make (V : GEN with type t = ext xxx) : S = struct
+module Make (V : GEN with type t = ext identifier) : S = struct
   type t = ext sequence_column
 
   let print f t ~option =
     match t with
-    | Sequence_column _ -> failwith "TODO: need implementation"
+    | Sequence_column (v, _) ->
+      let module V = (val V.generate ()) in
+      V.print ~option f v
 end

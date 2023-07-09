@@ -451,7 +451,7 @@ and 'a search_clause = Search_clause of 'a (* TODO *)
 
 and 'a recursive_search_order = Recursive_search_order of 'a (* TODO *)
 
-and 'a sequence_column = Sequence_column of 'a (* TODO *)
+and 'a sequence_column = Sequence_column of 'a identifier * 'a
 
 and 'a cycle_clause =
   | Cycle_clause of
