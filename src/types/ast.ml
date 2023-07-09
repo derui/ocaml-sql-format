@@ -330,7 +330,9 @@ and 'a natural_join = Natural_join of 'a (* TODO *)
 
 and 'a union_join = Union_join of 'a (* TODO *)
 
-and 'a join_specification = Join_specification of 'a (* TODO *)
+and 'a join_specification =
+  | Join_specification of
+      [ `cond of 'a join_condition | `named of 'a named_columns_join ] * 'a
 
 and 'a join_condition = Join_condition of 'a search_condition * 'a
 

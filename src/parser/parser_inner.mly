@@ -589,6 +589,11 @@ named_columns_join:
 join_condition:
 | Kw_on v = search_condition { Join_condition (v, ()) }
 ;;
+
+join_specification:
+| v = join_condition { Join_specification (`cond v, ()) }
+| v = named_columns_join { Join_specification (`named v, ()) }
+;;
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)

@@ -756,7 +756,19 @@ and natural_join () = Natural_join.((module Make () : S))
 
 and union_join () = Union_join.((module Make () : S))
 
-and join_specification () = Join_specification.((module Make () : S))
+and join_specification () =
+  Join_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.join_condition
+
+                let generate = join_condition
+              end)
+              (struct
+                type t = A.ext A.named_columns_join
+
+                let generate = named_columns_join
+              end) : S))
 
 and join_condition () =
   Join_condition.(
