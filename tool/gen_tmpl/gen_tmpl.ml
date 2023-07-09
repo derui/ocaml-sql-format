@@ -26,8 +26,12 @@ end
 
 let printer_di = {| and %%TYPE%% () = %%CONST%%.((module Make(): S)) |}
 
+let normalize name =
+  let spaces = Re.blank |> Re.rep1 |> Re.compile in
+  Re.replace_string spaces ~by:"_" name
+
 let () =
-  let name = Sys.argv.(1) in
+  let name = Sys.argv.(1) |> normalize in
   let re_type_name = Re.str "%%TYPE%%" |> Re.compile in
   let re_constr_name = Re.str "%%CONST%%" |> Re.compile in
   let type_name = String.lowercase_ascii name in
