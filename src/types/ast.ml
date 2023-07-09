@@ -340,4 +340,4 @@ and 'a join_type = Join_type of [ `inner | `outer of 'a outer_join_type ] * 'a
 
 and 'a outer_join_type = Outer_join_type of [ `left | `right | `full ] * 'a
 
-and 'a join_column_list = Join_column_list of 'a (* TODO *)
+and 'a join_column_list = Join_column_list of 'a column_name_list * 'a

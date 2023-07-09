@@ -772,4 +772,10 @@ and join_type () =
 
 and outer_join_type () = Outer_join_type.((module Make () : S))
 
-and join_column_list () = Join_column_list.((module Make () : S))
+and join_column_list () =
+  Join_column_list.(
+    (module Make (struct
+      type t = A.ext A.column_name_list
+
+      let generate = column_name_list
+    end) : S))

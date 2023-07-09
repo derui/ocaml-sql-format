@@ -577,6 +577,10 @@ join_type:
 | Kw_inner { Join_type (`inner, ()) }
 | t = outer_join_type option(Kw_outer) { Join_type (`outer t, ()) }
 ;;
+
+join_column_list:
+| c = column_name_list { Join_column_list (c, ()) }
+;;
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)
