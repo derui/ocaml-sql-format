@@ -746,7 +746,29 @@ and table_function_derived_table () =
 
 and value_expression () = Value_expression.((module Make () : S))
 
-and joined_table () = Joined_table.((module Make () : S))
+and joined_table () =
+  Joined_table.(
+    (module Make
+              (struct
+                type t = A.ext A.cross_join
+
+                let generate = cross_join
+              end)
+              (struct
+                type t = A.ext A.qualified_join
+
+                let generate = qualified_join
+              end)
+              (struct
+                type t = A.ext A.natural_join
+
+                let generate = natural_join
+              end)
+              (struct
+                type t = A.ext A.union_join
+
+                let generate = union_join
+              end) : S))
 
 and cross_join () =
   Cross_join.(

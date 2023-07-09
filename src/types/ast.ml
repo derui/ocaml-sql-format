@@ -166,7 +166,14 @@ and 'a table_primary =
       ]
       * 'a
 
-and 'a joined_table = Joined_table of 'a (* TODO *)
+and 'a joined_table =
+  | Joined_table of
+      [ `cross of 'a cross_join
+      | `qualified of 'a qualified_join
+      | `natural of 'a natural_join
+      | `union of 'a union_join
+      ]
+      * 'a
 
 and 'a sample_clause =
   | Sample_clause of

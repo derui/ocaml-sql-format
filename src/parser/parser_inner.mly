@@ -613,6 +613,13 @@ qualified_join:
 | r = table_reference jt = option(join_type) Kw_join t = table_primary; spec = join_specification { Qualified_join (r,jt, t, spec, ()) }
 ;;
 
+joined_table:
+| v = cross_join {Joined_table (`cross v, _)}
+| v = qualified_join {Joined_table (`qualified v, _)}
+| v = natural_join {Joined_table (`natural v, _)}
+| v = union_join {Joined_table (`union v, _)}
+;;
+
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)
