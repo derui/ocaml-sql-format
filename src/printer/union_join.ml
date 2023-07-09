@@ -6,8 +6,7 @@ module type S = PRINTER with type t = ext union_join
 
 module Make
     (R : GEN with type t = ext table_reference)
-    (P : GEN with type t = ext table_primary) =
-struct
+    (P : GEN with type t = ext table_primary) : S = struct
   type t = ext union_join
 
   let print f t ~option =

@@ -245,6 +245,7 @@ type token =
   | Kw_exclude
   | Kw_window
   | Kw_using
+  | Kw_natural
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

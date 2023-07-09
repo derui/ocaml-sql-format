@@ -752,7 +752,24 @@ and cross_join () = Cross_join.((module Make () : S))
 
 and qualified_join () = Qualified_join.((module Make () : S))
 
-and natural_join () = Natural_join.((module Make () : S))
+and natural_join () =
+  Natural_join.(
+    (module Make
+              (struct
+                type t = A.ext A.table_reference
+
+                let generate = table_reference
+              end)
+              (struct
+                type t = A.ext A.table_primary
+
+                let generate = table_primary
+              end)
+              (struct
+                type t = A.ext A.join_type
+
+                let generate = join_type
+              end) : S))
 
 and union_join () =
   Union_join.(

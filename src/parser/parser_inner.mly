@@ -285,6 +285,8 @@ open Types.Ast
 %token Kw_ties
 %token Kw_others
 %token Kw_window
+%token Kw_using
+%token Kw_natural
 
 %token Tok_eof
 
@@ -597,6 +599,10 @@ join_specification:
 
 union_join:
 | r = table_reference Kw_union Kw_join t = table_primary { Union_join (r, t, ()) }
+;;
+
+natural_join:
+| r = table_reference Kw_natural jt = option(join_type) Kw_join t = table_primary { Natural_join (r,jt, t, ()) }
 ;;
 
 (** End   7.7 joined table *)
