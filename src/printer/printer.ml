@@ -758,7 +758,13 @@ and union_join () = Union_join.((module Make () : S))
 
 and join_specification () = Join_specification.((module Make () : S))
 
-and join_condition () = Join_condition.((module Make () : S))
+and join_condition () =
+  Join_condition.(
+    (module Make (struct
+      type t = A.ext A.search_condition
+
+      let generate = search_condition
+    end) : S))
 
 and named_columns_join () =
   Named_columns_join.(
