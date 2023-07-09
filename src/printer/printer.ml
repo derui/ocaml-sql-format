@@ -925,7 +925,13 @@ and query_expression () = Query_expression.((module Make () : S))
 
 and with_clause () = With_clause.((module Make () : S))
 
-and with_list () = With_list.((module Make () : S))
+and with_list () =
+  With_list.(
+    (module Make (struct
+      type t = A.ext A.with_list_element
+
+      let generate = with_list_element
+    end) : S))
 
 and with_list_element () =
   With_list_element.(
