@@ -495,6 +495,10 @@ table_row_value_expression:
 | v = row_value_special_case { Table_row_value_expression (`special v, ()) }
 | v = row_value_constructor { Table_row_value_expression (`row v, ()) }
 ;;
+contextually_typed_row_value_expression:
+| v = row_value_special_case { Contextually_typed_row_value_expression (`special v, ()) }
+| v = contextually_typed_row_value_constructor { Contextually_typed_row_value_expression (`row v, ()) }
+;;
 (** End   7.2 row value expression *)
 
 (** Start 7.3 table value constructor *)

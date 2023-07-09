@@ -1,15 +1,21 @@
 open Types.Ast
-open Types.Token
 open Intf
 
 module type S =
   PRINTER with type t = ext contextually_typed_row_value_expression
 
-module Make (V : GEN with type t = ext xxx) : S = struct
+module Make
+    (V : GEN with type t = ext row_value_special_case)
+    (C : GEN with type t = ext contextually_typed_row_value_constructor) : S =
+struct
   type t = ext contextually_typed_row_value_expression
 
   let print f t ~option =
     match t with
-    | Contextually_typed_row_value_expression _ ->
-      failwith "TODO: need implementation"
+    | Contextually_typed_row_value_expression (`special v, _) ->
+      let module V = (val V.generate ()) in
+      V.print ~option f v
+    | Contextually_typed_row_value_expression (`row v, _) ->
+      let module C = (val C.generate ()) in
+      C.print ~option f v
 end

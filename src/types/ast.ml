@@ -517,7 +517,11 @@ and 'a table_row_value_expression =
       * 'a
 
 and 'a contextually_typed_row_value_expression =
-  | Contextually_typed_row_value_expression of 'a (* TODO *)
+  | Contextually_typed_row_value_expression of
+      [ `special of 'a row_value_special_case
+      | `row of 'a contextually_typed_row_value_constructor
+      ]
+      * 'a
 
 and 'a row_value_predicand = Row_value_predicand of 'a (* TODO *)
 
@@ -527,3 +531,6 @@ and 'a explicit_row_value_constructor =
   | Explicit_row_value_constructor of 'a (* TODO *)
 
 and 'a row_value_constructor = Row_value_constructor of 'a (* TODO *)
+
+and 'a contextually_typed_row_value_constructor =
+  | Contextually_typed_row_value_constructor of 'a (* TODO *)
