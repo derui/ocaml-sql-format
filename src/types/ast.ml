@@ -381,7 +381,10 @@ and 'a query_term = Query_term of 'a (* TODO *)
 
 and 'a non_join_query_term = Non_join_query_term of 'a (* TODO *)
 
-and 'a query_primary = Query_primary of 'a (* TODO *)
+and 'a query_primary =
+  | Query_primary of
+      [ `non_join of 'a non_join_query_primary | `joined of 'a joined_table ]
+      * 'a
 
 and 'a non_join_query_primary =
   | Non_join_query_primary of

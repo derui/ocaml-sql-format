@@ -875,6 +875,11 @@ non_join_query_primary:
 | v = simple_table { Non_join_query_primary (`simple v, ()) }
 | v = delimited(Tok_lparen, non_join_query_expression, Tok_rparen) { Non_join_query_primary (`expr v, ()) }
 ;;
+
+query_primary:
+| v = joined_table { Query_primary (`joined v, ()) }
+| v = non_join_query_primary { Query_primary (`non_join v, ()) }
+;;
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)

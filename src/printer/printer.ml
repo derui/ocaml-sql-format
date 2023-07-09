@@ -938,7 +938,19 @@ and query_term () = Query_term.((module Make () : S))
 
 and non_join_query_term () = Non_join_query_term.((module Make () : S))
 
-and query_primary () = Query_primary.((module Make () : S))
+and query_primary () =
+  Query_primary.(
+    (module Make
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
+              end)
+              (struct
+                type t = A.ext A.non_join_query_primary
+
+                let generate = non_join_query_primary
+              end) : S))
 
 and non_join_query_primary () =
   Non_join_query_primary.(
