@@ -880,6 +880,24 @@ query_primary:
 | v = joined_table { Query_primary (`joined v, ()) }
 | v = non_join_query_primary { Query_primary (`non_join v, ()) }
 ;;
+
+non_join_query_term:
+| v = non_join_query_primary { Non_join_query_term (`primary v, ()) }
+| term = query_term;
+  Kw_intersect;
+  c = option(corresponding_spec);
+  p = query_primary { Non_join_query_term (`term (term, None, c, p), ()) }
+| term = query_term;
+  Kw_intersect;
+  Kw_all;
+  c = option(corresponding_spec);
+  p = query_primary { Non_join_query_term (`term (term, Some `All, c, p), ()) }
+| term = query_term;
+  Kw_intersect;
+  Kw_distinct;
+  c = option(corresponding_spec);
+  p = query_primary { Non_join_query_term (`term (term, Some `Distinct, c, p), ()) }
+;;
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)

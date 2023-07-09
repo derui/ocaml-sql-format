@@ -379,7 +379,16 @@ and 'a non_join_query_expression = Non_join_query_expression of 'a (* TODO *)
 
 and 'a query_term = Query_term of 'a (* TODO *)
 
-and 'a non_join_query_term = Non_join_query_term of 'a (* TODO *)
+and 'a non_join_query_term =
+  | Non_join_query_term of
+      [ `primary of 'a non_join_query_primary
+      | `term of
+        'a query_term
+        * qualifier option
+        * 'a corresponding_spec option
+        * 'a query_primary
+      ]
+      * 'a
 
 and 'a query_primary =
   | Query_primary of

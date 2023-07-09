@@ -936,7 +936,29 @@ and non_join_query_expression () =
 
 and query_term () = Query_term.((module Make () : S))
 
-and non_join_query_term () = Non_join_query_term.((module Make () : S))
+and non_join_query_term () =
+  Non_join_query_term.(
+    (module Make
+              (struct
+                type t = A.ext A.non_join_query_primary
+
+                let generate = non_join_query_primary
+              end)
+              (struct
+                type t = A.ext A.query_term
+
+                let generate = query_term
+              end)
+              (struct
+                type t = A.ext A.corresponding_spec
+
+                let generate = corresponding_spec
+              end)
+              (struct
+                type t = A.ext A.query_primary
+
+                let generate = query_primary
+              end) : S))
 
 and query_primary () =
   Query_primary.(
