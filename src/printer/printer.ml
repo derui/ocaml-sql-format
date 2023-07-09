@@ -1316,10 +1316,18 @@ and table_value_constructor () =
     end) : S))
 
 and row_value_expression_list () =
-  Row_value_expression_list.((module Make () : S))
+  Row_value_expression_list.(
+    (module Make (struct
+      type t = A.ext A.table_row_value_expression
 
-and contextually_typed_table_value_expression () =
-  Contextually_typed_table_value_expression.((module Make () : S))
+      let generate = table_row_value_expression
+    end) : S))
+
+and contextually_typed_table_value_constructor () =
+  Contextually_typed_table_value_constructor.((module Make () : S))
 
 and contextually_typed_row_value_expression_list () =
   Contextually_typed_row_value_expression_list.((module Make () : S))
+
+and table_row_value_expression () =
+  Table_row_value_expression.((module Make () : S))

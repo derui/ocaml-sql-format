@@ -488,10 +488,15 @@ and 'a non_cycle_mark_value = Non_cycle_mark_value of 'a value_expression * 'a
 and 'a table_value_constructor =
   | Table_value_constructor of 'a row_value_expression_list * 'a
 
-and 'a row_value_expression_list = Row_value_expression_list of 'a (* TODO *)
+and 'a row_value_expression_list =
+  | Row_value_expression_list of
+      'a table_row_value_expression * 'a table_row_value_expression list * 'a
 
-and 'a contextually_typed_table_value_expression =
-  | Contextually_typed_table_value_expression of 'a (* TODO *)
+and 'a contextually_typed_table_value_constructor =
+  | Contextually_typed_table_value_constructor of 'a (* TODO *)
 
 and 'a contextually_typed_row_value_expression_list =
   | Contextually_typed_row_value_expression_list of 'a (* TODO *)
+
+and 'a table_row_value_expression =
+  | Table_row_value_expression of 'a (* TODO *)

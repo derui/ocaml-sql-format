@@ -489,6 +489,10 @@ column_reference:
 table_value_constructor:
 | Kw_values v = row_value_expression_list {Table_value_constructor (v, _)}
 ;;
+
+row_value_expression_list:
+| fl = table_row_value_expression; list = list(pair(Tok_comma, table_row_value_expression)) {Row_value_expression_list (fl, List.map snd list, ())}
+;;
 (** End   7.3 table value constructor *)
 
 
