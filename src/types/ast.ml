@@ -512,7 +512,7 @@ and 'a row_value_expression =
 and 'a table_row_value_expression =
   | Table_row_value_expression of
       [ `special of 'a row_value_special_case
-      | `explicit of 'a explicit_row_value_constructor
+      | `row of 'a row_value_constructor
       ]
       * 'a
 
@@ -525,3 +525,5 @@ and 'a row_value_special_case = Row_value_special_case of 'a (* TODO *)
 
 and 'a explicit_row_value_constructor =
   | Explicit_row_value_constructor of 'a (* TODO *)
+
+and 'a row_value_constructor = Row_value_constructor of 'a (* TODO *)

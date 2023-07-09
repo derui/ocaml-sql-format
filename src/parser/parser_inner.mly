@@ -487,8 +487,13 @@ column_reference:
 
 (** Start 7.2 row value expression *)
 row_value_expression:
+| v = row_value_special_case { Row_value_expression (`special v, ()) }
+| v = explicit_row_value_constructor { Row_value_expression (`explicit v, ()) }
+;;
+
+table_row_value_expression:
 | v = row_value_special_case { Table_row_value_expression (`special v, ()) }
-| v = explicit_row_value_constructor { Table_row_value_expression (`explicit v, ()) }
+| v = row_value_constructor { Table_row_value_expression (`row v, ()) }
 ;;
 (** End   7.2 row value expression *)
 
