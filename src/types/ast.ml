@@ -453,7 +453,14 @@ and 'a recursive_search_order = Recursive_search_order of 'a (* TODO *)
 
 and 'a sequence_column = Sequence_column of 'a (* TODO *)
 
-and 'a cycle_clause = Cycle_clause of 'a (* TODO *)
+and 'a cycle_clause =
+  | Cycle_clause of
+      'a cycle_column_list
+      * 'a cycle_mark_column
+      * 'a cycle_mark_value
+      * 'a non_cycle_mark_value
+      * 'a path_column
+      * 'a
 
 and 'a cycle_column_list =
   | Cycle_column_list of 'a cycle_column * 'a cycle_column list * 'a

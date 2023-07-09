@@ -248,6 +248,9 @@ type token =
   | Kw_natural
   | Kw_corresponding
   | Kw_recursive
+  | Kw_cycle
+  | Kw_default
+  | Kw_set
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

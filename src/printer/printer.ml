@@ -1196,7 +1196,34 @@ and recursive_search_order () = Recursive_search_order.((module Make () : S))
 
 and sequence_column () = Sequence_column.((module Make () : S))
 
-and cycle_clause () = Cycle_clause.((module Make () : S))
+and cycle_clause () =
+  Cycle_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.cycle_column_list
+
+                let generate = cycle_column_list
+              end)
+              (struct
+                type t = A.ext A.cycle_mark_column
+
+                let generate = cycle_mark_column
+              end)
+              (struct
+                type t = A.ext A.cycle_mark_value
+
+                let generate = cycle_mark_value
+              end)
+              (struct
+                type t = A.ext A.non_cycle_mark_value
+
+                let generate = non_cycle_mark_value
+              end)
+              (struct
+                type t = A.ext A.path_column
+
+                let generate = path_column
+              end) : S))
 
 and cycle_column_list () =
   Cycle_column_list.(

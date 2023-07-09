@@ -288,6 +288,10 @@ open Types.Ast
 %token Kw_using
 %token Kw_natural
 %token Kw_corresponding
+%token Kw_recursive
+%token Kw_cycle
+%token Kw_default
+%token Kw_set
 
 %token Tok_eof
 
@@ -987,6 +991,13 @@ cycle_column:
 
 cycle_column_list:
 | fl = cycle_column; list = list(pair(Tok_comma, cycle_column)) {Cycle_column_list (fl, List.map snd list, ())}
+;;
+
+cycle_clause:
+| Kw_cycle list = cycle_column_list;
+  Kw_set mark = cycle_mark_column Kw_to mark_value = cycle_mark_value;
+  Kw_default nmv =  non_cycle_mark_value;
+  Kw_using path = path_column { Cycle_clause (list, mark, mark_value, nmv, path, ()) }
 ;;
 
 (** End   7.14 search or cycle clause *)

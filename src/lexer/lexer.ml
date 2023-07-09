@@ -1722,6 +1722,21 @@ let kw_recursive =
     , Chars "vV"
     , Chars "eE" )]
 
+let kw_cycle =
+  [%sedlex.regexp? Chars "cC", Chars "yY", Chars "cC", Chars "lL", Chars "eE"]
+
+let kw_default =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "fF"
+    , Chars "aA"
+    , Chars "uU"
+    , Chars "lL"
+    , Chars "tT" )]
+
+let kw_set = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2027,6 +2042,9 @@ let rec token buf =
   | kw_natural -> Kw_natural
   | kw_corresponding -> Kw_corresponding
   | kw_recursive -> Kw_recursive
+  | kw_cycle -> Kw_cycle
+  | kw_default -> Kw_default
+  | kw_set -> Kw_set
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
