@@ -976,6 +976,11 @@ cycle_mark_value:
 path_column:
 | e = column_name {Path_column (e, ())}
 ;;
+
+cycle_mark_column:
+| e = column_name {Cycle_mark_column (e, ())}
+;;
+
 (** End   7.14 search or cycle clause *)
 
 
