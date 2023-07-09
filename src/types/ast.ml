@@ -502,8 +502,14 @@ and 'a contextually_typed_row_value_expression_list =
       * 'a contextually_typed_row_value_expression list
       * 'a
 
+and 'a row_value_expression = Row_value_expression of 'a (* TODO *)
+
 and 'a table_row_value_expression =
   | Table_row_value_expression of 'a (* TODO *)
 
 and 'a contextually_typed_row_value_expression =
   | Contextually_typed_row_value_expression of 'a (* TODO *)
+
+and 'a row_value_predicand = Row_value_predicand of 'a (* TODO *)
+
+and 'a row_value_special_case = Row_value_special_case of 'a (* TODO *)
