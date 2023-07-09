@@ -338,6 +338,6 @@ and 'a named_columns_join = Named_columns_join of 'a (* TODO *)
 
 and 'a join_type = Join_type of 'a (* TODO *)
 
-and 'a outer_join_type = Outer_join_type of 'a (* TODO *)
+and 'a outer_join_type = Outer_join_type of [ `left | `right | `full ] * 'a
 
 and 'a join_column_list = Join_column_list of 'a (* TODO *)

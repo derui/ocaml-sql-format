@@ -566,6 +566,14 @@ column_name_list:
 
 (** End   7.6 table reference *)
 
+(** Start 7.7 joined table *)
+outer_join_type:
+| Kw_left { Outer_join_type (`left, ()) }
+| Kw_right { Outer_join_type (`right, ()) }
+| Kw_full { Outer_join_type (`full, ()) }
+;;
+(** End   7.7 joined table *)
+
 (** Start 7.8 where clause *)
 where_clause:
 | Kw_where s = search_condition {Where_clause (s, ())}

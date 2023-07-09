@@ -9,5 +9,12 @@ module Make () : S = struct
 
   let print f t ~option =
     match t with
-    | Outer_join_type _ -> failwith "TODO: need implementation"
+    | Outer_join_type (kw, _) ->
+      let kw =
+        match kw with
+        | `left -> Kw_left
+        | `right -> Kw_right
+        | `full -> Kw_full
+      in
+      Printer_token.print ~option f kw
 end
