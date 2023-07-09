@@ -932,7 +932,28 @@ and with_list_element () = With_list_element.((module Make () : S))
 and query_expression_body () = Query_expression_body.((module Make () : S))
 
 and non_join_query_expression () =
-  Non_join_query_expression.((module Make () : S))
+  Non_join_query_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.non_join_query_term
+
+                let generate = non_join_query_term
+              end)
+              (struct
+                type t = A.ext A.query_expression_body
+
+                let generate = query_expression_body
+              end)
+              (struct
+                type t = A.ext A.corresponding_spec
+
+                let generate = corresponding_spec
+              end)
+              (struct
+                type t = A.ext A.query_term
+
+                let generate = query_term
+              end) : S))
 
 and query_term () =
   Query_term.(

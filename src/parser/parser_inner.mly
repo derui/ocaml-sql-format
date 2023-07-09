@@ -904,6 +904,38 @@ query_term:
 | v = non_join_query_term { Query_term (`term v, ()) }
 ;;
 
+non_join_query_expression:
+| v = non_join_query_term { Non_join_query_expression (`term v, ()) }
+| term = query_expression_body;
+  Kw_union;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`union (term, None, c, p), ()) }
+| term = query_expression_body;
+  Kw_union;
+  Kw_all;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`union (term, Some `All, c, p), ()) }
+| term = query_expression_body;
+  Kw_union;
+  Kw_distinct;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`union (term, Some `Distinct, c, p), ()) }
+| term = query_expression_body;
+  Kw_except;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`except (term, None, c, p), ()) }
+| term = query_expression_body;
+  Kw_except;
+  Kw_all;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`except (term, Some `All, c, p), ()) }
+| term = query_expression_body;
+  Kw_except;
+  Kw_distinct;
+  c = option(corresponding_spec);
+  p = query_term { Non_join_query_term (`except (term, Some `Distinct, c, p), ()) }
+;;
+
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)
