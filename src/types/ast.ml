@@ -443,8 +443,6 @@ and 'a corresponding_spec =
 and 'a corresponding_column_list =
   | Corresponding_column_list of 'a column_name_list * 'a
 
-and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
-
 and 'a search_or_cycle_clause =
   | Search_or_cycle_clause of
       [ `search of 'a search_clause
@@ -486,3 +484,13 @@ and 'a path_column = Path_column of 'a identifier * 'a
 and 'a cycle_mark_value = Cycle_mark_value of 'a value_expression * 'a
 
 and 'a non_cycle_mark_value = Non_cycle_mark_value of 'a value_expression * 'a
+
+and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
+
+and 'a row_value_expression_list = Row_value_expression_list of 'a (* TODO *)
+
+and 'a contextually_typed_table_value_expression =
+  | Contextually_typed_table_value_expression of 'a (* TODO *)
+
+and 'a contextually_typed_row_value_expression_list =
+  | Contextually_typed_row_value_expression_list of 'a (* TODO *)

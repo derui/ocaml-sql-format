@@ -1308,3 +1308,12 @@ and non_cycle_mark_value () =
 
       let generate = value_expression
     end) : S))
+
+and row_value_expression_list () =
+  Row_value_expression_list.((module Make () : S))
+
+and contextually_typed_table_value_expression () =
+  Contextually_typed_table_value_expression.((module Make () : S))
+
+and contextually_typed_row_value_expression_list () =
+  Contextually_typed_row_value_expression_list.((module Make () : S))
