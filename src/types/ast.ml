@@ -366,3 +366,29 @@ and 'a table_subquery = Table_subquery of 'a subquery * 'a
 and 'a subquery = Subquery of 'a query_expression * 'a
 
 and 'a query_expression = Query_expression of 'a (* TODO *)
+
+and 'a with_clause = With_clause of 'a (* TODO *)
+
+and 'a with_list = With_list of 'a (* TODO *)
+
+and 'a with_list_element = With_list_element of 'a (* TODO *)
+
+and 'a query_expression_body = Query_expression_body of 'a (* TODO *)
+
+and 'a non_join_query_expression = Non_join_query_expression of 'a (* TODO *)
+
+and 'a query_term = Query_term of 'a (* TODO *)
+
+and 'a non_join_query_term = Non_join_query_term of 'a (* TODO *)
+
+and 'a query_primary = Query_primary of 'a (* TODO *)
+
+and 'a non_join_query_primary = Non_join_query_primary of 'a (* TODO *)
+
+and 'a simple_table = Simple_table of 'a (* TODO *)
+
+and 'a explicit_table = Explicit_table of 'a (* TODO *)
+
+and 'a corresponding_spec = Corresponding_spec of 'a (* TODO *)
+
+and 'a corresponding_column_list = Corresponding_column_list of 'a (* TODO *)

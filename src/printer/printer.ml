@@ -922,3 +922,31 @@ and subquery () =
     end) : S))
 
 and query_expression () = Query_expression.((module Make () : S))
+
+and with_clause () = With_clause.((module Make () : S))
+
+and with_list () = With_list.((module Make () : S))
+
+and with_list_element () = With_list_element.((module Make () : S))
+
+and query_expression_body () = Query_expression_body.((module Make () : S))
+
+and non_join_query_expression () =
+  Non_join_query_expression.((module Make () : S))
+
+and query_term () = Query_term.((module Make () : S))
+
+and non_join_query_term () = Non_join_query_term.((module Make () : S))
+
+and query_primary () = Query_primary.((module Make () : S))
+
+and non_join_query_primary () = Non_join_query_primary.((module Make () : S))
+
+and simple_table () = Simple_table.((module Make () : S))
+
+and explicit_table () = Explicit_table.((module Make () : S))
+
+and corresponding_spec () = Corresponding_spec.((module Make () : S))
+
+and corresponding_column_list () =
+  Corresponding_column_list.((module Make () : S))
