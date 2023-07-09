@@ -594,6 +594,11 @@ join_specification:
 | v = join_condition { Join_specification (`cond v, ()) }
 | v = named_columns_join { Join_specification (`named v, ()) }
 ;;
+
+union_join:
+| r = table_reference Kw_union Kw_join t = table_primary { Union_join (r, t, ()) }
+;;
+
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)

@@ -328,7 +328,7 @@ and 'a qualified_join = Qualified_join of 'a (* TODO *)
 
 and 'a natural_join = Natural_join of 'a (* TODO *)
 
-and 'a union_join = Union_join of 'a (* TODO *)
+and 'a union_join = Union_join of 'a table_reference * 'a table_primary * 'a
 
 and 'a join_specification =
   | Join_specification of
