@@ -934,7 +934,19 @@ and query_expression_body () = Query_expression_body.((module Make () : S))
 and non_join_query_expression () =
   Non_join_query_expression.((module Make () : S))
 
-and query_term () = Query_term.((module Make () : S))
+and query_term () =
+  Query_term.(
+    (module Make
+              (struct
+                type t = A.ext A.non_join_query_term
+
+                let generate = non_join_query_term
+              end)
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
+              end) : S))
 
 and non_join_query_term () =
   Non_join_query_term.(

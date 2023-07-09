@@ -377,7 +377,9 @@ and 'a query_expression_body = Query_expression_body of 'a (* TODO *)
 
 and 'a non_join_query_expression = Non_join_query_expression of 'a (* TODO *)
 
-and 'a query_term = Query_term of 'a (* TODO *)
+and 'a query_term =
+  | Query_term of
+      [ `term of 'a non_join_query_term | `joined of 'a joined_table ] * 'a
 
 and 'a non_join_query_term =
   | Non_join_query_term of

@@ -898,6 +898,12 @@ non_join_query_term:
   c = option(corresponding_spec);
   p = query_primary { Non_join_query_term (`term (term, Some `Distinct, c, p), ()) }
 ;;
+
+query_term:
+| v = joined_table { Query_term (`joined v, ()) }
+| v = non_join_query_term { Query_term (`term v, ()) }
+;;
+
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)
