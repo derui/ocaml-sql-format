@@ -322,7 +322,7 @@ and 'a unsigned_value_specification =
 
 and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)
 
-and 'a cross_join = Cross_join of 'a (* TODO *)
+and 'a cross_join = Cross_join of 'a table_reference * 'a table_primary * 'a
 
 and 'a qualified_join =
   | Qualified_join of

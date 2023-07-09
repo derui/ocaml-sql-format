@@ -601,6 +601,10 @@ union_join:
 | r = table_reference Kw_union Kw_join t = table_primary { Union_join (r, t, ()) }
 ;;
 
+cross_join:
+| r = table_reference Kw_cross Kw_join t = table_primary { Cross_join (r, t, ()) }
+;;
+
 natural_join:
 | r = table_reference Kw_natural jt = option(join_type) Kw_join t = table_primary { Natural_join (r,jt, t, ()) }
 ;;
