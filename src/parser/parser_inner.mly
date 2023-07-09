@@ -605,6 +605,10 @@ natural_join:
 | r = table_reference Kw_natural jt = option(join_type) Kw_join t = table_primary { Natural_join (r,jt, t, ()) }
 ;;
 
+qualified_join:
+| r = table_reference jt = option(join_type) Kw_join t = table_primary; spec = join_specification { Qualified_join (r,jt, t, spec, ()) }
+;;
+
 (** End   7.7 joined table *)
 
 (** Start 7.8 where clause *)

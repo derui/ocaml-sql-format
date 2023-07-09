@@ -324,7 +324,13 @@ and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)
 
 and 'a cross_join = Cross_join of 'a (* TODO *)
 
-and 'a qualified_join = Qualified_join of 'a (* TODO *)
+and 'a qualified_join =
+  | Qualified_join of
+      'a table_reference
+      * 'a join_type option
+      * 'a table_primary
+      * 'a join_specification
+      * 'a
 
 and 'a natural_join =
   | Natural_join of
