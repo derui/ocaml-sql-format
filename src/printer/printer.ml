@@ -1198,7 +1198,13 @@ and sequence_column () = Sequence_column.((module Make () : S))
 
 and cycle_clause () = Cycle_clause.((module Make () : S))
 
-and cycle_column_list () = Cycle_column_list.((module Make () : S))
+and cycle_column_list () =
+  Cycle_column_list.(
+    (module Make (struct
+      type t = A.ext A.cycle_column
+
+      let generate = cycle_column
+    end) : S))
 
 and cycle_column () =
   Cycle_column.(

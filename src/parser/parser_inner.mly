@@ -985,6 +985,10 @@ cycle_column:
 | e = column_name {Cycle_column (e, ())}
 ;;
 
+cycle_column_list:
+| fl = cycle_column; list = list(pair(Tok_comma, cycle_column)) {Cycle_column_list (fl, List.map snd list, ())}
+;;
+
 (** End   7.14 search or cycle clause *)
 
 
