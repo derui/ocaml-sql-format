@@ -849,6 +849,12 @@ all_fields_column_name_list:
 
 (** End   7.12 Query specification *)
 
+(** Start 7.13 query expression *)
+corresponding_column_list:
+| l = column_name_list { Corresponding_column_list (l, ()) }
+;;
+(** End   7.13 query expression *)
+
 (** Start 7.15 subquery *)
 scalar_subquery:
 | q = subquery {Scalar_subquery (q, ())}
