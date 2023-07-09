@@ -1189,3 +1189,23 @@ and all_fields_reference () =
               end) : S))
 
 and search_or_cycle_clause () = Search_or_cycle_clause.((module Make () : S))
+
+and search_clause () = Search_clause.((module Make () : S))
+
+and recursive_search_order () = Recursive_search_order.((module Make () : S))
+
+and sequence_column () = Sequence_column.((module Make () : S))
+
+and cycle_clause () = Cycle_clause.((module Make () : S))
+
+and cycle_column_list () = Cycle_column_list.((module Make () : S))
+
+and cycle_column () = Cycle_column.((module Make () : S))
+
+and cycle_mark_column () = Cycle_mark_column.((module Make () : S))
+
+and path_column () = Path_column.((module Make () : S))
+
+and cycle_mark_value () = Cycle_mark_value.((module Make () : S))
+
+and non_cycle_mark_value () = Non_cycle_mark_value.((module Make () : S))

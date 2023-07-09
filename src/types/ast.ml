@@ -446,3 +446,23 @@ and 'a corresponding_column_list =
 and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
 
 and 'a search_or_cycle_clause = Search_or_cycle_clause of 'a (* TODO *)
+
+and 'a search_clause = Search_clause of 'a (* TODO *)
+
+and 'a recursive_search_order = Recursive_search_order of 'a (* TODO *)
+
+and 'a sequence_column = Sequence_column of 'a (* TODO *)
+
+and 'a cycle_clause = Cycle_clause of 'a (* TODO *)
+
+and 'a cycle_column_list = Cycle_column_list of 'a (* TODO *)
+
+and 'a cycle_column = Cycle_column of 'a (* TODO *)
+
+and 'a cycle_mark_column = Cycle_mark_column of 'a (* TODO *)
+
+and 'a path_column = Path_column of 'a (* TODO *)
+
+and 'a cycle_mark_value = Cycle_mark_value of 'a (* TODO *)
+
+and 'a non_cycle_mark_value = Non_cycle_mark_value of 'a (* TODO *)
