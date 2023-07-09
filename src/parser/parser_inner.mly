@@ -495,9 +495,15 @@ table_row_value_expression:
 | v = row_value_special_case { Table_row_value_expression (`special v, ()) }
 | v = row_value_constructor { Table_row_value_expression (`row v, ()) }
 ;;
+
 contextually_typed_row_value_expression:
 | v = row_value_special_case { Contextually_typed_row_value_expression (`special v, ()) }
 | v = contextually_typed_row_value_constructor { Contextually_typed_row_value_expression (`row v, ()) }
+;;
+
+row_value_predicand:
+| v = row_value_special_case { Row_value_predicand (`special v, ()) }
+| v = row_value_constructor_predicand { Row_value_predicand (`row v, ()) }
 ;;
 (** End   7.2 row value expression *)
 

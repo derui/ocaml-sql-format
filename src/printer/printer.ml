@@ -1381,7 +1381,19 @@ and contextually_typed_row_value_expression () =
                 let generate = contextually_typed_row_value_constructor
               end) : S))
 
-and row_value_predicand () = Row_value_predicand.((module Make () : S))
+and row_value_predicand () =
+  Row_value_predicand.(
+    (module Make
+              (struct
+                type t = A.ext A.row_value_special_case
+
+                let generate = row_value_special_case
+              end)
+              (struct
+                type t = A.ext A.row_value_constructor_predicand
+
+                let generate = row_value_constructor_predicand
+              end) : S))
 
 and row_value_special_case () = Row_value_special_case.((module Make () : S))
 
@@ -1392,3 +1404,6 @@ and row_value_constructor () = Row_value_constructor.((module Make () : S))
 
 and contextually_typed_row_value_constructor () =
   Contextually_typed_row_value_constructor.((module Make () : S))
+
+and row_value_constructor_predicand () =
+  Row_value_constructor_predicand.((module Make () : S))
