@@ -929,7 +929,19 @@ and with_list () = With_list.((module Make () : S))
 
 and with_list_element () = With_list_element.((module Make () : S))
 
-and query_expression_body () = Query_expression_body.((module Make () : S))
+and query_expression_body () =
+  Query_expression_body.(
+    (module Make
+              (struct
+                type t = A.ext A.joined_table
+
+                let generate = joined_table
+              end)
+              (struct
+                type t = A.ext A.non_join_query_expression
+
+                let generate = non_join_query_expression
+              end) : S))
 
 and non_join_query_expression () =
   Non_join_query_expression.(

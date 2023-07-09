@@ -373,7 +373,10 @@ and 'a with_list = With_list of 'a (* TODO *)
 
 and 'a with_list_element = With_list_element of 'a (* TODO *)
 
-and 'a query_expression_body = Query_expression_body of 'a (* TODO *)
+and 'a query_expression_body =
+  | Query_expression_body of
+      [ `expr of 'a non_join_query_expression | `joined of 'a joined_table ]
+      * 'a
 
 and 'a non_join_query_expression =
   | Non_join_query_expression of

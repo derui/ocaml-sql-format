@@ -936,6 +936,11 @@ non_join_query_expression:
   p = query_term { Non_join_query_term (`except (term, Some `Distinct, c, p), ()) }
 ;;
 
+query_expression_boyd:
+| v = joined_table { Query_expression_body (`joined v, ()) }
+| v = non_join_query_expression { Query_expression_body (`expr v, ()) }
+;;
+
 (** End   7.13 query expression *)
 
 (** Start 7.15 subquery *)
