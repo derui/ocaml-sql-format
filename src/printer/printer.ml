@@ -927,7 +927,29 @@ and with_clause () = With_clause.((module Make () : S))
 
 and with_list () = With_list.((module Make () : S))
 
-and with_list_element () = With_list_element.((module Make () : S))
+and with_list_element () =
+  With_list_element.(
+    (module Make
+              (struct
+                type t = A.ext A.column_name_list
+
+                let generate = column_name_list
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.query_expression
+
+                let generate = query_expression
+              end)
+              (struct
+                type t = A.ext A.search_or_cycle_clause
+
+                let generate = search_or_cycle_clause
+              end) : S))
 
 and query_expression_body () =
   Query_expression_body.(
@@ -1141,3 +1163,5 @@ and all_fields_reference () =
 
                 let generate = all_field_column_name_list
               end) : S))
+
+and search_or_cycle_clause () = Search_or_cycle_clause.((module Make () : S))

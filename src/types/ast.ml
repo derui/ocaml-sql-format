@@ -371,7 +371,13 @@ and 'a with_clause = With_clause of 'a (* TODO *)
 
 and 'a with_list = With_list of 'a (* TODO *)
 
-and 'a with_list_element = With_list_element of 'a (* TODO *)
+and 'a with_list_element =
+  | With_list_element of
+      'a identifier
+      * 'a column_name_list option
+      * 'a query_expression
+      * 'a search_or_cycle_clause option
+      * 'a
 
 and 'a query_expression_body =
   | Query_expression_body of
@@ -436,3 +442,5 @@ and 'a corresponding_column_list =
   | Corresponding_column_list of 'a column_name_list * 'a
 
 and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
+
+and 'a search_or_cycle_clause = Search_or_cycle_clause of 'a (* TODO *)

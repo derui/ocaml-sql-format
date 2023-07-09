@@ -936,9 +936,18 @@ non_join_query_expression:
   p = query_term { Non_join_query_term (`except (term, Some `Distinct, c, p), ()) }
 ;;
 
-query_expression_boyd:
+query_expression_body:
 | v = joined_table { Query_expression_body (`joined v, ()) }
 | v = non_join_query_expression { Query_expression_body (`expr v, ()) }
+;;
+
+with_list_element:
+| n = identifier;
+  c = option(delimited(Tok_lparen, column_name_list, Tok_rparen));
+  Kw_as;
+  expr = delimited(Tok_lparen, query_expression, Tok_rparen);
+  search = option(search_or_cycle_clause)
+  { With_list_element (n, c, expr, search, ()) }
 ;;
 
 (** End   7.13 query expression *)
