@@ -463,6 +463,6 @@ and 'a cycle_mark_column = Cycle_mark_column of 'a (* TODO *)
 
 and 'a path_column = Path_column of 'a (* TODO *)
 
-and 'a cycle_mark_value = Cycle_mark_value of 'a (* TODO *)
+and 'a cycle_mark_value = Cycle_mark_value of 'a value_expression * 'a
 
 and 'a non_cycle_mark_value = Non_cycle_mark_value of 'a value_expression * 'a

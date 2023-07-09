@@ -968,6 +968,9 @@ query_expression:
 non_cycle_mark_value:
 | e = value_expression {Non_cycle_mark_value (e, ())}
 ;;
+cycle_mark_value:
+| e = value_expression {Cycle_mark_value (e, ())}
+;;
 (** End   7.14 search or cycle clause *)
 
 
