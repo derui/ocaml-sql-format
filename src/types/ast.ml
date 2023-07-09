@@ -461,7 +461,7 @@ and 'a cycle_column = Cycle_column of 'a (* TODO *)
 
 and 'a cycle_mark_column = Cycle_mark_column of 'a (* TODO *)
 
-and 'a path_column = Path_column of 'a (* TODO *)
+and 'a path_column = Path_column of 'a identifier * 'a
 
 and 'a cycle_mark_value = Cycle_mark_value of 'a value_expression * 'a
 

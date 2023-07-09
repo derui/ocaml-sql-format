@@ -1204,7 +1204,13 @@ and cycle_column () = Cycle_column.((module Make () : S))
 
 and cycle_mark_column () = Cycle_mark_column.((module Make () : S))
 
-and path_column () = Path_column.((module Make () : S))
+and path_column () =
+  Path_column.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
 
 and cycle_mark_value () =
   Cycle_mark_value.(
