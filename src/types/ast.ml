@@ -227,8 +227,6 @@ and 'a boolean_value_expression = Boolean_value_expression of 'a (* TODO *)
 
 and 'a value_expression = Value_expression of 'a (* TODO *)
 
-and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
-
 and 'a collection_value_expression =
   | Collection_value_expression of 'a (* TODO *)
 
@@ -546,3 +544,11 @@ and 'a row_value_constructor_predicand =
 
 and 'a nonparenthesized_value_expression_primary =
   | Nonparenthesized_value_expression_primary of 'a (* TODO *)
+
+and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
+
+and 'a term = Term of 'a (* TODO *)
+
+and 'a factor = Factor of 'a (* TODO *)
+
+and 'a numeric_primary = Numeric_primary of 'a (* TODO *)

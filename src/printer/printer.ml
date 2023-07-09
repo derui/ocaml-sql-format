@@ -1416,3 +1416,9 @@ and row_value_constructor_predicand () =
 
 and nonparenthesized_value_expression_primary () =
   Nonparenthesized_value_expression_primary.((module Make () : S))
+
+and term () = Term.((module Make () : S))
+
+and factor () = Factor.((module Make () : S))
+
+and numeric_primary () = Numeric_primary.((module Make () : S))
