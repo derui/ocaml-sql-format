@@ -1754,6 +1754,10 @@ let kw_search =
   [%sedlex.regexp?
     Chars "sS", Chars "eE", Chars "aA", Chars "rR", Chars "cC", Chars "hH"]
 
+let kw_values =
+  [%sedlex.regexp?
+    Chars "vV", Chars "aA", Chars "lL", Chars "uU", Chars "eE", Chars "sS"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2065,6 +2069,7 @@ let rec token buf =
   | kw_depth -> Kw_depth
   | kw_breadth -> Kw_breadth
   | kw_search -> Kw_search
+  | kw_values -> Kw_values
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

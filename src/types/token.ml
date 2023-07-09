@@ -254,6 +254,7 @@ type token =
   | Kw_depth
   | Kw_breadth
   | Kw_search
+  | Kw_values
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

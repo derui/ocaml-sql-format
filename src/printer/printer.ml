@@ -1122,8 +1122,6 @@ and corresponding_column_list () =
       let generate = column_name_list
     end) : S))
 
-and table_value_constructor () = Table_value_constructor.((module Make () : S))
-
 and query_specification () =
   Query_specification.(
     (module Make
@@ -1307,6 +1305,14 @@ and non_cycle_mark_value () =
       type t = A.ext A.value_expression
 
       let generate = value_expression
+    end) : S))
+
+and table_value_constructor () =
+  Table_value_constructor.(
+    (module Make (struct
+      type t = A.ext A.row_value_expression_list
+
+      let generate = row_value_expression_list
     end) : S))
 
 and row_value_expression_list () =

@@ -485,7 +485,8 @@ and 'a cycle_mark_value = Cycle_mark_value of 'a value_expression * 'a
 
 and 'a non_cycle_mark_value = Non_cycle_mark_value of 'a value_expression * 'a
 
-and 'a table_value_constructor = Table_value_constructor of 'a (* TODO *)
+and 'a table_value_constructor =
+  | Table_value_constructor of 'a row_value_expression_list * 'a
 
 and 'a row_value_expression_list = Row_value_expression_list of 'a (* TODO *)
 

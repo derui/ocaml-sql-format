@@ -295,6 +295,7 @@ open Types.Ast
 %token Kw_depth
 %token Kw_breadth
 %token Kw_search
+%token Kw_values
 
 %token Tok_eof
 
@@ -483,6 +484,12 @@ column_reference:
 ;;
 
 (** End   names and identifiers *)
+
+(** Start 7.3 table value constructor *)
+table_value_constructor:
+| Kw_values v = row_value_expression_list {Table_value_constructor (v, _)}
+;;
+(** End   7.3 table value constructor *)
 
 
 (** Start 7.4 table expression *)
