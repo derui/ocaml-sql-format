@@ -265,6 +265,8 @@ include (
       | Kw_cycle -> Fmt.string f @@ as_keyword "cycle" keyword
       | Kw_default -> Fmt.string f @@ as_keyword "default" keyword
       | Kw_set -> Fmt.string f @@ as_keyword "set" keyword
+      | Kw_depth -> Fmt.string f @@ as_keyword "depth" keyword
+      | Kw_breadth -> Fmt.string f @@ as_keyword "breadth" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

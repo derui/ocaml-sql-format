@@ -1192,7 +1192,13 @@ and search_or_cycle_clause () = Search_or_cycle_clause.((module Make () : S))
 
 and search_clause () = Search_clause.((module Make () : S))
 
-and recursive_search_order () = Recursive_search_order.((module Make () : S))
+and recursive_search_order () =
+  Recursive_search_order.(
+    (module Make (struct
+      type t = A.ext A.sort_specification_list
+
+      let generate = sort_specification_list
+    end) : S))
 
 and sequence_column () =
   Sequence_column.(

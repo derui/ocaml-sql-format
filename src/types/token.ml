@@ -251,6 +251,8 @@ type token =
   | Kw_cycle
   | Kw_default
   | Kw_set
+  | Kw_depth
+  | Kw_breadth
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

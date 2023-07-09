@@ -1737,6 +1737,19 @@ let kw_default =
 
 let kw_set = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT"]
 
+let kw_depth =
+  [%sedlex.regexp? Chars "dD", Chars "eE", Chars "pP", Chars "tT", Chars "hH"]
+
+let kw_breadth =
+  [%sedlex.regexp?
+    ( Chars "bB"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "aA"
+    , Chars "dD"
+    , Chars "tT"
+    , Chars "hH" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2045,6 +2058,8 @@ let rec token buf =
   | kw_cycle -> Kw_cycle
   | kw_default -> Kw_default
   | kw_set -> Kw_set
+  | kw_depth -> Kw_depth
+  | kw_breadth -> Kw_breadth
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

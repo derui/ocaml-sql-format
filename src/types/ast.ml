@@ -449,7 +449,12 @@ and 'a search_or_cycle_clause = Search_or_cycle_clause of 'a (* TODO *)
 
 and 'a search_clause = Search_clause of 'a (* TODO *)
 
-and 'a recursive_search_order = Recursive_search_order of 'a (* TODO *)
+and 'a recursive_search_order =
+  | Recursive_search_order of
+      [ `depth of 'a sort_specification_list
+      | `breadth of 'a sort_specification_list
+      ]
+      * 'a
 
 and 'a sequence_column = Sequence_column of 'a identifier * 'a
 

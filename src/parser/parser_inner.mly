@@ -292,6 +292,8 @@ open Types.Ast
 %token Kw_cycle
 %token Kw_default
 %token Kw_set
+%token Kw_depth
+%token Kw_breadth
 
 %token Tok_eof
 
@@ -1002,6 +1004,11 @@ cycle_clause:
 
 sequence_column:
 | e = column_name {Sequence_column (e, ())}
+;;
+
+recursive_search_order:
+| Kw_depth Kw_first Kw_by spec = sort_specification_list {Recursive_search_order (`depth spec, ())}
+| Kw_breadth Kw_first Kw_by spec = sort_specification_list {Recursive_search_order (`breadth spec, ())}
 ;;
 
 (** End   7.14 search or cycle clause *)
