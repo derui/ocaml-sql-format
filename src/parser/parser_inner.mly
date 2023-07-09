@@ -497,6 +497,11 @@ row_value_expression_list:
 contextually_typed_table_value_constructor:
 | Kw_values v = contextually_typed_row_value_expression_list {Contextually_typed_table_value_constructor (v, _)}
 ;;
+
+contextually_typed_row_value_expression_list:
+| fl = contextually_typed_row_value_expression; list = list(pair(Tok_comma, contextually_typed_row_value_expression)) {Contextually_typed_row_value_expression_list (fl, List.map snd list, ())}
+;;
+
 (** End   7.3 table value constructor *)
 
 

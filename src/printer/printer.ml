@@ -1332,7 +1332,15 @@ and contextually_typed_table_value_constructor () =
     end) : S))
 
 and contextually_typed_row_value_expression_list () =
-  Contextually_typed_row_value_expression_list.((module Make () : S))
+  Contextually_typed_row_value_expression_list.(
+    (module Make (struct
+      type t = A.ext A.contextually_typed_row_value_expression
+
+      let generate = contextually_typed_row_value_expression
+    end) : S))
 
 and table_row_value_expression () =
   Table_row_value_expression.((module Make () : S))
+
+and contextually_typed_row_value_expression () =
+  Contextually_typed_row_value_expression.((module Make () : S))
