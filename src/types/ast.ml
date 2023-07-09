@@ -383,7 +383,10 @@ and 'a non_join_query_term = Non_join_query_term of 'a (* TODO *)
 
 and 'a query_primary = Query_primary of 'a (* TODO *)
 
-and 'a non_join_query_primary = Non_join_query_primary of 'a (* TODO *)
+and 'a non_join_query_primary =
+  | Non_join_query_primary of
+      [ `simple of 'a simple_table | `expr of 'a non_join_query_expression ]
+      * 'a
 
 and 'a simple_table =
   | Simple_table of
