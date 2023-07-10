@@ -1194,6 +1194,11 @@ sql_argument_list:
 | Tok_lparen fl = sql_argument; list = list(pair(sql_argument)) Tok_rparen {Sql_argument_list (fl, List.map snd list, ())}
 ;;
 
+sql_argument:
+| e = value_expression {Sql_argument (`value e, ())}
+| e = generalized_expression {Sql_argument (`generalized e, ())}
+;;
+
 generalized_expression:
 | e = value_expression Kw_as name = schema_qualified_name {Generalized_expression (e, name, ())}
 ;;

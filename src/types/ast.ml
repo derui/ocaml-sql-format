@@ -639,7 +639,14 @@ and 'a attribute_or_method_reference =
 and 'a sql_argument_list =
   | Sql_argument_list of 'a sql_argument * 'a sql_argument list * 'a
 
-and 'a sql_argument = Sql_argument of 'a (* TODO *)
+and 'a sql_argument =
+  | Sql_argument of
+      [ `value of 'a value_expression
+      | `generalized of
+        'a generalized_expression
+        (* TODO | `target of 'a target_specification *)
+      ]
+      * 'a
 
 and 'a generalized_expression =
   | Generalized_expression of

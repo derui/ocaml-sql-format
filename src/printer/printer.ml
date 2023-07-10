@@ -1582,7 +1582,19 @@ and sql_argument_list () =
       let generate = sql_argument
     end) : S))
 
-and sql_argument () = Sql_argument.((module Make () : S))
+and sql_argument () =
+  Sql_argument.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression
+
+                let generate = value_expression
+              end)
+              (struct
+                type t = A.ext A.generalized_expression
+
+                let generate = generalized_expression
+              end) : S))
 
 and generalized_expression () =
   Generalized_expression.(

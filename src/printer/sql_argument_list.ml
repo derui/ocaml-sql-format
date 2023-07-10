@@ -17,7 +17,7 @@ module Make (V : GEN with type t = ext sql_argument) : S = struct
           List.iter
             (fun v ->
               Sfmt.comma ~option f ();
-              V.print ~option f fl)
+              V.print ~option f v)
             list)
         f ()
 end
