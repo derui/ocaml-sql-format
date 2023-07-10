@@ -6,7 +6,8 @@ module type S =
 
 module Make
     (V : GEN with type t = ext column_reference)
-    (Next : GEN with type t = ext next_value_expression) : S = struct
+    (Next : GEN with type t = ext next_value_expression)
+    (Field : GEN with type t = ext field_reference) : S = struct
   type t = ext nonparenthesized_value_expression_primary
 
   let print f t ~option =
@@ -17,4 +18,7 @@ module Make
     | Nonparenthesized_value_expression_primary (`next c, _) ->
       let module Next = (val Next.generate ()) in
       Next.print ~option f c
+    | Nonparenthesized_value_expression_primary (`field c, _) ->
+      let module Field = (val Field.generate ()) in
+      Field.print ~option f c
 end

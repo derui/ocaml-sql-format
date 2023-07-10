@@ -1480,6 +1480,11 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext A.next_value_expression
 
                 let generate = next_value_expression
+              end)
+              (struct
+                type t = A.ext A.field_reference
+
+                let generate = field_reference
               end) : S))
 
 and sql_parameter_reference () =

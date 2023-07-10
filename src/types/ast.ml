@@ -583,8 +583,9 @@ and 'a nonparenthesized_value_expression_primary =
         (* | `scalar of 'a scalar_subquery *)
         (* | `case expression of 'a case_expression *)
         (* | `cast of 'a cast_specification *)
-        (* |`field of 'a field_reference *)
-        (* | `subtype of 'a subtype treatment *)
+        `field of
+        'a field_reference
+      | (* | `subtype of 'a subtype treatment *)
         (* | `method' of 'a method_invocation *)
         (* |`static of 'a static_method_invocation *)
         (* | `new' of 'a new_specification *)
