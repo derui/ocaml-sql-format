@@ -1484,7 +1484,19 @@ and sql_parameter_reference () =
       let generate = identifier_chain
     end) : S))
 
-and window_function () = Window_function.((module Make () : S))
+and window_function () =
+  Window_function.(
+    (module Make
+              (struct
+                type t = A.ext A.window_function_type
+
+                let generate = window_function_type
+              end)
+              (struct
+                type t = A.ext A.window_name_or_specification
+
+                let generate = window_name_or_specification
+              end) : S))
 
 and window_function_type () =
   Window_function_type.(

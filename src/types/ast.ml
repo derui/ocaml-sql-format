@@ -602,7 +602,9 @@ and 'a nonparenthesized_value_expression_primary =
 and 'a sql_parameter_reference =
   | Sql_parameter_reference of 'a identifier_chain * 'a
 
-and 'a window_function = Window_function of 'a (* TODO *)
+and 'a window_function =
+  | Window_function of
+      'a window_function_type * 'a window_name_or_specification * 'a
 
 and 'a window_function_type =
   | Window_function_type of

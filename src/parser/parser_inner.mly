@@ -528,6 +528,10 @@ window_function_type:
 | Kw_row_number Tok_lparen Tok_rparen { Window_function_type (`row_number, ())}
 ;;
 
+window_function:
+  | typ = window_function_type Kw_over w = window_name_or_specification {Window_function (typ, w, ())}
+;;
+
 (** End   6.10 window function *)
 
 (** Start 6.26 numeric value expression *)
