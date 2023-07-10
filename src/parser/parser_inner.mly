@@ -485,6 +485,12 @@ column_reference:
 
 (** End   names and identifiers *)
 
+(** Start 6.26 numeric value expression *)
+
+numeric_primary:
+| e = value_expression_primary {Numeric_primary (`primary e, ())}
+(** End   6.26 numeric value expression *)
+
 (** Start 7.2 row value expression *)
 row_value_expression:
 | v = row_value_special_case { Row_value_expression (`special v, ()) }

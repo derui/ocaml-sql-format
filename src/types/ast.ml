@@ -551,4 +551,7 @@ and 'a term = Term of 'a (* TODO *)
 
 and 'a factor = Factor of 'a (* TODO *)
 
-and 'a numeric_primary = Numeric_primary of 'a (* TODO *)
+and 'a numeric_primary =
+  | Numeric_primary of
+      [ `primary of 'a value_expression_primary | `function' of 'a (* TODO *) ]
+      * 'a

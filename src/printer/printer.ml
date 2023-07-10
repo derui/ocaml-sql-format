@@ -1421,4 +1421,10 @@ and term () = Term.((module Make () : S))
 
 and factor () = Factor.((module Make () : S))
 
-and numeric_primary () = Numeric_primary.((module Make () : S))
+and numeric_primary () =
+  Numeric_primary.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))
