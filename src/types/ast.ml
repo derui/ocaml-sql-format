@@ -628,3 +628,16 @@ and 'a next_value_expression =
 
 and 'a field_reference =
   | Field_reference of 'a value_expression_primary * 'a identifier * 'a
+
+and 'a attribute_or_method_reference =
+  | Attribute_or_method_reference of
+      'a value_expression_primary
+      * 'a identifier
+      * 'a sql_argument_list option
+      * 'a
+
+and 'a sql_argument_list = Sql_argument_list of 'a (* TODO *)
+
+and 'a sql_argument = Sql_argument of 'a (* TODO *)
+
+and 'a generalized_expression = Generalized_expression of 'a (* TODO *)

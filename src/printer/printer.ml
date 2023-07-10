@@ -1554,3 +1554,28 @@ and field_reference () =
 
                 let generate = value_expression_primary
               end) : S))
+
+and attribute_or_method_reference () =
+  Attribute_or_method_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression_primary
+
+                let generate = value_expression_primary
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.sql_argument_list
+
+                let generate = sql_argument_list
+              end) : S))
+
+and sql_argument_list () = Sql_argument_list.((module Make () : S))
+
+and sql_argument () = Sql_argument.((module Make () : S))
+
+and generalized_expression () = Generalized_expression.((module Make () : S))

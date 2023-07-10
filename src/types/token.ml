@@ -294,5 +294,6 @@ type token =
   | Op_lt
   | Op_ne
   | Op_ne2
+  | Op_dereference
   | Tok_eof
 [@@deriving show, eq]

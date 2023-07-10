@@ -40,6 +40,7 @@ open Types.Ast
 %token Op_lt
 %token Op_ne
 %token Op_ne2
+%token Op_dereference
 
 (* keywords *)
 %token Kw_select
@@ -547,6 +548,12 @@ field_reference:
 | e = value_expression_primary Tok_period name = identifier {Field_reference (e, name, ())}
 ;;
 (** End   6.14 field reference *)
+
+(** Start 6.19 attribute or method reference *)
+attribute_or_method_reference:
+  v = value_expression_primary Op_minus Op_gt i = identifier arg = option(sql_argument_list) {Attribute_or_method_reference (v, i, arg, ())}
+;;
+(** End   6.19 attribute or method reference *)
 
 (** Start 6.26 numeric value expression *)
 

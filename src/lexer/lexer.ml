@@ -2102,6 +2102,7 @@ let rec token buf =
   | '?' -> Tok_qmark
   | ';' -> Tok_semicolon
   | '\'' -> Tok_quote
+  | "->" -> Op_dereference
   | '+' -> Op_plus
   | '-' -> Op_minus
   | '*' -> Op_star
