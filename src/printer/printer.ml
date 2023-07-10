@@ -1414,9 +1414,6 @@ and contextually_typed_row_value_constructor () =
 and row_value_constructor_predicand () =
   Row_value_constructor_predicand.((module Make () : S))
 
-and nonparenthesized_value_expression_primary () =
-  Nonparenthesized_value_expression_primary.((module Make () : S))
-
 and numeric_value_expression () =
   Numeric_value_expression.(
     (module Make (struct
@@ -1448,3 +1445,12 @@ and numeric_primary () =
 
       let generate = value_expression_primary
     end) : S))
+
+and value_expression_primary () =
+  Value_expression_primary.((module Make () : S))
+
+and parenthesized_value_expression () =
+  Parenthesized_value_expression.((module Make () : S))
+
+and nonparenthesized_value_expression_primary () =
+  Nonparenthesized_value_expression_primary.((module Make () : S))

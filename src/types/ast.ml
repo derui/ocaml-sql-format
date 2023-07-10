@@ -232,8 +232,6 @@ and 'a collection_value_expression =
 
 and 'a collate_clause = Collate_clause of 'a collate_name * 'a
 
-and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
-
 and 'a window_clause = Window_clause of 'a window_definition_list * 'a
 
 and 'a window_definition_list =
@@ -542,9 +540,6 @@ and 'a contextually_typed_row_value_constructor =
 and 'a row_value_constructor_predicand =
   | Row_value_constructor_predicand of 'a (* TODO *)
 
-and 'a nonparenthesized_value_expression_primary =
-  | Nonparenthesized_value_expression_primary of 'a (* TODO *)
-
 and 'a numeric_value_expression =
   | Numeric_value_expression of
       [ `single of 'a term
@@ -567,3 +562,11 @@ and 'a numeric_primary =
   | Numeric_primary of
       [ `primary of 'a value_expression_primary | `function' of 'a (* TODO *) ]
       * 'a
+
+and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
+
+and 'a parenthesized_value_expression =
+  | Parenthesized_value_expression of 'a (* TODO *)
+
+and 'a nonparenthesized_value_expression_primary =
+  | Nonparenthesized_value_expression_primary of 'a (* TODO *)
