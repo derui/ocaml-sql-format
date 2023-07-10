@@ -566,7 +566,7 @@ and 'a numeric_primary =
 and 'a value_expression_primary = Value_expression_primary of 'a (* TODO *)
 
 and 'a parenthesized_value_expression =
-  | Parenthesized_value_expression of 'a (* TODO *)
+  | Parenthesized_value_expression of 'a value_expression * 'a (* TODO *)
 
 and 'a nonparenthesized_value_expression_primary =
   | Nonparenthesized_value_expression_primary of
