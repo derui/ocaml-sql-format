@@ -270,6 +270,7 @@ include (
       | Kw_search -> Fmt.string f @@ as_keyword "search" keyword
       | Kw_values -> Fmt.string f @@ as_keyword "values" keyword
       | Kw_value -> Fmt.string f @@ as_keyword "value" keyword
+      | Kw_element -> Fmt.string f @@ as_keyword "element" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

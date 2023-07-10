@@ -298,6 +298,7 @@ open Types.Ast
 %token Kw_search
 %token Kw_values
 %token Kw_value
+%token Kw_element
 
 %token Tok_eof
 
@@ -560,6 +561,12 @@ array_element_reference:
 | e = array_value_expression Tok_lsbrace i = numeric_value_expression Tok_rsbrace {Array_element_reference (e, i, ())}
 ;;
 (** End   6.23 array element reference *)
+
+(** Start 6.24 multiset element reference *)
+multiset_element_reference:
+| Kw_element e = delimited(Tok_lparen, multiset_element_reference, Tok_rparen) {Multiset_element_reference (e, ())}
+;;
+(** End   6.24 multiset element reference *)
 
 (** Start 6.26 numeric value expression *)
 

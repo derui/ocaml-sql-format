@@ -256,6 +256,7 @@ type token =
   | Kw_search
   | Kw_values
   | Kw_value
+  | Kw_element
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

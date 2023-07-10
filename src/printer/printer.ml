@@ -1625,3 +1625,14 @@ and array_element_reference () =
               end) : S))
 
 and array_value_expression () = Array_value_expression.((module Make () : S))
+
+and multiset_element_reference () =
+  Multiset_element_reference.(
+    (module Make (struct
+      type t = A.ext A.multiset_value_expression
+
+      let generate = multiset_value_expression
+    end) : S))
+
+and multiset_value_expression () =
+  Multiset_value_expression.((module Make () : S))

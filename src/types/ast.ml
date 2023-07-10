@@ -657,3 +657,8 @@ and 'a array_element_reference =
       'a array_value_expression * 'a numeric_value_expression * 'a
 
 and 'a array_value_expression = Array_value_expression of 'a (* TODO *)
+
+and 'a multiset_element_reference =
+  | Multiset_element_reference of 'a multiset_value_expression * 'a
+
+and 'a multiset_value_expression = Multiset_value_expression of 'a (* TODO *)
