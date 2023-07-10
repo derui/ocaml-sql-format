@@ -1193,6 +1193,10 @@ search_condition:
 sql_argument_list:
 | Tok_lparen fl = sql_argument; list = list(pair(sql_argument)) Tok_rparen {Sql_argument_list (fl, List.map snd list, ())}
 ;;
+
+generalized_expression:
+| e = value_expression Kw_as name = schema_qualified_name {Generalized_expression (e, name, ())}
+;;
 (** End   10.4 routine invocation *)
 
 (** Start 10.7 collate clause *)

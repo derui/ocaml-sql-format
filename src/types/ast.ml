@@ -641,4 +641,6 @@ and 'a sql_argument_list =
 
 and 'a sql_argument = Sql_argument of 'a (* TODO *)
 
-and 'a generalized_expression = Generalized_expression of 'a (* TODO *)
+and 'a generalized_expression =
+  | Generalized_expression of
+      'a value_expression * 'a schema_qualified_name * 'a
