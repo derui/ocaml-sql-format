@@ -514,6 +514,15 @@ sql_parameter_reference:
 window_name_or_specification:
 | e = identifier {Window_name_or_specification (`name e, ())}
 | e = window_specification {Window_name_or_specification (`spec e, ())}
+;;
+
+rank_function_type:
+| Kw_rank { Rank_function_type (`rank, ())}
+| Kw_dense_rank { Rank_function_type (`dense_rank, ())}
+| Kw_percent_rank { Rank_function_type (`percent_rank, ())}
+| Kw_cume_dist { Rank_function_type (`cume_dist, ())}
+;;
+
 (** End   6.10 window function *)
 
 (** Start 6.26 numeric value expression *)

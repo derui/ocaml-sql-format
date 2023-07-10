@@ -606,7 +606,9 @@ and 'a window_function = Window_function of 'a (* TODO *)
 
 and 'a window_function_type = Window_function_type of 'a (* TODO *)
 
-and 'a rank_function_type = Rank_function_type of 'a (* TODO *)
+and 'a rank_function_type =
+  | Rank_function_type of
+      [ `rank | `dense_rank | `percent_rank | `cume_dist ] * 'a
 
 and 'a window_name_or_specification =
   | Window_name_or_specification of
