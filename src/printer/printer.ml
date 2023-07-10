@@ -1486,7 +1486,13 @@ and sql_parameter_reference () =
 
 and window_function () = Window_function.((module Make () : S))
 
-and window_function_type () = Window_function_type.((module Make () : S))
+and window_function_type () =
+  Window_function_type.(
+    (module Make (struct
+      type t = A.ext A.rank_function_type
+
+      let generate = rank_function_type
+    end) : S))
 
 and rank_function_type () = Rank_function_type.((module Make () : S))
 

@@ -523,6 +523,11 @@ rank_function_type:
 | Kw_cume_dist { Rank_function_type (`cume_dist, ())}
 ;;
 
+window_function_type:
+| e = rank_function_type Tok_lparen Tok_rparen { Window_function_type (`rank e, ())}
+| Kw_row_number Tok_lparen Tok_rparen { Window_function_type (`row_number, ())}
+;;
+
 (** End   6.10 window function *)
 
 (** Start 6.26 numeric value expression *)

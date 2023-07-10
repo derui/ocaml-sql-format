@@ -604,7 +604,12 @@ and 'a sql_parameter_reference =
 
 and 'a window_function = Window_function of 'a (* TODO *)
 
-and 'a window_function_type = Window_function_type of 'a (* TODO *)
+and 'a window_function_type =
+  | Window_function_type of
+      [ `rank of 'a rank_function_type
+      | `row_number (* TODO | `aggregate of 'a aggregate_function *)
+      ]
+      * 'a
 
 and 'a rank_function_type =
   | Rank_function_type of
