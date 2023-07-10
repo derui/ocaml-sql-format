@@ -506,6 +506,9 @@ nonparenthesized_value_expression_primary:
 | e = column_reference {Nonparenthesized_value_expression_primary (`column e, ())}
 | e = next_value_expression {Nonparenthesized_value_expression_primary (`next e, ())}
 | e = field_reference {Nonparenthesized_value_expression_primary (`field e, ())}
+| e = attribute_or_method_reference {Nonparenthesized_value_expression_primary (`attribute e, ())}
+| e = array_element_reference {Nonparenthesized_value_expression_primary (`array e, ())}
+| e = multiset_element_reference {Nonparenthesized_value_expression_primary (`multiset e, ())}
 ;;
 (** End   6.3 value expression primary *)
 

@@ -1485,6 +1485,21 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext A.field_reference
 
                 let generate = field_reference
+              end)
+              (struct
+                type t = A.ext A.attribute_or_method_reference
+
+                let generate = attribute_or_method_reference
+              end)
+              (struct
+                type t = A.ext A.array_element_reference
+
+                let generate = array_element_reference
+              end)
+              (struct
+                type t = A.ext A.multiset_element_reference
+
+                let generate = multiset_element_reference
               end) : S))
 
 and sql_parameter_reference () =

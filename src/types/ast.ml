@@ -589,12 +589,14 @@ and 'a nonparenthesized_value_expression_primary =
         (* | `method' of 'a method_invocation *)
         (* |`static of 'a static_method_invocation *)
         (* | `new' of 'a new_specification *)
-        (* | `attribute of 'a attribute_or_method_reference *)
-        (* |`reference of 'a reference_resolution *)
+        `attribute of
+        'a attribute_or_method_reference
+      | (* |`reference of 'a reference_resolution *)
         (* | `collection of 'a collection_value_constructor *)
-        (* | `array of 'a array_element_reference *)
-        (* | `multiset of 'a multiset_element_reference *)
-        (* | `routine of 'a routine_invocation *)
+        `array of
+        'a array_element_reference
+      | `multiset of 'a multiset_element_reference
+      | (* | `routine of 'a routine_invocation *)
         `next of
         'a next_value_expression
       ]
