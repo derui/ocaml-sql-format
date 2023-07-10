@@ -1574,7 +1574,13 @@ and attribute_or_method_reference () =
                 let generate = sql_argument_list
               end) : S))
 
-and sql_argument_list () = Sql_argument_list.((module Make () : S))
+and sql_argument_list () =
+  Sql_argument_list.(
+    (module Make (struct
+      type t = A.ext A.sql_argument
+
+      let generate = sql_argument
+    end) : S))
 
 and sql_argument () = Sql_argument.((module Make () : S))
 

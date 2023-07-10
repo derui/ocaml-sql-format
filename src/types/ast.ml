@@ -636,7 +636,8 @@ and 'a attribute_or_method_reference =
       * 'a sql_argument_list option
       * 'a
 
-and 'a sql_argument_list = Sql_argument_list of 'a (* TODO *)
+and 'a sql_argument_list =
+  | Sql_argument_list of 'a sql_argument * 'a sql_argument list * 'a
 
 and 'a sql_argument = Sql_argument of 'a (* TODO *)
 

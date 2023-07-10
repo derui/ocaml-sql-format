@@ -1189,6 +1189,12 @@ search_condition:
 ;;
 (** End   8.19 Search condition *)
 
+(** Start 10.4 routine invocation *)
+sql_argument_list:
+| Tok_lparen fl = sql_argument; list = list(pair(sql_argument)) Tok_rparen {Sql_argument_list (fl, List.map snd list, ())}
+;;
+(** End   10.4 routine invocation *)
+
 (** Start 10.7 collate clause *)
 collate_clause:
 | Kw_collate n = collate_name {Collate_clause (n, ())}
