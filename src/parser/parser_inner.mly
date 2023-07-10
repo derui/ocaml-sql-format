@@ -434,6 +434,11 @@ boolean_literal:
   | Kw_unknown {Boolean_literal (`unknown, ())}
 ;;
 
+sign:
+  |Op_plus {`plus}
+  |Op_minus {`minus}
+;;
+
 (** End   5.3 literal *)
 
 (** Start names and identifiers *)
@@ -489,6 +494,9 @@ column_reference:
 
 numeric_primary:
 | e = value_expression_primary {Numeric_primary (`primary e, ())}
+
+factor:
+| sign = option(sign) e = numeric_primary {Factor (sign, e, ())}
 (** End   6.26 numeric value expression *)
 
 (** Start 7.2 row value expression *)

@@ -549,7 +549,7 @@ and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
 
 and 'a term = Term of 'a (* TODO *)
 
-and 'a factor = Factor of 'a (* TODO *)
+and 'a factor = Factor of sign option * 'a numeric_primary * 'a
 
 and 'a numeric_primary =
   | Numeric_primary of

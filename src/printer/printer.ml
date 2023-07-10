@@ -1419,7 +1419,13 @@ and nonparenthesized_value_expression_primary () =
 
 and term () = Term.((module Make () : S))
 
-and factor () = Factor.((module Make () : S))
+and factor () =
+  Factor.(
+    (module Make (struct
+      type t = A.ext A.numeric_primary
+
+      let generate = numeric_primary
+    end) : S))
 
 and numeric_primary () =
   Numeric_primary.(
