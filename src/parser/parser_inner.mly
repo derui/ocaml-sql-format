@@ -494,9 +494,17 @@ column_reference:
 
 numeric_primary:
 | e = value_expression_primary {Numeric_primary (`primary e, ())}
+;;
 
 factor:
 | sign = option(sign) e = numeric_primary {Factor (sign, e, ())}
+;;
+
+term:
+| v = factor {Term (`single v, ())}
+| v1 = factor Op_star v2 = factor {Term (`asterisk (v1, v2), ())}
+| v1 = factor Op_slash v2 = factor {Term (`solidus (v1, v2), ())}
+;;
 (** End   6.26 numeric value expression *)
 
 (** Start 7.2 row value expression *)

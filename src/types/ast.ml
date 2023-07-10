@@ -547,7 +547,13 @@ and 'a nonparenthesized_value_expression_primary =
 
 and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
 
-and 'a term = Term of 'a (* TODO *)
+and 'a term =
+  | Term of
+      [ `single of 'a factor
+      | `asterisk of 'a factor * 'a factor
+      | `solidus of 'a factor * 'a factor
+      ]
+      * 'a
 
 and 'a factor = Factor of sign option * 'a numeric_primary * 'a
 
