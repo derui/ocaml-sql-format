@@ -504,6 +504,12 @@ nonparenthesized_value_expression_primary:
 ;;
 (** End   6.3 value expression primary *)
 
+(** Start 6.8 sql parameter reference *)
+sql_parameter_reference:
+| e = identifier_chain {Sql_parameter_reference (e, ())}
+;;
+(** Start 6.8 sql parameter reference *)
+
 (** Start 6.26 numeric value expression *)
 
 numeric_primary:

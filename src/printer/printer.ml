@@ -1475,3 +1475,11 @@ and nonparenthesized_value_expression_primary () =
 
       let generate = column_reference
     end) : S))
+
+and sql_parameter_reference () =
+  Sql_parameter_reference.(
+    (module Make (struct
+      type t = A.ext A.identifier_chain
+
+      let generate = identifier_chain
+    end) : S))
