@@ -545,7 +545,13 @@ and 'a row_value_constructor_predicand =
 and 'a nonparenthesized_value_expression_primary =
   | Nonparenthesized_value_expression_primary of 'a (* TODO *)
 
-and 'a numeric_value_expression = Numeric_value_expression of 'a (* TODO *)
+and 'a numeric_value_expression =
+  | Numeric_value_expression of
+      [ `single of 'a term
+      | `plus of 'a numeric_value_expression * 'a term
+      | `minus of 'a numeric_value_expression * 'a term
+      ]
+      * 'a
 
 and 'a term =
   | Term of

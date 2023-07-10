@@ -1417,6 +1417,14 @@ and row_value_constructor_predicand () =
 and nonparenthesized_value_expression_primary () =
   Nonparenthesized_value_expression_primary.((module Make () : S))
 
+and numeric_value_expression () =
+  Numeric_value_expression.(
+    (module Make (struct
+      type t = A.ext A.term
+
+      let generate = term
+    end) : S))
+
 and term () =
   Term.(
     (module Make (struct

@@ -505,6 +505,12 @@ term:
 | v1 = factor Op_star v2 = factor {Term (`asterisk (v1, v2), ())}
 | v1 = factor Op_slash v2 = factor {Term (`solidus (v1, v2), ())}
 ;;
+
+numeric_value_expression:
+| v = term {Numeric_value_expression (`single v, ())}
+| v1 = numeric_value_expression Op_plus v2 = term {Numeric_value_expression (`plus (v1, v2), ())}
+| v1 = numeric_value_expression Op_minus v2 = term {Numeric_value_expression (`minus (v1, v2), ())}
+;;
 (** End   6.26 numeric value expression *)
 
 (** Start 7.2 row value expression *)
