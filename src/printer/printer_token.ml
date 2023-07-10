@@ -269,6 +269,7 @@ include (
       | Kw_breadth -> Fmt.string f @@ as_keyword "breadth" keyword
       | Kw_search -> Fmt.string f @@ as_keyword "search" keyword
       | Kw_values -> Fmt.string f @@ as_keyword "values" keyword
+      | Kw_value -> Fmt.string f @@ as_keyword "value" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

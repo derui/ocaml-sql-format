@@ -620,3 +620,6 @@ and 'a rank_function_type =
 and 'a window_name_or_specification =
   | Window_name_or_specification of
       [ `name of 'a identifier | `spec of 'a window_specification ] * 'a
+
+and 'a next_value_expression =
+  | Next_value_expression of 'a schema_qualified_name * 'a

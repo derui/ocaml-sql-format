@@ -1521,3 +1521,11 @@ and window_name_or_specification () =
 
                 let generate = window_specification
               end) : S))
+
+and next_value_expression () =
+  Next_value_expression.(
+    (module Make (struct
+      type t = A.ext A.schema_qualified_name
+
+      let generate = schema_qualified_name
+    end) : S))

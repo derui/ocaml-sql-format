@@ -296,6 +296,7 @@ open Types.Ast
 %token Kw_breadth
 %token Kw_search
 %token Kw_values
+%token Kw_value
 
 %token Tok_eof
 
@@ -533,6 +534,12 @@ window_function:
 ;;
 
 (** End   6.10 window function *)
+
+(** Start 6.13 next value expression *)
+next_value_expression:
+|Kw_next Kw_value Kw_for e = schema_qualified_name {Next_value_expression (e, ())}
+;;
+(** End   6.13 next value expression *)
 
 (** Start 6.26 numeric value expression *)
 
