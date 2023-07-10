@@ -1651,3 +1651,61 @@ and multiset_element_reference () =
 
 and multiset_value_expression () =
   Multiset_value_expression.((module Make () : S))
+
+and string_value_expression () =
+  String_value_expression.(
+    (module Make (struct
+      type t = A.ext A.character_value_expression
+
+      let generate = character_value_expression
+    end) : S))
+
+and character_value_expression () =
+  Character_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.concatenation
+
+                let generate = concatenation
+              end)
+              (struct
+                type t = A.ext A.character_factor
+
+                let generate = character_factor
+              end) : S))
+
+and concatenation () =
+  Concatenation.(
+    (module Make
+              (struct
+                type t = A.ext A.character_value_expression
+
+                let generate = character_value_expression
+              end)
+              (struct
+                type t = A.ext A.character_factor
+
+                let generate = character_factor
+              end) : S))
+
+and character_factor () =
+  Character_factor.(
+    (module Make
+              (struct
+                type t = A.ext A.character_primary
+
+                let generate = character_primary
+              end)
+              (struct
+                type t = A.ext A.collate_clause
+
+                let generate = collate_clause
+              end) : S))
+
+and character_primary () =
+  Character_primary.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))

@@ -664,3 +664,24 @@ and 'a multiset_element_reference =
   | Multiset_element_reference of 'a multiset_value_expression * 'a
 
 and 'a multiset_value_expression = Multiset_value_expression of 'a (* TODO *)
+
+and 'a string_value_expression =
+  | String_value_expression of 'a character_value_expression * 'a
+
+and 'a character_value_expression =
+  | Character_value_expression of
+      [ `concat of 'a concatenation | `factor of 'a character_factor ] * 'a
+
+and 'a concatenation =
+  | Concatenation of 'a character_value_expression * 'a character_factor * 'a
+
+and 'a character_factor =
+  | Character_factor of 'a character_primary * 'a collate_clause option * 'a
+
+and 'a character_primary =
+  | Character_primary of
+      [ `primary of
+        'a value_expression_primary
+        (* TODO | `function' of 'a string_value_function *)
+      ]
+      * 'a

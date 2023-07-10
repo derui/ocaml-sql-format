@@ -593,6 +593,28 @@ numeric_value_expression:
 | v1 = numeric_value_expression Op_minus v2 = term {Numeric_value_expression (`minus (v1, v2), ())}
 ;;
 (** End   6.26 numeric value expression *)
+(** Start 6.28 string value expression *)
+string_value_expression:
+| e = character_value_expression {String_value_expression (e, ())}
+;;
+
+character_value_expression:
+| e = concatenation {Character_value_expression (`concat e, ())}
+| e = character_factor {Character_value_expression (`factor e, ())}
+;;
+
+concatenation:
+| e = character_value_expression; Op_concat c = character_factor {Concatenation (e, c, ())}
+;;
+
+character_factor:
+| e = character_primary; c = option(collate_clause) {Character_factor (e, c, ())}
+;;
+
+character_primary:
+| e = value_expression_primary {Character_primary (`primary e, ())}
+;;
+(** End   6.28 string value expression *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:
