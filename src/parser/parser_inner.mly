@@ -502,6 +502,7 @@ parenthesized_value_expression:
 
 nonparenthesized_value_expression_primary:
 | e = column_reference {Nonparenthesized_value_expression_primary (`column e, ())}
+| e = next_value_expression {Nonparenthesized_value_expression_primary (`next e, ())}
 ;;
 (** End   6.3 value expression primary *)
 

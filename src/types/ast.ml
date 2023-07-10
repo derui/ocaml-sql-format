@@ -578,7 +578,7 @@ and 'a nonparenthesized_value_expression_primary =
       [ (* |  `unsigned of 'a unsigned_value_specification *)
         `column of
         'a column_reference
-        (* | `set_function of 'a set_function_specification *)
+      | (* | `set_function of 'a set_function_specification *)
         (* | `window of 'a window_function *)
         (* | `scalar of 'a scalar_subquery *)
         (* | `case expression of 'a case_expression *)
@@ -594,7 +594,8 @@ and 'a nonparenthesized_value_expression_primary =
         (* | `array of 'a array_element_reference *)
         (* | `multiset of 'a multiset_element_reference *)
         (* | `routine of 'a routine_invocation *)
-        (* | `next of 'a next_value_expression *)
+        `next of
+        'a next_value_expression
       ]
       * 'a
 (* TODO *)

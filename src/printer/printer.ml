@@ -1470,11 +1470,17 @@ and parenthesized_value_expression () =
 
 and nonparenthesized_value_expression_primary () =
   Nonparenthesized_value_expression_primary.(
-    (module Make (struct
-      type t = A.ext A.column_reference
+    (module Make
+              (struct
+                type t = A.ext A.column_reference
 
-      let generate = column_reference
-    end) : S))
+                let generate = column_reference
+              end)
+              (struct
+                type t = A.ext A.next_value_expression
+
+                let generate = next_value_expression
+              end) : S))
 
 and sql_parameter_reference () =
   Sql_parameter_reference.(
