@@ -1609,3 +1609,19 @@ and generalized_expression () =
 
                 let generate = schema_qualified_name
               end) : S))
+
+and array_element_reference () =
+  Array_element_reference.(
+    (module Make
+              (struct
+                type t = A.ext A.array_value_expression
+
+                let generate = array_value_expression
+              end)
+              (struct
+                type t = A.ext A.numeric_value_expression
+
+                let generate = numeric_value_expression
+              end) : S))
+
+and array_value_expression () = Array_value_expression.((module Make () : S))

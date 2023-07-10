@@ -651,3 +651,9 @@ and 'a sql_argument =
 and 'a generalized_expression =
   | Generalized_expression of
       'a value_expression * 'a schema_qualified_name * 'a
+
+and 'a array_element_reference =
+  | Array_element_reference of
+      'a array_value_expression * 'a numeric_value_expression * 'a
+
+and 'a array_value_expression = Array_value_expression of 'a (* TODO *)

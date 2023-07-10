@@ -555,6 +555,12 @@ attribute_or_method_reference:
 ;;
 (** End   6.19 attribute or method reference *)
 
+(** Start 6.23 array element reference *)
+array_element_reference:
+| e = array_value_expression Tok_lsbrace i = numeric_value_expression Tok_rsbrace {Array_element_reference (e, i, ())}
+;;
+(** End   6.23 array element reference *)
+
 (** Start 6.26 numeric value expression *)
 
 numeric_primary:
