@@ -1447,7 +1447,18 @@ and numeric_primary () =
     end) : S))
 
 and value_expression_primary () =
-  Value_expression_primary.((module Make () : S))
+  Value_expression_primary.(
+    (module Make
+              (struct
+                type t = A.ext A.parenthesized_value_expression
+
+                let generate = parenthesized_value_expression
+              end)
+              (struct
+                type t = A.ext A.nonparenthesized_value_expression_primary
+
+                let generate = nonparenthesized_value_expression_primary
+              end) : S))
 
 and parenthesized_value_expression () =
   Parenthesized_value_expression.(

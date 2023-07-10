@@ -490,6 +490,10 @@ column_reference:
 
 (** End   names and identifiers *)
 (** Start 6.3 value expression primary *)
+value_expression_primary:
+| e = parenthesized_value_expression {Value_expression_primary (`paren e, ())}
+| e = nonparenthesized_value_expression_primary {Value_expression_primary (`non_paren e, ())}
+;;
 
 parenthesized_value_expression:
 | Tok_lparen e = value_expression Tok_rparen {Parenthesized_value_expression (e, ())}
