@@ -541,6 +541,11 @@ next_value_expression:
 |Kw_next Kw_value Kw_for e = schema_qualified_name {Next_value_expression (e, ())}
 ;;
 (** End   6.13 next value expression *)
+(** Start 6.14 field reference *)
+field_reference:
+| e =value_expression_primary Tok_period name = identifier {Field_reference (e, name, ())}
+;;
+(** End   6.14 field reference *)
 
 (** Start 6.26 numeric value expression *)
 

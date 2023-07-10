@@ -624,3 +624,6 @@ and 'a window_name_or_specification =
 
 and 'a next_value_expression =
   | Next_value_expression of 'a schema_qualified_name * 'a
+
+and 'a field_reference =
+  | Field_reference of 'a value_expression_primary * 'a identifier * 'a

@@ -1535,3 +1535,17 @@ and next_value_expression () =
 
       let generate = schema_qualified_name
     end) : S))
+
+and field_reference () =
+  Field_reference.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.value_expression_primary
+
+                let generate = value_expression_primary
+              end) : S))
