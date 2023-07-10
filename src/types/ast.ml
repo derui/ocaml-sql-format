@@ -569,4 +569,27 @@ and 'a parenthesized_value_expression =
   | Parenthesized_value_expression of 'a (* TODO *)
 
 and 'a nonparenthesized_value_expression_primary =
-  | Nonparenthesized_value_expression_primary of 'a (* TODO *)
+  | Nonparenthesized_value_expression_primary of
+      [ (* |  `unsigned of 'a unsigned_value_specification *)
+        `column of
+        'a column_reference
+        (* | `set_function of 'a set_function_specification *)
+        (* | `window of 'a window_function *)
+        (* | `scalar of 'a scalar_subquery *)
+        (* | `case expression of 'a case_expression *)
+        (* | `cast of 'a cast_specification *)
+        (* |`field of 'a field_reference *)
+        (* | `subtype of 'a subtype treatment *)
+        (* | `method' of 'a method_invocation *)
+        (* |`static of 'a static_method_invocation *)
+        (* | `new' of 'a new_specification *)
+        (* | `attribute of 'a attribute_or_method_reference *)
+        (* |`reference of 'a reference_resolution *)
+        (* | `collection of 'a collection_value_constructor *)
+        (* | `array of 'a array_element_reference *)
+        (* | `multiset of 'a multiset_element_reference *)
+        (* | `routine of 'a routine_invocation *)
+        (* | `next of 'a next_value_expression *)
+      ]
+      * 'a
+(* TODO *)

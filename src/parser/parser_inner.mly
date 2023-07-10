@@ -489,6 +489,12 @@ column_reference:
 ;;
 
 (** End   names and identifiers *)
+(** Start 6.3 value expression primary *)
+
+nonparenthesized_value_expression_primary:
+| e = column_reference {Nonparenthesized_value_expression_primary (`column e, ())}
+;;
+(** End   6.3 value expression primary *)
 
 (** Start 6.26 numeric value expression *)
 

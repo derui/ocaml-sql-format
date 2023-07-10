@@ -1453,4 +1453,9 @@ and parenthesized_value_expression () =
   Parenthesized_value_expression.((module Make () : S))
 
 and nonparenthesized_value_expression_primary () =
-  Nonparenthesized_value_expression_primary.((module Make () : S))
+  Nonparenthesized_value_expression_primary.(
+    (module Make (struct
+      type t = A.ext A.column_reference
+
+      let generate = column_reference
+    end) : S))
