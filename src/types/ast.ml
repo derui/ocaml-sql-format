@@ -601,3 +601,13 @@ and 'a nonparenthesized_value_expression_primary =
 
 and 'a sql_parameter_reference =
   | Sql_parameter_reference of 'a identifier_chain * 'a
+
+and 'a window_function = Window_function of 'a (* TODO *)
+
+and 'a window_function_type = Window_function_type of 'a (* TODO *)
+
+and 'a rank_function_type = Rank_function_type of 'a (* TODO *)
+
+and 'a window_name_or_specification =
+  | Window_name_or_specification of
+      [ `name of 'a identifier | `spec of 'a window_specification ] * 'a

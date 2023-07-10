@@ -508,7 +508,13 @@ nonparenthesized_value_expression_primary:
 sql_parameter_reference:
 | e = identifier_chain {Sql_parameter_reference (e, ())}
 ;;
-(** Start 6.8 sql parameter reference *)
+(** End   6.8 sql parameter reference *)
+
+(** Start 6.10 window function *)
+window_name_or_specification:
+| e = identifier {Window_name_or_specification (`name e, ())}
+| e = window_specification {Window_name_or_specification (`spec e, ())}
+(** End   6.10 window function *)
 
 (** Start 6.26 numeric value expression *)
 
