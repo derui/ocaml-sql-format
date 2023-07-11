@@ -741,6 +741,34 @@ array_value_constructor_by_query:
 ;;
 (** End   6.36 array value constructor *)
 
+(** Start 6.37 multiset value expression *)
+multiset_value_expression:
+| e = multiset_term {Multiset_value_expression (`term e, ())}
+| e = multiset_value_expression; Kw_multiset Kw_union; option(Kw_all);
+  t = multiset_term {Multiset_value_expression (`union (t, p, Option.map (fun _ -> `All)), ())}
+| e = multiset_value_expression; Kw_multiset Kw_except; option(Kw_all);
+  t = multiset_term {Multiset_value_expression (`except (t, p, Option.map (fun _ -> `All)), ())}
+| e = multiset_value_expression; Kw_multiset Kw_union; option(Kw_distinct);
+  t = multiset_term {Multiset_value_expression (`union (t, p, Option.map (fun _ -> `Distinct)), ())}
+| e = multiset_value_expression; Kw_multiset Kw_except; option(Kw_distinct);
+  t = multiset_term {Multiset_value_expression (`except (t, p, Option.map (fun _ -> `Distinct)), ())}
+;;
+
+multiset_term:
+| e = multiset_primary {Multiset_term (`primary e, ())}
+| t = multiset_term; Kw_multiset Kw_intersect;
+  p = multiset_primary {Multiset_term (`intersect (t, p, None), ())}
+| t = multiset_term; Kw_multiset Kw_intersect Kw_all;
+  p = multiset_primary {Multiset_term (`intersect (t, p, Some `All), ())}
+| t = multiset_term; Kw_multiset Kw_intersect Kw_distinct;
+  p = multiset_primary {Multiset_term (`intersect (t, p, Some `Distinct), ())}
+;;
+
+multiset_primary:
+| e = value_expression_primary {Multiset_primary (e, ())}
+;;
+(** End   6.37 multiset value expression *)
+
 (** Start 7.2 row value expression *)
 row_value_expression:
 | v = row_value_special_case { Row_value_expression (`special v, ()) }

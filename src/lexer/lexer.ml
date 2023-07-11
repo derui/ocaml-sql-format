@@ -1783,6 +1783,17 @@ let kw_abs = [%sedlex.regexp? Chars "aA", Chars "bB", Chars "sS"]
 let kw_array =
   [%sedlex.regexp? Chars "aA", Chars "rR", Chars "rR", Chars "aA", Chars "yY"]
 
+let kw_multiset =
+  [%sedlex.regexp?
+    ( Chars "mM"
+    , Chars "uU"
+    , Chars "lL"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "tT" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2102,6 +2113,7 @@ let rec token buf =
   | kw_at -> Kw_at
   | kw_abs -> Kw_abs
   | kw_array -> Kw_array
+  | kw_multiset -> Kw_multiset
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

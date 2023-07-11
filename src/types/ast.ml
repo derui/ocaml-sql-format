@@ -661,8 +661,6 @@ and 'a array_element_reference =
 and 'a multiset_element_reference =
   | Multiset_element_reference of 'a multiset_value_expression * 'a
 
-and 'a multiset_value_expression = Multiset_value_expression of 'a (* TODO *)
-
 and 'a string_value_expression =
   | String_value_expression of 'a character_value_expression * 'a
 
@@ -692,7 +690,6 @@ and 'a datetime_value_expression =
       | `minus of 'a datetime_value_expression * 'a interval_term
       ]
       * 'a
-(* TODO *)
 
 and 'a datetime_term = Datetime_term of 'a datetime_factor * 'a
 
@@ -786,3 +783,24 @@ and 'a array_value_constructor_by_query =
       'a query_expression * 'a order_by_clause option * 'a
 
 and 'a order_by_clause = Order_by_clause of 'a (* TODO *)
+
+and 'a multiset_value_expression =
+  | Multiset_value_expression of
+      [ `term of 'a multiset_term
+      | `union of
+        'a multiset_value_expression * 'a multiset_term * qualifier option
+      | `except of
+        'a multiset_value_expression * 'a multiset_term * qualifier option
+      ]
+      * 'a
+
+and 'a multiset_term =
+  | Multiset_term of
+      [ `primary of 'a multiset_primary
+      | `term of 'a multiset_term * 'a multiset_primary * qualifier option
+      ]
+      * 'a
+
+and 'a multiset_primary =
+  | Multiset_primary of
+      [ `value of 'a value_expression_primary | `function' (* TODO *) ] * 'a

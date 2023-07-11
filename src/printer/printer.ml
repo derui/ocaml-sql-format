@@ -1647,9 +1647,6 @@ and multiset_element_reference () =
       let generate = multiset_value_expression
     end) : S))
 
-and multiset_value_expression () =
-  Multiset_value_expression.((module Make () : S))
-
 and string_value_expression () =
   String_value_expression.(
     (module Make (struct
@@ -1995,3 +1992,27 @@ and array_value_constructor_by_query () =
               end) : S))
 
 and order_by_clause () = Order_by_clause.((module Make () : S))
+
+and multiset_value_expression () =
+  Multiset_value_expression.(
+    (module Make (struct
+      type t = A.ext A.multiset_term
+
+      let generate = multiset_term
+    end) : S))
+
+and multiset_term () =
+  Multiset_term.(
+    (module Make (struct
+      type t = A.ext A.multiset_primary
+
+      let generate = multiset_primary
+    end) : S))
+
+and multiset_primary () =
+  Multiset_primary.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))
