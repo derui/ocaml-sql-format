@@ -765,3 +765,24 @@ and 'a array_value_expression_1 =
   | Array_value_expression_1 of 'a array_value_expression * 'a
 
 and 'a array_factor = Array_factor of 'a value_expression_primary * 'a
+
+and 'a array_value_constructor =
+  | Array_value_constructor of
+      [ `enum of 'a array_value_constructor_by_enumeration
+      | `query of 'a array_value_constructor_by_query
+      ]
+      * 'a
+
+and 'a array_value_constructor_by_enumeration =
+  | Array_value_constructor_by_enumeration of 'a array_element_list * 'a
+
+and 'a array_element_list =
+  | Array_element_list of 'a array_element * 'a array_element list * 'a
+
+and 'a array_element = Array_element of 'a value_expression * 'a
+
+and 'a array_value_constructor_by_query =
+  | Array_value_constructor_by_query of
+      'a query_expression * 'a order_by_clause option * 'a
+
+and 'a order_by_clause = Order_by_clause of 'a (* TODO *)

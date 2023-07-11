@@ -697,7 +697,7 @@ interval_absolute_value_function:
 ;;
 (** End   6.33 interval value function *)
 
-(** Start 6.35 array value function *)
+(** Start 6.35 array value expression *)
 array_value_expression:
 | e = array_factor {Array_value_expression (`factor e, ())}
 | e = array_concatenation {Array_value_expression (`concat e, ())}
@@ -714,7 +714,32 @@ array_value_expression_1:
 array_factor:
 | e = value_expression_primary {Array_factor (e, ())}
 ;;
-(** End   6.35 array value function *)
+(** End   6.35 array value expression *)
+
+(** Start 6.36 array value constructor *)
+array_value_constructor:
+| e = array_value_constructor_by_enumeration { Array_value_constructor (`enum e, ()) }
+| e = array_value_constructor_by_query { Array_value_constructor (`query e, ()) }
+;;
+
+array_value_constructor_by_enumeration:
+| Kw_array e = delimited(Tok_lsbrace, array_element_list, Tok_rsbrace) {Array_value_constructor_by_enumerationg (e, ())}
+;;
+
+array_element_list:
+| fl = array_element; list = list(pair(Tok_comma, array_element)) {Array_element_list (fl, List.map snd list, ())}
+;;
+
+array_element:
+| e = value_expression {Array_element (e, ())}
+;;
+
+array_value_constructor_by_query:
+|Kw_array Tok_lparen q = query_expression o = option(order_by_clause) Tok_rparen {
+                                                  Array_value_constructor_by_query (q, o, ())
+                                                }
+;;
+(** End   6.36 array value constructor *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

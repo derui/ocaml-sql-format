@@ -1941,3 +1941,57 @@ and array_factor () =
 
       let generate = value_expression_primary
     end) : S))
+
+and array_value_constructor () =
+  Array_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.array_value_constructor_by_enumeration
+
+                let generate = array_value_constructor_by_enumeration
+              end)
+              (struct
+                type t = A.ext A.array_value_constructor_by_query
+
+                let generate = array_value_constructor_by_query
+              end) : S))
+
+and array_value_constructor_by_enumeration () =
+  Array_value_constructor_by_enumeration.(
+    (module Make (struct
+      type t = A.ext A.array_element_list
+
+      let generate = array_element_list
+    end) : S))
+
+and array_element_list () =
+  Array_element_list.(
+    (module Make (struct
+      type t = A.ext A.array_element
+
+      let generate = array_element
+    end) : S))
+
+and array_element () =
+  Array_element.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))
+
+and array_value_constructor_by_query () =
+  Array_value_constructor_by_query.(
+    (module Make
+              (struct
+                type t = A.ext A.query_expression
+
+                let generate = query_expression
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
+              end) : S))
+
+and order_by_clause () = Order_by_clause.((module Make () : S))

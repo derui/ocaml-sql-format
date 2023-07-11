@@ -1,5 +1,4 @@
 open Types.Ast
-open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext interval_term_2

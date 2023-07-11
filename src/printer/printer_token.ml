@@ -275,6 +275,7 @@ include (
       | Kw_local -> Fmt.string f @@ as_keyword "local" keyword
       | Kw_at -> Fmt.string f @@ as_keyword "at" keyword
       | Kw_abs -> Fmt.string f @@ as_keyword "abs" keyword
+      | Kw_array -> Fmt.string f @@ as_keyword "array" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
