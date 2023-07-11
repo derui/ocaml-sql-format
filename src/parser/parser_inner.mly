@@ -697,6 +697,25 @@ interval_absolute_value_function:
 ;;
 (** End   6.33 interval value function *)
 
+(** Start 6.35 array value function *)
+array_value_expression:
+| e = array_factor {Array_value_expression (`factor e, ())}
+| e = array_concatenation {Array_value_expression (`concat e, ())}
+;;
+
+array_concatenation:
+| e = array_value_expression_1 Op_concat f = array_factor {Array_concatenation (e, f, ())}
+;;
+
+array_value_expression_1:
+| e = array_value_expression {Array_value_expression_1 (e, ())}
+;;
+
+array_factor:
+| e = value_expression_primary {Array_factor (e, ())}
+;;
+(** End   6.35 array value function *)
+
 (** Start 7.2 row value expression *)
 row_value_expression:
 | v = row_value_special_case { Row_value_expression (`special v, ()) }

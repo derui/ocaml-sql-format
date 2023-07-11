@@ -658,8 +658,6 @@ and 'a array_element_reference =
   | Array_element_reference of
       'a array_value_expression * 'a numeric_value_expression * 'a
 
-and 'a array_value_expression = Array_value_expression of 'a (* TODO *)
-
 and 'a multiset_element_reference =
   | Multiset_element_reference of 'a multiset_value_expression * 'a
 
@@ -755,3 +753,15 @@ and 'a interval_value_function =
 
 and 'a interval_absolute_value_function =
   | Interval_absolute_value_function of 'a interval_value_expression * 'a
+
+and 'a array_value_expression =
+  | Array_value_expression of
+      [ `concat of 'a array_concatenation | `factor of 'a array_factor ] * 'a
+
+and 'a array_concatenation =
+  | Array_concatenation of 'a array_value_expression_1 * 'a array_factor * 'a
+
+and 'a array_value_expression_1 =
+  | Array_value_expression_1 of 'a array_value_expression * 'a
+
+and 'a array_factor = Array_factor of 'a value_expression_primary * 'a

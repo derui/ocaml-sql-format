@@ -1639,8 +1639,6 @@ and array_element_reference () =
                 let generate = numeric_value_expression
               end) : S))
 
-and array_value_expression () = Array_value_expression.((module Make () : S))
-
 and multiset_element_reference () =
   Multiset_element_reference.(
     (module Make (struct
@@ -1898,4 +1896,48 @@ and interval_absolute_value_function () =
       type t = A.ext A.interval_value_expression
 
       let generate = interval_value_expression
+    end) : S))
+
+and array_value_expression () =
+  Array_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.array_factor
+
+                let generate = array_factor
+              end)
+              (struct
+                type t = A.ext A.array_concatenation
+
+                let generate = array_concatenation
+              end) : S))
+
+and array_concatenation () =
+  Array_concatenation.(
+    (module Make
+              (struct
+                type t = A.ext A.array_value_expression_1
+
+                let generate = array_value_expression_1
+              end)
+              (struct
+                type t = A.ext A.array_factor
+
+                let generate = array_factor
+              end) : S))
+
+and array_value_expression_1 () =
+  Array_value_expression_1.(
+    (module Make (struct
+      type t = A.ext A.array_value_expression
+
+      let generate = array_value_expression
+    end) : S))
+
+and array_factor () =
+  Array_factor.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
     end) : S))
