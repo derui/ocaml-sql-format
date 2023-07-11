@@ -593,6 +593,7 @@ numeric_value_expression:
 | v1 = numeric_value_expression Op_minus v2 = term {Numeric_value_expression (`minus (v1, v2), ())}
 ;;
 (** End   6.26 numeric value expression *)
+
 (** Start 6.28 string value expression *)
 string_value_expression:
 | e = character_value_expression {String_value_expression (e, ())}
@@ -614,7 +615,45 @@ character_factor:
 character_primary:
 | e = value_expression_primary {Character_primary (`primary e, ())}
 ;;
+character_primary:
+| e = value_expression_primary {Character_primary (`primary e, ())}
+;;
 (** End   6.28 string value expression *)
+
+(** Start 6.32 interval value expression *)
+interval_value_expression:
+| f = interval_term {Interval_value_expression (`term f, ())}
+| e = interval_value_expression_1 Op_plus t = interval_term_1 {Interval_value_expression (`plus (e, t), ())}
+| e = interval_value_expression_1 Op_minus t = interval_term_1 {Interval_value_expression (`minus (e, t), ())}
+| Tok_lparen e = datetime_value_expression;
+  Op_minus;
+  t = datetime_term Tok_rparen;
+  iq = interval_qualifier {Interval_value_expression (`qualifier (e, t, iq), ())}
+;;
+
+interval_term:
+| f = interval_factor {Interval_term (`factor f, ())}
+| t = interval_term_2 Op_star f = factor {Interval_term (`asterisk (t, f), ())}
+| t = interval_term_2 Op_slash f = factor {Interval_term (`solidus (t, f), ())}
+| t = term Op_star f = interval_factor {Interval_term (`term (t, f), ())}
+;;
+
+interval_factor:
+|s = option(sign); e = interval_primary {Interval_factor (s, e, ())}
+;;
+
+interval_primary:
+|e = value_expression_primary iq = option(interval_qualifier) {Interval_primary (`value (e, iq), ())}
+;;
+
+interval_term_1:
+|e = interval_term {Interval_term_1 (e, ())}
+;;
+
+interval_term_2:
+|e = interval_term {Interval_term_2 (e, ())}
+;;
+(** End   6.32 interval value expression *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

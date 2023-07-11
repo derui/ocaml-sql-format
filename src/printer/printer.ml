@@ -1709,3 +1709,120 @@ and character_primary () =
 
       let generate = value_expression_primary
     end) : S))
+
+and datetime_value_expression () =
+  Datetime_value_expression.((module Make () : S))
+
+and datetime_term () = Datetime_term.((module Make () : S))
+
+and datetime_factor () = Datetime_factor.((module Make () : S))
+
+and datetime_primary () = Datetime_primary.((module Make () : S))
+
+and time_zone () = Time_zone.((module Make () : S))
+
+and time_zone_specifier () = Time_zone_specifier.((module Make () : S))
+
+and interval_value_expression () =
+  Interval_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.interval_term
+
+                let generate = interval_term
+              end)
+              (struct
+                type t = A.ext A.interval_value_expression_1
+
+                let generate = interval_value_expression_1
+              end)
+              (struct
+                type t = A.ext A.interval_term_1
+
+                let generate = interval_term_1
+              end)
+              (struct
+                type t = A.ext A.datetime_value_expression
+
+                let generate = datetime_value_expression
+              end)
+              (struct
+                type t = A.ext A.datetime_term
+
+                let generate = datetime_term
+              end)
+              (struct
+                type t = A.ext L.interval_qualifier
+
+                let generate = interval_qualifier
+              end) : S))
+
+and interval_term () =
+  Interval_term.(
+    (module Make
+              (struct
+                type t = A.ext A.interval_factor
+
+                let generate = interval_factor
+              end)
+              (struct
+                type t = A.ext A.factor
+
+                let generate = factor
+              end)
+              (struct
+                type t = A.ext A.term
+
+                let generate = term
+              end)
+              (struct
+                type t = A.ext A.interval_term_2
+
+                let generate = interval_term_2
+              end) : S))
+
+and interval_factor () =
+  Interval_factor.(
+    (module Make (struct
+      type t = A.ext A.interval_primary
+
+      let generate = interval_primary
+    end) : S))
+
+and interval_primary () =
+  Interval_primary.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression_primary
+
+                let generate = value_expression_primary
+              end)
+              (struct
+                type t = A.ext L.interval_qualifier
+
+                let generate = interval_qualifier
+              end) : S))
+
+and interval_value_expression_1 () =
+  Interval_value_expression_1.(
+    (module Make (struct
+      type t = A.ext A.interval_value_expression
+
+      let generate = interval_value_expression
+    end) : S))
+
+and interval_term_1 () =
+  Interval_term_1.(
+    (module Make (struct
+      type t = A.ext A.interval_term
+
+      let generate = interval_term
+    end) : S))
+
+and interval_term_2 () =
+  Interval_term_2.(
+    (module Make (struct
+      type t = A.ext A.interval_term
+
+      let generate = interval_term
+    end) : S))

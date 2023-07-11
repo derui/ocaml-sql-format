@@ -685,3 +685,52 @@ and 'a character_primary =
         (* TODO | `function' of 'a string_value_function *)
       ]
       * 'a
+
+and 'a datetime_value_expression = Datetime_value_expression of 'a (* TODO *)
+
+and 'a datetime_term = Datetime_term of 'a (* TODO *)
+
+and 'a datetime_factor = Datetime_factor of 'a (* TODO *)
+
+and 'a datetime_primary = Datetime_primary of 'a (* TODO *)
+
+and 'a time_zone = Time_zone of 'a (* TODO *)
+
+and 'a time_zone_specifier = Time_zone_specifier of 'a (* TODO *)
+
+and 'a interval_value_expression =
+  | Interval_value_expression of
+      [ `term of 'a interval_term
+      | `plus of 'a interval_value_expression_1 * 'a interval_term_1
+      | `minus of 'a interval_value_expression_1 * 'a interval_term_1
+      | `qualifier of
+        'a datetime_value_expression * 'a datetime_term * 'a interval_qualifier
+      ]
+      * 'a
+
+and 'a interval_term =
+  | Interval_term of
+      [ `factor of 'a interval_factor
+      | `asterisk of 'a interval_term_2 * 'a factor
+      | `solidus of 'a interval_term_2 * 'a factor
+      | `term of 'a term * 'a interval_factor
+      ]
+      * 'a
+
+and 'a interval_factor =
+  | Interval_factor of sign option * 'a interval_primary * 'a
+
+and 'a interval_primary =
+  | Interval_primary of
+      [ `value of
+        'a value_expression_primary * 'a interval_qualifier option
+        (* TODO | `function' of 'a interval_value_function *)
+      ]
+      * 'a
+
+and 'a interval_value_expression_1 =
+  | Interval_value_expression_1 of 'a interval_value_expression * 'a
+
+and 'a interval_term_1 = Interval_term_1 of 'a interval_term * 'a
+
+and 'a interval_term_2 = Interval_term_2 of 'a interval_term * 'a
