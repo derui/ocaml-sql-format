@@ -619,9 +619,6 @@ character_factor:
 character_primary:
 | e = value_expression_primary {Character_primary (`primary e, ())}
 ;;
-character_primary:
-| e = value_expression_primary {Character_primary (`primary e, ())}
-;;
 (** End   6.28 string value expression *)
 
 (** Start 6.30 datetime value expression *)
