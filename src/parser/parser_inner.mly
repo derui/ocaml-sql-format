@@ -299,6 +299,9 @@ open Types.Ast
 %token Kw_values
 %token Kw_value
 %token Kw_element
+%token Kw_zone
+%token Kw_local
+%token Kw_at
 
 %token Tok_eof
 
@@ -619,6 +622,36 @@ character_primary:
 | e = value_expression_primary {Character_primary (`primary e, ())}
 ;;
 (** End   6.28 string value expression *)
+
+(** Start 6.30 datetime value expression *)
+datetime_value_expression:
+| e = datetime_term {Datetime_value_expression (`term e, ())}
+| e = interval_value_expression; Op_plus term = datetime_term {Datetime_value_expression (`plus_interval e, ())}
+| e = datetime_value_expression; Op_plus term = interval_term {Datetime_value_expression (`plus_datetime e, ())}
+| e = datetime_value_expression; Op_minus term = interval_term {Datetime_value_expression (`minus e, ())}
+;;
+
+datetime_term:
+| e = datetime_factor {Datetime_term (e, ())}
+;;
+
+datetime_factor:
+| e = datetime_primary; s = option(time_zone_specifier) {Datetime_factor (e, s, ())}
+;;
+
+datetime_primary:
+| e = value_expression_primary {Datetime_primary (e, ())}
+;;
+
+time_zone:
+| Kw_at e = time_zone_specifier {Time_zone (e, ())}
+;;
+
+time_zone_specifier:
+| Kw_local {Time_zone_specifier (`local, ())}
+| Kw_time Kw_zone e = interval_primary {Time_zone_specifier (`time_zone e, ())}
+;;
+(** End   6.30 datetime value expression *)
 
 (** Start 6.32 interval value expression *)
 interval_value_expression:

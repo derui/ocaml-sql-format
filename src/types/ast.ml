@@ -686,17 +686,33 @@ and 'a character_primary =
       ]
       * 'a
 
-and 'a datetime_value_expression = Datetime_value_expression of 'a (* TODO *)
+and 'a datetime_value_expression =
+  | Datetime_value_expression of
+      [ `term of 'a datetime_term
+      | `plus_interval of 'a interval_value_expression * 'a datetime_term
+      | `plus_datetime of 'a datetime_value_expression * 'a interval_term
+      | `minus of 'a datetime_value_expression * 'a interval_term
+      ]
+      * 'a
+(* TODO *)
 
-and 'a datetime_term = Datetime_term of 'a (* TODO *)
+and 'a datetime_term = Datetime_term of 'a datetime_factor * 'a
 
-and 'a datetime_factor = Datetime_factor of 'a (* TODO *)
+and 'a datetime_factor =
+  | Datetime_factor of 'a datetime_primary * 'a time_zone_specifier option * 'a
 
-and 'a datetime_primary = Datetime_primary of 'a (* TODO *)
+and 'a datetime_primary =
+  | Datetime_primary of
+      [ `value of
+        'a value_expression_primary
+        (* TODO | `function' of 'a datetime_value_function *)
+      ]
+      * 'a
 
-and 'a time_zone = Time_zone of 'a (* TODO *)
+and 'a time_zone = Time_zone of 'a time_zone_specifier * 'a
 
-and 'a time_zone_specifier = Time_zone_specifier of 'a (* TODO *)
+and 'a time_zone_specifier =
+  | Time_zone_specifier of [ `local | `time_zone of 'a interval_primary ] * 'a
 
 and 'a interval_value_expression =
   | Interval_value_expression of

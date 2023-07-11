@@ -1711,17 +1711,69 @@ and character_primary () =
     end) : S))
 
 and datetime_value_expression () =
-  Datetime_value_expression.((module Make () : S))
+  Datetime_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.datetime_term
 
-and datetime_term () = Datetime_term.((module Make () : S))
+                let generate = datetime_term
+              end)
+              (struct
+                type t = A.ext A.interval_value_expression
 
-and datetime_factor () = Datetime_factor.((module Make () : S))
+                let generate = interval_value_expression
+              end)
+              (struct
+                type t = A.ext A.interval_term
 
-and datetime_primary () = Datetime_primary.((module Make () : S))
+                let generate = interval_term
+              end) : S))
 
-and time_zone () = Time_zone.((module Make () : S))
+and datetime_term () =
+  Datetime_term.(
+    (module Make (struct
+      type t = A.ext A.datetime_factor
 
-and time_zone_specifier () = Time_zone_specifier.((module Make () : S))
+      let generate = datetime_factor
+    end) : S))
+
+and datetime_factor () =
+  Datetime_factor.(
+    (module Make
+              (struct
+                type t = A.ext A.datetime_primary
+
+                let generate = datetime_primary
+              end)
+              (struct
+                type t = A.ext A.time_zone_specifier
+
+                let generate = time_zone_specifier
+              end) : S))
+
+and datetime_primary () =
+  Datetime_primary.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))
+
+and time_zone () =
+  Time_zone.(
+    (module Make (struct
+      type t = A.ext A.time_zone_specifier
+
+      let generate = time_zone_specifier
+    end) : S))
+
+and time_zone_specifier () =
+  Time_zone_specifier.(
+    (module Make (struct
+      type t = A.ext A.interval_primary
+
+      let generate = interval_primary
+    end) : S))
 
 and interval_value_expression () =
   Interval_value_expression.(

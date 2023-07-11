@@ -1771,6 +1771,13 @@ let kw_element =
     , Chars "nN"
     , Chars "tT" )]
 
+let kw_zone = [%sedlex.regexp? Chars "zZ", Chars "oO", Chars "nN", Chars "eE"]
+
+let kw_local =
+  [%sedlex.regexp? Chars "lL", Chars "oO", Chars "cC", Chars "aA", Chars "lL"]
+
+let kw_at = [%sedlex.regexp? Chars "aA", Chars "tT"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2085,6 +2092,9 @@ let rec token buf =
   | kw_values -> Kw_values
   | kw_value -> Kw_value
   | kw_element -> Kw_element
+  | kw_zone -> Kw_zone
+  | kw_local -> Kw_local
+  | kw_at -> Kw_at
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

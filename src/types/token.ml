@@ -257,6 +257,9 @@ type token =
   | Kw_values
   | Kw_value
   | Kw_element
+  | Kw_zone
+  | Kw_local
+  | Kw_at
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

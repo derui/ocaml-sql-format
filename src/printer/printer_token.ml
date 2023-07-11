@@ -271,6 +271,9 @@ include (
       | Kw_values -> Fmt.string f @@ as_keyword "values" keyword
       | Kw_value -> Fmt.string f @@ as_keyword "value" keyword
       | Kw_element -> Fmt.string f @@ as_keyword "element" keyword
+      | Kw_zone -> Fmt.string f @@ as_keyword "zone" keyword
+      | Kw_local -> Fmt.string f @@ as_keyword "local" keyword
+      | Kw_at -> Fmt.string f @@ as_keyword "at" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
