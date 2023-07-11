@@ -738,9 +738,8 @@ and 'a interval_factor =
 
 and 'a interval_primary =
   | Interval_primary of
-      [ `value of
-        'a value_expression_primary * 'a interval_qualifier option
-        (* TODO | `function' of 'a interval_value_function *)
+      [ `value of 'a value_expression_primary * 'a interval_qualifier option
+      | `function' of 'a interval_value_function
       ]
       * 'a
 
@@ -750,3 +749,9 @@ and 'a interval_value_expression_1 =
 and 'a interval_term_1 = Interval_term_1 of 'a interval_term * 'a
 
 and 'a interval_term_2 = Interval_term_2 of 'a interval_term * 'a
+
+and 'a interval_value_function =
+  | Interval_value_function of 'a interval_absolute_value_function * 'a
+
+and 'a interval_absolute_value_function =
+  | Interval_absolute_value_function of 'a interval_value_expression * 'a

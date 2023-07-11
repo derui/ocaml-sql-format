@@ -302,6 +302,7 @@ open Types.Ast
 %token Kw_zone
 %token Kw_local
 %token Kw_at
+%token Kw_abs
 
 %token Tok_eof
 
@@ -677,6 +678,7 @@ interval_factor:
 
 interval_primary:
 |e = value_expression_primary iq = option(interval_qualifier) {Interval_primary (`value (e, iq), ())}
+|e = interval_value_function {Interval_primary (`function' e, ())}
 ;;
 
 interval_term_1:
@@ -687,6 +689,16 @@ interval_term_2:
 |e = interval_term {Interval_term_2 (e, ())}
 ;;
 (** End   6.32 interval value expression *)
+
+(** Start 6.33 interval value function *)
+interval_value_function:
+| f = interval_absolute_value_function {Interval_value_function (f, _)}
+;;
+
+interval_absolute_value_function:
+| Kw_abs e = delimited(Tok_lparen, interval_value_expression, Tok_rparen) {Interval_absolute_value_function (f, _)}
+;;
+(** End   6.33 interval value function *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

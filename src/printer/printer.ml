@@ -1853,6 +1853,11 @@ and interval_primary () =
                 type t = A.ext L.interval_qualifier
 
                 let generate = interval_qualifier
+              end)
+              (struct
+                type t = A.ext A.interval_value_function
+
+                let generate = interval_value_function
               end) : S))
 
 and interval_value_expression_1 () =
@@ -1877,4 +1882,20 @@ and interval_term_2 () =
       type t = A.ext A.interval_term
 
       let generate = interval_term
+    end) : S))
+
+and interval_value_function () =
+  Interval_value_function.(
+    (module Make (struct
+      type t = A.ext A.interval_absolute_value_function
+
+      let generate = interval_absolute_value_function
+    end) : S))
+
+and interval_absolute_value_function () =
+  Interval_absolute_value_function.(
+    (module Make (struct
+      type t = A.ext A.interval_value_expression
+
+      let generate = interval_value_expression
     end) : S))
