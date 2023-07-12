@@ -2011,8 +2011,30 @@ and multiset_term () =
 
 and multiset_primary () =
   Multiset_primary.(
-    (module Make (struct
-      type t = A.ext A.value_expression_primary
+    (module Make
+              (struct
+                type t = A.ext A.value_expression_primary
 
-      let generate = value_expression_primary
+                let generate = value_expression_primary
+              end)
+              (struct
+                type t = A.ext A.multiset_value_function
+
+                let generate = multiset_value_function
+              end) : S))
+
+and multiset_value_function () =
+  Multiset_value_function.(
+    (module Make (struct
+      type t = A.ext A.multiset_set_function
+
+      let generate = multiset_set_function
+    end) : S))
+
+and multiset_set_function () =
+  Multiset_set_function.(
+    (module Make (struct
+      type t = A.ext A.multiset_value_expression
+
+      let generate = multiset_value_expression
     end) : S))

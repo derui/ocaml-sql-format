@@ -765,9 +765,20 @@ multiset_term:
 ;;
 
 multiset_primary:
-| e = value_expression_primary {Multiset_primary (e, ())}
+| e = value_expression_primary {Multiset_primary (`value e, ())}
+| e = multiset_value_function {Multiset_primary (`function' e, ())}
 ;;
 (** End   6.37 multiset value expression *)
+
+(** Start 6.38 multiset value function *)
+multiset_value_function:
+|  e = multiset_set_function {Multiset_value_function (e, ())}
+;;
+
+multiset_set_function:
+| Kw_set e = delimited(Tok_lparen, multiset_value_expression, Tok_rparen) {Multiset_set_function (e, ())}
+;;
+(** End   6.38 multiset value function *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

@@ -803,4 +803,13 @@ and 'a multiset_term =
 
 and 'a multiset_primary =
   | Multiset_primary of
-      [ `value of 'a value_expression_primary | `function' (* TODO *) ] * 'a
+      [ `value of 'a value_expression_primary
+      | `function' of 'a multiset_value_function
+      ]
+      * 'a
+
+and 'a multiset_value_function =
+  | Multiset_value_function of 'a multiset_set_function * 'a
+
+and 'a multiset_set_function =
+  | Multiset_set_function of 'a multiset_value_expression * 'a
