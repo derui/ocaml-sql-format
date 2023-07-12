@@ -303,6 +303,8 @@ open Types.Ast
 %token Kw_local
 %token Kw_at
 %token Kw_abs
+%token Kw_array
+%token Kw_multiset
 
 %token Tok_eof
 
@@ -779,6 +781,36 @@ multiset_set_function:
 | Kw_set e = delimited(Tok_lparen, multiset_value_expression, Tok_rparen) {Multiset_set_function (e, ())}
 ;;
 (** End   6.38 multiset value function *)
+
+(** Start 6.39 multiset value constructor *)
+table_value_constructor_by_query:
+| Kw_table e = delimited(Tok_lparen, query_expression, Tok_rparen) {Table_value_constructor_by_query (e, ())}
+;;
+
+multiset_value_constructor_by_query:
+| Kw_multiset e = delimited(Tok_lparen, query_expression, Tok_rparen) {Multiset_value_constructor_by_query (e, ())}
+;;
+
+multiset_element:
+| e = value_expression {Multiset_element (e, ())}
+;;
+
+multiset_element_list:
+| fl = multiset_element; list = list(pair(Tok_comma, multiset_element)) {Multiset_element_list (fl, List.map snd list, ())}
+;;
+
+multiset_value_constructor_by_enumeration:
+| Kw_multiset e = delimited(Tok_lsbrace, multiset_element_list, Tok_rsbrace) {
+                      Multiset_value_constructor_by_enumeration (e, ())
+                    }
+;;
+
+multiset_value_constructor:
+| e = multiset_value_constructor_by_enumeration {Multiset_value_constructor (`enum e ,())}
+| e = multiset_value_constructor_by_query {Multiset_value_constructor (`multi_query e ,())}
+| e = table_value_constructor_by_query {Multiset_value_constructor (`table_query e ,())}
+  ;;
+(** End   6.39 multiset value constructor *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

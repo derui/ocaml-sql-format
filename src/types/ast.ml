@@ -813,3 +813,25 @@ and 'a multiset_value_function =
 
 and 'a multiset_set_function =
   | Multiset_set_function of 'a multiset_value_expression * 'a
+
+and 'a multiset_value_constructor =
+  | Multiset_value_constructor of
+      [ `enum of 'a multiset_value_constructor_by_enumeration
+      | `multi_query of 'a multiset_value_constructor_by_query
+      | `table_query of 'a table_value_constructor_by_query
+      ]
+      * 'a
+
+and 'a multiset_value_constructor_by_enumeration =
+  | Multiset_value_constructor_by_enumeration of 'a multiset_element_list * 'a
+
+and 'a multiset_element_list =
+  | Multiset_element_list of 'a multiset_element * 'a multiset_element list * 'a
+
+and 'a multiset_element = Multiset_element of 'a value_expression * 'a
+
+and 'a multiset_value_constructor_by_query =
+  | Multiset_value_constructor_by_query of 'a query_expression * 'a (* TODO *)
+
+and 'a table_value_constructor_by_query =
+  | Table_value_constructor_by_query of 'a query_expression * 'a

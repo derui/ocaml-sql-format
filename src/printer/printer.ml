@@ -2038,3 +2038,62 @@ and multiset_set_function () =
 
       let generate = multiset_value_expression
     end) : S))
+
+and multiset_value_constructor () =
+  Multiset_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.multiset_value_constructor_by_enumeration
+
+                let generate = multiset_value_constructor_by_enumeration
+              end)
+              (struct
+                type t = A.ext A.multiset_value_constructor_by_query
+
+                let generate = multiset_value_constructor_by_query
+              end)
+              (struct
+                type t = A.ext A.table_value_constructor_by_query
+
+                let generate = table_value_constructor_by_query
+              end) : S))
+
+and multiset_value_constructor_by_enumeration () =
+  Multiset_value_constructor_by_enumeration.(
+    (module Make (struct
+      type t = A.ext A.multiset_element_list
+
+      let generate = multiset_element_list
+    end) : S))
+
+and multiset_element_list () =
+  Multiset_element_list.(
+    (module Make (struct
+      type t = A.ext A.multiset_element
+
+      let generate = multiset_element
+    end) : S))
+
+and multiset_element () =
+  Multiset_element.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))
+
+and multiset_value_constructor_by_query () =
+  Multiset_value_constructor_by_query.(
+    (module Make (struct
+      type t = A.ext A.query_expression
+
+      let generate = query_expression
+    end) : S))
+
+and table_value_constructor_by_query () =
+  Table_value_constructor_by_query.(
+    (module Make (struct
+      type t = A.ext A.query_expression
+
+      let generate = query_expression
+    end) : S))
