@@ -699,6 +699,47 @@ interval_absolute_value_function:
 ;;
 (** End   6.33 interval value function *)
 
+(** Start 6.34 boolean value expression *)
+truth_value:
+| Kw_true {Truth_value (`true', ())}
+| Kw_false {Truth_value (`false', ())}
+| Kw_unknown {Truth_value (`unknown, ())}
+;;
+
+parenthesized_boolean_value_expression:
+  | e = delimited(Tok_lparen, boolean_value_expression, Tok_rparen) {Parenthesized_boolean_value_expression (e, ())}
+;;
+
+boolean_predicand:
+| e = parenthesized_boolean_value_expression {Boolean_predicand (`paren e, ())}
+| e = nonparenthesized_value_expression_primary {Boolean_predicand (`non e, ())}
+;;
+
+boolean_primary:
+| e = boolean_predicand {Boolean_primary (`predicand e, ())}
+;;
+
+boolean_test:
+| e = boolean_primary {Boolean_test (e, None, ())}
+| e = boolean_primary Kw_is v = truth_value {Boolean_test (e, Some (`is v), ())}
+| e = boolean_primary Kw_is Kw_not v = truth_value {Boolean_test (e, Some (`is_not v), ())}
+;;
+
+boolean_factor:
+| not_ = option(Kw_not) e = boolean_test {Boolean_factor (Option.map (fun _ -> `not') not_, e, ())}
+;;
+
+boolean_term:
+| e = boolean_factor {Boolean_term (`factor e, ())}
+| t = boolean_term Kw_and f = boolean_factor {Boolean_term (`and' (t, f), ())}
+;;
+
+boolean_value_expression:
+| e = boolean_term {Boolean_value_expression (`term e, ())}
+| t = boolean_value_expression Kw_or f = boolean_term {Boolean_value_expression (`or' (t, f), ())}
+;;
+(** End   6.34 boolean value expression *)
+
 (** Start 6.35 array value expression *)
 array_value_expression:
 | e = array_factor {Array_value_expression (`factor e, ())}

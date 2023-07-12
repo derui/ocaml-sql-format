@@ -223,8 +223,6 @@ and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
 
 and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
-and 'a boolean_value_expression = Boolean_value_expression of 'a (* TODO *)
-
 and 'a value_expression = Value_expression of 'a (* TODO *)
 
 and 'a collection_value_expression =
@@ -835,3 +833,46 @@ and 'a multiset_value_constructor_by_query =
 
 and 'a table_value_constructor_by_query =
   | Table_value_constructor_by_query of 'a query_expression * 'a
+
+and 'a boolean_value_expression =
+  | Boolean_value_expression of
+      [ `term of 'a boolean_term
+      | `or' of 'a boolean_value_expression * 'a boolean_term
+      ]
+      * 'a
+
+and 'a boolean_term =
+  | Boolean_term of
+      [ `factor of 'a boolean_factor
+      | `and' of 'a boolean_term * 'a boolean_factor
+      ]
+      * 'a
+
+and 'a boolean_factor =
+  | Boolean_factor of [ `not' ] option * 'a boolean_test * 'a
+
+and 'a boolean_test =
+  | Boolean_test of
+      'a boolean_primary
+      * [ `is of 'a truth_value | `is_not of 'a truth_value ] option
+      * 'a
+
+and 'a boolean_primary =
+  | Boolean_primary of
+      [ (* TODO `predicate of 'a predicate | *)
+        `predicand of
+        'a boolean_predicand
+      ]
+      * 'a
+
+and 'a truth_value = Truth_value of [ `true' | `false' | `unknown ] * 'a
+
+and 'a boolean_predicand =
+  | Boolean_predicand of
+      [ `paren of 'a parenthesized_boolean_value_expression
+      | `non of 'a nonparenthesized_value_expression_primary
+      ]
+      * 'a
+
+and 'a parenthesized_boolean_value_expression =
+  | Parenthesized_boolean_value_expression of 'a boolean_value_expression * 'a

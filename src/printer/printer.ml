@@ -611,9 +611,6 @@ and search_condition () =
       let generate = boolean_value_expression
     end) : S))
 
-and boolean_value_expression () =
-  Boolean_value_expression.((module Make () : S))
-
 and table_reference () =
   Table_reference.(
     (module Make
@@ -2096,4 +2093,74 @@ and table_value_constructor_by_query () =
       type t = A.ext A.query_expression
 
       let generate = query_expression
+    end) : S))
+
+and boolean_value_expression () =
+  Boolean_value_expression.(
+    (module Make (struct
+      type t = A.ext A.boolean_term
+
+      let generate = boolean_term
+    end) : S))
+
+and boolean_term () =
+  Boolean_term.(
+    (module Make (struct
+      type t = A.ext A.boolean_factor
+
+      let generate = boolean_factor
+    end) : S))
+
+and boolean_factor () =
+  Boolean_factor.(
+    (module Make (struct
+      type t = A.ext A.boolean_test
+
+      let generate = boolean_test
+    end) : S))
+
+and boolean_primary () =
+  Boolean_primary.(
+    (module Make (struct
+      type t = A.ext A.boolean_predicand
+
+      let generate = boolean_predicand
+    end) : S))
+
+and boolean_test () =
+  Boolean_test.(
+    (module Make
+              (struct
+                type t = A.ext A.boolean_primary
+
+                let generate = boolean_primary
+              end)
+              (struct
+                type t = A.ext A.truth_value
+
+                let generate = truth_value
+              end) : S))
+
+and truth_value () = Truth_value.((module Make () : S))
+
+and boolean_predicand () =
+  Boolean_predicand.(
+    (module Make
+              (struct
+                type t = A.ext A.parenthesized_boolean_value_expression
+
+                let generate = parenthesized_boolean_value_expression
+              end)
+              (struct
+                type t = A.ext A.nonparenthesized_value_expression_primary
+
+                let generate = nonparenthesized_value_expression_primary
+              end) : S))
+
+and parenthesized_boolean_value_expression () =
+  Parenthesized_boolean_value_expression.(
+    (module Make (struct
+      type t = A.ext A.boolean_value_expression
+
+      let generate = boolean_value_expression
     end) : S))
