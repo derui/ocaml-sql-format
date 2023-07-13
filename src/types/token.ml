@@ -263,6 +263,8 @@ type token =
   | Kw_abs
   | Kw_array
   | Kw_multiset
+  | Kw_localtime
+  | Kw_localtimestamp
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

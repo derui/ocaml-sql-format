@@ -1794,6 +1794,35 @@ let kw_multiset =
     , Chars "eE"
     , Chars "tT" )]
 
+let kw_localtime =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "oO"
+    , Chars "cC"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE" )]
+
+let kw_localtimestamp =
+  [%sedlex.regexp?
+    ( Chars "lL"
+    , Chars "oO"
+    , Chars "cC"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "aA"
+    , Chars "mM"
+    , Chars "pP" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2114,6 +2143,8 @@ let rec token buf =
   | kw_abs -> Kw_abs
   | kw_array -> Kw_array
   | kw_multiset -> Kw_multiset
+  | kw_localtime -> Kw_localtime
+  | kw_localtimestamp -> Kw_localtimestamp
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

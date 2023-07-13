@@ -277,6 +277,8 @@ include (
       | Kw_abs -> Fmt.string f @@ as_keyword "abs" keyword
       | Kw_array -> Fmt.string f @@ as_keyword "array" keyword
       | Kw_multiset -> Fmt.string f @@ as_keyword "multiset" keyword
+      | Kw_localtime -> Fmt.string f @@ as_keyword "localtime" keyword
+      | Kw_localtimestamp -> Fmt.string f @@ as_keyword "localtimestamp" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

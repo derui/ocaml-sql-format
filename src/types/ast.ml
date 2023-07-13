@@ -696,9 +696,8 @@ and 'a datetime_factor =
 
 and 'a datetime_primary =
   | Datetime_primary of
-      [ `value of
-        'a value_expression_primary
-        (* TODO | `function' of 'a datetime_value_function *)
+      [ `value of 'a value_expression_primary
+      | `function' of 'a datetime_value_function
       ]
       * 'a
 
@@ -876,3 +875,36 @@ and 'a boolean_predicand =
 
 and 'a parenthesized_boolean_value_expression =
   | Parenthesized_boolean_value_expression of 'a boolean_value_expression * 'a
+
+and 'a datetime_value_function =
+  | Datetime_value_function of
+      [ `date of 'a current_date_value_function
+      | `time of 'a current_time_value_function
+      | `local_time of 'a current_local_time_value_function
+      | `timestamp of 'a current_timestamp_value_function
+      | `local_timestamp of 'a current_local_timestamp_value_function
+      ]
+      * 'a
+
+and 'a current_date_value_function = Current_date_value_function of 'a
+
+and 'a current_time_value_function =
+  | Current_time_value_function of 'a time_precision option * 'a
+
+and 'a current_local_time_value_function =
+  | Current_local_time_value_function of 'a time_precision option * 'a
+
+and 'a current_timestamp_value_function =
+  | Current_timestamp_value_function of 'a timestamp_precision option * 'a
+
+and 'a current_local_timestamp_value_function =
+  | Current_local_timestamp_value_function of 'a timestamp_precision option * 'a
+
+and 'a time_precision =
+  | Time_precision of 'a time_fractional_seconds_precision * 'a
+
+and 'a timestamp_precision =
+  | Timestamp_precision of 'a time_fractional_seconds_precision * 'a
+
+and 'a time_fractional_seconds_precision =
+  | Time_fractional_seconds_precision of 'a unsigned_integer * 'a

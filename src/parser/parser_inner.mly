@@ -498,6 +498,21 @@ column_reference:
 ;;
 
 (** End   names and identifiers *)
+
+(** Start 6.1 data type *)
+time_fractional_seconds_precision:
+| e = unsigned_integer {Time_fractional_seconds_precision (e, ())}
+;;
+
+timestamp_precision:
+| e = time_fractional_seconds_precision {Timestamp_precision (e, ())}
+;;
+
+time_precision:
+| e = time_fractional_seconds_precision {Time_precision (e, ())}
+;;
+(** End   6.1 data type *)
+
 (** Start 6.3 value expression primary *)
 value_expression_primary:
 | e = parenthesized_value_expression {Value_expression_primary (`paren e, ())}
@@ -640,7 +655,8 @@ datetime_factor:
 ;;
 
 datetime_primary:
-| e = value_expression_primary {Datetime_primary (e, ())}
+| e = value_expression_primary {Datetime_primary (`value e, ())}
+| e = datetime_value_function {Datetime_primary (`function' e, ())}
 ;;
 
 time_zone:
@@ -652,6 +668,36 @@ time_zone_specifier:
 | Kw_time Kw_zone e = interval_primary {Time_zone_specifier (`time_zone e, ())}
 ;;
 (** End   6.30 datetime value expression *)
+
+(** Start 6.31 datetime value function *)
+datetime_value_function:
+| e = current_date_value_function {Datetime_value_function (`date e, ())}
+| e = current_time_value_function {Datetime_value_function (`time e, ())}
+| e = current_local_time_value_function {Datetime_value_function (`local_time e, ())}
+| e = current_timestamp_value_function {Datetime_value_function (`timestamp e, ())}
+| e = current_local_timestamp_value_function {Datetime_value_function (`local_timestamp e, ())}
+;;
+
+current_local_timestamp_value_function:
+| Kw_localtimestamp e = option(delimited(Tok_lparen, timestamp_precision, Tok_rparen)) {Current_local_timestamp_value_function (e, ())}
+;;
+
+current_timestamp_value_function:
+| Kw_timestamp e = option(delimited(Tok_lparen, timestamp_precision, Tok_rparen)) {Current_timestamp_value_function (e, ())}
+;;
+
+current_local_time_value_function:
+| Kw_localtime e = option(delimited(Tok_lparen, time_precision, Tok_rparen)) {Current_local_time_value_function (e, ())}
+;;
+
+current_time_value_function:
+| Kw_current_time e = option(delimited(Tok_lparen, time_precision, Tok_rparen)) {Current_time_value_function (e, ())}
+;;
+
+current_date_value_function:
+| Kw_current_date {Current_date_value_function ()}
+;;
+(** End   6.31 datetime value function *)
 
 (** Start 6.32 interval value expression *)
 interval_value_expression:

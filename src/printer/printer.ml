@@ -1745,11 +1745,17 @@ and datetime_factor () =
 
 and datetime_primary () =
   Datetime_primary.(
-    (module Make (struct
-      type t = A.ext A.value_expression_primary
+    (module Make
+              (struct
+                type t = A.ext A.value_expression_primary
 
-      let generate = value_expression_primary
-    end) : S))
+                let generate = value_expression_primary
+              end)
+              (struct
+                type t = A.ext A.datetime_value_function
+
+                let generate = datetime_value_function
+              end) : S))
 
 and time_zone () =
   Time_zone.(
@@ -2163,4 +2169,92 @@ and parenthesized_boolean_value_expression () =
       type t = A.ext A.boolean_value_expression
 
       let generate = boolean_value_expression
+    end) : S))
+
+and datetime_value_function () =
+  Datetime_value_function.(
+    (module Make
+              (struct
+                type t = A.ext A.current_date_value_function
+
+                let generate = current_date_value_function
+              end)
+              (struct
+                type t = A.ext A.current_time_value_function
+
+                let generate = current_time_value_function
+              end)
+              (struct
+                type t = A.ext A.current_local_time_value_function
+
+                let generate = current_local_time_value_function
+              end)
+              (struct
+                type t = A.ext A.current_timestamp_value_function
+
+                let generate = current_timestamp_value_function
+              end)
+              (struct
+                type t = A.ext A.current_local_timestamp_value_function
+
+                let generate = current_local_timestamp_value_function
+              end) : S))
+
+and current_date_value_function () =
+  Current_date_value_function.((module Make () : S))
+
+and current_time_value_function () =
+  Current_time_value_function.(
+    (module Make (struct
+      type t = A.ext A.time_precision
+
+      let generate = time_precision
+    end) : S))
+
+and current_local_time_value_function () =
+  Current_local_time_value_function.(
+    (module Make (struct
+      type t = A.ext A.time_precision
+
+      let generate = time_precision
+    end) : S))
+
+and current_timestamp_value_function () =
+  Current_timestamp_value_function.(
+    (module Make (struct
+      type t = A.ext A.timestamp_precision
+
+      let generate = timestamp_precision
+    end) : S))
+
+and current_local_timestamp_value_function () =
+  Current_local_timestamp_value_function.(
+    (module Make (struct
+      type t = A.ext A.timestamp_precision
+
+      let generate = timestamp_precision
+    end) : S))
+
+and time_precision () =
+  Time_precision.(
+    (module Make (struct
+      type t = A.ext A.time_fractional_seconds_precision
+
+      let generate = time_fractional_seconds_precision
+    end) : S))
+
+and timestamp_precision () =
+  Timestamp_precision.(
+    (module Make (struct
+      type t = A.ext A.time_fractional_seconds_precision
+
+      let generate = time_fractional_seconds_precision
+    end) : S))
+
+and time_fractional_seconds_precision () =
+  Time_fractional_seconds_precision.(
+    (module Make (struct
+      type t = A.ext L.unsigned_integer
+
+      let generate = unsigned_integer
     end) : S))
