@@ -1,5 +1,6 @@
 module A = Types.Ast
 module L = Types.Literal
+module B = Types.Basic
 module Options = Options
 
 let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
@@ -18,6 +19,9 @@ let empty_grouping_set () = Empty_grouping_set.((module Make () : S))
 
 let unsigned_integer () = Unsigned_integer.((module Make () : S))
 
+let non_second_primary_datetime_field () =
+  Non_second_primary_datetime_field.((module Make () : S))
+
 let rec asterisked_identifier_chain () =
   Asterisked_identifier_chain.(
     (module Make (struct
@@ -25,6 +29,20 @@ let rec asterisked_identifier_chain () =
 
       let generate = identifier
     end) : S))
+
+and interval_qualifier () =
+  Interval_qualifier.(
+    (module Make
+              (struct
+                type t = B.non_second_primary_datetime_field
+
+                let generate = non_second_primary_datetime_field
+              end)
+              (struct
+                type t = A.ext L.unsigned_integer
+
+                let generate = unsigned_integer
+              end) : S))
 
 and derived_column () =
   Derived_column.(
