@@ -16,6 +16,8 @@ let identifier () = Identifier.((module Make () : S))
 
 let empty_grouping_set () = Empty_grouping_set.((module Make () : S))
 
+let unsigned_integer () = Unsigned_integer.((module Make () : S))
+
 let rec asterisked_identifier_chain () =
   Asterisked_identifier_chain.(
     (module Make (struct
