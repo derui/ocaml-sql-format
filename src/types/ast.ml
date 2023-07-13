@@ -908,3 +908,72 @@ and 'a timestamp_precision =
 
 and 'a time_fractional_seconds_precision =
   | Time_fractional_seconds_precision of 'a unsigned_integer * 'a
+
+and 'a data_type = Data_type of 'a (* TODO *)
+
+and 'a predefined_type = Predefined_type of 'a (* TODO *)
+
+and 'a character_string_type = Character_string_type of 'a (* TODO *)
+
+and 'a national_character_string_type =
+  | National_character_string_type of 'a (* TODO *)
+
+and 'a binary_large_object_string_type =
+  | Binary_large_object_string_type of 'a (* TODO *)
+
+and 'a numeric_type = Numeric_type of 'a (* TODO *)
+
+and 'a exact_numeric_type = Exact_numeric_type of 'a (* TODO *)
+
+and 'a approximate_numeric_type = Approximate_numeric_type of 'a (* TODO *)
+
+and 'a length = Length of 'a unsigned_integer * 'a
+
+and 'a large_object_length = Large_object_length of 'a (* TODO *)
+
+and 'a char_length_units =
+  | Char_length_units of [ `char | `code | `octets ] * 'a
+
+and 'a precision = Precision of 'a unsigned_integer * 'a
+
+and 'a scale = Scale of 'a unsigned_integer * 'a
+
+and 'a boolean_type = Boolean_type of 'a
+
+and 'a datetime_type =
+  | Datetime_type of
+      [ `date
+      | `time of 'a time_precision option * 'a with_or_without_time_zone option
+      | `timestamp of
+        'a timestamp_precision option * 'a with_or_without_time_zone option
+      ]
+      * 'a
+
+and 'a with_or_without_time_zone =
+  | With_or_without_time_zone of [ `with' | `without ] * 'a
+
+and 'a interval_type = Interval_type of 'a interval_qualifier * 'a
+
+and 'a row_type = Row_type of 'a (* TODO *)
+
+and 'a row_type_body = Row_type_body of 'a (* TODO *)
+
+and 'a reference_type =
+  | Reference_type of 'a referenced_type * 'a scope_clause option * 'a
+
+and 'a scope_clause = Scope_clause of 'a table_name * 'a
+
+and 'a referenced_type =
+  | Referenced_type of 'a path_resolved_user_defined_type_name * 'a
+
+and 'a path_resolved_user_defined_type_name =
+  | Path_resolved_user_defined_type_name of 'a schema_qualified_name * 'a
+
+and 'a collection_type =
+  | Collection_type of
+      [ `array of 'a array_type | `multiset of 'a multiset_type ] * 'a
+
+and 'a array_type =
+  | Array_type of 'a data_type * 'a unsigned_integer option * 'a
+
+and 'a multiset_type = Multiset_type of 'a data_type * 'a

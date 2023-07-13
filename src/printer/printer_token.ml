@@ -279,6 +279,12 @@ include (
       | Kw_multiset -> Fmt.string f @@ as_keyword "multiset" keyword
       | Kw_localtime -> Fmt.string f @@ as_keyword "localtime" keyword
       | Kw_localtimestamp -> Fmt.string f @@ as_keyword "localtimestamp" keyword
+      | Kw_characters -> Fmt.string f @@ as_keyword "characters" keyword
+      | Kw_code_units -> Fmt.string f @@ as_keyword "code_units" keyword
+      | Kw_octets -> Fmt.string f @@ as_keyword "octets" keyword
+      | Kw_without -> Fmt.string f @@ as_keyword "without" keyword
+      | Kw_scope -> Fmt.string f @@ as_keyword "scope" keyword
+      | Kw_ref -> Fmt.string f @@ as_keyword "ref" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

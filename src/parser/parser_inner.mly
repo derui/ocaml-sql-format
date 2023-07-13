@@ -305,6 +305,14 @@ open Types.Ast
 %token Kw_abs
 %token Kw_array
 %token Kw_multiset
+%token Kw_localtime
+%token Kw_localtimestamp
+%token Kw_characters
+%token Kw_code_units
+%token Kw_octets
+%token Kw_without
+%token Kw_scope
+%token Kw_ref
 
 %token Tok_eof
 
@@ -510,6 +518,78 @@ timestamp_precision:
 
 time_precision:
 | e = time_fractional_seconds_precision {Time_precision (e, ())}
+;;
+
+length:
+| e = unsigned_integer {Length (e, ())}
+;;
+
+boolean_type:
+| Kw_boolean {Boolean_type ()}
+;;
+
+scale:
+  | e = unsigned_integer {Scale (e, ())}
+;;
+
+precision:
+| e = unsigned_integer {Precision (e, ())}
+;;
+
+char_length_units:
+| Kw_characters {Char_length_units (`char, ())}
+| Kw_code_units {Char_length_units (`code, ())}
+| Kw_octets {Char_length_units (`octets, ())}
+;;
+
+with_or_without_time_zone:
+  |Kw_with Kw_time Kw_zone {With_or_without_time_zone (`with' ,())}
+  |Kw_without Kw_time Kw_zone {With_or_without_time_zone (`without ,())}
+;;
+
+interval_type:
+  | Kw_interval q = interval_qualifier {Interval_type (q, ())}
+;;
+
+path_resolved_user_defined_type_name:
+| e = schema_qualified_name {Path_resolved_user_defined_type_name (e, ())}
+;;
+
+referenced_type:
+| e = path_resolved_user_defined_type_name {Referenced_type (e, ())}
+;;
+
+scope_clause:
+| Kw_scope e =table_name {Scope_clause (e, ())}
+;;
+
+reference_type:
+| Kw_ref e = delimited(Tok_lparen, referenced_type, Tok_rparen) s = option(scope_clause) {Reference_type (e, s, ())}
+;;
+
+array_type:
+| t = data_type Kw_array u = delimited(Tok_lsbrace, unsigned_integer, Tok_rsbrace) {Array_type (t, u, ())}
+;;
+
+multiset_type:
+| t = data_type Kw_multiset {Multiset_type (t, ())}
+;;
+
+collection_type:
+| e =array_type {Collection_type (`array e, ())}
+| e =multiset_type {Collection_type (`multiset e, ())}
+;;
+
+datetime_type:
+| Kw_date {Datetime_type (`date, ())}
+| Kw_time e = option(delimited(Tok_lparen, time_precision, Tok_rparen));
+  t = option(with_or_without_time_zone) {
+          Datetime_type (`time (e, t), ())
+        }
+| Kw_timestamp e = option(delimited(Tok_lparen, timestamp_precision, Tok_rparen));
+  t = option(with_or_without_time_zone) {
+          Datetime_type (`timestamp (e, t), ())
+        }
 ;;
 (** End   6.1 data type *)
 

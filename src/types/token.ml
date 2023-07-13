@@ -265,6 +265,12 @@ type token =
   | Kw_multiset
   | Kw_localtime
   | Kw_localtimestamp
+  | Kw_characters
+  | Kw_code_units
+  | Kw_octets
+  | Kw_without
+  | Kw_scope
+  | Kw_ref
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

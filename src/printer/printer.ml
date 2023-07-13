@@ -2,6 +2,7 @@ module A = Types.Ast
 module L = Types.Literal
 module B = Types.Basic
 module Options = Options
+open A
 
 let basic_non_reserved () = Basic_non_reserved.((module Make () : S))
 
@@ -2277,4 +2278,161 @@ and time_fractional_seconds_precision () =
       type t = A.ext L.unsigned_integer
 
       let generate = unsigned_integer
+    end) : S))
+
+and data_type () = Data_type.((module Make () : S))
+
+and predefined_type () = Predefined_type.((module Make () : S))
+
+and character_string_type () = Character_string_type.((module Make () : S))
+
+and national_character_string_type () =
+  National_character_string_type.((module Make () : S))
+
+and binary_large_object_string_type () =
+  Binary_large_object_string_type.((module Make () : S))
+
+and numeric_type () = Numeric_type.((module Make () : S))
+
+and exact_numeric_type () = Exact_numeric_type.((module Make () : S))
+
+and approximate_numeric_type () =
+  Approximate_numeric_type.((module Make () : S))
+
+and length () =
+  Length.(
+    (module Make (struct
+      type t = A.ext L.unsigned_integer
+
+      let generate = unsigned_integer
+    end) : S))
+
+and large_object_length () = Large_object_length.((module Make () : S))
+
+and char_length_units () = Char_length_units.((module Make () : S))
+
+and precision () =
+  Precision.(
+    (module Make (struct
+      type t = A.ext L.unsigned_integer
+
+      let generate = unsigned_integer
+    end) : S))
+
+and scale () =
+  Scale.(
+    (module Make (struct
+      type t = A.ext L.unsigned_integer
+
+      let generate = unsigned_integer
+    end) : S))
+
+and boolean_type () = Boolean_type.((module Make () : S))
+
+and datetime_type () =
+  Datetime_type.(
+    (module Make
+              (struct
+                type t = A.ext time_precision
+
+                let generate = time_precision
+              end)
+              (struct
+                type t = A.ext timestamp_precision
+
+                let generate = timestamp_precision
+              end)
+              (struct
+                type t = A.ext with_or_without_time_zone
+
+                let generate = with_or_without_time_zone
+              end) : S))
+
+and with_or_without_time_zone () =
+  With_or_without_time_zone.((module Make () : S))
+
+and interval_type () =
+  Interval_type.(
+    (module Make (struct
+      type t = A.ext L.interval_qualifier
+
+      let generate = interval_qualifier
+    end) : S))
+
+and row_type () = Row_type.((module Make () : S))
+
+and row_type_body () = Row_type_body.((module Make () : S))
+
+and reference_type () =
+  Reference_type.(
+    (module Make
+              (struct
+                type t = A.ext referenced_type
+
+                let generate = referenced_type
+              end)
+              (struct
+                type t = A.ext scope_clause
+
+                let generate = scope_clause
+              end) : S))
+
+and scope_clause () =
+  Scope_clause.(
+    (module Make (struct
+      type t = A.ext A.table_name
+
+      let generate = table_name
+    end) : S))
+
+and referenced_type () =
+  Referenced_type.(
+    (module Make (struct
+      type t = A.ext A.path_resolved_user_defined_type_name
+
+      let generate = path_resolved_user_defined_type_name
+    end) : S))
+
+and path_resolved_user_defined_type_name () =
+  Path_resolved_user_defined_type_name.(
+    (module Make (struct
+      type t = A.ext A.schema_qualified_name
+
+      let generate = schema_qualified_name
+    end) : S))
+
+and collection_type () =
+  Collection_type.(
+    (module Make
+              (struct
+                type t = A.ext array_type
+
+                let generate = array_type
+              end)
+              (struct
+                type t = A.ext multiset_type
+
+                let generate = multiset_type
+              end) : S))
+
+and array_type () =
+  Array_type.(
+    (module Make
+              (struct
+                type t = A.ext data_type
+
+                let generate = data_type
+              end)
+              (struct
+                type t = A.ext L.unsigned_integer
+
+                let generate = unsigned_integer
+              end) : S))
+
+and multiset_type () =
+  Multiset_type.(
+    (module Make (struct
+      type t = A.ext data_type
+
+      let generate = data_type
     end) : S))
