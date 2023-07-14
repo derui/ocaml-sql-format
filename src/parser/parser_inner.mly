@@ -505,6 +505,10 @@ column_reference:
 | Kw_module Tok_period i = identifier Tok_period n = identifier {Column_reference (`module' (i, n), ())}
 ;;
 
+field_name:
+| i = identifier { i }
+;;
+
 (** End   names and identifiers *)
 
 (** Start 6.1 data type *)
@@ -591,7 +595,21 @@ datetime_type:
           Datetime_type (`timestamp (e, t), ())
         }
 ;;
+
+large_object_length:
+| u = unsigned_integer; v = option(Tok_ident); unit = option(char_length_units) { Large_object_length (u, Option.map (function
+                                                                                                              | "k" | "K" -> `k
+                                                                                                              | "m" | "M" -> `m
+                                                                                                              | "g" | "G" -> `g
+                                                                                                              | _ -> failwith "Invalid multiplier") v, unit, ()) }
+;;
 (** End   6.1 data type *)
+
+(** Start 6.2 field definition *)
+field_definition:
+| name = field_name d = data_type {Field_definition (name, d, (), ())}
+;;
+(** End   6.2 field definition *)
 
 (** Start 6.3 value expression primary *)
 value_expression_primary:

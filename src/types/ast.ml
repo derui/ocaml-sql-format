@@ -929,7 +929,12 @@ and 'a approximate_numeric_type = Approximate_numeric_type of 'a (* TODO *)
 
 and 'a length = Length of 'a unsigned_integer * 'a
 
-and 'a large_object_length = Large_object_length of 'a (* TODO *)
+and 'a large_object_length =
+  | Large_object_length of
+      'a unsigned_integer
+      * [ `k | `m | `g ] option
+      * 'a char_length_units option
+      * 'a
 
 and 'a char_length_units =
   | Char_length_units of [ `char | `code | `octets ] * 'a
@@ -977,3 +982,6 @@ and 'a array_type =
   | Array_type of 'a data_type * 'a unsigned_integer option * 'a
 
 and 'a multiset_type = Multiset_type of 'a data_type * 'a
+
+and 'a field_definition =
+  | Field_definition of 'a identifier * 'a data_type * 'a * 'a

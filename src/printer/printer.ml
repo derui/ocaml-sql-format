@@ -2307,7 +2307,19 @@ and length () =
       let generate = unsigned_integer
     end) : S))
 
-and large_object_length () = Large_object_length.((module Make () : S))
+and large_object_length () =
+  Large_object_length.(
+    (module Make
+              (struct
+                type t = A.ext L.unsigned_integer
+
+                let generate = unsigned_integer
+              end)
+              (struct
+                type t = A.ext char_length_units
+
+                let generate = char_length_units
+              end) : S))
 
 and char_length_units () = Char_length_units.((module Make () : S))
 
@@ -2436,3 +2448,17 @@ and multiset_type () =
 
       let generate = data_type
     end) : S))
+
+and field_definition () =
+  Field_definition.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext data_type
+
+                let generate = data_type
+              end) : S))
