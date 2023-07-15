@@ -1198,3 +1198,17 @@ and 'a when_operand =
 and 'a result' = Result of [ `expr of 'a result_expression | `null ] * 'a
 
 and 'a result_expression = Result_expression of 'a value_expression * 'a
+
+and 'a cast_specification =
+  | Cast_specification of 'a cast_operand * 'a cast_target * 'a
+
+and 'a cast_operand =
+  | Cast_operand of
+      [ `expr of 'a value_expression
+      | `implicit of 'a implicitly_typed_value_specification
+      ]
+      * 'a
+
+and 'a cast_target =
+  | Cast_target of
+      [ `domain of 'a schema_qualified_name | `data of 'a data_type ] * 'a

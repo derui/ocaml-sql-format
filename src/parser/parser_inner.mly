@@ -487,6 +487,10 @@ identifier:
    | i = identifier { i }
 ;;
 
+domain_name:
+| s = schema_qualified_name {s}
+;;
+
 local_or_schema_qualifier:
 | Kw_module { `module' }
 | s = schema_name { `schema s }
@@ -966,6 +970,26 @@ result_expression:
 | e = value_expression {Result_expression (e, ())}
 ;;
 (** End   6.11 case expression *)
+
+(** Start 6.12 cast specification *)
+cast_specification:
+| Kw_cast Tok_lparen;
+  operand = cast_operand;
+  Kw_as;
+  target = cast_target;
+  Tok_rparen {Cast_specification (operand, target, ())}
+;;
+
+cast_operand:
+| v = value_expression {Cast_operand (`expr v, ())}
+| v = implicit_typed_value_specification {Cast_operand (`implicit v, ())}
+;;
+
+cast_target:
+| v = domain_name {Cast_target (`domain v, ())}
+| v = data_type {Cast_target (`data v, ())}
+;;
+(** Start 6.12 cast specification *)
 
 (** Start 6.13 next value expression *)
 next_value_expression:

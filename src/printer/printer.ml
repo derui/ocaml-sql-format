@@ -3124,3 +3124,45 @@ and result_expression () =
 
       let generate = value_expression
     end) : S))
+
+and cast_specification () =
+  Cast_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.cast_operand
+
+                let generate = cast_operand
+              end)
+              (struct
+                type t = A.ext A.cast_target
+
+                let generate = cast_target
+              end) : S))
+
+and cast_operand () =
+  Cast_operand.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression
+
+                let generate = value_expression
+              end)
+              (struct
+                type t = A.ext A.implicitly_typed_value_specification
+
+                let generate = implicitly_typed_value_specification
+              end) : S))
+
+and cast_target () =
+  Cast_target.(
+    (module Make
+              (struct
+                type t = A.ext A.schema_qualified_name
+
+                let generate = schema_qualified_name
+              end)
+              (struct
+                type t = A.ext data_type
+
+                let generate = data_type
+              end) : S))
