@@ -745,6 +745,7 @@ nonparenthesized_value_expression_primary:
 | e = attribute_or_method_reference {Nonparenthesized_value_expression_primary (`attribute e, ())}
 | e = array_element_reference {Nonparenthesized_value_expression_primary (`array e, ())}
 | e = multiset_element_reference {Nonparenthesized_value_expression_primary (`multiset e, ())}
+| e = window_function {Nonparenthesized_value_expression_primary (`window e, ())}
 ;;
 (** End   6.3 value expression primary *)
 

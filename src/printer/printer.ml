@@ -1518,6 +1518,16 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext A.multiset_element_reference
 
                 let generate = multiset_element_reference
+              end)
+              (struct
+                type t = A.ext A.window_function
+
+                let generate = window_function
+              end)
+              (struct
+                type t = A.ext A.scalar_subquery
+
+                let generate = scalar_subquery
               end) : S))
 
 and sql_parameter_reference () =

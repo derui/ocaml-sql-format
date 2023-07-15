@@ -10,7 +10,9 @@ module Make
     (Field : GEN with type t = ext field_reference)
     (Attr : GEN with type t = ext attribute_or_method_reference)
     (Array' : GEN with type t = ext array_element_reference)
-    (Multiset : GEN with type t = ext multiset_element_reference) : S = struct
+    (Multiset : GEN with type t = ext multiset_element_reference)
+    (Window : GEN with type t = ext window_function)
+    (Subquery : GEN with type t = ext scalar_subquery) : S = struct
   type t = ext nonparenthesized_value_expression_primary
 
   let print f t ~option =
@@ -33,4 +35,10 @@ module Make
     | Nonparenthesized_value_expression_primary (`multiset c, _) ->
       let module Multiset = (val Multiset.generate ()) in
       Multiset.print ~option f c
+    | Nonparenthesized_value_expression_primary (`window c, _) ->
+      let module Window = (val Window.generate ()) in
+      Window.print ~option f c
+    | Nonparenthesized_value_expression_primary (`scalar c, _) ->
+      let module Subquery = (val Subquery.generate ()) in
+      Subquery.print ~option f c
 end
