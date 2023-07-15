@@ -575,10 +575,9 @@ and 'a nonparenthesized_value_expression_primary =
       | `set_function of 'a set_function_specification
       | `window of 'a window_function
       | `scalar of 'a scalar_subquery
-      | (* | `case expression of 'a case_expression *)
-        (* | `cast of 'a cast_specification *)
-        `field of
-        'a field_reference
+      | `case of 'a case_expression
+      | `cast of 'a cast_specification
+      | `field of 'a field_reference
       | (* | `subtype of 'a subtype treatment *)
         (* | `method' of 'a method_invocation *)
         (* |`static of 'a static_method_invocation *)

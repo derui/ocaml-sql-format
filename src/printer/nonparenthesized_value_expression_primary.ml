@@ -14,7 +14,9 @@ module Make
     (Window : GEN with type t = ext window_function)
     (Subquery : GEN with type t = ext scalar_subquery)
     (Set_function : GEN with type t = ext set_function_specification)
-    (U : GEN with type t = ext unsigned_value_specification) : S = struct
+    (U : GEN with type t = ext unsigned_value_specification)
+    (Case : GEN with type t = ext case_expression)
+    (Cast : GEN with type t = ext case_specification) : S = struct
   type t = ext nonparenthesized_value_expression_primary
 
   let print f t ~option =
@@ -49,4 +51,10 @@ module Make
     | Nonparenthesized_value_expression_primary (`set_function c, _) ->
       let module Set_function = (val Set_function.generate ()) in
       Set_function.print ~option f c
+    | Nonparenthesized_value_expression_primary (`case c, _) ->
+      let module Case = (val Case.generate ()) in
+      Case.print ~option f c
+    | Nonparenthesized_value_expression_primary (`cast c, _) ->
+      let module Cast = (val Cast.generate ()) in
+      Cast.print ~option f c
 end

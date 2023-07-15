@@ -1676,6 +1676,16 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext A.unsigned_value_specification
 
                 let generate = unsigned_value_specification
+              end)
+              (struct
+                type t = A.ext A.case_expression
+
+                let generate = case_expression
+              end)
+              (struct
+                type t = A.ext A.cast_specification
+
+                let generate = cast_specification
               end) : S))
 
 and sql_parameter_reference () =

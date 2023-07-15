@@ -754,6 +754,8 @@ nonparenthesized_value_expression_primary:
 | e = multiset_element_reference {Nonparenthesized_value_expression_primary (`multiset e, ())}
 | e = window_function {Nonparenthesized_value_expression_primary (`window e, ())}
 | e = set_function_function {Nonparenthesized_value_expression_primary (`set_function e, ())}
+| e = case_expression {Nonparenthesized_value_expression_primary (`case e, ())}
+| e = cast_specification {Nonparenthesized_value_expression_primary (`cast e, ())}
 ;;
 (** End   6.3 value expression primary *)
 
