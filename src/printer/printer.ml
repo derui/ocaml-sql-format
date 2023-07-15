@@ -2168,7 +2168,13 @@ and array_value_constructor_by_query () =
                 let generate = order_by_clause
               end) : S))
 
-and order_by_clause () = Order_by_clause.((module Make () : S))
+and order_by_clause () =
+  Order_by_clause.(
+    (module Make (struct
+      type t = A.ext A.sort_specification_list
+
+      let generate = sort_specification_list
+    end) : S))
 
 and multiset_value_expression () =
   Multiset_value_expression.(

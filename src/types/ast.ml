@@ -756,7 +756,7 @@ and 'a array_value_constructor_by_query =
   | Array_value_constructor_by_query of
       'a query_expression * 'a order_by_clause option * 'a
 
-and 'a order_by_clause = Order_by_clause of 'a (* TODO *)
+and 'a order_by_clause = Order_by_clause of 'a sort_specification_list * 'a
 
 and 'a multiset_value_expression =
   | Multiset_value_expression of

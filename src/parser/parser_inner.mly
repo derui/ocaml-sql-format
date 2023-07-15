@@ -2049,7 +2049,7 @@ search_condition:
 
 (** Start 10.4 routine invocation *)
 sql_argument_list:
-| Tok_lparen fl = sql_argument; list = list(pair(sql_argument)) Tok_rparen {Sql_argument_list (fl, List.map snd list, ())}
+| Tok_lparen fl = sql_argument; list = list(pair(Tok_comma, sql_argument)) Tok_rparen {Sql_argument_list (fl, List.map snd list, ())}
 ;;
 
 sql_argument:
@@ -2098,6 +2098,12 @@ null_ordering:
 | Kw_nulls Kw_last {Null_ordering (`last, ())}
   ;;
 (** End   10.10 sort specification *)
+
+(** Start 14.1 declare cursor *)
+order_by_clause:
+  | Kw_order Kw_by e = sort_specification_list {Order_by_clause (e, ())}
+  ;;
+(** End   14.1 declare cursor *)
 
 non_reserved_identifier:
   | Kw_exception { Non_reserved_identifier (`exception',()) }
