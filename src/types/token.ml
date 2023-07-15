@@ -271,6 +271,17 @@ type token =
   | Kw_without
   | Kw_scope
   | Kw_ref
+  | Kw_precision
+  | Kw_numeric
+  | Kw_dec
+  | Kw_int
+  | Kw_binary
+  | Kw_large
+  | Kw_national
+  | Kw_varying
+  | Kw_character
+  | Kw_nchar
+  | Kw_nclob
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

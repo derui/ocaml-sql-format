@@ -2280,24 +2280,150 @@ and time_fractional_seconds_precision () =
       let generate = unsigned_integer
     end) : S))
 
-and data_type () = Data_type.((module Make () : S))
+and data_type () =
+  Data_type.(
+    (module Make
+              (struct
+                type t = A.ext predefined_type
 
-and predefined_type () = Predefined_type.((module Make () : S))
+                let generate = predefined_type
+              end)
+              (struct
+                type t = A.ext row_type
 
-and character_string_type () = Character_string_type.((module Make () : S))
+                let generate = row_type
+              end)
+              (struct
+                type t = A.ext path_resolved_user_defined_type_name
+
+                let generate = path_resolved_user_defined_type_name
+              end)
+              (struct
+                type t = A.ext reference_type
+
+                let generate = reference_type
+              end)
+              (struct
+                type t = A.ext collection_type
+
+                let generate = collection_type
+              end) : S))
+
+and predefined_type () =
+  Predefined_type.(
+    (module Make
+              (struct
+                type t = A.ext character_string_type
+
+                let generate = character_string_type
+              end)
+              (struct
+                type t = A.ext national_character_string_type
+
+                let generate = national_character_string_type
+              end)
+              (struct
+                type t = A.ext binary_large_object_string_type
+
+                let generate = binary_large_object_string_type
+              end)
+              (struct
+                type t = A.ext numeric_type
+
+                let generate = numeric_type
+              end)
+              (struct
+                type t = A.ext boolean_type
+
+                let generate = boolean_type
+              end)
+              (struct
+                type t = A.ext datetime_type
+
+                let generate = datetime_type
+              end)
+              (struct
+                type t = A.ext interval_type
+
+                let generate = interval_type
+              end)
+              (struct
+                type t = A.ext collate_clause
+
+                let generate = collate_clause
+              end) : S))
+
+and character_string_type () =
+  Character_string_type.(
+    (module Make
+              (struct
+                type t = A.ext length
+
+                let generate = length
+              end)
+              (struct
+                type t = A.ext large_object_length
+
+                let generate = large_object_length
+              end) : S))
 
 and national_character_string_type () =
-  National_character_string_type.((module Make () : S))
+  National_character_string_type.(
+    (module Make
+              (struct
+                type t = A.ext length
+
+                let generate = length
+              end)
+              (struct
+                type t = A.ext large_object_length
+
+                let generate = large_object_length
+              end) : S))
 
 and binary_large_object_string_type () =
-  Binary_large_object_string_type.((module Make () : S))
+  Binary_large_object_string_type.(
+    (module Make (struct
+      type t = A.ext large_object_length
 
-and numeric_type () = Numeric_type.((module Make () : S))
+      let generate = large_object_length
+    end) : S))
 
-and exact_numeric_type () = Exact_numeric_type.((module Make () : S))
+and numeric_type () =
+  Numeric_type.(
+    (module Make
+              (struct
+                type t = A.ext exact_numeric_type
+
+                let generate = exact_numeric_type
+              end)
+              (struct
+                type t = A.ext approximate_numeric_type
+
+                let generate = approximate_numeric_type
+              end) : S))
+
+and exact_numeric_type () =
+  Exact_numeric_type.(
+    (module Make
+              (struct
+                type t = A.ext precision
+
+                let generate = precision
+              end)
+              (struct
+                type t = A.ext scale
+
+                let generate = scale
+              end) : S))
 
 and approximate_numeric_type () =
-  Approximate_numeric_type.((module Make () : S))
+  Approximate_numeric_type.(
+    (module Make (struct
+      type t = A.ext precision
+
+      let generate = precision
+    end) : S))
 
 and length () =
   Length.(
@@ -2371,9 +2497,21 @@ and interval_type () =
       let generate = interval_qualifier
     end) : S))
 
-and row_type () = Row_type.((module Make () : S))
+and row_type () =
+  Row_type.(
+    (module Make (struct
+      type t = A.ext row_type_body
 
-and row_type_body () = Row_type_body.((module Make () : S))
+      let generate = row_type_body
+    end) : S))
+
+and row_type_body () =
+  Row_type_body.(
+    (module Make (struct
+      type t = A.ext field_definition
+
+      let generate = field_definition
+    end) : S))
 
 and reference_type () =
   Reference_type.(

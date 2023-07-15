@@ -313,6 +313,17 @@ open Types.Ast
 %token Kw_without
 %token Kw_scope
 %token Kw_ref
+%token Kw_precision
+%token Kw_numeric
+%token Kw_dec
+%token Kw_int
+%token Kw_binary
+%token Kw_large
+%token Kw_national
+%token Kw_varying
+%token Kw_character
+%token Kw_nchar
+%token Kw_nclob
 
 %token Tok_eof
 
@@ -597,11 +608,117 @@ datetime_type:
 ;;
 
 large_object_length:
-| u = unsigned_integer; v = option(Tok_ident); unit = option(char_length_units) { Large_object_length (u, Option.map (function
-                                                                                                              | "k" | "K" -> `k
-                                                                                                              | "m" | "M" -> `m
-                                                                                                              | "g" | "G" -> `g
-                                                                                                              | _ -> failwith "Invalid multiplier") v, unit, ()) }
+| u = unsigned_integer; v = option(Tok_ident);
+  unit = option(char_length_units) { Large_object_length (u, Option.map (function
+                                                                 | "k" | "K" -> `k
+                                                                 | "m" | "M" -> `m
+                                                                 | "g" | "G" -> `g
+                                                                 | _ -> failwith "Invalid multiplier") v, unit, ()) }
+;;
+
+row_type:
+| Kw_row v = row_type_body {Row_type (v, ())}
+;;
+
+row_type_body:
+| Tok_lparen fl = field_definition; list = list(pair(Tok_comma, field_definition));
+  Tok_rparen {
+      Row_type_body (fl, List.map snd list, ())
+    }
+;;
+
+approximate_numeric_type:
+|Kw_float v = option(delimited(Tok_lparen, precision, Tok_rparen)) {Approximate_numeric_type (`float v, ())}
+|Kw_real {Approximate_numeric_type (`real, ())}
+|Kw_double Kw_precision {Approximate_numeric_type (`double, ())}
+;;
+
+exact_numeric_type:
+| Kw_numeric {Exact_numeric_type (`numeric None, ())}
+| Kw_numeric v = delimited(Tok_lparen, precision, Tok_rparen) {Exact_numeric_type (`numeric (Some (v, None)), ())}
+| Kw_numeric Tok_lparen v = precision;
+  Tok_comma s = scale Tok_rparen {Exact_numeric_type (`numeric (Some (v, Some s)), ())}
+| Kw_decimal {Exact_numeric_type (`decimal None, ())}
+| Kw_decimal v = delimited(Tok_lparen, precision, Tok_rparen) {Exact_numeric_type (`decimal (Some (v, None)), ())}
+| Kw_decimal Tok_lparen v = precision;
+  Tok_comma s = scale Tok_rparen {Exact_numeric_type (`decimal (Some (v, Some s)), ())}
+| Kw_dec {Exact_numeric_type (`dec None, ())}
+| Kw_dec v = delimited(Tok_lparen, precision, Tok_rparen) {Exact_numeric_type (`dec (Some (v, None)), ())}
+| Kw_dec Tok_lparen v = precision;
+  Tok_comma s = scale Tok_rparen {Exact_numeric_type (`dec (Some (v, Some s)), ())}
+
+| Kw_smallint {Exact_numeric_type (`smallint, ())}
+| Kw_integer {Exact_numeric_type (`integer, ())}
+| Kw_int {Exact_numeric_type (`int, ())}
+| Kw_bigint {Exact_numeric_type (`bigint, ())}
+;;
+
+numeric_type:
+  | e = exact_numeric_type {Numeric_type (`exact e, ())}
+  | e = approximate_numeric_type {Numeric_type (`approximate e, ())}
+;;
+
+binary_large_object_string_type:
+| Kw_binary Kw_large Kw_object;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {Binary_large_object_string_type (`long, v, ())}
+| Kw_blob;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {Binary_large_object_string_type (`short, v, ())}
+;;
+
+national_character_string_type:
+| Kw_national Kw_character;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {National_character_string_type (`character v, ())}
+| Kw_national Kw_char;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {National_character_string_type (`char v, ())}
+| Kw_nchar;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {National_character_string_type (`nchar v, ())}
+| Kw_national Kw_character Kw_varying;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {National_character_string_type (`character_varying v, ())}
+| Kw_national Kw_char Kw_varying;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {National_character_string_type (`char_varying v, ())}
+| Kw_national Kw_character Kw_large Kw_object;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {National_character_string_type (`character_large_object v, ())}
+| Kw_national Kw_char Kw_large Kw_object;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {National_character_string_type (`char_large_object v, ())}
+| Kw_nclob;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {National_character_string_type (`nclob v, ())}
+;;
+
+character_string_type:
+| Kw_character;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {Character_string_type (`character v, ())}
+| Kw_char;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {Character_string_type (`char v, ())}
+| Kw_character Kw_varying;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {Character_string_type (`character_varying v, ())}
+| Kw_char Kw_varying;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {Character_string_type (`char_varying v, ())}
+| Kw_varchar;
+  v = option(delimited(Tok_lparen, length, Tok_rparen)) {Character_string_type (`varchar v, ())}
+| Kw_character Kw_large Kw_object;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {Character_string_type (`character_large_object v, ())}
+| Kw_char Kw_large Kw_object;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {Character_string_type (`char_large_object v, ())}
+| Kw_clob;
+  v = option(delimited(Tok_lparen, large_object_length, Tok_rparen)) {Character_string_type (`clob v, ())}
+;;
+
+predefined_type:
+| t = character_string_type; c = option(collate_clause) { Predefined_type (`character (t, (), c), ()) }
+| t = national_character_string_type; c = option(collate_clause) { Predefined_type (`national_character (t, (), c), ()) }
+| t = binary_large_object_string_type { Predefined_type (`blob t, ()) }
+| t = numeric_type { Predefined_type (`numeric t, ()) }
+| t = boolean_type { Predefined_type (`boolean t, ()) }
+| t = datetime_type { Predefined_type (`datetime t, ()) }
+| t = interval_type { Predefined_type (`interval t, ()) }
+;;
+
+data_type:
+| t = predefined_type {Data_type (`predefined t, ())}
+| t = row_type {Data_type (`row t, ())}
+| t = path_resolved_user_defined_type_name {Data_type (`path t, ())}
+| t = reference_type {Data_type (`ref t, ())}
+| t = collection_type {Data_type (`collection t, ())}
 ;;
 (** End   6.1 data type *)
 

@@ -285,6 +285,17 @@ include (
       | Kw_without -> Fmt.string f @@ as_keyword "without" keyword
       | Kw_scope -> Fmt.string f @@ as_keyword "scope" keyword
       | Kw_ref -> Fmt.string f @@ as_keyword "ref" keyword
+      | Kw_precision -> Fmt.string f @@ as_keyword "precision" keyword
+      | Kw_numeric -> Fmt.string f @@ as_keyword "numeric" keyword
+      | Kw_dec -> Fmt.string f @@ as_keyword "dec" keyword
+      | Kw_int -> Fmt.string f @@ as_keyword "int" keyword
+      | Kw_binary -> Fmt.string f @@ as_keyword "binary" keyword
+      | Kw_large -> Fmt.string f @@ as_keyword "large" keyword
+      | Kw_national -> Fmt.string f @@ as_keyword "national" keyword
+      | Kw_varying -> Fmt.string f @@ as_keyword "varying" keyword
+      | Kw_character -> Fmt.string f @@ as_keyword "character" keyword
+      | Kw_nchar -> Fmt.string f @@ as_keyword "nchar" keyword
+      | Kw_nclob -> Fmt.string f @@ as_keyword "nclob" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

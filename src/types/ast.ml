@@ -909,23 +909,82 @@ and 'a timestamp_precision =
 and 'a time_fractional_seconds_precision =
   | Time_fractional_seconds_precision of 'a unsigned_integer * 'a
 
-and 'a data_type = Data_type of 'a (* TODO *)
+and 'a data_type =
+  | Data_type of
+      [ `predefined of 'a predefined_type
+      | `row of 'a row_type
+      | `path of 'a path_resolved_user_defined_type_name
+      | `ref of 'a reference_type
+      | `collection of 'a collection_type
+      ]
+      * 'a
 
-and 'a predefined_type = Predefined_type of 'a (* TODO *)
+and 'a predefined_type =
+  | Predefined_type of
+      [ `character of 'a character_string_type * 'a * 'a collate_clause option
+      | `national_character of
+        'a national_character_string_type * 'a collate_clause option
+      | `blob of 'a binary_large_object_string_type
+      | `numeric of 'a numeric_type
+      | `boolean of 'a boolean_type
+      | `datetime of 'a datetime_type
+      | `interval of 'a interval_type
+      ]
+      * 'a
 
-and 'a character_string_type = Character_string_type of 'a (* TODO *)
+and 'a character_string_type =
+  | Character_string_type of
+      [ `character of 'a length option
+      | `char of 'a length option
+      | `character_varying of 'a length option
+      | `char_varying of 'a length option
+      | `varchar of 'a length option
+      | `character_large_object of 'a large_object_length option
+      | `char_large_object of 'a large_object_length option
+      | `clob of 'a large_object_length option
+      ]
+      * 'a
 
 and 'a national_character_string_type =
-  | National_character_string_type of 'a (* TODO *)
+  | National_character_string_type of
+      [ `character of 'a length option
+      | `char of 'a length option
+      | `nchar of 'a length option
+      | `character_varying of 'a length option
+      | `char_varying of 'a length option
+      | `nchar_varying of 'a length option
+      | `character_large_object of 'a large_object_length option
+      | `nchar_large_object of 'a large_object_length option
+      | `nclob of 'a large_object_length option
+      ]
+      * 'a
 
 and 'a binary_large_object_string_type =
-  | Binary_large_object_string_type of 'a (* TODO *)
+  | Binary_large_object_string_type of
+      [ `long | `short ] * 'a large_object_length option * 'a
 
-and 'a numeric_type = Numeric_type of 'a (* TODO *)
+and 'a numeric_type =
+  | Numeric_type of
+      [ `exact of 'a exact_numeric_type
+      | `approximate of 'a approximate_numeric_type
+      ]
+      * 'a
 
-and 'a exact_numeric_type = Exact_numeric_type of 'a (* TODO *)
+and 'a exact_numeric_type =
+  | Exact_numeric_type of
+      [ `numeric of ('a precision * 'a scale option) option
+      | `decimal of ('a precision * 'a scale option) option
+      | `dec of ('a precision * 'a scale option) option
+      | `smallint
+      | `integer
+      | `int
+      | `bigint
+      ]
+      * 'a
 
-and 'a approximate_numeric_type = Approximate_numeric_type of 'a (* TODO *)
+and 'a approximate_numeric_type =
+  | Approximate_numeric_type of
+      [ `float of 'a precision option | `real | `double ] * 'a
 
 and 'a length = Length of 'a unsigned_integer * 'a
 
@@ -959,9 +1018,10 @@ and 'a with_or_without_time_zone =
 
 and 'a interval_type = Interval_type of 'a interval_qualifier * 'a
 
-and 'a row_type = Row_type of 'a (* TODO *)
+and 'a row_type = Row_type of 'a row_type_body * 'a
 
-and 'a row_type_body = Row_type_body of 'a (* TODO *)
+and 'a row_type_body =
+  | Row_type_body of 'a field_definition * 'a field_definition list * 'a
 
 and 'a reference_type =
   | Reference_type of 'a referenced_type * 'a scope_clause option * 'a

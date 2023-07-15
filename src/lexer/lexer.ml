@@ -1868,6 +1868,78 @@ let kw_scope =
 
 let kw_ref = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "fF"]
 
+let kw_precision =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "cC"
+    , Chars "iI"
+    , Chars "sS"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_numeric =
+  [%sedlex.regexp?
+    ( Chars "nN"
+    , Chars "uU"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "cC" )]
+
+let kw_int = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT"]
+
+let kw_dec = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "cC"]
+
+let kw_binary =
+  [%sedlex.regexp?
+    Chars "bB", Chars "iI", Chars "nN", Chars "aA", Chars "rR", Chars "yY"]
+
+let kw_large =
+  [%sedlex.regexp? Chars "lL", Chars "aA", Chars "rR", Chars "gG", Chars "eE"]
+
+let kw_national =
+  [%sedlex.regexp?
+    ( Chars "nN"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "aA"
+    , Chars "lL" )]
+
+let kw_varying =
+  [%sedlex.regexp?
+    ( Chars "vV"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "yY"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
+let kw_character =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "hH"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "cC"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_nchar =
+  [%sedlex.regexp? Chars "nN", Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
+
+let kw_nclob =
+  [%sedlex.regexp? Chars "nN", Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2196,6 +2268,17 @@ let rec token buf =
   | kw_without -> Kw_without
   | kw_scope -> Kw_scope
   | kw_ref -> Kw_ref
+  | kw_precision -> Kw_precision
+  | kw_numeric -> Kw_numeric
+  | kw_dec -> Kw_dec
+  | kw_int -> Kw_int
+  | kw_binary -> Kw_binary
+  | kw_large -> Kw_large
+  | kw_national -> Kw_national
+  | kw_varying -> Kw_varying
+  | kw_character -> Kw_character
+  | kw_nchar -> Kw_nchar
+  | kw_nclob -> Kw_nclob
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

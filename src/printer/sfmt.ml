@@ -31,3 +31,13 @@ let parens ?indent:need_indent ~option pf fmt v =
   | None ->
     pf fmt v;
     Printer_token.print fmt Tok_rparen ~option
+
+let keyword ~option fmt = function
+  | [] -> failwith "need least one keyword"
+  | fl :: rest ->
+    Printer_token.print ~option fmt fl;
+    List.iter
+      (fun k ->
+        Fmt.string fmt " ";
+        Printer_token.print ~option fmt k)
+      rest
