@@ -339,6 +339,7 @@ open Types.Ast
 %token Tok_eof
 
 %start <Types.Entry.t list> entries
+
 %%
 
 entries:
@@ -1061,7 +1062,6 @@ collection_value_constructor:
 (** End   6.25 value expression *)
 
 (** Start 6.26 numeric value expression *)
-
 numeric_primary:
 | e = value_expression_primary {Numeric_primary (`primary e, ())}
 ;;
@@ -1305,24 +1305,14 @@ array_value_constructor_by_query:
 (** Start 6.37 multiset value expression *)
 multiset_value_expression:
 | e = multiset_term {Multiset_value_expression (`term e, ())}
-| e = multiset_value_expression; Kw_multiset Kw_union; option(Kw_all);
-  t = multiset_term {Multiset_value_expression (`union (t, p, Option.map (fun _ -> `All)), ())}
-| e = multiset_value_expression; Kw_multiset Kw_except; option(Kw_all);
-  t = multiset_term {Multiset_value_expression (`except (t, p, Option.map (fun _ -> `All)), ())}
-| e = multiset_value_expression; Kw_multiset Kw_union; option(Kw_distinct);
-  t = multiset_term {Multiset_value_expression (`union (t, p, Option.map (fun _ -> `Distinct)), ())}
-| e = multiset_value_expression; Kw_multiset Kw_except; option(Kw_distinct);
-  t = multiset_term {Multiset_value_expression (`except (t, p, Option.map (fun _ -> `Distinct)), ())}
+| e = multiset_value_expression; Kw_multiset Kw_union; q = option(set_quantifier);
+  t = multiset_term {Multiset_value_expression (`union (t, p, q), ())}
 ;;
 
 multiset_term:
 | e = multiset_primary {Multiset_term (`primary e, ())}
-| t = multiset_term; Kw_multiset Kw_intersect;
-  p = multiset_primary {Multiset_term (`intersect (t, p, None), ())}
-| t = multiset_term; Kw_multiset Kw_intersect Kw_all;
-  p = multiset_primary {Multiset_term (`intersect (t, p, Some `All), ())}
-| t = multiset_term; Kw_multiset Kw_intersect Kw_distinct;
-  p = multiset_primary {Multiset_term (`intersect (t, p, Some `Distinct), ())}
+| t = multiset_term; Kw_multiset Kw_intersect; q = option(set_quantifier);
+  p = multiset_primary {Multiset_term (`intersect (t, p, q), ())}
 ;;
 
 multiset_primary:
@@ -1963,7 +1953,7 @@ with_clause:
               list = with_list {With_clause (Option.map (fun _ -> `recursive) kw, list, ())}
 
 query_expression:
-| wl = option(with_list); q = query_expression_body {Query_expression (wl, q, ())}
+| wl = option(with_clause); q = query_expression_body {Query_expression (wl, q, ())}
 ;;
 
 (** End   7.13 query expression *)
