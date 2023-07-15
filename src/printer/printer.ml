@@ -699,8 +699,6 @@ and window_frame_following () =
 
 and window_frame_exclusion () = Window_frame_exclusion.((module Make () : S))
 
-and sort_specification_list () = Sort_specification_list.((module Make () : S))
-
 and table_expression () =
   Table_expression.(
     (module Make
@@ -3392,3 +3390,42 @@ and row_value_constructor_predicand () =
 
                 let generate = explicit_row_value_constructor
               end) : S))
+
+and sort_specification_list () =
+  Sort_specification_list.(
+    (module Make (struct
+      type t = A.ext A.sort_specification
+
+      let generate = sort_specification
+    end) : S))
+
+and sort_specification () =
+  Sort_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.sort_key
+
+                let generate = sort_key
+              end)
+              (struct
+                type t = A.ext A.ordering_specification
+
+                let generate = ordering_specification
+              end)
+              (struct
+                type t = A.ext A.null_ordering
+
+                let generate = null_ordering
+              end) : S))
+
+and sort_key () =
+  Sort_key.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))
+
+and ordering_specification () = Ordering_specification.((module Make () : S))
+
+and null_ordering () = Null_ordering.((module Make () : S))

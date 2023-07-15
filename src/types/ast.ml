@@ -311,8 +311,6 @@ and 'a window_frame_exclusion =
   | Window_frame_exclusion of
       [ `current_row | `group | `ties | `no_others ] * 'a
 
-and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)
-
 and 'a cross_join = Cross_join of 'a table_reference * 'a table_primary * 'a
 
 and 'a qualified_join =
@@ -1295,3 +1293,21 @@ and 'a row_value_constructor_predicand =
       | `explicit of 'a explicit_row_value_constructor
       ]
       * 'a
+
+and 'a sort_specification_list =
+  | Sort_specification_list of
+      'a sort_specification * 'a sort_specification list * 'a
+
+and 'a sort_specification =
+  | Sort_specification of
+      'a sort_key
+      * 'a ordering_specification option
+      * 'a null_ordering option
+      * 'a
+
+and 'a sort_key = Sort_key of 'a value_expression * 'a
+
+and 'a ordering_specification =
+  | Ordering_specification of [ `asc | `desc ] * 'a
+
+and 'a null_ordering = Null_ordering of [ `first | `last ] * 'a

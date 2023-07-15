@@ -2056,6 +2056,30 @@ collate_clause:
 ;;
 (** End   10.7 collate clause *)
 
+(** Start 10.10 sort specification *)
+sort_specification_list:
+| fl = sort_specification; list = list(pair(Tok_comma, sort_specification)) {Sort_specification_list (fl, List.map snd list, ())}
+  ;;
+
+sort_specification:
+| key = sort_key spec = option(ordering_specification) null = option(null_ordering) {Sort_specification (key, spec, null, ())}
+;;
+
+sort_key:
+| e = value_expression {Sort_key (e, ())}
+  ;;
+
+ordering_specification:
+| Kw_asc {Ordering_specification (`asc, ())}
+| Kw_desc {Ordering_specification (`desc, ())}
+  ;;
+
+null_ordering:
+| Kw_nulls Kw_first {Null_ordering (`first, ())}
+| Kw_nulls Kw_last {Null_ordering (`last, ())}
+  ;;
+(** End   10.10 sort specification *)
+
 non_reserved_identifier:
   | Kw_exception { Non_reserved_identifier (`exception',()) }
   | Kw_serial { Non_reserved_identifier (`serial,()) }
