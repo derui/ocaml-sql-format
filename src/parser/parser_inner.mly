@@ -333,6 +333,8 @@ open Types.Ast
 %token Kw_current_transform_group_for_type
 %token Kw_nullif
 %token Kw_coalesce
+%token Kw_exclude
+%token Kw_current_user
 
 %token Tok_eof
 
@@ -422,7 +424,7 @@ timestamp_literal:
 ;;
 
 interval_literal:
-  | Kw_interval sign = option(plus_or_minus) s = interval_string q = interval_qualifier { Interval_literal (sign, s, q, ())}
+  | Kw_interval sign = option(sign) s = interval_string q = interval_qualifier { Interval_literal (sign, s, q, ())}
 ;;
 
 interval_string:
@@ -753,7 +755,7 @@ nonparenthesized_value_expression_primary:
 | e = array_element_reference {Nonparenthesized_value_expression_primary (`array e, ())}
 | e = multiset_element_reference {Nonparenthesized_value_expression_primary (`multiset e, ())}
 | e = window_function {Nonparenthesized_value_expression_primary (`window e, ())}
-| e = set_function_function {Nonparenthesized_value_expression_primary (`set_function e, ())}
+| e = set_function_specification {Nonparenthesized_value_expression_primary (`set_function e, ())}
 | e = case_expression {Nonparenthesized_value_expression_primary (`case e, ())}
 | e = cast_specification {Nonparenthesized_value_expression_primary (`cast e, ())}
 ;;
@@ -841,8 +843,8 @@ null_specification:
 ;;
 
 empty_specification:
-  | Kw_array Tol_lsbrace Tok_rsbrace {Empty_specification (`array, ())}
-  | Kw_multiset Tol_lsbrace Tok_rsbrace {Empty_specification (`multiset, ())}
+  | Kw_array Tok_lsbrace Tok_rsbrace {Empty_specification (`array, ())}
+  | Kw_multiset Tok_lsbrace Tok_rsbrace {Empty_specification (`multiset, ())}
 ;;
 
 implicit_typed_value_specification:
@@ -1034,7 +1036,7 @@ common_value_expression:
 | e = string_value_expression {Common_value_expression (`string e, ())}
 | e = datetime_value_expression {Common_value_expression (`datetime e, ())}
 | e = interval_value_expression {Common_value_expression (`interval e, ())}
-| e = user_defined_value_expression {Common_value_expression (`user_defined e, ())}
+| e = user_defined_type_value_expression {Common_value_expression (`user_defined e, ())}
 | e = reference_value_expression {Common_value_expression (`reference e, ())}
 | e = collection_value_expression {Common_value_expression (`collection e, ())}
 ;;
@@ -1191,6 +1193,10 @@ interval_primary:
 |e = value_expression_primary iq = option(interval_qualifier) {Interval_primary (`value (e, iq), ())}
 |e = interval_value_function {Interval_primary (`function' e, ())}
 ;;
+
+interval_value_expression_1:
+|e = interval_value_expression {Interval_value_expression_1 (e, ())}
+  ;;
 
 interval_term_1:
 |e = interval_term {Interval_term_1 (e, ())}
@@ -1374,11 +1380,11 @@ row_value_constructor:
 
 explicit_row_value_constructor:
   | Tok_lparen;
-    e = explicit_row_value_constructor_element;
+    e = row_value_constructor_element;
     Tok_comma;
-    list = explicit_row_value_constructor_element_list;
+    list = row_value_constructor_element_list;
     Tok_rparen {Explicit_row_value_constructor (`param (e, list), ())}
-  | Kw_row e = delimited(Tok_lparen, explicit_row_value_constructor_element_list, Tok_rparen) {
+  | Kw_row e = delimited(Tok_lparen, row_value_constructor_element_list, Tok_rparen) {
                    Explicit_row_value_constructor (`row e, ())}
   | e = row_subquery {Explicit_row_value_constructor (`subquery e, ())}
   ;;
@@ -1729,51 +1735,57 @@ window_frame_exclusion:
 ;;
 
 window_frame_following:
-  | v = unsigned_value_specification Kw_following {Window_frame_following (v, _)}
+  | v = unsigned_value_specification Kw_following {Window_frame_following (v, ())}
 ;;
 
 window_frame_bound_1:
-  | v = window_frame_bound {Window_frame_bound_1 (v, _)}
+  | v = window_frame_bound {Window_frame_bound_1 (v, ())}
 ;;
 
 window_frame_bound_2:
-  | v = window_frame_bound {Window_frame_bound_2 (v, _)}
+  | v = window_frame_bound {Window_frame_bound_2 (v, ())}
 ;;
 
 window_frame_preceding:
-  | v = unsigned_value_specification Kw_preceding {Window_frame_preceding (v, _)}
+  | v = unsigned_value_specification Kw_preceding {Window_frame_preceding (v, ())}
 ;;
 
 window_frame_between:
-  | Kw_between b1 = window_frame_bound_1 Kw_and b2= window_frame_bound_2 {Window_frame_between (b1, b2, _)}
+  | Kw_between b1 = window_frame_bound_1 Kw_and b2= window_frame_bound_2 {Window_frame_between (b1, b2, ())}
 ;;
 
 window_frame_start:
-  | Kw_unbounded Kw_preceding {Window_frame_start (`unbounded, _)}
-  | v = window_frame_preceding {Window_frame_start (`preceding v, _)}
-  | Kw_current Kw_row {Window_frame_start (`current, _)}
+  | Kw_unbounded Kw_preceding {Window_frame_start (`unbounded, ())}
+  | v = window_frame_preceding {Window_frame_start (`preceding v, ())}
+  | Kw_current Kw_row {Window_frame_start (`current, ())}
 ;;
 
 window_frame_bound:
-  | v = window_frame_start {Window_frame_bound (`start v, _)}
-  | Kw_unbounded Kw_following {Window_frame_bound (`unbounded, _)}
-  | v = window_frame_following {Window_frame_bound (`following v, _)}
+  | v = window_frame_start {Window_frame_bound (`start v, ())}
+  | Kw_unbounded Kw_following {Window_frame_bound (`unbounded, ())}
+  | v = window_frame_following {Window_frame_bound (`following v, ())}
 ;;
 
 window_frame_extent:
-  | v = window_frame_start {Window_frame_extent (`start v, _)}
-  | v = window_frame_between {Window_frame_extent (`between v, _)}
+  | v = window_frame_start {Window_frame_extent (`start v, ())}
+  | v = window_frame_between {Window_frame_extent (`between v, ())}
 ;;
 
 window_frame_clause:
-  | v = delimited(Tok_lparen ,window_specification_detail, Tok_rparen) {Window_specification (v, _)}
+  | v = window_frame_units e = window_frame_extent;
+    exclusion = option(window_frame_exclusion) {Window_frame_clause (v, e, exclusion, ())}
+;;
 
-window_specification_detail:
+window_specification:
+| e = delimited(Tok_lparen, window_specification_details, Tok_rparen) {Window_specification (e, ())}
+  ;;
+
+window_specification_details:
   | v = option(identifier);
     partition = option(window_partition_clause);
     order = option(window_order_clause);
     frame = option(window_frame_clause);
-    { Window_specification_detail (v, partition, order, frame, _) }
+    { Window_specification_details (v, partition, order, frame, _) }
 ;;
 
 window_order_clause:
@@ -1798,7 +1810,7 @@ window_clause:
 
 (** Start 7.12 Query specification *)
 query_specification:
-  | Kw_select q = option(set_qualifier) l = select_list t = table_expression { Query_specification (q, l, t, ()) }
+  | Kw_select q = option(set_quantifier) l = select_list t = table_expression { Query_specification (q, l, t, ()) }
 ;;
 
 select_list:
@@ -2055,6 +2067,13 @@ collate_clause:
 | Kw_collate n = collate_name {Collate_clause (n, ())}
 ;;
 (** End   10.7 collate clause *)
+
+(** Start 10.9 aggregate function *)
+set_quantifier:
+|Kw_all {`All}
+|Kw_distinct {`Distinct}
+  ;;
+(** End   10.9 aggregate function *)
 
 (** Start 10.10 sort specification *)
 sort_specification_list:
