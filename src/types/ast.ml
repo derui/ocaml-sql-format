@@ -570,9 +570,8 @@ and 'a parenthesized_value_expression =
 
 and 'a nonparenthesized_value_expression_primary =
   | Nonparenthesized_value_expression_primary of
-      [ (* |  `unsigned of 'a unsigned_value_specification *)
-        `column of
-        'a column_reference
+      [ `unsigned of 'a unsigned_value_specification
+      | `column of 'a column_reference
       | `set_function of 'a set_function_specification
       | `window of 'a window_function
       | `scalar of 'a scalar_subquery

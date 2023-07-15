@@ -1628,6 +1628,11 @@ and nonparenthesized_value_expression_primary () =
   Nonparenthesized_value_expression_primary.(
     (module Make
               (struct
+                type t = A.ext A.unsigned_value_specification
+
+                let generate = unsigned_value_specification
+              end)
+              (struct
                 type t = A.ext A.column_reference
 
                 let generate = column_reference

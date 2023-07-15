@@ -13,12 +13,15 @@ module Make
     (Multiset : GEN with type t = ext multiset_element_reference)
     (Window : GEN with type t = ext window_function)
     (Subquery : GEN with type t = ext scalar_subquery)
-    (Set_function : GEN with type t = ext set_function_specification) : S =
-struct
+    (Set_function : GEN with type t = ext set_function_specification)
+    (U : GEN with type t = ext unsigned_value_specification) : S = struct
   type t = ext nonparenthesized_value_expression_primary
 
   let print f t ~option =
     match t with
+    | Nonparenthesized_value_expression_primary (`unsigned c, _) ->
+      let module U = (val U.generate ()) in
+      U.print ~option f c
     | Nonparenthesized_value_expression_primary (`column c, _) ->
       let module V = (val V.generate ()) in
       V.print ~option f c
