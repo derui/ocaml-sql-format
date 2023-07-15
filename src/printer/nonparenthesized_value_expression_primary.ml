@@ -16,7 +16,7 @@ module Make
     (Set_function : GEN with type t = ext set_function_specification)
     (U : GEN with type t = ext unsigned_value_specification)
     (Case : GEN with type t = ext case_expression)
-    (Cast : GEN with type t = ext case_specification) : S = struct
+    (Cast : GEN with type t = ext cast_specification) : S = struct
   type t = ext nonparenthesized_value_expression_primary
 
   let print f t ~option =

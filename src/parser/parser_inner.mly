@@ -831,7 +831,7 @@ value_specification:
 ;;
 (** End   6.4 value specification and target specification *)
 
-(** Start 6.5 contextually typed value expression *)
+(** Start 6.5 contextually typed value specification *)
 default_specification:
 | Kw_default {Default_specification () }
 ;;
@@ -850,11 +850,11 @@ implicit_typed_value_specification:
   |e = empty_specification {Implicit_typed_value_specification (`empty e, ())}
 ;;
 
-contextually_typed_value_expression:
-| e = implicit_typed_value_specification {Contextually_typed_value_expression (`implicit e, ())}
-| e = default_specification {Contextually_typed_value_expression (`default e, ())}
+contextually_typed_value_specification:
+| e = implicit_typed_value_specification {Contextually_typed_value_specification (`implicit e, ())}
+| e = default_specification {Contextually_typed_value_specification (`default e, ())}
 ;;
-(** End   6.5 contextually typed value expression *)
+(** End   6.5 contextually typed value specification *)
 
 (** Start 6.6 identifier chain *)
 identifier_chain:
@@ -1364,6 +1364,65 @@ multiset_value_constructor:
 | e = table_value_constructor_by_query {Multiset_value_constructor (`table_query e ,())}
   ;;
 (** End   6.39 multiset value constructor *)
+
+(** Start 7.1 row value constructor *)
+row_value_constructor:
+  | e = common_value_expression {Row_value_constructor (`common e, ())}
+  | e = boolean_value_expression {Row_value_constructor (`boolean e, ())}
+  | e = explicit_row_value_constructor {Row_value_constructor (`explicit e, ())}
+  ;;
+
+explicit_row_value_constructor:
+  | Tok_lparen;
+    e = explicit_row_value_constructor_element;
+    Tok_comma;
+    list = explicit_row_value_constructor_element_list;
+    Tok_rparen {Explicit_row_value_constructor (`param (e, list), ())}
+  | Kw_row e = delimited(Tok_lparen, explicit_row_value_constructor_element_list, Tok_rparen) {
+                   Explicit_row_value_constructor (`row e, ())}
+  | e = row_subquery {Explicit_row_value_constructor (`subquery e, ())}
+  ;;
+
+row_value_constructor_element_list:
+  | e = row_value_constructor_element;
+    list = list(pair(Tok_comma, row_value_constructor_element)) {row_value_constructor_element_list (e, List.map snd list, ())}
+  ;;
+
+row_value_constructor_element:
+  | e = value_expression {Row_value_constructor_element (e, ())}
+;;
+
+contextually_typed_row_value_constructor:
+  | e = common_value_expression {Contextually_typed_row_value_constructor (`common e, ())}
+  | e = boolean_value_expression {Contextually_typed_row_value_constructor (`boolean e, ())}
+  | e = contextually_typed_value_specification {Contextually_typed_row_value_constructor (`typed_value e, ())}
+  | Tok_lparen;
+    e = contextually_typed_row_value_constructor_element;
+    Tok_comma;
+    list = contextually_typed_row_value_constructor_element_list;
+    Tok_rparen {Contextually_typed_row_value_constructor (`paren (e, list), ())}
+  | Kw_row e = delimited(Tok_lparen, contextually_typed_row_value_constructor_element_list, Tok_rparen) {
+                   Contextually_typed_row_value_constructor (`row e, ())}
+  ;;
+
+contextually_typed_row_value_constructor_element_list:
+  | fl = contextually_typed_row_value_constructor_element;
+    list = list(pair(Tok_comma, contextually_typed_row_value_constructor_element)) {
+             Contextually_typed_row_value_constructor_element_list (fl, List.map snd list, ())}
+  ;;
+
+contextually_typed_row_value_constructor_element:
+  | e = value_expression {Contextually_typed_row_value_constructor_element (`expr e, ())}
+  | e = contextually_typed_value_specification {Contextually_typed_row_value_constructor_element (`spec e, ())}
+;;
+
+row_value_constructor_predicand:
+  | e = common_value_expression {Row_value_constructor_predicand (`common e, ())}
+  | e = boolean_predicand {Row_value_constructor_predicand (`boolean e, ())}
+  | e = explicit_row_value_constructor {Row_value_constructor_predicand (`explicit e, ())}
+  ;;
+
+(** End 7.1 row value constructor *)
 
 (** Start 7.2 row value expression *)
 row_value_expression:

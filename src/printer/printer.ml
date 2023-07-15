@@ -1557,17 +1557,6 @@ and row_value_special_case () =
       let generate = nonparenthesized_value_expression_primary
     end) : S))
 
-and explicit_row_value_constructor () =
-  Explicit_row_value_constructor.((module Make () : S))
-
-and row_value_constructor () = Row_value_constructor.((module Make () : S))
-
-and contextually_typed_row_value_constructor () =
-  Contextually_typed_row_value_constructor.((module Make () : S))
-
-and row_value_constructor_predicand () =
-  Row_value_constructor_predicand.((module Make () : S))
-
 and numeric_value_expression () =
   Numeric_value_expression.(
     (module Make (struct
@@ -3275,4 +3264,131 @@ and collection_value_constructor () =
                 type t = A.ext A.multiset_value_constructor
 
                 let generate = multiset_value_constructor
+              end) : S))
+
+and row_value_constructor () =
+  Row_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.boolean_value_expression
+
+                let generate = boolean_value_expression
+              end)
+              (struct
+                type t = A.ext A.explicit_row_value_constructor
+
+                let generate = explicit_row_value_constructor
+              end) : S))
+
+and explicit_row_value_constructor () =
+  Explicit_row_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.row_value_constructor_element
+
+                let generate = row_value_constructor_element
+              end)
+              (struct
+                type t = A.ext A.row_value_constructor_element_list
+
+                let generate = row_value_constructor_element_list
+              end)
+              (struct
+                type t = A.ext A.row_subquery
+
+                let generate = row_subquery
+              end) : S))
+
+and row_value_constructor_element_list () =
+  Row_value_constructor_element_list.(
+    (module Make (struct
+      type t = A.ext A.row_value_constructor_element
+
+      let generate = row_value_constructor_element
+    end) : S))
+
+and row_value_constructor_element () =
+  Row_value_constructor_element.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))
+
+and contextually_typed_row_value_constructor () =
+  Contextually_typed_row_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.boolean_value_expression
+
+                let generate = boolean_value_expression
+              end)
+              (struct
+                type t = A.ext A.contextually_typed_value_specification
+
+                let generate = contextually_typed_value_specification
+              end)
+              (struct
+                type t =
+                  A.ext A.contextually_typed_row_value_constructor_element
+
+                let generate = contextually_typed_row_value_constructor_element
+              end)
+              (struct
+                type t =
+                  A.ext A.contextually_typed_row_value_constructor_element_list
+
+                let generate =
+                  contextually_typed_row_value_constructor_element_list
+              end) : S))
+
+and contextually_typed_row_value_constructor_element_list () =
+  Contextually_typed_row_value_constructor_element_list.(
+    (module Make (struct
+      type t = A.ext A.contextually_typed_row_value_constructor_element
+
+      let generate = contextually_typed_row_value_constructor_element
+    end) : S))
+
+and contextually_typed_row_value_constructor_element () =
+  Contextually_typed_row_value_constructor_element.(
+    (module Make
+              (struct
+                type t = A.ext A.value_expression
+
+                let generate = value_expression
+              end)
+              (struct
+                type t = A.ext A.contextually_typed_value_specification
+
+                let generate = contextually_typed_value_specification
+              end) : S))
+
+and row_value_constructor_predicand () =
+  Row_value_constructor_predicand.(
+    (module Make
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.boolean_predicand
+
+                let generate = boolean_predicand
+              end)
+              (struct
+                type t = A.ext A.explicit_row_value_constructor
+
+                let generate = explicit_row_value_constructor
               end) : S))

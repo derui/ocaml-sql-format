@@ -519,17 +519,6 @@ and 'a row_value_predicand =
 and 'a row_value_special_case =
   | Row_value_special_case of 'a nonparenthesized_value_expression_primary * 'a
 
-and 'a explicit_row_value_constructor =
-  | Explicit_row_value_constructor of 'a (* TODO *)
-
-and 'a row_value_constructor = Row_value_constructor of 'a (* TODO *)
-
-and 'a contextually_typed_row_value_constructor =
-  | Contextually_typed_row_value_constructor of 'a (* TODO *)
-
-and 'a row_value_constructor_predicand =
-  | Row_value_constructor_predicand of 'a (* TODO *)
-
 and 'a numeric_value_expression =
   | Numeric_value_expression of
       [ `single of 'a term
@@ -1244,5 +1233,65 @@ and 'a collection_value_constructor =
   | Collection_value_constructor of
       [ `array of 'a array_value_constructor
       | `multiset of 'a multiset_value_constructor
+      ]
+      * 'a
+
+and 'a row_value_constructor =
+  | Row_value_constructor of
+      [ `common of 'a common_value_expression
+      | `boolean of 'a boolean_value_expression
+      | `explicit of 'a explicit_row_value_constructor
+      ]
+      * 'a
+
+and 'a explicit_row_value_constructor =
+  | Explicit_row_value_constructor of
+      [ `param of
+        'a row_value_constructor_element * 'a row_value_constructor_element_list
+      | `row of 'a row_value_constructor_element_list
+      | `subquery of 'a row_subquery
+      ]
+      * 'a
+
+and 'a row_value_constructor_element_list =
+  | Row_value_constructor_element_list of
+      'a row_value_constructor_element
+      * 'a row_value_constructor_element list
+      * 'a
+
+and 'a row_value_constructor_element =
+  | Row_value_constructor_element of 'a value_expression * 'a
+
+and 'a contextually_typed_row_value_constructor =
+  | Contextually_typed_row_value_constructor of
+      [ `common of 'a common_value_expression
+      | `boolean of 'a boolean_value_expression
+      | `typed_value of 'a contextually_typed_value_specification
+      | `paren of
+        'a contextually_typed_row_value_constructor_element
+        * 'a contextually_typed_row_value_constructor_element_list
+      | `row of 'a contextually_typed_row_value_constructor_element_list
+      ]
+      * 'a
+
+and 'a contextually_typed_row_value_constructor_element_list =
+  | Contextually_typed_row_value_constructor_element_list of
+      'a contextually_typed_row_value_constructor_element
+      * 'a contextually_typed_row_value_constructor_element list
+      * 'a
+(* TODO *)
+
+and 'a contextually_typed_row_value_constructor_element =
+  | Contextually_typed_row_value_constructor_element of
+      [ `expr of 'a value_expression
+      | `spec of 'a contextually_typed_value_specification
+      ]
+      * 'a
+
+and 'a row_value_constructor_predicand =
+  | Row_value_constructor_predicand of
+      [ `common of 'a common_value_expression
+      | `boolean of 'a boolean_predicand
+      | `explicit of 'a explicit_row_value_constructor
       ]
       * 'a
