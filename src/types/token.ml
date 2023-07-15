@@ -290,6 +290,8 @@ type token =
   | Kw_current_transform_group_for_type
   | Kw_current_path
   | Kw_current_role
+  | Kw_nullif
+  | Kw_coalesce
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string

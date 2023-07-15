@@ -306,6 +306,8 @@ include (
         Fmt.string f @@ as_keyword "current_transform_group_for_type" keyword
       | Kw_current_path -> Fmt.string f @@ as_keyword "current_path" keyword
       | Kw_current_role -> Fmt.string f @@ as_keyword "current_role" keyword
+      | Kw_nullif -> Fmt.string f @@ as_keyword "nullif" keyword
+      | Kw_coalesce -> Fmt.string f @@ as_keyword "coalesce" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

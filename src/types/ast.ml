@@ -1140,3 +1140,61 @@ and 'a set_function_specification =
 
 and 'a grouping_operation =
   | Grouping_operation of 'a column_reference * 'a column_reference list * 'a
+
+and 'a case_expression =
+  | Case_expression of
+      [ `abbrev of 'a case_abbreviation | `spec of 'a case_specification ] * 'a
+
+and 'a case_abbreviation =
+  | Case_abbreviation of
+      [ `nullif of 'a value_expression * 'a value_expression
+      | `coalesce of 'a value_expression * 'a value_expression list
+      ]
+      * 'a
+
+and 'a case_specification =
+  | Case_specification of
+      [ `simple of 'a simple_case | `searched of 'a searched_case ] * 'a
+
+and 'a simple_case =
+  | Simple_case of
+      'a case_operand * 'a simple_when_clause list * 'a else_clause option * 'a
+
+and 'a searched_case =
+  | Searched_case of 'a searched_when_clause list * 'a else_clause option * 'a
+
+and 'a simple_when_clause =
+  | Simple_when_clause of 'a when_operand * 'a result' * 'a
+
+and 'a searched_when_clause =
+  | Searched_when_clause of 'a search_condition * 'a result' * 'a
+
+and 'a else_clause = Else_clause of 'a result' * 'a
+
+and 'a case_operand =
+  | Case_operand of [ `row of 'a row_value_predicand | `overlap of 'a ] * 'a
+
+and 'a when_operand =
+  | When_operand of
+      [ `row of 'a row_value_predicand
+      | `comparison of 'a
+      | `between of 'a
+      | `in' of 'a
+      | `character_like of 'a
+      | `octet_like of 'a
+      | `similar of 'a
+      | `null of 'a
+      | `quantified_comparison of 'a
+      | `match' of 'a
+      | `overlaps of 'a
+      | `distinct of 'a
+      | `member of 'a
+      | `submultiset of 'a
+      | `set of 'a
+      | `type' of 'a
+      ]
+      * 'a
+
+and 'a result' = Result of [ `expr of 'a result_expression | `null ] * 'a
+
+and 'a result_expression = Result_expression of 'a value_expression * 'a

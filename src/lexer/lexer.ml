@@ -2092,6 +2092,21 @@ let kw_current_user =
     , Chars "eE"
     , Chars "rR" )]
 
+let kw_nullif =
+  [%sedlex.regexp?
+    Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "iI", Chars "fF"]
+
+let kw_coalesce =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "cC"
+    , Chars "eE" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2439,6 +2454,8 @@ let rec token buf =
   | kw_current_transform_group_for_type -> Kw_current_transform_group_for_type
   | kw_current_path -> Kw_current_path
   | kw_current_role -> Kw_current_role
+  | kw_nullif -> Kw_nullif
+  | kw_coalesce -> Kw_coalesce
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

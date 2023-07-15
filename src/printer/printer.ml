@@ -1628,11 +1628,6 @@ and nonparenthesized_value_expression_primary () =
   Nonparenthesized_value_expression_primary.(
     (module Make
               (struct
-                type t = A.ext A.unsigned_value_specification
-
-                let generate = unsigned_value_specification
-              end)
-              (struct
                 type t = A.ext A.column_reference
 
                 let generate = column_reference
@@ -1676,6 +1671,11 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext set_function_specification
 
                 let generate = set_function_specification
+              end)
+              (struct
+                type t = A.ext A.unsigned_value_specification
+
+                let generate = unsigned_value_specification
               end) : S))
 
 and sql_parameter_reference () =
@@ -2986,4 +2986,141 @@ and grouping_operation () =
       type t = A.ext column_reference
 
       let generate = column_reference
+    end) : S))
+
+and case_expression () =
+  Case_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.case_abbreviation
+
+                let generate = case_abbreviation
+              end)
+              (struct
+                type t = A.ext A.case_specification
+
+                let generate = case_specification
+              end) : S))
+
+and case_abbreviation () =
+  Case_abbreviation.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
+    end) : S))
+
+and case_specification () =
+  Case_specification.(
+    (module Make
+              (struct
+                type t = A.ext A.simple_case
+
+                let generate = simple_case
+              end)
+              (struct
+                type t = A.ext A.searched_case
+
+                let generate = searched_case
+              end) : S))
+
+and simple_case () =
+  Simple_case.(
+    (module Make
+              (struct
+                type t = A.ext A.case_operand
+
+                let generate = case_operand
+              end)
+              (struct
+                type t = A.ext A.simple_when_clause
+
+                let generate = simple_when_clause
+              end)
+              (struct
+                type t = A.ext A.else_clause
+
+                let generate = else_clause
+              end) : S))
+
+and searched_case () =
+  Searched_case.(
+    (module Make
+              (struct
+                type t = A.ext A.searched_when_clause
+
+                let generate = searched_when_clause
+              end)
+              (struct
+                type t = A.ext A.else_clause
+
+                let generate = else_clause
+              end) : S))
+
+and simple_when_clause () =
+  Simple_when_clause.(
+    (module Make
+              (struct
+                type t = A.ext when_operand
+
+                let generate = when_operand
+              end)
+              (struct
+                type t = A.ext result'
+
+                let generate = result
+              end) : S))
+
+and searched_when_clause () =
+  Searched_when_clause.(
+    (module Make
+              (struct
+                type t = A.ext search_condition
+
+                let generate = search_condition
+              end)
+              (struct
+                type t = A.ext result'
+
+                let generate = result
+              end) : S))
+
+and else_clause () =
+  Else_clause.(
+    (module Make (struct
+      type t = A.ext A.result'
+
+      let generate = result
+    end) : S))
+
+and case_operand () =
+  Case_operand.(
+    (module Make (struct
+      type t = A.ext A.row_value_predicand
+
+      let generate = row_value_predicand
+    end) : S))
+
+and when_operand () =
+  When_operand.(
+    (module Make (struct
+      type t = A.ext A.row_value_predicand
+
+      let generate = row_value_predicand
+    end) : S))
+
+and result () =
+  Result.(
+    (module Make (struct
+      type t = A.ext A.result_expression
+
+      let generate = result_expression
+    end) : S))
+
+and result_expression () =
+  Result_expression.(
+    (module Make (struct
+      type t = A.ext A.value_expression
+
+      let generate = value_expression
     end) : S))

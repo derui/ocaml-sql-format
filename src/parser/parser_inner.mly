@@ -331,6 +331,8 @@ open Types.Ast
 %token Kw_current_path
 %token Kw_current_role
 %token Kw_current_transform_group_for_type
+%token Kw_nullif
+%token Kw_coalesce
 
 %token Tok_eof
 
@@ -902,6 +904,68 @@ window_function:
 ;;
 
 (** End   6.10 window function *)
+
+(** Start 6.11 case expression *)
+case_expression:
+| e = case_specification {Case_expression (`spec e, ())}
+| e = case_abbreviation {Case_expression (`abbrev e, ())}
+;;
+
+case_abbreviation:
+| Kw_nullif Tok_lparen;
+  first = value_expression; Tok_comma; second = value_expression;
+  Tok_rparen {Case_abbreviation (`nullif (first ,second), ())}
+| Kw_coalesce Tok_lparen;
+  first = value_expression; list = list(pair(Tok_comma, value_expression));
+  Tok_rparen {Case_abbreviation (`coalesce (first ,list), ())}
+;;
+
+case_specification:
+| e = simple_case {Case_specification (`simple e, ())}
+| e = searched_case {Case_specification (`searched e, ())}
+;;
+
+simple_case:
+| Kw_case c = case_operand;
+  list = nonempty_list(simple_when_clause);
+  els = option(else_clause) Kw_end {Simple_case (c, list, els, ())}
+;;
+
+searched_case:
+| Kw_case fl = nonempty_list(searched_when_clause) e = option(else_clause) Kw_end {
+                                                           Searched_case (fl, e, ())
+                                                         }
+;;
+
+simple_when_clause:
+| Kw_when e = when_operand Kw_then r = result {Simple_when_clause (e, r, ())}
+;;
+
+searched_when_clause:
+| Kw_when e = search_condition Kw_then r = result {Searched_when_clause (e, r, ())}
+;;
+
+else_clause:
+| Kw_else e = result {Else_clause (e, ())}
+;;
+
+case_operand:
+| e = row_value_predicand {Case_operand (`row e, ())}
+;;
+
+when_operand:
+| e = row_value_predicand {When_operand (`row e, ())}
+;;
+
+result:
+| e = result_expression {Result (`expr e, ())}
+| Kw_null {Result (`null, ())}
+;;
+
+result_expression:
+| e = value_expression {Result_expression (e, ())}
+;;
+(** End   6.11 case expression *)
 
 (** Start 6.13 next value expression *)
 next_value_expression:
