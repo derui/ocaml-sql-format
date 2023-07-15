@@ -23,6 +23,147 @@ let unsigned_integer () = Unsigned_integer.((module Make () : S))
 let non_second_primary_datetime_field () =
   Non_second_primary_datetime_field.((module Make () : S))
 
+let character_string_literal () =
+  Character_string_literal.((module Make () : S))
+
+let national_character_string_literal () =
+  National_character_string_literal.((module Make () : S))
+
+let unicode_character_string_literal () =
+  Unicode_character_string_literal.((module Make () : S))
+
+let binary_string_literal () = Binary_string_literal.((module Make () : S))
+
+let date_literal () = Date_literal.((module Make () : S))
+
+let time_literal () = Time_literal.((module Make () : S))
+
+let timestamp_literal () = Timestamp_literal.((module Make () : S))
+
+let datetime_literal () =
+  Datetime_literal.(
+    (module Make
+              (struct
+                type t = A.ext L.date_literal
+
+                let generate = date_literal
+              end)
+              (struct
+                type t = A.ext L.time_literal
+
+                let generate = time_literal
+              end)
+              (struct
+                type t = A.ext L.timestamp_literal
+
+                let generate = timestamp_literal
+              end) : S))
+
+let interval_qualifier () =
+  Interval_qualifier.(
+    (module Make
+              (struct
+                type t = B.non_second_primary_datetime_field
+
+                let generate = non_second_primary_datetime_field
+              end)
+              (struct
+                type t = A.ext L.unsigned_integer
+
+                let generate = unsigned_integer
+              end) : S))
+
+let interval_literal () =
+  Interval_literal.(
+    (module Make (struct
+      type t = A.ext L.interval_qualifier
+
+      let generate = interval_qualifier
+    end) : S))
+
+let boolean_literal () = Boolean_literal.((module Make () : S))
+
+let general_literal () =
+  General_literal.(
+    (module Make
+              (struct
+                type t = A.ext L.character_string_literal
+
+                let generate = character_string_literal
+              end)
+              (struct
+                type t = A.ext L.national_character_string_literal
+
+                let generate = national_character_string_literal
+              end)
+              (struct
+                type t = A.ext L.unicode_character_string_literal
+
+                let generate = unicode_character_string_literal
+              end)
+              (struct
+                type t = A.ext L.binary_string_literal
+
+                let generate = binary_string_literal
+              end)
+              (struct
+                type t = A.ext L.datetime_literal
+
+                let generate = datetime_literal
+              end)
+              (struct
+                type t = A.ext L.interval_literal
+
+                let generate = interval_literal
+              end)
+              (struct
+                type t = A.ext L.boolean_literal
+
+                let generate = boolean_literal
+              end) : S))
+
+let unsigned_numeric_literal () =
+  Unsigned_numeric_literal.((module Make () : S))
+
+let signed_numeric_literal () =
+  Signed_numeric_literal.(
+    (module Make (struct
+      type t = A.ext L.unsigned_numeric_literal
+
+      let generate = unsigned_numeric_literal
+    end) : S))
+
+let unsigned_numeric_literal () =
+  Unsigned_numeric_literal.((module Make () : S))
+
+let unsigned_literal () =
+  Unsigned_literal.(
+    (module Make
+              (struct
+                type t = A.ext L.general_literal
+
+                let generate = general_literal
+              end)
+              (struct
+                type t = A.ext L.unsigned_numeric_literal
+
+                let generate = unsigned_numeric_literal
+              end) : S))
+
+let literal () =
+  Literal.(
+    (module Make
+              (struct
+                type t = A.ext L.general_literal
+
+                let generate = general_literal
+              end)
+              (struct
+                type t = A.ext L.signed_numeric_literal
+
+                let generate = signed_numeric_literal
+              end) : S))
+
 let rec asterisked_identifier_chain () =
   Asterisked_identifier_chain.(
     (module Make (struct
@@ -557,9 +698,6 @@ and window_frame_following () =
     end) : S))
 
 and window_frame_exclusion () = Window_frame_exclusion.((module Make () : S))
-
-and unsigned_value_specification () =
-  Unsigned_value_specification.((module Make () : S))
 
 and sort_specification_list () = Sort_specification_list.((module Make () : S))
 
@@ -2610,3 +2748,182 @@ and field_definition () =
 
                 let generate = data_type
               end) : S))
+
+and value_specification () =
+  Value_specification.(
+    (module Make
+              (struct
+                type t = A.ext L.literal
+
+                let generate = literal
+              end)
+              (struct
+                type t = A.ext general_value_specification
+
+                let generate = general_value_specification
+              end) : S))
+
+and unsigned_value_specification () =
+  Unsigned_value_specification.(
+    (module Make
+              (struct
+                type t = A.ext L.unsigned_literal
+
+                let generate = unsigned_literal
+              end)
+              (struct
+                type t = A.ext general_value_specification
+
+                let generate = general_value_specification
+              end) : S))
+
+and general_value_specification () =
+  General_value_specification.(
+    (module Make
+              (struct
+                type t = A.ext host_parameter_specification
+
+                let generate = host_parameter_specification
+              end)
+              (struct
+                type t = A.ext sql_parameter_reference
+
+                let generate = sql_parameter_reference
+              end)
+              (struct
+                type t = A.ext dynamic_parameter_specification
+
+                let generate = dynamic_parameter_specification
+              end)
+              (struct
+                type t = A.ext current_collation_specification
+
+                let generate = current_collation_specification
+              end)
+              (struct
+                type t = A.ext path_resolved_user_defined_type_name
+
+                let generate = path_resolved_user_defined_type_name
+              end) : S))
+
+and simple_value_specification () =
+  Simple_value_specification.(
+    (module Make
+              (struct
+                type t = A.ext L.literal
+
+                let generate = literal
+              end)
+              (struct
+                type t = A.ext host_parameter_name
+
+                let generate = host_parameter_name
+              end)
+              (struct
+                type t = A.ext sql_parameter_reference
+
+                let generate = sql_parameter_reference
+              end) : S))
+
+and target_specification () =
+  Target_specification.(
+    (module Make
+              (struct
+                type t = A.ext host_parameter_specification
+
+                let generate = host_parameter_specification
+              end)
+              (struct
+                type t = A.ext sql_parameter_reference
+
+                let generate = sql_parameter_reference
+              end)
+              (struct
+                type t = A.ext column_reference
+
+                let generate = column_reference
+              end)
+              (struct
+                type t = A.ext target_array_element_specification
+
+                let generate = target_array_element_specification
+              end)
+              (struct
+                type t = A.ext dynamic_parameter_specification
+
+                let generate = dynamic_parameter_specification
+              end) : S))
+
+and simple_target_specification () =
+  Simple_target_specification.(
+    (module Make
+              (struct
+                type t = A.ext host_parameter_specification
+
+                let generate = host_parameter_specification
+              end)
+              (struct
+                type t = A.ext sql_parameter_reference
+
+                let generate = sql_parameter_reference
+              end)
+              (struct
+                type t = A.ext column_reference
+
+                let generate = column_reference
+              end) : S))
+
+and host_parameter_specification () =
+  Host_parameter_specification.(
+    (module Make (struct
+      type t = A.ext host_parameter_name
+
+      let generate = host_parameter_name
+    end) : S))
+
+and dynamic_parameter_specification () =
+  Dynamic_parameter_specification.((module Make () : S))
+
+and target_array_element_specification () =
+  Target_array_element_specification.(
+    (module Make
+              (struct
+                type t = A.ext target_array_reference
+
+                let generate = target_array_reference
+              end)
+              (struct
+                type t = A.ext simple_value_specification
+
+                let generate = simple_value_specification
+              end) : S))
+
+and target_array_reference () =
+  Target_array_reference.(
+    (module Make
+              (struct
+                type t = A.ext sql_parameter_reference
+
+                let generate = sql_parameter_reference
+              end)
+              (struct
+                type t = A.ext column_reference
+
+                let generate = column_reference
+              end) : S))
+
+and current_collation_specification () =
+  Current_collation_specification.(
+    (module Make (struct
+      type t = A.ext string_value_expression
+
+      let generate = string_value_expression
+    end) : S))
+
+and host_parameter_name () =
+  Host_parameter_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))

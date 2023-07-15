@@ -1940,6 +1940,158 @@ let kw_nchar =
 let kw_nclob =
   [%sedlex.regexp? Chars "nN", Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
 
+let kw_collation =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "oO"
+    , Chars "nN" )]
+
+let kw_indicator =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "cC"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "oO"
+    , Chars "rR" )]
+
+let kw_current_default_transform_group =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "dD"
+    , Chars "eE"
+    , Chars "fF"
+    , Chars "aA"
+    , Chars "uU"
+    , Chars "lL"
+    , Chars "tT"
+    , '_'
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "fF"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "mM"
+    , '_'
+    , Chars "gG"
+    , Chars "rR"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "pP" )]
+
+let kw_current_transform_group_for_type =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "fF"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "mM"
+    , '_'
+    , Chars "gG"
+    , Chars "rR"
+    , Chars "oO"
+    , Chars "uU"
+    , Chars "pP"
+    , '_'
+    , Chars "fF"
+    , Chars "oO"
+    , Chars "rR"
+    , '_'
+    , Chars "tT"
+    , Chars "yY"
+    , Chars "pP"
+    , Chars "eE" )]
+
+let kw_current_path =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "pP"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "hH" )]
+
+let kw_current_role =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "rR"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_system_user =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "yY"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "mM"
+    , '_'
+    , Chars "uU"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "rR" )]
+
+let kw_current_user =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "tT"
+    , '_'
+    , Chars "uU"
+    , Chars "sS"
+    , Chars "eE"
+    , Chars "rR" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2279,6 +2431,14 @@ let rec token buf =
   | kw_character -> Kw_character
   | kw_nchar -> Kw_nchar
   | kw_nclob -> Kw_nclob
+  | kw_collation -> Kw_collation
+  | kw_indicator -> Kw_indicator
+  | kw_current_user -> Kw_current_user
+  | kw_system_user -> Kw_system_user
+  | kw_current_default_transform_group -> Kw_current_default_transform_group
+  | kw_current_transform_group_for_type -> Kw_current_transform_group_for_type
+  | kw_current_path -> Kw_current_path
+  | kw_current_role -> Kw_current_role
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
   | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)

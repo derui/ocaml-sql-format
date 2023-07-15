@@ -316,9 +316,6 @@ and 'a window_frame_exclusion =
   | Window_frame_exclusion of
       [ `current_row | `group | `ties | `no_others ] * 'a
 
-and 'a unsigned_value_specification =
-  | Unsigned_value_specification of 'a (* TODO *)
-
 and 'a sort_specification_list = Sort_specification_list of 'a (* TODO *)
 
 and 'a cross_join = Cross_join of 'a table_reference * 'a table_primary * 'a
@@ -1046,3 +1043,77 @@ and 'a multiset_type = Multiset_type of 'a data_type * 'a
 
 and 'a field_definition =
   | Field_definition of 'a identifier * 'a data_type * 'a * 'a
+
+and 'a value_specification =
+  | Value_specification of
+      [ `literal of 'a literal | `general of 'a general_value_specification ]
+      * 'a
+
+and 'a unsigned_value_specification =
+  | Unsigned_value_specification of
+      [ `literal of 'a unsigned_literal
+      | `general of 'a general_value_specification
+      ]
+      * 'a
+
+and 'a general_value_specification =
+  | General_value_specification of
+      [ `host of 'a host_parameter_specification
+      | `sql of 'a sql_parameter_reference
+      | `dynamic of 'a dynamic_parameter_specification
+      | `current_collation of 'a current_collation_specification
+      | `default_transform_group
+      | `path
+      | `role
+      | `transform_group_for_type of 'a path_resolved_user_defined_type_name
+      | `current_user
+      | `session_user
+      | `system_user
+      | `user
+      | `value
+      ]
+      * 'a
+
+and 'a simple_value_specification =
+  | Simple_value_specification of
+      [ `literal of 'a literal
+      | `host of 'a host_parameter_name
+      | `sql of 'a sql_parameter_reference
+      ]
+      * 'a
+
+and 'a target_specification =
+  | Target_specification of
+      [ `host of 'a host_parameter_specification
+      | `sql of 'a sql_parameter_reference
+      | `col of 'a column_reference
+      | `array_element of 'a target_array_element_specification
+      | `dynamic of 'a dynamic_parameter_specification
+      ]
+      * 'a
+
+and 'a simple_target_specification =
+  | Simple_target_specification of
+      [ `host of 'a host_parameter_specification
+      | `sql of 'a sql_parameter_reference
+      | `col of 'a column_reference
+      ]
+      * 'a
+
+and 'a host_parameter_specification =
+  | Host_parameter_specification of 'a host_parameter_name * 'a
+
+and 'a dynamic_parameter_specification = Dynamic_parameter_specification of 'a
+
+and 'a target_array_element_specification =
+  | Target_array_element_specification of
+      'a target_array_reference * 'a simple_value_specification * 'a
+
+and 'a target_array_reference =
+  | Target_array_reference of
+      [ `sql of 'a sql_parameter_reference | `col of 'a column_reference ] * 'a
+
+and 'a current_collation_specification =
+  | Current_collation_specification of 'a string_value_expression * 'a
+
+and 'a host_parameter_name = Host_parameter_name of 'a identifier * 'a

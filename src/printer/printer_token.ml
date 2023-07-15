@@ -296,6 +296,16 @@ include (
       | Kw_character -> Fmt.string f @@ as_keyword "character" keyword
       | Kw_nchar -> Fmt.string f @@ as_keyword "nchar" keyword
       | Kw_nclob -> Fmt.string f @@ as_keyword "nclob" keyword
+      | Kw_collation -> Fmt.string f @@ as_keyword "collation" keyword
+      | Kw_indicator -> Fmt.string f @@ as_keyword "indicator" keyword
+      | Kw_current_user -> Fmt.string f @@ as_keyword "current_user" keyword
+      | Kw_system_user -> Fmt.string f @@ as_keyword "system_user" keyword
+      | Kw_current_default_transform_group ->
+        Fmt.string f @@ as_keyword "current_default_transform_group" keyword
+      | Kw_current_transform_group_for_type ->
+        Fmt.string f @@ as_keyword "current_transform_group_for_type" keyword
+      | Kw_current_path -> Fmt.string f @@ as_keyword "current_path" keyword
+      | Kw_current_role -> Fmt.string f @@ as_keyword "current_role" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

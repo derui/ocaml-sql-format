@@ -324,6 +324,13 @@ open Types.Ast
 %token Kw_character
 %token Kw_nchar
 %token Kw_nclob
+%token Kw_collation
+%token Kw_indicator
+%token Kw_system_user
+%token Kw_current_default_transform_group
+%token Kw_current_path
+%token Kw_current_role
+%token Kw_current_transform_group_for_type
 
 %token Tok_eof
 
@@ -520,6 +527,9 @@ field_name:
 | i = identifier { i }
 ;;
 
+host_parameter_name:
+| Tok_colon i = identifier { Host_parameter_name (i, ())}
+;;
 (** End   names and identifiers *)
 
 (** Start 6.1 data type *)
@@ -748,6 +758,78 @@ nonparenthesized_value_expression_primary:
 | e = window_function {Nonparenthesized_value_expression_primary (`window e, ())}
 ;;
 (** End   6.3 value expression primary *)
+
+(** Start 6.4 value specification and target specification *)
+current_collation_specification:
+| Kw_current Kw_collation;
+  e = delimited(Tok_lparen, string_value_expression, Tok_rparen) {Current_collation_specification (e, ())}
+;;
+
+target_array_reference:
+| e = sql_parameter_reference {Target_array_reference (`sql e, ())}
+| e = column_reference {Target_array_reference (`col e, ())}
+;;
+
+target_array_element_specification:
+|r = target_array_reference;
+ v = delimited(Tok_lsbrace, simple_value_specification, Tok_rsbrace) { Target_array_element_specification (r, v, ()) }
+;;
+
+dynamic_parameter_specification:
+| Tok_qmark { Dynamic_parameter_specification () }
+;;
+
+host_parameter_specification:
+  | n = host_parameter_name {Host_parameter_specification (n, ())}
+;;
+
+simple_target_specification:
+| e = host_parameter_specification {Simple_target_specification (`host e, ())}
+| e = sql_parameter_reference {Simple_target_specification (`sql e, ())}
+| e = column_reference {Simple_target_specification (`col e, ())}
+;;
+
+target_specification:
+| e = host_parameter_specification {Target_specification (`host e, ())}
+| e = sql_parameter_reference {Target_specification (`sql e, ())}
+| e = column_reference {Target_specification (`col e, ())}
+| e = target_array_element_specification {Target_specification (`array_element e, ())}
+| e = dynamic_parameter_specification {Target_specification (`dynamic e, ())}
+;;
+
+simple_value_specification:
+| e = literal {Simple_value_specification (`literal e, ())}
+| e = host_parameter_name {Simple_value_specification (`host e, ())}
+| e = sql_parameter_reference {Simple_value_specification (`sql e, ())}
+;;
+
+general_value_specification:
+| e = host_parameter_specification { General_value_specification (`host e, ()) }
+| e = sql_parameter_reference { General_value_specification (`sql e, ()) }
+| e = dynamic_parameter_specification { General_value_specification (`dynamic e, ()) }
+| e = current_collation_specification { General_value_specification (`current_collation e, ()) }
+| Kw_current_default_transform_group { General_value_specification (`default_transform_group, ()) }
+| Kw_current_path { General_value_specification (`path, ()) }
+| Kw_current_role { General_value_specification (`role, ()) }
+| Kw_current_transform_group_for_type;
+  e = path_resolved_user_defined_type_name { General_value_specification (`transform_group_for_type e, ()) }
+| Kw_current_user { General_value_specification (`current_user, ()) }
+| Kw_session_user { General_value_specification (`session_user, ()) }
+| Kw_system_user { General_value_specification (`system_user, ()) }
+| Kw_user { General_value_specification (`user, ()) }
+| Kw_value { General_value_specification (`value, ()) }
+;;
+
+unsigned_value_specification:
+  | e = unsigned_literal {Unsigned_value_specification (`literal e, ())}
+  | e = general_value_specification {Unsigned_value_specification (`general e, ())}
+;;
+
+value_specification:
+  | e = literal {Value_specification (`literal e, ())}
+  | e = general_value_specification {Value_specification (`general e, ())}
+;;
+(** End   6.4 value specification and target specification *)
 
 (** Start 6.8 sql parameter reference *)
 sql_parameter_reference:

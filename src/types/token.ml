@@ -282,6 +282,14 @@ type token =
   | Kw_character
   | Kw_nchar
   | Kw_nclob
+  | Kw_collation
+  | Kw_indicator
+  | Kw_current_user
+  | Kw_system_user
+  | Kw_current_default_transform_group
+  | Kw_current_transform_group_for_type
+  | Kw_current_path
+  | Kw_current_role
   (* tokens *)
   | Tok_ident of string
   | Tok_all_in_group of string
