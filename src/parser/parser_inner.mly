@@ -1022,6 +1022,42 @@ multiset_element_reference:
 ;;
 (** End   6.24 multiset element reference *)
 
+(** Start 6.25 value expression *)
+value_expression:
+| e = common_value_expression {Value_expression (`common e, ())}
+| e = boolean_value_expression {Value_expression (`boolean e, ())}
+| e = row_value_expression {Value_expression (`row e, ())}
+;;
+
+common_value_expression:
+| e = numeric_value_expression {Common_value_expression (`numeric e, ())}
+| e = string_value_expression {Common_value_expression (`string e, ())}
+| e = datetime_value_expression {Common_value_expression (`datetime e, ())}
+| e = interval_value_expression {Common_value_expression (`interval e, ())}
+| e = user_defined_value_expression {Common_value_expression (`user_defined e, ())}
+| e = reference_value_expression {Common_value_expression (`reference e, ())}
+| e = collection_value_expression {Common_value_expression (`collection e, ())}
+;;
+
+user_defined_type_value_expression:
+| e = value_expression_primary {User_defined_type_value_expression (e, ())}
+;;
+
+reference_value_expression:
+| e = value_expression_primary {Reference_value_expression (e, ())}
+;;
+
+collection_value_expression:
+| e = array_value_expression {Collection_value_expression (`array e, ())}
+| e = multiset_value_expression {Collection_value_expression (`multiset e, ())}
+;;
+
+collection_value_constructor:
+| e = array_value_constructor {Collection_value_constructor (`array e, ())}
+| e = multiset_value_constructor {Collection_value_constructor (`multiset e, ())}
+;;
+(** End   6.25 value expression *)
+
 (** Start 6.26 numeric value expression *)
 
 numeric_primary:

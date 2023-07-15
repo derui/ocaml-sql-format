@@ -223,11 +223,6 @@ and 'a derived_column_list = Derived_column_list of 'a column_name_list * 'a
 
 and 'a search_condition = Search_condition of 'a boolean_value_expression * 'a
 
-and 'a value_expression = Value_expression of 'a (* TODO *)
-
-and 'a collection_value_expression =
-  | Collection_value_expression of 'a (* TODO *)
-
 and 'a collate_clause = Collate_clause of 'a collate_name * 'a
 
 and 'a window_clause = Window_clause of 'a window_definition_list * 'a
@@ -1211,3 +1206,43 @@ and 'a cast_operand =
 and 'a cast_target =
   | Cast_target of
       [ `domain of 'a schema_qualified_name | `data of 'a data_type ] * 'a
+
+and 'a value_expression =
+  | Value_expression of
+      [ `common of 'a common_value_expression
+      | `boolean of 'a boolean_value_expression
+      | `row of 'a row_value_expression
+      ]
+      * 'a
+
+and 'a common_value_expression =
+  | Common_value_expression of
+      [ `numeric of 'a numeric_value_expression
+      | `string of 'a string_value_expression
+      | `datetime of 'a datetime_value_expression
+      | `interval of 'a interval_value_expression
+      | `user_defined of 'a user_defined_type_value_expression
+      | `reference of 'a reference_value_expression
+      | `collection of 'a collection_value_expression
+      ]
+      * 'a
+
+and 'a user_defined_type_value_expression =
+  | User_defined_type_value_expression of 'a value_expression_primary * 'a
+
+and 'a reference_value_expression =
+  | Reference_value_expression of 'a value_expression_primary * 'a
+
+and 'a collection_value_expression =
+  | Collection_value_expression of
+      [ `array of 'a array_value_expression
+      | `multiset of 'a multiset_value_expression
+      ]
+      * 'a
+
+and 'a collection_value_constructor =
+  | Collection_value_constructor of
+      [ `array of 'a array_value_constructor
+      | `multiset of 'a multiset_value_constructor
+      ]
+      * 'a

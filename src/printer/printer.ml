@@ -900,8 +900,6 @@ and table_function_derived_table () =
       let generate = collection_value_expression
     end) : S))
 
-and value_expression () = Value_expression.((module Make () : S))
-
 and joined_table () =
   Joined_table.(
     (module Make
@@ -3175,4 +3173,106 @@ and cast_target () =
                 type t = A.ext data_type
 
                 let generate = data_type
+              end) : S))
+
+and value_expression () =
+  Value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.common_value_expression
+
+                let generate = common_value_expression
+              end)
+              (struct
+                type t = A.ext A.boolean_value_expression
+
+                let generate = boolean_value_expression
+              end)
+              (struct
+                type t = A.ext A.row_value_expression
+
+                let generate = row_value_expression
+              end) : S))
+
+and common_value_expression () =
+  Common_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.numeric_value_expression
+
+                let generate = numeric_value_expression
+              end)
+              (struct
+                type t = A.ext A.string_value_expression
+
+                let generate = string_value_expression
+              end)
+              (struct
+                type t = A.ext A.datetime_value_expression
+
+                let generate = datetime_value_expression
+              end)
+              (struct
+                type t = A.ext A.interval_value_expression
+
+                let generate = interval_value_expression
+              end)
+              (struct
+                type t = A.ext A.user_defined_type_value_expression
+
+                let generate = user_defined_type_value_expression
+              end)
+              (struct
+                type t = A.ext A.reference_value_expression
+
+                let generate = reference_value_expression
+              end)
+              (struct
+                type t = A.ext A.collection_value_expression
+
+                let generate = collection_value_expression
+              end) : S))
+
+and user_defined_type_value_expression () =
+  User_defined_type_value_expression.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))
+
+and reference_value_expression () =
+  Reference_value_expression.(
+    (module Make (struct
+      type t = A.ext A.value_expression_primary
+
+      let generate = value_expression_primary
+    end) : S))
+
+and collection_value_expression () =
+  Collection_value_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.array_value_expression
+
+                let generate = array_value_expression
+              end)
+              (struct
+                type t = A.ext A.multiset_value_expression
+
+                let generate = multiset_value_expression
+              end) : S))
+
+and collection_value_constructor () =
+  Collection_value_constructor.(
+    (module Make
+              (struct
+                type t = A.ext A.array_value_constructor
+
+                let generate = array_value_constructor
+              end)
+              (struct
+                type t = A.ext A.multiset_value_constructor
+
+                let generate = multiset_value_constructor
               end) : S))
