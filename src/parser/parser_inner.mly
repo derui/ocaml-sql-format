@@ -485,10 +485,6 @@ identifier:
    | i = identifier { i }
 ;;
 
-identifier_chain:
-| i = identifier l = list(identifier) {Identifier_chain (i, l, ())}
-;;
-
 local_or_schema_qualifier:
 | Kw_module { `module' }
 | s = schema_name { `schema s }
@@ -516,11 +512,6 @@ schema_qualified_name:
 
 collate_name:
 | i = schema_qualified_name {Collate_name (i, ())}
-;;
-
-column_reference:
-| c = identifier_chain {Column_reference (`chain c, ())}
-| Kw_module Tok_period i = identifier Tok_period n = identifier {Column_reference (`module' (i, n), ())}
 ;;
 
 field_name:
@@ -756,6 +747,7 @@ nonparenthesized_value_expression_primary:
 | e = array_element_reference {Nonparenthesized_value_expression_primary (`array e, ())}
 | e = multiset_element_reference {Nonparenthesized_value_expression_primary (`multiset e, ())}
 | e = window_function {Nonparenthesized_value_expression_primary (`window e, ())}
+| e = set_function_function {Nonparenthesized_value_expression_primary (`set_function e, ())}
 ;;
 (** End   6.3 value expression primary *)
 
@@ -831,11 +823,61 @@ value_specification:
 ;;
 (** End   6.4 value specification and target specification *)
 
+(** Start 6.5 contextually typed value expression *)
+default_specification:
+| Kw_default {Default_specification () }
+;;
+
+null_specification:
+| Kw_null {Null_specification () }
+;;
+
+empty_specification:
+  | Kw_array Tol_lsbrace Tok_rsbrace {Empty_specification (`array, ())}
+  | Kw_multiset Tol_lsbrace Tok_rsbrace {Empty_specification (`multiset, ())}
+;;
+
+implicit_typed_value_specification:
+  |e = null_specification {Implicit_typed_value_specification (`null e, ())}
+  |e = empty_specification {Implicit_typed_value_specification (`empty e, ())}
+;;
+
+contextually_typed_value_expression:
+| e = implicit_typed_value_specification {Contextually_typed_value_expression (`implicit e, ())}
+| e = default_specification {Contextually_typed_value_expression (`default e, ())}
+;;
+(** End   6.5 contextually typed value expression *)
+
+(** Start 6.6 identifier chain *)
+identifier_chain:
+| i = identifier l = list(identifier) {Identifier_chain (i, l, ())}
+;;
+(** End   6.6 identifier chain *)
+
+(** Start 6.7 column reference *)
+column_reference:
+| c = identifier_chain {Column_reference (`chain c, ())}
+| Kw_module Tok_period i = identifier Tok_period n = identifier {Column_reference (`module' (i, n), ())}
+;;
+(** End   6.7 column reference *)
+
 (** Start 6.8 sql parameter reference *)
 sql_parameter_reference:
 | e = identifier_chain {Sql_parameter_reference (e, ())}
 ;;
 (** End   6.8 sql parameter reference *)
+
+(** Start 6.9 set function specification *)
+set_function_specification:
+| e = grouping_operation {Set_function_specification (`grouping e, ())}
+;;
+
+grouping_operation:
+| Kw_grouping Tok_lparen fl = column_reference;
+  list = list(pair(Tok_comma, column_reference));
+  Tok_rparen {Grouping_operation (fl, list, ())}
+;;
+(** End   6.9 set function specification *)
 
 (** Start 6.10 window function *)
 window_name_or_specification:

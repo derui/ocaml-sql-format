@@ -573,9 +573,8 @@ and 'a nonparenthesized_value_expression_primary =
       [ (* |  `unsigned of 'a unsigned_value_specification *)
         `column of
         'a column_reference
-      | (* | `set_function of 'a set_function_specification *)
-        `window of
-        'a window_function
+      | `set_function of 'a set_function_specification
+      | `window of 'a window_function
       | `scalar of 'a scalar_subquery
       | (* | `case expression of 'a case_expression *)
         (* | `cast of 'a cast_specification *)
@@ -1117,3 +1116,28 @@ and 'a current_collation_specification =
   | Current_collation_specification of 'a string_value_expression * 'a
 
 and 'a host_parameter_name = Host_parameter_name of 'a identifier * 'a
+
+and 'a contextually_typed_value_specification =
+  | Contextually_typed_value_specification of
+      [ `implicit of 'a implicitly_typed_value_specification
+      | `default of 'a default_specification
+      ]
+      * 'a
+
+and 'a implicitly_typed_value_specification =
+  | Implicitly_typed_value_specification of
+      [ `null of 'a null_specification | `empty of 'a empty_specification ] * 'a
+
+and 'a null_specification = Null_specification of 'a
+
+and 'a empty_specification =
+  | Empty_specification of [ `array | `multiset ] * 'a
+
+and 'a default_specification = Default_specification of 'a
+
+and 'a set_function_specification =
+  | Set_function_specification of
+      [ `grouping of 'a grouping_operation | `aggregate of 'a ] * 'a
+
+and 'a grouping_operation =
+  | Grouping_operation of 'a column_reference * 'a column_reference list * 'a

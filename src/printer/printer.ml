@@ -1666,6 +1666,11 @@ and nonparenthesized_value_expression_primary () =
                 type t = A.ext A.scalar_subquery
 
                 let generate = scalar_subquery
+              end)
+              (struct
+                type t = A.ext set_function_specification
+
+                let generate = set_function_specification
               end) : S))
 
 and sql_parameter_reference () =
@@ -2926,4 +2931,54 @@ and host_parameter_name () =
       type t = A.ext L.identifier
 
       let generate = identifier
+    end) : S))
+
+and contextually_typed_value_specification () =
+  Contextually_typed_value_specification.(
+    (module Make
+              (struct
+                type t = A.ext implicitly_typed_value_specification
+
+                let generate = implicitly_typed_value_specification
+              end)
+              (struct
+                type t = A.ext default_specification
+
+                let generate = default_specification
+              end) : S))
+
+and implicitly_typed_value_specification () =
+  Implicitly_typed_value_specification.(
+    (module Make
+              (struct
+                type t = A.ext null_specification
+
+                let generate = null_specification
+              end)
+              (struct
+                type t = A.ext empty_specification
+
+                let generate = empty_specification
+              end) : S))
+
+and null_specification () = Null_specification.((module Make () : S))
+
+and empty_specification () = Empty_specification.((module Make () : S))
+
+and default_specification () = Default_specification.((module Make () : S))
+
+and set_function_specification () =
+  Set_function_specification.(
+    (module Make (struct
+      type t = A.ext grouping_operation
+
+      let generate = grouping_operation
+    end) : S))
+
+and grouping_operation () =
+  Grouping_operation.(
+    (module Make (struct
+      type t = A.ext column_reference
+
+      let generate = column_reference
     end) : S))
