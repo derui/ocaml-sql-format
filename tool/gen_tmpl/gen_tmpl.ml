@@ -7,6 +7,10 @@ let write_content file content =
 
 let ast = {| and 'a %%TYPE%% = %%CONST%% of 'a (* TODO *) |}
 
+let parser_tmpl = {|%%TYPE%%:
+                   |
+                   ;;|}
+
 let printer =
   {|
 open Types.Ast
@@ -46,6 +50,12 @@ let () =
   let () =
     let fname = "src/printer/printer.ml" in
     let content = Re.replace_string re_type_name ~by:type_name printer_di in
+    let content = Re.replace_string re_constr_name ~by:constr_name content in
+    write_content fname content
+  in
+  let () =
+    let fname = "src/parser/parser_inner.mly" in
+    let content = Re.replace_string re_type_name ~by:type_name parser_tmpl in
     let content = Re.replace_string re_constr_name ~by:constr_name content in
     write_content fname content
   in

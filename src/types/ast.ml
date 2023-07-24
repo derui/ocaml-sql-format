@@ -1277,7 +1277,6 @@ and 'a contextually_typed_row_value_constructor_element_list =
       'a contextually_typed_row_value_constructor_element
       * 'a contextually_typed_row_value_constructor_element list
       * 'a
-(* TODO *)
 
 and 'a contextually_typed_row_value_constructor_element =
   | Contextually_typed_row_value_constructor_element of
