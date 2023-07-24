@@ -6,7 +6,7 @@ tasks:
 
   build:
     cmds:
-      - dune build
+      - dune build {{.CLI_ARGS}}
     silent: true
 
   build-tool:
