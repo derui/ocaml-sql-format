@@ -3435,3 +3435,29 @@ and sort_key () =
 and ordering_specification () = Ordering_specification.((module Make () : S))
 
 and null_ordering () = Null_ordering.((module Make () : S))
+
+and direct_sql_statement () =
+  Direct_sql_statement.(
+    (module Make (struct
+      type t = A.ext A.directly_executable_statement
+
+      let generate = directly_executable_statement
+    end) : S))
+
+and directly_executable_statement () =
+  Directly_executable_statement.(
+    (module Make (struct
+      type t = A.ext A.direct_sql_data_statement
+
+      let generate = direct_sql_data_statement
+    end) : S))
+
+and direct_sql_data_statement () =
+  Direct_sql_data_statement.(
+    (module Make (struct
+      type t = A.ext A.direct_select_statement
+
+      let generate = direct_select_statement
+    end) : S))
+
+and direct_select_statement () = Direct_select_statement.((module Make () : S))

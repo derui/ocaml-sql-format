@@ -1310,3 +1310,17 @@ and 'a ordering_specification =
   | Ordering_specification of [ `asc | `desc ] * 'a
 
 and 'a null_ordering = Null_ordering of [ `first | `last ] * 'a
+
+(* 21.1 direct SQL statement *)
+and 'a direct_sql_statement =
+  | Direct_sql_statement of 'a directly_executable_statement list * 'a
+
+and 'a directly_executable_statement =
+  | Directly_executable_statement of
+      [ `data of 'a direct_sql_data_statement ] * 'a
+
+and 'a direct_sql_data_statement =
+  | Direct_sql_data_statement of [ `select of 'a direct_select_statement ] * 'a
+
+(* 21.2 direct select statement *)
+and 'a direct_select_statement = Direct_select_statement of 'a (* TODO *)

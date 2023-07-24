@@ -2217,3 +2217,22 @@ basic_non_reserved:
   | Kw_quarter  {Basic_non_reserved (`quarter, ())}
   | Kw_policy {Basic_non_reserved (`policy, ())}
 ;;
+
+(* 21.1 direct sql statement *)
+direct_sql_statement:
+| l = separated_nonempty_list(Tok_semicolon, directly_executable_statement);
+option(Tok_semicolon) {
+    Directly_sql_statement (l, ())
+  }
+;;
+directly_executable_statement:
+| v = direct_sql_data_statement { Directly_executable_statement (`data v, ()) }
+;;
+direct_sql_data_statement:
+  |v = direct_select_statement {Direct_sql_data_statement (`select v, ())}
+;;
+
+(* 21.2 direct select statement *)
+direct_select_statement:
+  |
+;;
