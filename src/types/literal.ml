@@ -1,5 +1,6 @@
 (** literals *)
-type 'a identifier = Identifier of string * 'a
+type 'a identifier =
+  | Identifier of [ `keyword of Token.keyword | `raw of string ] * 'a
 
 and 'a non_reserved_identifier =
   | Non_reserved_identifier of

@@ -23,7 +23,7 @@ exception Invalid_token of token
 %token Tok_qmark
 %token Tok_semicolon
 %token Tok_quote
-%token <string> Tok_ident
+%token <[`keyword of keyword | `raw of string]> Tok_ident
 %token <string> Tok_string
 %token <string> Tok_blob
 %token <string> Tok_numeric
@@ -58,7 +58,7 @@ entry:
                  | { }
 ;;
 
-let identifier := Tok_ident
+let identifier := | x = Tok_ident; {Identifier x}
 
 let literal_value :=
   | v = numeric_literal; { Literal_value (`numeric v, ())}
@@ -84,4 +84,13 @@ let blob_literal :=
   | v = Tok_blob; { Blob_literal (v, ()) }
 
 let bind_parameter :=
-| Tok_qmark; {Bind_parameter ()}
+  | Tok_qmark; {Bind_parameter ()}
+
+let schema_name :=
+  | v = identifier; { Schema_name (v, ()) }
+
+let table_name :=
+  | v = identifier; { Table_name (v, ()) }
+
+let column_name :=
+  | v = identifier; { column_name (v, ()) }

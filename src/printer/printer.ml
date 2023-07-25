@@ -3,6 +3,8 @@ module L = Types.Literal
 module B = Types.Basic
 module Options = Options
 
+let identifier () = Identifier.((module Make () : S))
+
 let rec literal_value () =
   Literal_value.(
     (module Make
@@ -29,3 +31,27 @@ and string_literal () = String_literal.((module Make () : S))
 and blob_literal () = Blob_literal.((module Make () : S))
 
 and bind_parameter () = Bind_parameter.((module Make () : S))
+
+and schema_name () =
+  Schema_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and table_name () =
+  Table_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and column_name () =
+  Column_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
