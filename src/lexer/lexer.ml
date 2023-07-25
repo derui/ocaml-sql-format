@@ -2116,14 +2116,19 @@ let letter = [%sedlex.regexp? 'a' .. 'z' | 'A' .. 'Z' | 0x0153 .. 0xfffd]
 
 let digit = [%sedlex.regexp? '0' .. '9']
 
+let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
+
 let unsigned_integer = [%sedlex.regexp? Plus digit]
 
-let exact_numeric_literal =
+let decimal =
   [%sedlex.regexp?
-    unsigned_integer, Opt ('.', unsigned_integer) | '.', unsigned_integer]
+    unsigned_integer, '.', unsigned_integer | '.', unsigned_integer]
 
-let approximate_numeric_literal =
-  [%sedlex.regexp? exact_numeric_literal, Chars "eE", unsigned_integer]
+let exponent = [%sedlex.regexp? Chars "eE", Opt (Chars "+-"), unsigned_integer]
+
+let hexdecimal = [%sedlex.regexp? "0x", Plus hexit]
+
+let numeric = [%sedlex.regexp? decimal, Opt exponent | hexdecimal]
 
 let identifier_start = [%sedlex.regexp? lu | ll | lt | lm | lo | nl]
 
@@ -2139,12 +2144,9 @@ let delimited_identifier =
 
 let identifier = [%sedlex.regexp? regular_identifier | delimited_identifier]
 
-let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
-
-let national_string =
-  [%sedlex.regexp? Chars "nN", "'", Star ("''" | Sub (any, "'")), "'"]
-
 let string = [%sedlex.regexp? "'", Star ("''" | Sub (any, "'")), "'"]
+
+let blob = [%sedlex.regexp? Chars "xX", string]
 
 let unicode_representation = [%sedlex.regexp? Rep (hexit, 4) | Rep (hexit, 6)]
 
@@ -2457,16 +2459,9 @@ let rec token buf =
   | kw_nullif -> Kw_nullif
   | kw_coalesce -> Kw_coalesce
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
-  | national_string -> Tok_national_string (Sedlexing.Utf8.lexeme buf)
-  | unicode_string -> Tok_unicode_string (Sedlexing.Utf8.lexeme buf)
-  | typed_string -> Tok_typed_string (Sedlexing.Utf8.lexeme buf)
-  | bin_string -> Tok_bin_string (Sedlexing.Utf8.lexeme buf)
+  | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
-  | unsigned_integer -> Tok_unsigned_integer (Sedlexing.Utf8.lexeme buf)
-  | exact_numeric_literal ->
-    Tok_exact_numeric_literal (Sedlexing.Utf8.lexeme buf)
-  | approximate_numeric_literal ->
-    Tok_approximate_numeric_literal (Sedlexing.Utf8.lexeme buf)
+  | numeric -> Tok_numeric (Sedlexing.Utf8.lexeme buf)
   | space -> token buf
   | newline ->
     Sedlexing.new_line buf;

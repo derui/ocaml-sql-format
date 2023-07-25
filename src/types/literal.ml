@@ -1,5 +1,3 @@
-open Basic
-
 (** literals *)
 type 'a identifier = Identifier of string * 'a
 
@@ -143,83 +141,17 @@ and 'a non_numeric_literal =
       ]
       * 'a
 
-(* does not handle structure of unsigned numeric literal. exact and approximate should be handle in lexer. *)
-and 'a unsigned_numeric_literal = Unsigned_numeric_literal of string * 'a
-
-and 'a signed_numeric_literal =
-  | Signed_numeric_literal of sign option * 'a unsigned_numeric_literal * 'a
-
-and 'a unsigned_integer = Unsigned_integer of string * 'a
-
-and 'a signed_integer =
-  | Signed_integer of sign option * 'a unsigned_integer * 'a
-
-and 'a character_string_literal = Character_string_literal of string * 'a
-
-and 'a national_character_string_literal =
-  | National_character_string_literal of string * 'a
-
-and 'a unicode_character_string_literal =
-  | Unicode_character_string_literal of string * 'a
-
-and 'a binary_string_literal = Binary_string_literal of string * 'a
-
-and 'a datetime_literal =
-  | Datetime_literal of
-      [ `date of 'a date_literal
-      | `time of 'a time_literal
-      | `timestamp of 'a timestamp_literal
+and 'a literal_value =
+  | Literal_value of
+      [ `null
+      | `blob of 'a blob_literal
+      | `string of 'a string_literal
+      | `numeric of 'a numeric_literal
       ]
       * 'a
 
-(* does not handle structure of datetime literal in current formatter *)
-and 'a date_literal = Date_literal of string * 'a
+and 'a numeric_literal = Numeric_literal of string * 'a
 
-and 'a time_literal = Time_literal of string * 'a
+and 'a string_literal = String_literal of string * 'a
 
-and 'a timestamp_literal = Timestamp_literal of string * 'a
-
-and 'a interval_literal =
-  | Interval_literal of sign option * string * 'a interval_qualifier * 'a
-
-and 'a interval_qualifier =
-  | Interval_qualifier of
-      [ `single of
-        [ `primary of
-          non_second_primary_datetime_field * 'a unsigned_integer option
-        | `second of 'a unsigned_integer option * 'a unsigned_integer option
-        ]
-      | `start_end of
-        (non_second_primary_datetime_field * 'a unsigned_integer option)
-        * [ `primary of non_second_primary_datetime_field
-          | `second of 'a unsigned_integer option
-          ]
-      ]
-      * 'a
-
-and 'a boolean_literal =
-  | Boolean_literal of [ `true' | `false' | `unknown ] * 'a
-
-and 'a general_literal =
-  | General_literal of
-      [ `character of 'a character_string_literal
-      | `national of 'a national_character_string_literal
-      | `unicode of 'a unicode_character_string_literal
-      | `binary of 'a binary_string_literal
-      | `datetime of 'a datetime_literal
-      | `interval of 'a interval_literal
-      | `boolean of 'a boolean_literal
-      ]
-      * 'a
-
-and 'a unsigned_literal =
-  | Unsigned_literal of
-      [ `numeric of 'a unsigned_numeric_literal
-      | `general of 'a general_literal
-      ]
-      * 'a
-
-and 'a literal =
-  | Literal of
-      [ `numeric of 'a signed_numeric_literal | `general of 'a general_literal ]
-      * 'a
+and 'a blob_literal = Blob_literal of string * 'a

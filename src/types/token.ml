@@ -294,15 +294,9 @@ type token =
   | Kw_coalesce
   (* tokens *)
   | Tok_ident of string
-  | Tok_all_in_group of string
   | Tok_string of string
-  | Tok_national_string of string
-  | Tok_unicode_string of string
-  | Tok_typed_string of string
-  | Tok_bin_string of string
-  | Tok_exact_numeric_literal of string
-  | Tok_approximate_numeric_literal of string
-  | Tok_unsigned_integer of string
+  | Tok_blob of string
+  | Tok_numeric of string
   | Tok_lparen
   | Tok_rparen
   | Tok_period
