@@ -144,6 +144,11 @@ and 'a non_numeric_literal =
 and 'a literal_value =
   | Literal_value of
       [ `null
+      | `true'
+      | `false'
+      | `current_time
+      | `current_date
+      | `current_timestamp
       | `blob of 'a blob_literal
       | `string of 'a string_literal
       | `numeric of 'a numeric_literal
