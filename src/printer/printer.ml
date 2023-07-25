@@ -27,3 +27,5 @@ and numeric_literal () = Numeric_literal.((module Make () : S))
 and string_literal () = String_literal.((module Make () : S))
 
 and blob_literal () = Blob_literal.((module Make () : S))
+
+and bind_parameter () = Bind_parameter.((module Make () : S))

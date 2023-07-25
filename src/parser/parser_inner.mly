@@ -360,3 +360,7 @@ string_literal:
 blob_literal:
   | v = Tok_blob { Blob_literal (v, ()) }
 ;;
+
+bind_parameter:
+| Tok_qmark {Bind_parameter ()}
+;;
