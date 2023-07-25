@@ -1,6 +1,13 @@
 %{
 open Types.Ast
 open Types.Literal
+open Types.Token
+
+let is_kw kw = function
+  | `keyword kw' -> kw = kw'
+  | `raw _ -> false
+
+exception Invalid_token of token
 %}
 
 %token Tok_lparen
@@ -22,28 +29,20 @@ open Types.Literal
 %token <string> Tok_numeric
 
 (* operators *)
-%token Op_plus
-%token Op_minus
-%token Op_star
-%token Op_slash
-%token Op_double_amp
-%token Op_concat
-%token Op_eq
-%token Op_ge
-%token Op_gt
-%token Op_le
-%token Op_lt
-%token Op_ne
-%token Op_ne2
-%token Op_dereference
-
-(* keywords *)
-%token Kw_null
-%token Kw_true
-%token Kw_false
-%token Kw_current_date
-%token Kw_current_time
-%token Kw_current_timestamp
+(* %token Op_plus *)
+(* %token Op_minus *)
+(* %token Op_star *)
+(* %token Op_slash *)
+(* %token Op_double_amp *)
+(* %token Op_concat *)
+(* %token Op_eq *)
+(* %token Op_ge *)
+(* %token Op_gt *)
+(* %token Op_le *)
+(* %token Op_lt *)
+(* %token Op_ne *)
+(* %token Op_ne2 *)
+(* %token Op_dereference *)
 
 %token Tok_eof
 
@@ -59,27 +58,30 @@ entry:
                  | { }
 ;;
 
-literal_value:
-  | v = numeric_literal { Literal_value (`numeric v, ())}
-  | v = string_literal { Literal_value (`string v, ())}
-  | v = blob_literal { Literal_value (`blob v, ())}
-  | Kw_null { Literal_value (`null, ()) }
-  | Kw_true { Literal_value (`true', ()) }
-  | Kw_false { Literal_value (`false', ()) }
-  | Kw_current_date { Literal_value (`current_date, ()) }
-  | Kw_current_time { Literal_value (`current_time, ()) }
-  | Kw_current_timestamp { Literal_value (`current_timestamp, ()) }
-;;
-numeric_literal:
-  | v = Tok_numeric { Numeric_literal (v, ()) }
-;;
-string_literal:
-  | v = Tok_string { String_literal (v, ()) }
-;;
-blob_literal:
-  | v = Tok_blob { Blob_literal (v, ()) }
-;;
+let identifier := Tok_ident
 
-bind_parameter:
-| Tok_qmark {Bind_parameter ()}
-;;
+let literal_value :=
+  | v = numeric_literal; { Literal_value (`numeric v, ())}
+  | v = string_literal; { Literal_value (`string v, ())}
+  | v = blob_literal; { Literal_value (`blob v, ())}
+  | v = identifier; { match v with
+                      | Tok_ident (`keyword Kw_null) -> Literal_value (`null, ())
+                      | Tok_ident (`keyword Kw_true) -> Literal_value (`true', ())
+                      | Tok_ident (`keyword Kw_false) -> Literal_value (`false', ())
+                      | Tok_ident (`keyword Kw_current_date) -> Literal_value (`current_date, ())
+                      | Tok_ident (`keyword Kw_current_time) -> Literal_value (`current_time, ())
+                      | Tok_ident (`keyword Kw_current_timestamp) -> Literal_value (`current_timestamp, ())
+                      | _ -> raise Invalid_token
+                    }
+
+let numeric_literal :=
+  | v = Tok_numeric; { Numeric_literal (v, ()) }
+
+let string_literal :=
+  | v = Tok_string ;{ String_literal (v, ()) }
+
+let blob_literal :=
+  | v = Tok_blob; { Blob_literal (v, ()) }
+
+let bind_parameter :=
+| Tok_qmark; {Bind_parameter ()}

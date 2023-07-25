@@ -22,11 +22,13 @@ module Make
     | Literal_value (`blob v, _) ->
       let module B = (val B.generate ()) in
       B.print ~option f v
-    | Literal_value (`null, _) -> Token.print ~option f Kw_null
-    | Literal_value (`true', _) -> Token.print ~option f Kw_true
-    | Literal_value (`false', _) -> Token.print ~option f Kw_false
-    | Literal_value (`current_date, _) -> Token.print ~option f Kw_current_date
-    | Literal_value (`current_time, _) -> Token.print ~option f Kw_current_time
+    | Literal_value (`null, _) -> Keyword.print ~option f Kw_null
+    | Literal_value (`true', _) -> Keyword.print ~option f Kw_true
+    | Literal_value (`false', _) -> Keyword.print ~option f Kw_false
+    | Literal_value (`current_date, _) ->
+      Keyword.print ~option f Kw_current_date
+    | Literal_value (`current_time, _) ->
+      Keyword.print ~option f Kw_current_time
     | Literal_value (`current_timestamp, _) ->
-      Token.print ~option f Kw_current_timestamp
+      Keyword.print ~option f Kw_current_timestamp
 end
