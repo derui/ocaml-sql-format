@@ -7,9 +7,10 @@ let write_content file content =
 
 let ast = {| and 'a %%TYPE%% = %%CONST%% of 'a (* TODO *) |}
 
-let parser_tmpl = {|%%TYPE%%:
-                   |
-                   ;;|}
+let parser_tmpl = {|
+let %%TYPE%% :=
+ | { }
+|}
 
 let printer =
   {|
