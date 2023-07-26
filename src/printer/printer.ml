@@ -55,3 +55,25 @@ and column_name () =
 
       let generate = identifier
     end) : S))
+
+and type_name () =
+  Type_name.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.signed_number
+
+                let generate = signed_number
+              end) : S))
+
+and signed_number () =
+  Signed_number.(
+    (module Make (struct
+      type t = A.ext L.numeric_literal
+
+      let generate = numeric_literal
+    end) : S))

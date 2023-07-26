@@ -29,8 +29,8 @@ exception Invalid_token of token
 %token <string> Tok_numeric
 
 (* operators *)
-(* %token Op_plus *)
-(* %token Op_minus *)
+%token Op_plus
+%token Op_minus
 (* %token Op_star *)
 (* %token Op_slash *)
 (* %token Op_double_amp *)
@@ -50,14 +50,19 @@ exception Invalid_token of token
 
 %%
 
-statements:
-  | v = separated_nonempty_list(Tok_semicolon, entry) Tok_eof { [] }
-;;
-
-entry:
+let entry :=
                  | { }
-;;
 
+
+let statements :=
+  | v = separated_nonempty_list(Tok_semicolon, entry); Tok_eof; { [] }
+
+                      (* basic *)
+let sign ==
+  | Op_plus; {`plus}
+  | Op_minus; {`minus}
+
+(* literal *)
 let identifier := | x = Tok_ident; {Identifier x}
 
 let literal_value :=
@@ -94,3 +99,14 @@ let table_name :=
 
 let column_name :=
   | v = identifier; { column_name (v, ()) }
+
+let type_name :=
+ | name = nonempty_list(identifier); Tok_lparen;
+   size = signed_number; Tok_comma; max_size = signed_number;
+   Tok_lparen ;
+   { Type_name (name, `with_size (size, max_size), ()) }
+ | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen); { Type_name (name, `size size, ()) }
+ | name = nonempty_list(identifier); { Type_name (name, `name_only, ()) }
+
+let signed_number :=
+ | sign = option(sign); v = numeric_literal; { Signed_number (sign ,v, ()) }
