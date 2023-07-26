@@ -69,7 +69,8 @@ and 'a table_or_subquery =
 and 'a select_clause =
   | Select_clause of quantifier option * 'a result_column list * 'a
 
-and 'a from_clause = From_clause of 'a (* TODO *)
+and 'a from_clause =
+  | From_clause of [ `table_or_subquery of 'a table_or_subquery list ] * 'a
 
 and 'a where_clause = Where_clause of 'a (* TODO *)
 

@@ -173,7 +173,7 @@ let select_clause :=
 
 
 let from_clause :=
- | { }
+ | ts = separated_nonempty_list(Tok_comma, table_or_subquery); { From_clause (`table_or_subquery ts, ()) }
 
 
 let where_clause :=

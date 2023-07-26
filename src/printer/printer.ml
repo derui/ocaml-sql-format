@@ -151,7 +151,13 @@ and select_clause () =
       let generate = result_column
     end) : S))
 
-and from_clause () = From_clause.((module Make () : S))
+and from_clause () =
+  From_clause.(
+    (module Make (struct
+      type t = A.ext A.table_or_subquery
+
+      let generate = table_or_subquery
+    end) : S))
 
 and where_clause () = Where_clause.((module Make () : S))
 
