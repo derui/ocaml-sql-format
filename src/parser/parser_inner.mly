@@ -31,7 +31,7 @@ exception Invalid_token of token
 (* operators *)
 %token Op_plus
 %token Op_minus
-(* %token Op_star *)
+%token Op_star
 (* %token Op_slash *)
 (* %token Op_double_amp *)
 (* %token Op_concat *)
@@ -116,3 +116,77 @@ let qualified_name :=
  | tname = table_name;Tok_period; name = column_name; { Quanlified_name (None, Some tname, name, ()) }
  | sname = schema_name; Tok_period; tname = table_name;
    Tok_period; name = column_name; { Quanlified_name (Some sname, Some tname, name, ()) }
+
+
+let expr :=
+ | v = literal_value; { Expr (`literal v, ()) }
+ | v = bind_parameter; { Expr (`parameter v, ()) }
+ | v = qualified_name; { Expr (`name v, ()) }
+
+
+let sql_statement :=
+ | s = select_statement; { Sql_statement (`select s, ()) }
+
+
+let select_statement :=
+ | c = select_core ;{ Select_statement (c, ())}
+
+
+let select_core :=
+ | { }
+
+
+let result_column :=
+ | Op_star; { Result_column (`asterisk, ()) }
+ | v = table_name; Tok_period; Op_star; { Result_column (`qualified_asterisk v, ()) }
+ | e = expr; { Result_column (`expr (e, None), ()) }
+ | e = expr; kw = option(identifier); alias = identifier; {
+       match kw with
+       | Some (`keyword Kw_as) | None -> Result_column (`expr (e, Some alias), ())
+       | _ -> raise (Invalid_token kw)
+     }
+
+
+let table_or_subquery :=
+ | sname = schema_name; Tok_period; tname = table_name; option(identifier); alias = identifier;
+   { match kw with
+     | Some (`keyword Kw_as) | None -> Table_or_subquery (`name (Some sname, tname, Some alias), ())
+     | _ -> raise (Invalid_token kw)
+   }
+ | sname = schema_name; Tok_period; tname = table_name; { Table_or_subquery (`name (Some sname, tname, None), ()) }
+ | tname = table_name; { Table_or_subquery (`name (None, tname, None), ()) }
+
+let quantifier ==
+  | v = identifier; {
+      match v with
+      | `keyword Kw_distinct -> `distinct
+      | `keyword Kw_all -> `all
+      | _ -> raise (Invalid_token v)
+    }
+
+let select_clause :=
+ | select = identifier; q = option(quantifier); cols = separated_nonempty_list(Tok_comma, result_column); {
+       match select with
+       | `keyword Kw_select -> Select_clause (q, cols, ())
+       | _ raise (Invalid_token select)
+     }
+
+
+let from_clause :=
+ | { }
+
+
+let where_clause :=
+ | { }
+
+
+let group_by_clause :=
+ | { }
+
+
+let window_clause :=
+ | { }
+
+
+let having_clause :=
+ | { }

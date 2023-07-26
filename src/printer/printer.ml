@@ -96,3 +96,67 @@ and qualified_name () =
 
                 let generate = column_name
               end) : S))
+
+and expr () =
+  Expr.(
+    (module Make
+              (struct
+                type t = A.ext L.literal_value
+
+                let generate = literal_value
+              end)
+              (struct
+                type t = A.ext A.bind_parameter
+
+                let generate = bind_parameter
+              end)
+              (struct
+                type t = A.ext A.qualified_name
+
+                let generate = qualified_name
+              end) : S))
+
+and sql_statement () = Sql_statement.((module Make () : S))
+
+and select_startement () = Select_startement.((module Make () : S))
+
+and select_core () = Select_core.((module Make () : S))
+
+and result_column () =
+  Result_column.(
+    (module Make
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end) : S))
+
+and table_or_subquery () = Table_or_subquery.((module Make () : S))
+
+and select_clause () =
+  Select_clause.(
+    (module Make (struct
+      type t = A.ext A.result_column
+
+      let generate = result_column
+    end) : S))
+
+and from_clause () = From_clause.((module Make () : S))
+
+and where_clause () = Where_clause.((module Make () : S))
+
+and group_by_clause () = Group_by_clause.((module Make () : S))
+
+and window_clause () = Window_clause.((module Make () : S))
+
+and having_clause () = Having_clause.((module Make () : S))

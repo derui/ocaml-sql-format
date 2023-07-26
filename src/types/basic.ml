@@ -1,7 +1,7 @@
 (* no-info types *)
-type qualifier =
-  [ `Distinct
-  | `All
+type quantifier =
+  [ `distinct
+  | `all
   ]
 [@@deriving show, eq]
 
