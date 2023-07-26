@@ -141,7 +141,24 @@ and result_column () =
                 let generate = expr
               end) : S))
 
-and table_or_subquery () = Table_or_subquery.((module Make () : S))
+and table_or_subquery () =
+  Table_or_subquery.(
+    (module Make
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end)
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end) : S))
 
 and select_clause () =
   Select_clause.(
