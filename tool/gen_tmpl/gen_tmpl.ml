@@ -5,7 +5,7 @@ let write_content file content =
   (try Out_channel.output_string chan ("\n" ^ content) with _ -> ());
   close_out chan
 
-let ast = {| and 'a %%TYPE%% = %%CONST%% of 'a (* TODO *) |}
+let ast = {| and 'a %%TYPE%% = %%CONST%% of (* TODO *) 'a |}
 
 let parser_tmpl = {|
 let %%TYPE%% :=
@@ -20,12 +20,12 @@ open Intf
 
 module type S = PRINTER with type t = ext %%TYPE%%
 
-module Make (V: GEN with type t = ext xxx) : S = struct
+module Make () : S = struct
   type t = ext %%TYPE%%
 
   let print f t ~option =
     match t with
-    | %%CONST%% _ -> failwith "TODO: need implementation"
+    | %%CONST%% _ -> ()
 end
                |}
 
