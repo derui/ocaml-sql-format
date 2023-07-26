@@ -23,3 +23,7 @@ and 'a type_name =
       * 'a
 
 and 'a signed_number = Signed_number of sign * 'a numeric_literal * 'a
+
+and 'a qualified_name =
+  | Qualified_name of
+      'a schema_name option * 'a table_name option * 'a column_name * 'a

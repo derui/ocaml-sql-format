@@ -77,3 +77,22 @@ and signed_number () =
 
       let generate = numeric_literal
     end) : S))
+
+and qualified_name () =
+  Qualified_name.(
+    (module Make
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end)
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end) : S))

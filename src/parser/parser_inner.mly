@@ -91,13 +91,13 @@ let blob_literal :=
 let bind_parameter :=
   | Tok_qmark; {Bind_parameter ()}
 
-let schema_name :=
+let schema_name ==
   | v = identifier; { Schema_name (v, ()) }
 
-let table_name :=
+let table_name ==
   | v = identifier; { Table_name (v, ()) }
 
-let column_name :=
+let column_name ==
   | v = identifier; { column_name (v, ()) }
 
 let type_name :=
@@ -110,3 +110,9 @@ let type_name :=
 
 let signed_number :=
  | sign = option(sign); v = numeric_literal; { Signed_number (sign ,v, ()) }
+
+let qualified_name :=
+ | name = column_name; { Quanlified_name (None, None, name, ()) }
+ | tname = table_name;Tok_period; name = column_name; { Quanlified_name (None, Some tname, name, ()) }
+ | sname = schema_name; Tok_period; tname = table_name;
+   Tok_period; name = column_name; { Quanlified_name (Some sname, Some tname, name, ()) }
