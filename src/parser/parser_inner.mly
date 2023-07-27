@@ -168,7 +168,7 @@ let select_clause :=
  | select = identifier; q = option(quantifier); cols = separated_nonempty_list(Tok_comma, result_column); {
        match select with
        | `keyword Kw_select -> Select_clause (q, cols, ())
-       | _ raise (Invalid_token select)
+       | _ -> raise (Invalid_token select)
      }
 
 
@@ -177,7 +177,10 @@ let from_clause :=
 
 
 let where_clause :=
- | { }
+ | where = identifier; e = expr; { match identifier with
+                                   | `keyword Kw_where -> Where_clause (e, ())
+                                   | _ -> raise (Invalid_token where)
+                                 }
 
 
 let group_by_clause :=

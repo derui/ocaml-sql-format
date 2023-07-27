@@ -64,7 +64,6 @@ and 'a table_or_subquery =
   | Table_or_subquery of
       [ `name of 'a schema_name option * 'a table_name * 'a identifier option ]
       * 'a
-(* TODO *)
 
 and 'a select_clause =
   | Select_clause of quantifier option * 'a result_column list * 'a
@@ -72,7 +71,7 @@ and 'a select_clause =
 and 'a from_clause =
   | From_clause of [ `table_or_subquery of 'a table_or_subquery list ] * 'a
 
-and 'a where_clause = Where_clause of 'a (* TODO *)
+and 'a where_clause = Where_clause of 'a expr * 'a
 
 and 'a group_by_clause = Group_by_clause of 'a (* TODO *)
 
