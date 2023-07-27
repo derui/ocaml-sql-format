@@ -4,7 +4,7 @@ open Intf
 
 module type S = PRINTER with type t = ext window_clause
 
-module Make (V : GEN with type t = ext xxx) : S = struct
+module Make () : S = struct
   type t = ext window_clause
 
   let print f t ~option =

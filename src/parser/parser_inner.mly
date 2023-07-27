@@ -197,4 +197,7 @@ let window_clause :=
 
 
 let having_clause :=
- | { }
+ | having = identifier; e = expr; { match having with
+                                    | `keyword Kw_having -> Having_clause (e, ())
+                                    | _ -> raise (Invalid_token [having])
+                                  }
