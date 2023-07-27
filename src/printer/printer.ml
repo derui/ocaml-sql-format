@@ -201,3 +201,13 @@ and having_clause () =
 
       let generate = expr
     end) : S))
+
+and window_name () =
+  Window_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and window_defn () = Window_defn.((module Make () : S))

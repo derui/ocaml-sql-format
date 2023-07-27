@@ -201,3 +201,11 @@ let having_clause :=
                                     | `keyword Kw_having -> Having_clause (e, ())
                                     | _ -> raise (Invalid_token [having])
                                   }
+
+
+let window_name ==
+ | v = identifier; { Window_name (v, ()) }
+
+
+let window_defn :=
+ | { }

@@ -78,3 +78,7 @@ and 'a group_by_clause = Group_by_clause of 'a expr list * 'a
 and 'a window_clause = Window_clause of 'a (* TODO *)
 
 and 'a having_clause = Having_clause of 'a expr * 'a
+
+and 'a window_name = Window_name of 'a identifier * 'a
+
+and 'a window_defn = Window_defn of (* TODO *) 'a
