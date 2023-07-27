@@ -73,7 +73,7 @@ and 'a from_clause =
 
 and 'a where_clause = Where_clause of 'a expr * 'a
 
-and 'a group_by_clause = Group_by_clause of 'a (* TODO *)
+and 'a group_by_clause = Group_by_clause of 'a expr list * 'a
 
 and 'a window_clause = Window_clause of 'a (* TODO *)
 

@@ -7,7 +7,7 @@ let is_kw kw = function
   | `keyword kw' -> kw = kw'
   | `raw _ -> false
 
-exception Invalid_token of token
+exception Invalid_token of token list
 %}
 
 %token Tok_lparen
@@ -143,7 +143,7 @@ let result_column :=
  | e = expr; kw = option(identifier); alias = identifier; {
        match kw with
        | Some (`keyword Kw_as) | None -> Result_column (`expr (e, Some alias), ())
-       | _ -> raise (Invalid_token kw)
+       | _ -> raise (Invalid_token [kw])
      }
 
 
@@ -151,7 +151,7 @@ let table_or_subquery :=
  | sname = schema_name; Tok_period; tname = table_name; option(identifier); alias = identifier;
    { match kw with
      | Some (`keyword Kw_as) | None -> Table_or_subquery (`name (Some sname, tname, Some alias), ())
-     | _ -> raise (Invalid_token kw)
+     | _ -> raise (Invalid_token [kw])
    }
  | sname = schema_name; Tok_period; tname = table_name; { Table_or_subquery (`name (Some sname, tname, None), ()) }
  | tname = table_name; { Table_or_subquery (`name (None, tname, None), ()) }
@@ -168,7 +168,7 @@ let select_clause :=
  | select = identifier; q = option(quantifier); cols = separated_nonempty_list(Tok_comma, result_column); {
        match select with
        | `keyword Kw_select -> Select_clause (q, cols, ())
-       | _ -> raise (Invalid_token select)
+       | _ -> raise (Invalid_token [select])
      }
 
 
@@ -177,14 +177,19 @@ let from_clause :=
 
 
 let where_clause :=
- | where = identifier; e = expr; { match identifier with
+ | where = identifier; e = expr; { match where with
                                    | `keyword Kw_where -> Where_clause (e, ())
-                                   | _ -> raise (Invalid_token where)
+                                   | _ -> raise (Invalid_token [where])
                                  }
 
 
 let group_by_clause :=
- | { }
+ | group = identifier; by = identifier; es = separated_nonempty_list(Tok_comma, expr);
+   {
+     match (group, by) with
+     | `keyword Kw_group, `keyword Kw_by -> Group_by_clause (es, ())
+     | _ -> raise (Invalid_token [group; by])
+   }
 
 
 let window_clause :=

@@ -184,7 +184,13 @@ and where_clause () =
       let generate = expr
     end) : S))
 
-and group_by_clause () = Group_by_clause.((module Make () : S))
+and group_by_clause () =
+  Group_by_clause.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))
 
 and window_clause () = Window_clause.((module Make () : S))
 
