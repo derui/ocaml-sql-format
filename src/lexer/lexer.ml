@@ -2107,6 +2107,10 @@ let kw_coalesce =
     , Chars "cC"
     , Chars "eE" )]
 
+let kw_groups =
+  [%sedlex.regexp?
+    Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP", Chars "sS"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2460,6 +2464,7 @@ let rec token buf =
   | kw_current_role -> Tok_ident (`keyword Kw_current_role)
   | kw_nullif -> Tok_ident (`keyword Kw_nullif)
   | kw_coalesce -> Tok_ident (`keyword Kw_coalesce)
+  | kw_groups -> Tok_ident (`keyword Kw_groups)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (`raw (Sedlexing.Utf8.lexeme buf))

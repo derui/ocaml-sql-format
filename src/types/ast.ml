@@ -82,3 +82,59 @@ and 'a having_clause = Having_clause of 'a expr * 'a
 and 'a window_name = Window_name of 'a identifier * 'a
 
 and 'a window_defn = Window_defn of (* TODO *) 'a
+
+and 'a base_window_name = Base_window_name of 'a identifier * 'a
+
+and 'a order_by_clause = Order_by_clause of 'a ordering_term * 'a
+
+and 'a frame_spec =
+  | Frame_spec of
+      [ `range | `rows | `groups ]
+      * 'a frame_spec_core
+      * 'a frame_spec_excluding option
+      * 'a
+
+and 'a ordering_term =
+  | Ordering_term of
+      'a expr
+      * 'a collation_name option
+      * [ `asc | `desc ] option
+      * [ `first | `last ] option
+      * 'a
+
+and 'a partition_clause = Partition_clause of (* TODO *) 'a
+
+and 'a collation_name = Collation_name of 'a identifier * 'a
+
+and 'a frame_spec_between =
+  | Frame_spec_between of 'a frame_spec_between_1 * 'a frame_spec_between_2 * 'a
+
+and 'a frame_spec_between_1 =
+  | Frame_spec_between_1 of
+      [ `unbounded
+      | `preceding of 'a expr
+      | `following of 'a expr
+      | `current_row
+      ]
+      * 'a
+
+and 'a frame_spec_between_2 =
+  | Frame_spec_between_2 of
+      [ `unbounded
+      | `preceding of 'a expr
+      | `following of 'a expr
+      | `current_row
+      ]
+      * 'a
+
+and 'a frame_spec_core =
+  | Frame_spec_core of
+      [ `between of 'a frame_spec_between
+      | `unbounded
+      | `preceding of 'a expr
+      | `current_row
+      ]
+      * 'a
+
+and 'a frame_spec_excluding =
+  | Frame_spec_excluding of [ `no_others | `current_row | `group | `ties ] * 'a

@@ -209,3 +209,126 @@ let window_name ==
 
 let window_defn :=
  | { }
+
+
+let base_window_name :=
+ | i = identifier; { Base_window_name (i, ()) }
+
+
+let order_by_clause :=
+  | order = identifier; by = identifier; term = ordering_term; {
+        match (order, by) with
+        | `keyword Kw_order, `keyword Kw_by -> Order_by_clause (term, ())
+        | _ -> raise (Invalid_token [order; by])
+      }
+
+let order ==
+  | v = identifier; {
+            match kw with
+            | `keyword Kw_asc -> `asc
+            | `keyword Kw_desc -> `desc
+            | _ -> raise (Invalid_token [kw])
+          }
+
+let null_order ==
+  | n = identifier; o = identifier; {
+            match (n, o) with
+            | `keyword Kw_null, `keyword Kw_first -> `first
+            | `keyword Kw_null, `keyword Kw_last -> `last
+            | _ -> raise (Invalid_token [n, o])
+          }
+
+let frame_spec :=
+ | r = identifier; core = frame_spec_core; e = option(frame_spec_excluding);  {
+       match r with
+       | `keyword Kw_range -> Frame_spec (`range, core, e, ())
+       | `keyword Kw_rows -> Frame_spec (`rows, core, e, ())
+       | `keyword Kw_groups -> Frame_spec (`groups, core, e, ())
+       | _ -> raise (Invalid_token [r])
+     }
+
+
+let ordering_term :=
+ | e = expr; collation = option(collation_name);
+   o = order; no = null_order;
+   { Ordering_term (e, collation, o, no, ())  }
+
+
+let partition_clause :=
+ | { }
+
+
+let collation_name :=
+ | kw = identifier; name = identifier; {
+       match kw with
+       | `keyword Kw_collation -> Collation_name (name, ())
+       | _ -> raise (Invalid_token [kw])
+     }
+
+
+let frame_spec_between :=
+  | kw = identifier; b1 = frame_spec_between_1; kw2 = identifier; b2 = frame_spec_between_2;
+    {
+      match kw, kw2 with
+      | `keyword Kw_between, `keyword Kw_and -> Frame_spec_between (b1, b2, ())
+      | _ -> raise (Invalid_token [kw; kw2])
+    }
+
+
+let frame_spec_between_1 :=
+ | e = expr; kw = identifier; {
+        match kw with
+        | `keyword Kw_preceding -> Frame_spec_between_1 (`preceding e, ())
+        | `keyword Kw_following -> Frame_spec_between_1 (`following e, ())
+        | _ -> raise (Invalid_token [kw])
+      }
+ | v = identifier; v2 = identifier; {
+        match v, v2 with
+        | `keyword Kw_unbounded, `keyword Kw_preceding -> Frame_spec_between_1 (`unbounded, ())
+        | `keyword Kw_current, `keyword Kw_row -> Frame_spec_between_1 (`current_row, ())
+        | _ -> raise (Invalid_token [v; v2])
+      }
+
+
+let frame_spec_between_2 :=
+ | e = expr; kw = identifier; {
+        match kw with
+        | `keyword Kw_preceding -> Frame_spec_between_2 (`preceding e, ())
+        | `keyword Kw_following -> Frame_spec_between_2 (`following e, ())
+        | _ -> raise (Invalid_token [kw])
+      }
+ | v = identifier; v2 = identifier; {
+        match v, v2 with
+        | `keyword Kw_unbounded, `keyword Kw_following -> Frame_spec_between_2 (`unbounded, ())
+        | `keyword Kw_current, `keyword Kw_row -> Frame_spec_between_2 (`current_row, ())
+        | _ -> raise (Invalid_token [v; v2])
+      }
+
+
+let frame_spec_core :=
+ | e = expr; kw = identifier; {
+       match kw with
+       | `keyword Kw_preceding -> Frame_spec_core (`preceding e; ())
+     }
+ | kw = identifier; kw2 = identifier; {
+       match kw, kw2 with
+       | `keyword Kw_unbounded, `keyword Kw_preceding -> Frame_spec_core (`unbounded, ())
+       | `keyword Kw_current, `keyword Kw_row -> Frame_spec_core (`current_row, ())
+       | _ -> raise (Invalid_token [kw; kw2])
+     }
+ | b = frame_spec_between; { Frame_spec_core (`between b, ()) }
+
+
+let frame_spec_excluding :=
+ | e = identifier; v1 = identifier; {
+        match (e, v1) with
+        | `keyword Kw_exclude, `keyword Kw_group -> Frame_spec_excluding (`group, ())
+        | `keyword Kw_exclude, `keyword Kw_ties -> Frame_spec_excluding (`current_row, ())
+        | _ -> raise (Invalid_token [e; v1])
+      }
+ | e = identifier; v1 = identifier; v2 = identifier; {
+        match (e, v1, v2) with
+        | `keyword Kw_exclude, `keyword Kw_no, `keyword Kw_others -> Frame_spec_excluding (`no_others, ())
+        | `keyword Kw_exclude, `keyword Kw_current, `keyword Kw_row -> Frame_spec_excluding (`current_row, ())
+        | _ -> raise (Invalid_token [e; v1; v2])
+      }

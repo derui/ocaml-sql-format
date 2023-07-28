@@ -211,3 +211,103 @@ and window_name () =
     end) : S))
 
 and window_defn () = Window_defn.((module Make () : S))
+
+and base_window_name () =
+  Base_window_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and order_by_clause () =
+  Order_by_clause.(
+    (module Make (struct
+      type t = A.ext A.ordering_term
+
+      let generate = ordering_term
+    end) : S))
+
+and frame_spec () =
+  Frame_spec.(
+    (module Make
+              (struct
+                type t = A.ext A.frame_spec_core
+
+                let generate = frame_spec_core
+              end)
+              (struct
+                type t = A.ext A.frame_spec_excluding
+
+                let generate = frame_spec_excluding
+              end) : S))
+
+and ordering_term () =
+  Ordering_term.(
+    (module Make
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.collation_name
+
+                let generate = collation_name
+              end) : S))
+
+and partition_clause () = Partition_clause.((module Make () : S))
+
+and collation_name () =
+  Collation_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and frame_spec_between () =
+  Frame_spec_between.(
+    (module Make
+              (struct
+                type t = A.ext A.frame_spec_between_1
+
+                let generate = frame_spec_between_1
+              end)
+              (struct
+                type t = A.ext A.frame_spec_between_2
+
+                let generate = frame_spec_between_2
+              end) : S))
+
+and frame_spec_between_1 () =
+  Frame_spec_between_1.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))
+
+and frame_spec_between_2 () =
+  Frame_spec_between_2.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))
+
+and frame_spec_core () =
+  Frame_spec_core.(
+    (module Make
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.frame_spec_between
+
+                let generate = frame_spec_between
+              end) : S))
+
+and frame_spec_excluding () = Frame_spec_excluding.((module Make () : S))

@@ -308,5 +308,6 @@ include (
       | Kw_current_role -> Fmt.string f @@ as_keyword "current_role" keyword
       | Kw_nullif -> Fmt.string f @@ as_keyword "nullif" keyword
       | Kw_coalesce -> Fmt.string f @@ as_keyword "coalesce" keyword
+      | Kw_groups -> Fmt.string f @@ as_keyword "groups" keyword
   end :
     PRINTER with type t = keyword)

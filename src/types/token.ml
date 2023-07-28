@@ -292,6 +292,7 @@ type keyword =
   | Kw_current_role
   | Kw_nullif
   | Kw_coalesce
+  | Kw_groups
 [@@deriving show, eq]
 
 type token =
