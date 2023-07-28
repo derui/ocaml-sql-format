@@ -256,7 +256,13 @@ and ordering_term () =
                 let generate = collation_name
               end) : S))
 
-and partition_clause () = Partition_clause.((module Make () : S))
+and partition_clause () =
+  Partition_clause.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))
 
 and collation_name () =
   Collation_name.(

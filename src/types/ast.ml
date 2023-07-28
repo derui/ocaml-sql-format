@@ -102,7 +102,7 @@ and 'a ordering_term =
       * [ `first | `last ] option
       * 'a
 
-and 'a partition_clause = Partition_clause of (* TODO *) 'a
+and 'a partition_clause = Partition_clause of 'a expr list * 'a
 
 and 'a collation_name = Collation_name of 'a identifier * 'a
 

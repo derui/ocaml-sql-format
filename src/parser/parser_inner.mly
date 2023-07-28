@@ -255,7 +255,11 @@ let ordering_term :=
 
 
 let partition_clause :=
- | { }
+ | kw = identifier; kw2 = identifier; es = separated_nonempty_list(Tok_comma, expr); {
+       match kw, kw2 with
+       | `keyword Kw_partition, `keyword Kw_by -> Partition_clause (es, ())
+       | _ -> raise (Invalid_token [kw;kw2])
+     }
 
 
 let collation_name :=
