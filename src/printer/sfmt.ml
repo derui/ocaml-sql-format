@@ -35,9 +35,9 @@ let parens ?indent:need_indent ~option pf fmt v =
 let keyword ~option fmt = function
   | [] -> failwith "need least one keyword"
   | fl :: rest ->
-    Keyword.print ~option fmt fl;
+    Token.print ~option fmt fl;
     List.iter
       (fun k ->
         Fmt.string fmt " ";
-        Keyword.print ~option fmt k)
+        Token.print ~option fmt k)
       rest

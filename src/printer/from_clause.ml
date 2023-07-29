@@ -13,7 +13,7 @@ module Make (V : GEN with type t = ext table_or_subquery) : S = struct
       match ts with
       | [] -> failwith "Invalid path"
       | d :: ds ->
-        Keyword.print ~option f Kw_from;
+        Sfmt.keyword ~option f [ Kw_from ];
 
         Sfmt.force_vbox option.indent_size
           (fun f _ ->

@@ -1,4 +1,4 @@
-type keyword =
+type token =
   | Kw_select
   | Kw_from
   | Kw_as
@@ -293,11 +293,8 @@ type keyword =
   | Kw_nullif
   | Kw_coalesce
   | Kw_groups
-[@@deriving show, eq]
-
-type token =
   (* tokens *)
-  | Tok_ident of [ `keyword of keyword | `raw of string ]
+  | Tok_ident of string
   | Tok_string of string
   | Tok_blob of string
   | Tok_numeric of string

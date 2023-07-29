@@ -2170,304 +2170,302 @@ let bin_string = [%sedlex.regexp? "X", "'", Plus (Rep (hexit, 2)), "'"]
 
 let rec token buf =
   match%sedlex buf with
-  | kw_select -> Tok_ident (`keyword Kw_select)
-  | kw_from -> Tok_ident (`keyword Kw_from)
-  | kw_as -> Tok_ident (`keyword Kw_as)
-  | kw_true -> Tok_ident (`keyword Kw_true)
-  | kw_false -> Tok_ident (`keyword Kw_false)
-  | kw_unknown -> Tok_ident (`keyword Kw_unknown)
-  | kw_null -> Tok_ident (`keyword Kw_null)
-  | kw_date -> Tok_ident (`keyword Kw_date)
-  | kw_time -> Tok_ident (`keyword Kw_time)
-  | kw_timestamp -> Tok_ident (`keyword Kw_timestamp)
-  | kw_into -> Tok_ident (`keyword Kw_into)
-  | kw_or -> Tok_ident (`keyword Kw_or)
-  | kw_not -> Tok_ident (`keyword Kw_not)
-  | kw_union -> Tok_ident (`keyword Kw_union)
-  | kw_except -> Tok_ident (`keyword Kw_except)
-  | kw_intersect -> Tok_ident (`keyword Kw_intersect)
-  | kw_and -> Tok_ident (`keyword Kw_and)
-  | kw_group -> Tok_ident (`keyword Kw_group)
-  | kw_by -> Tok_ident (`keyword Kw_by)
-  | kw_rollup -> Tok_ident (`keyword Kw_rollup)
-  | kw_having -> Tok_ident (`keyword Kw_having)
-  | kw_where -> Tok_ident (`keyword Kw_where)
-  | kw_order -> Tok_ident (`keyword Kw_order)
-  | kw_asc -> Tok_ident (`keyword Kw_asc)
-  | kw_desc -> Tok_ident (`keyword Kw_desc)
-  | kw_first -> Tok_ident (`keyword Kw_first)
-  | kw_last -> Tok_ident (`keyword Kw_last)
-  | kw_limit -> Tok_ident (`keyword Kw_limit)
-  | kw_offset -> Tok_ident (`keyword Kw_offset)
-  | kw_row -> Tok_ident (`keyword Kw_row)
-  | kw_rows -> Tok_ident (`keyword Kw_rows)
-  | kw_fetch -> Tok_ident (`keyword Kw_fetch)
-  | kw_next -> Tok_ident (`keyword Kw_next)
-  | kw_only -> Tok_ident (`keyword Kw_only)
-  | kw_all -> Tok_ident (`keyword Kw_all)
-  | kw_distinct -> Tok_ident (`keyword Kw_distinct)
-  | kw_is -> Tok_ident (`keyword Kw_is)
-  | kw_between -> Tok_ident (`keyword Kw_between)
-  | kw_like_regex -> Tok_ident (`keyword Kw_like_regex)
-  | kw_similar -> Tok_ident (`keyword Kw_similar)
-  | kw_to -> Tok_ident (`keyword Kw_to)
-  | kw_escape -> Tok_ident (`keyword Kw_escape)
-  | kw_like -> Tok_ident (`keyword Kw_like)
-  | kw_any -> Tok_ident (`keyword Kw_any)
-  | kw_some -> Tok_ident (`keyword Kw_some)
-  | kw_in -> Tok_ident (`keyword Kw_in)
-  | kw_exists -> Tok_ident (`keyword Kw_exists)
-  | kw_with -> Tok_ident (`keyword Kw_with)
-  | kw_table -> Tok_ident (`keyword Kw_table)
-  | kw_lateral -> Tok_ident (`keyword Kw_lateral)
-  | kw_left -> Tok_ident (`keyword Kw_left)
-  | kw_right -> Tok_ident (`keyword Kw_right)
-  | kw_full -> Tok_ident (`keyword Kw_full)
-  | kw_outer -> Tok_ident (`keyword Kw_outer)
-  | kw_inner -> Tok_ident (`keyword Kw_inner)
-  | kw_cross -> Tok_ident (`keyword Kw_cross)
-  | kw_join -> Tok_ident (`keyword Kw_join)
-  | kw_on -> Tok_ident (`keyword Kw_on)
-  | kw_case -> Tok_ident (`keyword Kw_case)
-  | kw_when -> Tok_ident (`keyword Kw_when)
-  | kw_then -> Tok_ident (`keyword Kw_then)
-  | kw_end -> Tok_ident (`keyword Kw_end)
-  | kw_else -> Tok_ident (`keyword Kw_else)
-  | kw_textagg -> Tok_ident (`keyword Kw_textagg)
-  | kw_for -> Tok_ident (`keyword Kw_for)
-  | kw_delimiter -> Tok_ident (`keyword Kw_delimiter)
-  | kw_quote -> Tok_ident (`keyword Kw_quote)
-  | kw_no -> Tok_ident (`keyword Kw_no)
-  | kw_header -> Tok_ident (`keyword Kw_header)
-  | kw_encoding -> Tok_ident (`keyword Kw_encoding)
-  | kw_count -> Tok_ident (`keyword Kw_count)
-  | kw_count_big -> Tok_ident (`keyword Kw_count_big)
-  | kw_avg -> Tok_ident (`keyword Kw_avg)
-  | kw_sum -> Tok_ident (`keyword Kw_sum)
-  | kw_min -> Tok_ident (`keyword Kw_min)
-  | kw_max -> Tok_ident (`keyword Kw_max)
-  | kw_every -> Tok_ident (`keyword Kw_every)
-  | kw_stddev_pop -> Tok_ident (`keyword Kw_stddev_pop)
-  | kw_stddev_samp -> Tok_ident (`keyword Kw_stddev_samp)
-  | kw_var_samp -> Tok_ident (`keyword Kw_var_samp)
-  | kw_var_pop -> Tok_ident (`keyword Kw_var_pop)
-  | kw_filter -> Tok_ident (`keyword Kw_filter)
-  | kw_over -> Tok_ident (`keyword Kw_over)
-  | kw_partition -> Tok_ident (`keyword Kw_partition)
-  | kw_range -> Tok_ident (`keyword Kw_range)
-  | kw_unbounded -> Tok_ident (`keyword Kw_unbounded)
-  | kw_following -> Tok_ident (`keyword Kw_following)
-  | kw_preceding -> Tok_ident (`keyword Kw_preceding)
-  | kw_current -> Tok_ident (`keyword Kw_current)
-  | kw_row_number -> Tok_ident (`keyword Kw_row_number)
-  | kw_rank -> Tok_ident (`keyword Kw_rank)
-  | kw_dense_rank -> Tok_ident (`keyword Kw_dense_rank)
-  | kw_percent_rank -> Tok_ident (`keyword Kw_percent_rank)
-  | kw_cume_dist -> Tok_ident (`keyword Kw_cume_dist)
-  | kw_string -> Tok_ident (`keyword Kw_string)
-  | kw_varchar -> Tok_ident (`keyword Kw_varchar)
-  | kw_boolean -> Tok_ident (`keyword Kw_boolean)
-  | kw_byte -> Tok_ident (`keyword Kw_byte)
-  | kw_tinyint -> Tok_ident (`keyword Kw_tinyint)
-  | kw_short -> Tok_ident (`keyword Kw_short)
-  | kw_smallint -> Tok_ident (`keyword Kw_smallint)
-  | kw_char -> Tok_ident (`keyword Kw_char)
-  | kw_integer -> Tok_ident (`keyword Kw_integer)
-  | kw_long -> Tok_ident (`keyword Kw_long)
-  | kw_bigint -> Tok_ident (`keyword Kw_bigint)
-  | kw_biginteger -> Tok_ident (`keyword Kw_biginteger)
-  | kw_float -> Tok_ident (`keyword Kw_float)
-  | kw_real -> Tok_ident (`keyword Kw_real)
-  | kw_double -> Tok_ident (`keyword Kw_double)
-  | kw_bigdecimal -> Tok_ident (`keyword Kw_bigdecimal)
-  | kw_decimal -> Tok_ident (`keyword Kw_decimal)
-  | kw_object -> Tok_ident (`keyword Kw_object)
-  | kw_blob -> Tok_ident (`keyword Kw_blob)
-  | kw_clob -> Tok_ident (`keyword Kw_clob)
-  | kw_json -> Tok_ident (`keyword Kw_json)
-  | kw_varbinary -> Tok_ident (`keyword Kw_varbinary)
-  | kw_geometry -> Tok_ident (`keyword Kw_geometry)
-  | kw_geography -> Tok_ident (`keyword Kw_geography)
-  | kw_xml -> Tok_ident (`keyword Kw_xml)
-  | kw_convert -> Tok_ident (`keyword Kw_convert)
-  | kw_cast -> Tok_ident (`keyword Kw_cast)
-  | kw_substring -> Tok_ident (`keyword Kw_substring)
-  | kw_extract -> Tok_ident (`keyword Kw_extract)
-  | kw_year -> Tok_ident (`keyword Kw_year)
-  | kw_month -> Tok_ident (`keyword Kw_month)
-  | kw_day -> Tok_ident (`keyword Kw_day)
-  | kw_hour -> Tok_ident (`keyword Kw_hour)
-  | kw_minute -> Tok_ident (`keyword Kw_minute)
-  | kw_second -> Tok_ident (`keyword Kw_second)
-  | kw_quarter -> Tok_ident (`keyword Kw_quarter)
-  | kw_epoch -> Tok_ident (`keyword Kw_epoch)
-  | kw_dow -> Tok_ident (`keyword Kw_dow)
-  | kw_doy -> Tok_ident (`keyword Kw_doy)
-  | kw_trim -> Tok_ident (`keyword Kw_trim)
-  | kw_leading -> Tok_ident (`keyword Kw_leading)
-  | kw_trailing -> Tok_ident (`keyword Kw_trailing)
-  | kw_both -> Tok_ident (`keyword Kw_both)
-  | kw_to_chars -> Tok_ident (`keyword Kw_to_chars)
-  | kw_to_bytes -> Tok_ident (`keyword Kw_to_bytes)
-  | kw_sql_tsi_frac_second -> Tok_ident (`keyword Kw_sql_tsi_frac_second)
-  | kw_sql_tsi_second -> Tok_ident (`keyword Kw_sql_tsi_second)
-  | kw_sql_tsi_minute -> Tok_ident (`keyword Kw_sql_tsi_minute)
-  | kw_sql_tsi_hour -> Tok_ident (`keyword Kw_sql_tsi_hour)
-  | kw_sql_tsi_day -> Tok_ident (`keyword Kw_sql_tsi_day)
-  | kw_sql_tsi_week -> Tok_ident (`keyword Kw_sql_tsi_week)
-  | kw_sql_tsi_month -> Tok_ident (`keyword Kw_sql_tsi_month)
-  | kw_sql_tsi_quarter -> Tok_ident (`keyword Kw_sql_tsi_quarter)
-  | kw_sql_tsi_year -> Tok_ident (`keyword Kw_sql_tsi_year)
-  | kw_timestampadd -> Tok_ident (`keyword Kw_timestampadd)
-  | kw_timestampdiff -> Tok_ident (`keyword Kw_timestampdiff)
-  | kw_user -> Tok_ident (`keyword Kw_user)
-  | kw_xmlconcat -> Tok_ident (`keyword Kw_xmlconcat)
-  | kw_xmlcomment -> Tok_ident (`keyword Kw_xmlcomment)
-  | kw_xmltext -> Tok_ident (`keyword Kw_xmltext)
-  | kw_insert -> Tok_ident (`keyword Kw_insert)
-  | kw_translate -> Tok_ident (`keyword Kw_translate)
-  | kw_position -> Tok_ident (`keyword Kw_position)
-  | kw_listagg -> Tok_ident (`keyword Kw_listagg)
-  | kw_within -> Tok_ident (`keyword Kw_within)
-  | kw_current_date -> Tok_ident (`keyword Kw_current_date)
-  | kw_current_timestamp -> Tok_ident (`keyword Kw_current_timestamp)
-  | kw_current_time -> Tok_ident (`keyword Kw_current_time)
-  | kw_exception -> Tok_ident (`keyword Kw_exception)
-  | kw_serial -> Tok_ident (`keyword Kw_serial)
-  | kw_index -> Tok_ident (`keyword Kw_index)
-  | kw_instead -> Tok_ident (`keyword Kw_instead)
-  | kw_view -> Tok_ident (`keyword Kw_view)
-  | kw_enabled -> Tok_ident (`keyword Kw_enabled)
-  | kw_disabled -> Tok_ident (`keyword Kw_disabled)
-  | kw_key -> Tok_ident (`keyword Kw_key)
-  | kw_document -> Tok_ident (`keyword Kw_document)
-  | kw_content -> Tok_ident (`keyword Kw_content)
-  | kw_empty -> Tok_ident (`keyword Kw_empty)
-  | kw_ordinality -> Tok_ident (`keyword Kw_ordinality)
-  | kw_path -> Tok_ident (`keyword Kw_path)
-  | kw_querystring -> Tok_ident (`keyword Kw_querystring)
-  | kw_namespace -> Tok_ident (`keyword Kw_namespace)
-  | kw_result -> Tok_ident (`keyword Kw_result)
-  | kw_accesspattern -> Tok_ident (`keyword Kw_accesspattern)
-  | kw_auto_increment -> Tok_ident (`keyword Kw_auto_increment)
-  | kw_wellformed -> Tok_ident (`keyword Kw_wellformed)
-  | kw_texttable -> Tok_ident (`keyword Kw_texttable)
-  | kw_arraytable -> Tok_ident (`keyword Kw_arraytable)
-  | kw_jsontable -> Tok_ident (`keyword Kw_jsontable)
-  | kw_selector -> Tok_ident (`keyword Kw_selector)
-  | kw_skip -> Tok_ident (`keyword Kw_skip)
-  | kw_width -> Tok_ident (`keyword Kw_width)
-  | kw_passing -> Tok_ident (`keyword Kw_passing)
-  | kw_name -> Tok_ident (`keyword Kw_name)
-  | kw_columns -> Tok_ident (`keyword Kw_columns)
-  | kw_nulls -> Tok_ident (`keyword Kw_nulls)
-  | kw_objecttable -> Tok_ident (`keyword Kw_objecttable)
-  | kw_version -> Tok_ident (`keyword Kw_version)
-  | kw_including -> Tok_ident (`keyword Kw_including)
-  | kw_excluding -> Tok_ident (`keyword Kw_excluding)
-  | kw_xmldeclaration -> Tok_ident (`keyword Kw_xmldeclaration)
-  | kw_variadic -> Tok_ident (`keyword Kw_variadic)
-  | kw_raise -> Tok_ident (`keyword Kw_raise)
-  | kw_chain -> Tok_ident (`keyword Kw_chain)
-  | kw_jsonarray_agg -> Tok_ident (`keyword Kw_jsonarray_agg)
-  | kw_jsonobject -> Tok_ident (`keyword Kw_jsonobject)
-  | kw_preserve -> Tok_ident (`keyword Kw_preserve)
-  | kw_upsert -> Tok_ident (`keyword Kw_upsert)
-  | kw_after -> Tok_ident (`keyword Kw_after)
-  | kw_type -> Tok_ident (`keyword Kw_type)
-  | kw_translator -> Tok_ident (`keyword Kw_translator)
-  | kw_jaas -> Tok_ident (`keyword Kw_jaas)
-  | kw_condition -> Tok_ident (`keyword Kw_condition)
-  | kw_mask -> Tok_ident (`keyword Kw_mask)
-  | kw_access -> Tok_ident (`keyword Kw_access)
-  | kw_control -> Tok_ident (`keyword Kw_control)
-  | kw_none -> Tok_ident (`keyword Kw_none)
-  | kw_data -> Tok_ident (`keyword Kw_data)
-  | kw_database -> Tok_ident (`keyword Kw_database)
-  | kw_privileges -> Tok_ident (`keyword Kw_privileges)
-  | kw_role -> Tok_ident (`keyword Kw_role)
-  | kw_schema -> Tok_ident (`keyword Kw_schema)
-  | kw_use -> Tok_ident (`keyword Kw_use)
-  | kw_repository -> Tok_ident (`keyword Kw_repository)
-  | kw_rename -> Tok_ident (`keyword Kw_rename)
-  | kw_domain -> Tok_ident (`keyword Kw_domain)
-  | kw_usage -> Tok_ident (`keyword Kw_usage)
-  | kw_explain -> Tok_ident (`keyword Kw_explain)
-  | kw_analyze -> Tok_ident (`keyword Kw_analyze)
-  | kw_text -> Tok_ident (`keyword Kw_text)
-  | kw_format -> Tok_ident (`keyword Kw_format)
-  | kw_yaml -> Tok_ident (`keyword Kw_yaml)
-  | kw_policy -> Tok_ident (`keyword Kw_policy)
-  | kw_session_user -> Tok_ident (`keyword Kw_session_user)
-  | kw_interval -> Tok_ident (`keyword Kw_interval)
-  | kw_tablesample -> Tok_ident (`keyword Kw_tablesample)
-  | kw_bernoulli -> Tok_ident (`keyword Kw_bernoulli)
-  | kw_system -> Tok_ident (`keyword Kw_system)
-  | kw_repeatable -> Tok_ident (`keyword Kw_repeatable)
-  | kw_unnest -> Tok_ident (`keyword Kw_unnest)
-  | kw_module -> Tok_ident (`keyword Kw_module)
-  | kw_collate -> Tok_ident (`keyword Kw_collate)
-  | kw_cube -> Tok_ident (`keyword Kw_cube)
-  | kw_grouping -> Tok_ident (`keyword Kw_grouping)
-  | kw_sets -> Tok_ident (`keyword Kw_sets)
-  | kw_ties -> Tok_ident (`keyword Kw_ties)
-  | kw_others -> Tok_ident (`keyword Kw_others)
-  | kw_exclude -> Tok_ident (`keyword Kw_exclude)
-  | kw_window -> Tok_ident (`keyword Kw_window)
-  | kw_using -> Tok_ident (`keyword Kw_using)
-  | kw_natural -> Tok_ident (`keyword Kw_natural)
-  | kw_corresponding -> Tok_ident (`keyword Kw_corresponding)
-  | kw_recursive -> Tok_ident (`keyword Kw_recursive)
-  | kw_cycle -> Tok_ident (`keyword Kw_cycle)
-  | kw_default -> Tok_ident (`keyword Kw_default)
-  | kw_set -> Tok_ident (`keyword Kw_set)
-  | kw_depth -> Tok_ident (`keyword Kw_depth)
-  | kw_breadth -> Tok_ident (`keyword Kw_breadth)
-  | kw_search -> Tok_ident (`keyword Kw_search)
-  | kw_values -> Tok_ident (`keyword Kw_values)
-  | kw_value -> Tok_ident (`keyword Kw_value)
-  | kw_element -> Tok_ident (`keyword Kw_element)
-  | kw_zone -> Tok_ident (`keyword Kw_zone)
-  | kw_local -> Tok_ident (`keyword Kw_local)
-  | kw_at -> Tok_ident (`keyword Kw_at)
-  | kw_abs -> Tok_ident (`keyword Kw_abs)
-  | kw_array -> Tok_ident (`keyword Kw_array)
-  | kw_multiset -> Tok_ident (`keyword Kw_multiset)
-  | kw_localtime -> Tok_ident (`keyword Kw_localtime)
-  | kw_localtimestamp -> Tok_ident (`keyword Kw_localtimestamp)
-  | kw_characters -> Tok_ident (`keyword Kw_characters)
-  | kw_code_units -> Tok_ident (`keyword Kw_code_units)
-  | kw_octets -> Tok_ident (`keyword Kw_octets)
-  | kw_without -> Tok_ident (`keyword Kw_without)
-  | kw_scope -> Tok_ident (`keyword Kw_scope)
-  | kw_ref -> Tok_ident (`keyword Kw_ref)
-  | kw_precision -> Tok_ident (`keyword Kw_precision)
-  | kw_numeric -> Tok_ident (`keyword Kw_numeric)
-  | kw_dec -> Tok_ident (`keyword Kw_dec)
-  | kw_int -> Tok_ident (`keyword Kw_int)
-  | kw_binary -> Tok_ident (`keyword Kw_binary)
-  | kw_large -> Tok_ident (`keyword Kw_large)
-  | kw_national -> Tok_ident (`keyword Kw_national)
-  | kw_varying -> Tok_ident (`keyword Kw_varying)
-  | kw_character -> Tok_ident (`keyword Kw_character)
-  | kw_nchar -> Tok_ident (`keyword Kw_nchar)
-  | kw_nclob -> Tok_ident (`keyword Kw_nclob)
-  | kw_collation -> Tok_ident (`keyword Kw_collation)
-  | kw_indicator -> Tok_ident (`keyword Kw_indicator)
-  | kw_current_user -> Tok_ident (`keyword Kw_current_user)
-  | kw_system_user -> Tok_ident (`keyword Kw_system_user)
-  | kw_current_default_transform_group ->
-    Tok_ident (`keyword Kw_current_default_transform_group)
-  | kw_current_transform_group_for_type ->
-    Tok_ident (`keyword Kw_current_transform_group_for_type)
-  | kw_current_path -> Tok_ident (`keyword Kw_current_path)
-  | kw_current_role -> Tok_ident (`keyword Kw_current_role)
-  | kw_nullif -> Tok_ident (`keyword Kw_nullif)
-  | kw_coalesce -> Tok_ident (`keyword Kw_coalesce)
-  | kw_groups -> Tok_ident (`keyword Kw_groups)
+  | kw_select -> Kw_select
+  | kw_from -> Kw_from
+  | kw_as -> Kw_as
+  | kw_true -> Kw_true
+  | kw_false -> Kw_false
+  | kw_unknown -> Kw_unknown
+  | kw_null -> Kw_null
+  | kw_date -> Kw_date
+  | kw_time -> Kw_time
+  | kw_timestamp -> Kw_timestamp
+  | kw_into -> Kw_into
+  | kw_or -> Kw_or
+  | kw_not -> Kw_not
+  | kw_union -> Kw_union
+  | kw_except -> Kw_except
+  | kw_intersect -> Kw_intersect
+  | kw_and -> Kw_and
+  | kw_group -> Kw_group
+  | kw_by -> Kw_by
+  | kw_rollup -> Kw_rollup
+  | kw_having -> Kw_having
+  | kw_where -> Kw_where
+  | kw_order -> Kw_order
+  | kw_asc -> Kw_asc
+  | kw_desc -> Kw_desc
+  | kw_first -> Kw_first
+  | kw_last -> Kw_last
+  | kw_limit -> Kw_limit
+  | kw_offset -> Kw_offset
+  | kw_row -> Kw_row
+  | kw_rows -> Kw_rows
+  | kw_fetch -> Kw_fetch
+  | kw_next -> Kw_next
+  | kw_only -> Kw_only
+  | kw_all -> Kw_all
+  | kw_distinct -> Kw_distinct
+  | kw_is -> Kw_is
+  | kw_between -> Kw_between
+  | kw_like_regex -> Kw_like_regex
+  | kw_similar -> Kw_similar
+  | kw_to -> Kw_to
+  | kw_escape -> Kw_escape
+  | kw_like -> Kw_like
+  | kw_any -> Kw_any
+  | kw_some -> Kw_some
+  | kw_in -> Kw_in
+  | kw_exists -> Kw_exists
+  | kw_with -> Kw_with
+  | kw_table -> Kw_table
+  | kw_lateral -> Kw_lateral
+  | kw_left -> Kw_left
+  | kw_right -> Kw_right
+  | kw_full -> Kw_full
+  | kw_outer -> Kw_outer
+  | kw_inner -> Kw_inner
+  | kw_cross -> Kw_cross
+  | kw_join -> Kw_join
+  | kw_on -> Kw_on
+  | kw_case -> Kw_case
+  | kw_when -> Kw_when
+  | kw_then -> Kw_then
+  | kw_end -> Kw_end
+  | kw_else -> Kw_else
+  | kw_textagg -> Kw_textagg
+  | kw_for -> Kw_for
+  | kw_delimiter -> Kw_delimiter
+  | kw_quote -> Kw_quote
+  | kw_no -> Kw_no
+  | kw_header -> Kw_header
+  | kw_encoding -> Kw_encoding
+  | kw_count -> Kw_count
+  | kw_count_big -> Kw_count_big
+  | kw_avg -> Kw_avg
+  | kw_sum -> Kw_sum
+  | kw_min -> Kw_min
+  | kw_max -> Kw_max
+  | kw_every -> Kw_every
+  | kw_stddev_pop -> Kw_stddev_pop
+  | kw_stddev_samp -> Kw_stddev_samp
+  | kw_var_samp -> Kw_var_samp
+  | kw_var_pop -> Kw_var_pop
+  | kw_filter -> Kw_filter
+  | kw_over -> Kw_over
+  | kw_partition -> Kw_partition
+  | kw_range -> Kw_range
+  | kw_unbounded -> Kw_unbounded
+  | kw_following -> Kw_following
+  | kw_preceding -> Kw_preceding
+  | kw_current -> Kw_current
+  | kw_row_number -> Kw_row_number
+  | kw_rank -> Kw_rank
+  | kw_dense_rank -> Kw_dense_rank
+  | kw_percent_rank -> Kw_percent_rank
+  | kw_cume_dist -> Kw_cume_dist
+  | kw_string -> Kw_string
+  | kw_varchar -> Kw_varchar
+  | kw_boolean -> Kw_boolean
+  | kw_byte -> Kw_byte
+  | kw_tinyint -> Kw_tinyint
+  | kw_short -> Kw_short
+  | kw_smallint -> Kw_smallint
+  | kw_char -> Kw_char
+  | kw_integer -> Kw_integer
+  | kw_long -> Kw_long
+  | kw_bigint -> Kw_bigint
+  | kw_biginteger -> Kw_biginteger
+  | kw_float -> Kw_float
+  | kw_real -> Kw_real
+  | kw_double -> Kw_double
+  | kw_bigdecimal -> Kw_bigdecimal
+  | kw_decimal -> Kw_decimal
+  | kw_object -> Kw_object
+  | kw_blob -> Kw_blob
+  | kw_clob -> Kw_clob
+  | kw_json -> Kw_json
+  | kw_varbinary -> Kw_varbinary
+  | kw_geometry -> Kw_geometry
+  | kw_geography -> Kw_geography
+  | kw_xml -> Kw_xml
+  | kw_convert -> Kw_convert
+  | kw_cast -> Kw_cast
+  | kw_substring -> Kw_substring
+  | kw_extract -> Kw_extract
+  | kw_year -> Kw_year
+  | kw_month -> Kw_month
+  | kw_day -> Kw_day
+  | kw_hour -> Kw_hour
+  | kw_minute -> Kw_minute
+  | kw_second -> Kw_second
+  | kw_quarter -> Kw_quarter
+  | kw_epoch -> Kw_epoch
+  | kw_dow -> Kw_dow
+  | kw_doy -> Kw_doy
+  | kw_trim -> Kw_trim
+  | kw_leading -> Kw_leading
+  | kw_trailing -> Kw_trailing
+  | kw_both -> Kw_both
+  | kw_to_chars -> Kw_to_chars
+  | kw_to_bytes -> Kw_to_bytes
+  | kw_sql_tsi_frac_second -> Kw_sql_tsi_frac_second
+  | kw_sql_tsi_second -> Kw_sql_tsi_second
+  | kw_sql_tsi_minute -> Kw_sql_tsi_minute
+  | kw_sql_tsi_hour -> Kw_sql_tsi_hour
+  | kw_sql_tsi_day -> Kw_sql_tsi_day
+  | kw_sql_tsi_week -> Kw_sql_tsi_week
+  | kw_sql_tsi_month -> Kw_sql_tsi_month
+  | kw_sql_tsi_quarter -> Kw_sql_tsi_quarter
+  | kw_sql_tsi_year -> Kw_sql_tsi_year
+  | kw_timestampadd -> Kw_timestampadd
+  | kw_timestampdiff -> Kw_timestampdiff
+  | kw_user -> Kw_user
+  | kw_xmlconcat -> Kw_xmlconcat
+  | kw_xmlcomment -> Kw_xmlcomment
+  | kw_xmltext -> Kw_xmltext
+  | kw_insert -> Kw_insert
+  | kw_translate -> Kw_translate
+  | kw_position -> Kw_position
+  | kw_listagg -> Kw_listagg
+  | kw_within -> Kw_within
+  | kw_current_date -> Kw_current_date
+  | kw_current_timestamp -> Kw_current_timestamp
+  | kw_current_time -> Kw_current_time
+  | kw_exception -> Kw_exception
+  | kw_serial -> Kw_serial
+  | kw_index -> Kw_index
+  | kw_instead -> Kw_instead
+  | kw_view -> Kw_view
+  | kw_enabled -> Kw_enabled
+  | kw_disabled -> Kw_disabled
+  | kw_key -> Kw_key
+  | kw_document -> Kw_document
+  | kw_content -> Kw_content
+  | kw_empty -> Kw_empty
+  | kw_ordinality -> Kw_ordinality
+  | kw_path -> Kw_path
+  | kw_querystring -> Kw_querystring
+  | kw_namespace -> Kw_namespace
+  | kw_result -> Kw_result
+  | kw_accesspattern -> Kw_accesspattern
+  | kw_auto_increment -> Kw_auto_increment
+  | kw_wellformed -> Kw_wellformed
+  | kw_texttable -> Kw_texttable
+  | kw_arraytable -> Kw_arraytable
+  | kw_jsontable -> Kw_jsontable
+  | kw_selector -> Kw_selector
+  | kw_skip -> Kw_skip
+  | kw_width -> Kw_width
+  | kw_passing -> Kw_passing
+  | kw_name -> Kw_name
+  | kw_columns -> Kw_columns
+  | kw_nulls -> Kw_nulls
+  | kw_objecttable -> Kw_objecttable
+  | kw_version -> Kw_version
+  | kw_including -> Kw_including
+  | kw_excluding -> Kw_excluding
+  | kw_xmldeclaration -> Kw_xmldeclaration
+  | kw_variadic -> Kw_variadic
+  | kw_raise -> Kw_raise
+  | kw_chain -> Kw_chain
+  | kw_jsonarray_agg -> Kw_jsonarray_agg
+  | kw_jsonobject -> Kw_jsonobject
+  | kw_preserve -> Kw_preserve
+  | kw_upsert -> Kw_upsert
+  | kw_after -> Kw_after
+  | kw_type -> Kw_type
+  | kw_translator -> Kw_translator
+  | kw_jaas -> Kw_jaas
+  | kw_condition -> Kw_condition
+  | kw_mask -> Kw_mask
+  | kw_access -> Kw_access
+  | kw_control -> Kw_control
+  | kw_none -> Kw_none
+  | kw_data -> Kw_data
+  | kw_database -> Kw_database
+  | kw_privileges -> Kw_privileges
+  | kw_role -> Kw_role
+  | kw_schema -> Kw_schema
+  | kw_use -> Kw_use
+  | kw_repository -> Kw_repository
+  | kw_rename -> Kw_rename
+  | kw_domain -> Kw_domain
+  | kw_usage -> Kw_usage
+  | kw_explain -> Kw_explain
+  | kw_analyze -> Kw_analyze
+  | kw_text -> Kw_text
+  | kw_format -> Kw_format
+  | kw_yaml -> Kw_yaml
+  | kw_policy -> Kw_policy
+  | kw_session_user -> Kw_session_user
+  | kw_interval -> Kw_interval
+  | kw_tablesample -> Kw_tablesample
+  | kw_bernoulli -> Kw_bernoulli
+  | kw_system -> Kw_system
+  | kw_repeatable -> Kw_repeatable
+  | kw_unnest -> Kw_unnest
+  | kw_module -> Kw_module
+  | kw_collate -> Kw_collate
+  | kw_cube -> Kw_cube
+  | kw_grouping -> Kw_grouping
+  | kw_sets -> Kw_sets
+  | kw_ties -> Kw_ties
+  | kw_others -> Kw_others
+  | kw_exclude -> Kw_exclude
+  | kw_window -> Kw_window
+  | kw_using -> Kw_using
+  | kw_natural -> Kw_natural
+  | kw_corresponding -> Kw_corresponding
+  | kw_recursive -> Kw_recursive
+  | kw_cycle -> Kw_cycle
+  | kw_default -> Kw_default
+  | kw_set -> Kw_set
+  | kw_depth -> Kw_depth
+  | kw_breadth -> Kw_breadth
+  | kw_search -> Kw_search
+  | kw_values -> Kw_values
+  | kw_value -> Kw_value
+  | kw_element -> Kw_element
+  | kw_zone -> Kw_zone
+  | kw_local -> Kw_local
+  | kw_at -> Kw_at
+  | kw_abs -> Kw_abs
+  | kw_array -> Kw_array
+  | kw_multiset -> Kw_multiset
+  | kw_localtime -> Kw_localtime
+  | kw_localtimestamp -> Kw_localtimestamp
+  | kw_characters -> Kw_characters
+  | kw_code_units -> Kw_code_units
+  | kw_octets -> Kw_octets
+  | kw_without -> Kw_without
+  | kw_scope -> Kw_scope
+  | kw_ref -> Kw_ref
+  | kw_precision -> Kw_precision
+  | kw_numeric -> Kw_numeric
+  | kw_dec -> Kw_dec
+  | kw_int -> Kw_int
+  | kw_binary -> Kw_binary
+  | kw_large -> Kw_large
+  | kw_national -> Kw_national
+  | kw_varying -> Kw_varying
+  | kw_character -> Kw_character
+  | kw_nchar -> Kw_nchar
+  | kw_nclob -> Kw_nclob
+  | kw_collation -> Kw_collation
+  | kw_indicator -> Kw_indicator
+  | kw_current_user -> Kw_current_user
+  | kw_system_user -> Kw_system_user
+  | kw_current_default_transform_group -> Kw_current_default_transform_group
+  | kw_current_transform_group_for_type -> Kw_current_transform_group_for_type
+  | kw_current_path -> Kw_current_path
+  | kw_current_role -> Kw_current_role
+  | kw_nullif -> Kw_nullif
+  | kw_coalesce -> Kw_coalesce
+  | kw_groups -> Kw_groups
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
-  | identifier -> Tok_ident (`raw (Sedlexing.Utf8.lexeme buf))
+  | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | numeric -> Tok_numeric (Sedlexing.Utf8.lexeme buf)
   | space -> token buf
   | newline ->

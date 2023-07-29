@@ -9,6 +9,6 @@ module Make () : S = struct
 
   let print f t ~option =
     match t with
-    | Identifier (`keyword v, _) -> Keyword.print ~option f v
+    | Identifier (`keyword v, _) -> Token.print ~option f v
     | Identifier (`raw v, _) -> Fmt.string f v
 end

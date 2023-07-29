@@ -14,7 +14,7 @@ statements: Tok_ident Tok_semicolon
 ##
 ## Ends in an error in state: 1.
 ##
-## select_clause -> Tok_ident . option(quantifier) separated_nonempty_list(Tok_comma,result_column) [ Tok_semicolon Tok_ident Tok_eof ]
+## select_clause -> Tok_ident . option(quantifier) separated_nonempty_list(Tok_comma,result_column) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident
@@ -26,7 +26,7 @@ statements: Tok_ident Tok_ident Tok_semicolon
 ##
 ## Ends in an error in state: 3.
 ##
-## select_clause -> Tok_ident option(quantifier) . separated_nonempty_list(Tok_comma,result_column) [ Tok_semicolon Tok_ident Tok_eof ]
+## select_clause -> Tok_ident option(quantifier) . separated_nonempty_list(Tok_comma,result_column) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident option(quantifier)
@@ -38,8 +38,8 @@ statements: Tok_ident Op_star Tok_string
 ##
 ## Ends in an error in state: 12.
 ##
-## separated_nonempty_list(Tok_comma,result_column) -> result_column . [ Tok_semicolon Tok_ident Tok_eof ]
-## separated_nonempty_list(Tok_comma,result_column) -> result_column . Tok_comma separated_nonempty_list(Tok_comma,result_column) [ Tok_semicolon Tok_ident Tok_eof ]
+## separated_nonempty_list(Tok_comma,result_column) -> result_column . [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,result_column) -> result_column . Tok_comma separated_nonempty_list(Tok_comma,result_column) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## result_column
@@ -51,7 +51,7 @@ statements: Tok_ident Tok_qmark Tok_comma Tok_semicolon
 ##
 ## Ends in an error in state: 13.
 ##
-## separated_nonempty_list(Tok_comma,result_column) -> result_column Tok_comma . separated_nonempty_list(Tok_comma,result_column) [ Tok_semicolon Tok_ident Tok_eof ]
+## separated_nonempty_list(Tok_comma,result_column) -> result_column Tok_comma . separated_nonempty_list(Tok_comma,result_column) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## result_column Tok_comma
@@ -63,10 +63,10 @@ statements: Tok_ident Tok_ident Tok_ident Tok_string
 ##
 ## Ends in an error in state: 18.
 ##
-## qualified_name -> identifier . [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier . Tok_period identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier . Tok_period identifier Tok_period identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## result_column -> identifier . Tok_period Op_star [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . [ Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . Tok_period identifier [ Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . Tok_period identifier Tok_period identifier [ Tok_ident Tok_eof Tok_comma ]
+## result_column -> identifier . Tok_period Op_star [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier
@@ -78,9 +78,9 @@ statements: Tok_ident Tok_ident Tok_ident Tok_period Tok_string
 ##
 ## Ends in an error in state: 19.
 ##
-## qualified_name -> identifier Tok_period . identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier Tok_period . identifier Tok_period identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## result_column -> identifier Tok_period . Op_star [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period . identifier [ Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period . identifier Tok_period identifier [ Tok_ident Tok_eof Tok_comma ]
+## result_column -> identifier Tok_period . Op_star [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period
@@ -92,8 +92,8 @@ statements: Tok_ident Tok_ident Tok_ident Tok_period Tok_ident Tok_string
 ##
 ## Ends in an error in state: 22.
 ##
-## qualified_name -> identifier Tok_period identifier . [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier Tok_period identifier . Tok_period identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period identifier . [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period identifier . Tok_period identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period identifier
@@ -105,7 +105,7 @@ statements: Tok_ident Tok_ident Tok_ident Tok_period Tok_ident Tok_period Tok_st
 ##
 ## Ends in an error in state: 23.
 ##
-## qualified_name -> identifier Tok_period identifier Tok_period . identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period identifier Tok_period . identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period identifier Tok_period
@@ -117,8 +117,8 @@ statements: Tok_ident Tok_qmark Tok_string
 ##
 ## Ends in an error in state: 25.
 ##
-## result_column -> expr . [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## result_column -> expr . option(Tok_ident) identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
+## result_column -> expr . [ Tok_ident Tok_eof Tok_comma ]
+## result_column -> expr . option(Tok_ident) identifier [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## expr
@@ -130,7 +130,7 @@ statements: Tok_ident Tok_qmark Tok_ident Tok_string
 ##
 ## Ends in an error in state: 27.
 ##
-## result_column -> expr option(Tok_ident) . identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
+## result_column -> expr option(Tok_ident) . identifier [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## expr option(Tok_ident)
@@ -138,100 +138,24 @@ statements: Tok_ident Tok_qmark Tok_ident Tok_string
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Tok_ident Tok_qmark Tok_semicolon Tok_string
+statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_comma Tok_string
 ##
-## Ends in an error in state: 33.
+## Ends in an error in state: 34.
 ##
-## separated_nonempty_list(Tok_semicolon,statement) -> statement Tok_semicolon . separated_nonempty_list(Tok_semicolon,statement) [ Tok_eof ]
-##
-## The known suffix of the stack is as follows:
-## statement Tok_semicolon
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_ident Tok_ident Tok_string
-##
-## Ends in an error in state: 39.
-##
-## separated_nonempty_list(Tok_comma,table_or_subquery) -> table_or_subquery . [ Tok_semicolon Tok_ident Tok_eof ]
-## separated_nonempty_list(Tok_comma,table_or_subquery) -> table_or_subquery . Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_semicolon Tok_ident Tok_eof ]
+## nonempty_list(pair(statement,option(Tok_comma))) -> statement option(Tok_comma) . [ Tok_eof ]
+## nonempty_list(pair(statement,option(Tok_comma))) -> statement option(Tok_comma) . nonempty_list(pair(statement,option(Tok_comma))) [ Tok_eof ]
 ##
 ## The known suffix of the stack is as follows:
-## table_or_subquery
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_comma Tok_string
-##
-## Ends in an error in state: 40.
-##
-## separated_nonempty_list(Tok_comma,table_or_subquery) -> table_or_subquery Tok_comma . separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_semicolon Tok_ident Tok_eof ]
-##
-## The known suffix of the stack is as follows:
-## table_or_subquery Tok_comma
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_string
-##
-## Ends in an error in state: 42.
-##
-## table_or_subquery -> identifier . Tok_period identifier option(Tok_ident) identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## table_or_subquery -> identifier . Tok_period identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## table_or_subquery -> identifier . [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-##
-## The known suffix of the stack is as follows:
-## identifier
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_period Tok_string
-##
-## Ends in an error in state: 43.
-##
-## table_or_subquery -> identifier Tok_period . identifier option(Tok_ident) identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## table_or_subquery -> identifier Tok_period . identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-##
-## The known suffix of the stack is as follows:
-## identifier Tok_period
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_string
-##
-## Ends in an error in state: 44.
-##
-## table_or_subquery -> identifier Tok_period identifier . option(Tok_ident) identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-## table_or_subquery -> identifier Tok_period identifier . [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-##
-## The known suffix of the stack is as follows:
-## identifier Tok_period identifier
-##
-
-<YOUR SYNTAX ERROR MESSAGE HERE>
-
-statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_ident Tok_string
-##
-## Ends in an error in state: 45.
-##
-## table_or_subquery -> identifier Tok_period identifier option(Tok_ident) . identifier [ Tok_semicolon Tok_ident Tok_eof Tok_comma ]
-##
-## The known suffix of the stack is as follows:
-## identifier Tok_period identifier option(Tok_ident)
+## statement option(Tok_comma)
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 49.
+## Ends in an error in state: 41.
 ##
-## where_clause -> Tok_ident . expr [ Tok_semicolon Tok_ident Tok_eof ]
+## where_clause -> Tok_ident . expr [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident
@@ -241,11 +165,11 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_semicolon
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 50.
+## Ends in an error in state: 42.
 ##
-## qualified_name -> identifier . [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier . Tok_period identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier . Tok_period identifier Tok_period identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . Tok_period identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier . Tok_period identifier Tok_period identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier
@@ -255,10 +179,10 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_ident Tok_string
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_ident Tok_period Tok_string
 ##
-## Ends in an error in state: 51.
+## Ends in an error in state: 43.
 ##
-## qualified_name -> identifier Tok_period . identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
-## qualified_name -> identifier Tok_period . identifier Tok_period identifier [ Tok_semicolon Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period . identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## qualified_name -> identifier Tok_period . identifier Tok_period identifier [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period
@@ -268,9 +192,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_ident Tok_period Tok_strin
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 54.
+## Ends in an error in state: 46.
 ##
-## select_core -> select_clause option(from_clause) option(where_clause) . option(group_by_clause) option(having_clause) option(window_clause) [ Tok_semicolon Tok_eof ]
+## select_core -> select_clause option(from_clause) option(where_clause) . option(group_by_clause) option(having_clause) option(window_clause) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## select_clause option(from_clause) option(where_clause)
@@ -280,9 +204,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_string
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 55.
+## Ends in an error in state: 47.
 ##
-## group_by_clause -> Tok_ident . Tok_ident separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_ident Tok_eof ]
+## group_by_clause -> Tok_ident . Tok_ident separated_nonempty_list(Tok_comma,expr) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident
@@ -292,9 +216,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 56.
+## Ends in an error in state: 48.
 ##
-## group_by_clause -> Tok_ident Tok_ident . separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_ident Tok_eof ]
+## group_by_clause -> Tok_ident Tok_ident . separated_nonempty_list(Tok_comma,expr) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident Tok_ident
@@ -304,10 +228,10 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 58.
+## Ends in an error in state: 50.
 ##
-## separated_nonempty_list(Tok_comma,expr) -> expr . [ Tok_semicolon Tok_rparen Tok_ident Tok_eof ]
-## separated_nonempty_list(Tok_comma,expr) -> expr . Tok_comma separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof ]
+## separated_nonempty_list(Tok_comma,expr) -> expr . [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,expr) -> expr . Tok_comma separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## expr
@@ -317,9 +241,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 59.
+## Ends in an error in state: 51.
 ##
-## separated_nonempty_list(Tok_comma,expr) -> expr Tok_comma . separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_rparen Tok_ident Tok_eof ]
+## separated_nonempty_list(Tok_comma,expr) -> expr Tok_comma . separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## expr Tok_comma
@@ -329,9 +253,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_rparen
 ##
-## Ends in an error in state: 61.
+## Ends in an error in state: 53.
 ##
-## select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) . option(having_clause) option(window_clause) [ Tok_semicolon Tok_eof ]
+## select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) . option(having_clause) option(window_clause) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## select_clause option(from_clause) option(where_clause) option(group_by_clause)
@@ -340,18 +264,18 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 58, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
-## In state 57, spurious reduction of production group_by_clause -> Tok_ident Tok_ident separated_nonempty_list(Tok_comma,expr)
-## In state 124, spurious reduction of production option(group_by_clause) -> group_by_clause
+## In state 50, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
+## In state 49, spurious reduction of production group_by_clause -> Tok_ident Tok_ident separated_nonempty_list(Tok_comma,expr)
+## In state 116, spurious reduction of production option(group_by_clause) -> group_by_clause
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 62.
+## Ends in an error in state: 54.
 ##
-## having_clause -> Tok_ident . expr [ Tok_semicolon Tok_ident Tok_eof ]
+## having_clause -> Tok_ident . expr [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident
@@ -361,9 +285,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 64.
+## Ends in an error in state: 56.
 ##
-## select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) . option(window_clause) [ Tok_semicolon Tok_eof ]
+## select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) . option(window_clause) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause)
@@ -373,9 +297,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 65.
+## Ends in an error in state: 57.
 ##
-## window_clause -> Tok_ident . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_eof ]
+## window_clause -> Tok_ident . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_ident
@@ -385,10 +309,10 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 67.
+## Ends in an error in state: 59.
 ##
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Tok_ident window_defn [ Tok_semicolon Tok_eof ]
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Tok_ident window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_eof ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Tok_ident window_defn [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Tok_ident window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier
@@ -398,10 +322,10 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 68.
+## Ends in an error in state: 60.
 ##
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident . window_defn [ Tok_semicolon Tok_eof ]
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident . window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_eof ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident . window_defn [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident . window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_ident
@@ -411,9 +335,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_string
 ##
-## Ends in an error in state: 69.
+## Ends in an error in state: 61.
 ##
-## window_defn -> Tok_lparen . option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_eof Tok_comma ]
+## window_defn -> Tok_lparen . option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lparen
@@ -423,9 +347,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_string
 ##
-## Ends in an error in state: 70.
+## Ends in an error in state: 62.
 ##
-## window_defn -> Tok_lparen option(base_window_name) . option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_eof Tok_comma ]
+## window_defn -> Tok_lparen option(base_window_name) . option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lparen option(base_window_name)
@@ -435,7 +359,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 71.
+## Ends in an error in state: 63.
 ##
 ## partition_clause -> Tok_ident . Tok_ident separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Tok_ident ]
 ##
@@ -447,7 +371,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 72.
+## Ends in an error in state: 64.
 ##
 ## partition_clause -> Tok_ident Tok_ident . separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Tok_ident ]
 ##
@@ -457,11 +381,11 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_semicolon
+statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_eof
 ##
-## Ends in an error in state: 75.
+## Ends in an error in state: 67.
 ##
-## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) . option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_eof Tok_comma ]
+## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) . option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lparen option(base_window_name) option(partition_clause)
@@ -470,16 +394,16 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 ## This implies that, although the LR(1) items shown above provide an
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 58, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
-## In state 73, spurious reduction of production partition_clause -> Tok_ident Tok_ident separated_nonempty_list(Tok_comma,expr)
-## In state 74, spurious reduction of production option(partition_clause) -> partition_clause
+## In state 50, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
+## In state 65, spurious reduction of production partition_clause -> Tok_ident Tok_ident separated_nonempty_list(Tok_comma,expr)
+## In state 66, spurious reduction of production option(partition_clause) -> partition_clause
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 76.
+## Ends in an error in state: 68.
 ##
 ## order_by_clause -> Tok_ident . Tok_ident ordering_term [ Tok_rparen Tok_ident ]
 ##
@@ -491,7 +415,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 77.
+## Ends in an error in state: 69.
 ##
 ## order_by_clause -> Tok_ident Tok_ident . ordering_term [ Tok_rparen Tok_ident ]
 ##
@@ -503,7 +427,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 79.
+## Ends in an error in state: 71.
 ##
 ## ordering_term -> expr . option(collation_name) option(order) option(null_order) [ Tok_rparen Tok_ident ]
 ##
@@ -515,7 +439,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 80.
+## Ends in an error in state: 72.
 ##
 ## collation_name -> Tok_ident . identifier [ Tok_rparen Tok_ident ]
 ##
@@ -527,7 +451,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 82.
+## Ends in an error in state: 74.
 ##
 ## ordering_term -> expr option(collation_name) . option(order) option(null_order) [ Tok_rparen Tok_ident ]
 ##
@@ -539,7 +463,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 84.
+## Ends in an error in state: 76.
 ##
 ## ordering_term -> expr option(collation_name) option(order) . option(null_order) [ Tok_rparen Tok_ident ]
 ##
@@ -551,7 +475,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 85.
+## Ends in an error in state: 77.
 ##
 ## option(null_order) -> Tok_ident . Tok_ident [ Tok_rparen Tok_ident ]
 ##
@@ -563,9 +487,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 90.
+## Ends in an error in state: 82.
 ##
-## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) . option(frame_spec) Tok_rparen [ Tok_semicolon Tok_eof Tok_comma ]
+## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) . option(frame_spec) Tok_rparen [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause)
@@ -575,7 +499,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 91.
+## Ends in an error in state: 83.
 ##
 ## frame_spec -> Tok_ident . frame_spec_core option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -587,7 +511,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 92.
+## Ends in an error in state: 84.
 ##
 ## frame_spec_between -> Tok_ident . frame_spec_between_1 Tok_ident frame_spec_between_2 [ Tok_rparen Tok_ident ]
 ## frame_spec_core -> Tok_ident . Tok_ident [ Tok_rparen Tok_ident ]
@@ -602,7 +526,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 93.
+## Ends in an error in state: 85.
 ##
 ## frame_spec_between_1 -> Tok_ident . Tok_ident [ Tok_ident ]
 ## frame_spec_core -> Tok_ident Tok_ident . [ Tok_rparen Tok_ident ]
@@ -617,7 +541,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 95.
+## Ends in an error in state: 87.
 ##
 ## frame_spec_between -> Tok_ident frame_spec_between_1 . Tok_ident frame_spec_between_2 [ Tok_rparen Tok_ident ]
 ##
@@ -629,7 +553,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 96.
+## Ends in an error in state: 88.
 ##
 ## frame_spec_between -> Tok_ident frame_spec_between_1 Tok_ident . frame_spec_between_2 [ Tok_rparen Tok_ident ]
 ##
@@ -641,7 +565,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 97.
+## Ends in an error in state: 89.
 ##
 ## frame_spec_between_2 -> Tok_ident . Tok_ident [ Tok_rparen Tok_ident ]
 ## identifier -> Tok_ident . [ Tok_period Tok_ident ]
@@ -655,7 +579,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 100.
+## Ends in an error in state: 92.
 ##
 ## frame_spec_between_2 -> expr . Tok_ident [ Tok_rparen Tok_ident ]
 ##
@@ -667,7 +591,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 102.
+## Ends in an error in state: 94.
 ##
 ## frame_spec_between_1 -> expr . Tok_ident [ Tok_ident ]
 ##
@@ -679,7 +603,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_string
 ##
-## Ends in an error in state: 104.
+## Ends in an error in state: 96.
 ##
 ## frame_spec -> Tok_ident frame_spec_core . option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -691,7 +615,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 105.
+## Ends in an error in state: 97.
 ##
 ## frame_spec_excluding -> Tok_ident . Tok_ident [ Tok_rparen ]
 ## frame_spec_excluding -> Tok_ident . Tok_ident Tok_ident [ Tok_rparen ]
@@ -704,7 +628,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 106.
+## Ends in an error in state: 98.
 ##
 ## frame_spec_excluding -> Tok_ident Tok_ident . [ Tok_rparen ]
 ## frame_spec_excluding -> Tok_ident Tok_ident . Tok_ident [ Tok_rparen ]
@@ -717,7 +641,7 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_string
 ##
-## Ends in an error in state: 111.
+## Ends in an error in state: 103.
 ##
 ## frame_spec_core -> expr . Tok_ident [ Tok_rparen Tok_ident ]
 ##
@@ -729,9 +653,9 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_ident Tok_string
 ##
-## Ends in an error in state: 113.
+## Ends in an error in state: 105.
 ##
-## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) . Tok_rparen [ Tok_semicolon Tok_eof Tok_comma ]
+## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) . Tok_rparen [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec)
@@ -741,10 +665,10 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_rparen Tok_string
 ##
-## Ends in an error in state: 118.
+## Ends in an error in state: 110.
 ##
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn . [ Tok_semicolon Tok_eof ]
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn . Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_eof ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn . [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn . Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_ident window_defn
@@ -754,12 +678,121 @@ statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident 
 
 statements: Tok_ident Op_star Tok_ident Tok_ident Tok_qmark Tok_ident Tok_ident Tok_qmark Tok_ident Tok_qmark Tok_ident Tok_ident Tok_ident Tok_lparen Tok_rparen Tok_comma Tok_string
 ##
-## Ends in an error in state: 119.
+## Ends in an error in state: 111.
 ##
-## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn Tok_comma . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_eof ]
+## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Tok_ident window_defn Tok_comma . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_ident Tok_eof Tok_comma ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_ident window_defn Tok_comma
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_string
+##
+## Ends in an error in state: 117.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . Tok_period identifier option(Tok_ident) identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . Tok_period identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . Tok_period identifier option(Tok_ident) identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . Tok_period identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier . Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_string
+##
+## Ends in an error in state: 118.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period . identifier option(Tok_ident) identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period . identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period . identifier option(Tok_ident) identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period . identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_string
+##
+## Ends in an error in state: 119.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier . option(Tok_ident) identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier . [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier . option(Tok_ident) identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier . Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period identifier
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_comma Tok_string
+##
+## Ends in an error in state: 120.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier Tok_comma . separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period identifier Tok_comma
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_ident Tok_string
+##
+## Ends in an error in state: 122.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier option(Tok_ident) . identifier [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier option(Tok_ident) . identifier Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period identifier option(Tok_ident)
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_ident Tok_ident Tok_string
+##
+## Ends in an error in state: 123.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier option(Tok_ident) identifier . [ Tok_ident Tok_eof Tok_comma ]
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier option(Tok_ident) identifier . Tok_comma separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period identifier option(Tok_ident) identifier
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_period Tok_ident Tok_ident Tok_ident Tok_comma Tok_string
+##
+## Ends in an error in state: 124.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_period identifier option(Tok_ident) identifier Tok_comma . separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period identifier option(Tok_ident) identifier Tok_comma
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Tok_ident Op_star Tok_ident Tok_comma Tok_string
+##
+## Ends in an error in state: 126.
+##
+## separated_nonempty_list(Tok_comma,table_or_subquery) -> identifier Tok_comma . separated_nonempty_list(Tok_comma,table_or_subquery) [ Tok_ident Tok_eof Tok_comma ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_comma
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>

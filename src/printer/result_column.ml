@@ -19,7 +19,7 @@ module Make
       E.print ~option f e;
       Option.iter
         (fun v ->
-          Keyword.print ~option f Kw_as;
+          Sfmt.keyword ~option f [ Kw_as ];
           let module I = (val I.generate ()) in
           I.print ~option f v)
         alias
