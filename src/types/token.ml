@@ -326,5 +326,6 @@ type token =
   | Op_ne
   | Op_ne2
   | Op_dereference
+  | Op_tilda
   | Tok_eof
 [@@deriving show, eq]

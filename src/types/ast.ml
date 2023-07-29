@@ -31,6 +31,7 @@ and 'a expr =
       [ `literal of 'a literal_value
       | `parameter of 'a bind_parameter
       | `name of 'a qualified_name
+      | `unary of 'a unary_operator * 'a expr
       ]
       * 'a
 
@@ -61,7 +62,11 @@ and 'a result_column =
 
 and 'a table_or_subquery =
   | Table_or_subquery of
-      [ `name of 'a schema_name option * 'a table_name * 'a identifier option ]
+      [ `name of 'a schema_name option * 'a table_name * 'a identifier option
+      | `statement of 'a select_statement * 'a identifier option
+      | `nested of 'a table_or_subquery list
+      | `join of 'a join_clause
+      ]
       * 'a
 
 and 'a select_clause =
@@ -168,3 +173,5 @@ and 'a join_clause =
       'a table_or_subquery
       * ('a join_operator * 'a table_or_subquery * 'a join_constraint) list
       * 'a
+
+and 'a unary_operator = Unary_operator of [ `tilda | `plus | `minus ] * 'a

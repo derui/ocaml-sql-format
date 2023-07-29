@@ -114,6 +114,11 @@ and expr () =
                 type t = A.ext A.qualified_name
 
                 let generate = qualified_name
+              end)
+              (struct
+                type t = A.ext A.unary_operator
+
+                let generate = unary_operator
               end) : S))
 
 and sql_statement () =
@@ -202,6 +207,16 @@ and table_or_subquery () =
                 type t = A.ext L.identifier
 
                 let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
+              end)
+              (struct
+                type t = A.ext A.join_clause
+
+                let generate = join_clause
               end) : S))
 
 and select_clause () =
@@ -436,3 +451,5 @@ and join_clause () =
 
                 let generate = join_constraint
               end) : S))
+
+and unary_operator () = Unary_operator.((module Make () : S))

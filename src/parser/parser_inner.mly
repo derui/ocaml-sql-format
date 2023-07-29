@@ -334,6 +334,7 @@ open Types.Token
 %token Op_ne
 %token Op_ne2
 %token Op_dereference
+%token Op_tilda
 
 %token Tok_eof
 
@@ -341,7 +342,7 @@ open Types.Token
 
 %%
 
-let keyword :=
+let keyword ==
   | Kw_select; {Identifier (`keyword Kw_select, ())}
   | Kw_from; {Identifier (`keyword Kw_from, ())}
   | Kw_as; {Identifier (`keyword Kw_as, ())}
@@ -653,12 +654,12 @@ let identifier :=
   | ~ = keyword; <>
 
 let literal_value :=
-  | Kw_null; {Literal_value (`null, ())}
-  | Kw_true; {Literal_value (`true', ())}
-  | Kw_false; {Literal_value (`false', ())}
-  | Kw_current_date; {Literal_value (`current_date, ())}
-  | Kw_current_time; {Literal_value (`current_time, ())}
-  | Kw_current_timestamp; {Literal_value (`current_timestamp, ())}
+  | Kw_null; {Literal_value (`null, ())} %prec Kw_null
+  | Kw_true; {Literal_value (`true', ())} %prec Kw_true
+  | Kw_false; {Literal_value (`false', ())} %prec Kw_false
+  | Kw_current_date; {Literal_value (`current_date, ())} %prec Kw_current_date
+  | Kw_current_time; {Literal_value (`current_time, ())} %prec Kw_current_time
+  | Kw_current_timestamp; {Literal_value (`current_timestamp, ())} %prec Kw_current_timestamp
   | v = numeric_literal; { Literal_value (`numeric v, ())}
   | v = string_literal; { Literal_value (`string v, ())}
   | v = blob_literal; { Literal_value (`blob v, ())}
@@ -706,6 +707,7 @@ let expr :=
  | v = literal_value; { Expr (`literal v, ()) }
  | v = bind_parameter; { Expr (`parameter v, ()) }
  | v = qualified_name; { Expr (`name v, ()) }
+ | op = unary_operator; v = expr; { Expr (`unary (op, v), ()) }
 
 
 let sql_statement :=
@@ -713,7 +715,7 @@ let sql_statement :=
 
 
 let select_statement :=
- | c = select_core ;{ Select_statement (c, ())}
+ | c = select_core; { Select_statement (c, ())}
 
 
 let select_core :=
@@ -740,6 +742,13 @@ let alias ==
 let table_or_subquery :=
  | sname = schema_name; Tok_period; tname = table_name; a = alias; { Table_or_subquery (`name (Some sname, tname, a), ()) }
  | tname = table_name; a = alias; { Table_or_subquery (`name (None, tname, a), ()) }
+ | stmt = delimited(Tok_lparen, select_statement, Tok_rparen); a = alias; { Table_or_subquery (`statement (stmt, a), ()) }
+ | ls = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, table_or_subquery), Tok_rparen); {
+     Table_or_subquery (`nested ls, ())
+   }
+ | ls = delimited(Tok_lparen, join_clause, Tok_rparen); {
+     Table_or_subquery (`join ls, ())
+   }
 
 
 let quantifier ==
@@ -884,3 +893,9 @@ let join_clause_sublist ==
 
 let join_clause :=
  | q = table_or_subquery; cs = list(join_clause_sublist) ; { Join_clause (q, cs, ()) }
+
+
+let unary_operator :=
+ | Op_tilda; { Unary_operator (`tilda, ()) } %prec Op_tilda
+ | Op_plus; { Unary_operator (`plus, ()) } %prec Op_plus
+ | Op_minus; { Unary_operator (`minus, ()) } %prec Op_minus

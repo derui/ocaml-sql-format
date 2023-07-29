@@ -341,6 +341,7 @@ include (
       | Op_ne -> Fmt.string f "<>"
       | Op_ne2 -> Fmt.string f "!="
       | Op_dereference -> Fmt.string f "->"
+      | Op_tilda -> Fmt.string f "~"
       | Tok_eof -> failwith "Can not stringify EOF"
   end :
     PRINTER with type t = token)
