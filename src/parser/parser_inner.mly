@@ -1,7 +1,6 @@
 %{
 open Types.Ast
 open Types.Literal
-open Types.Token
 
 %}
 
@@ -651,7 +650,6 @@ let sign ==
 (* literal *)
 let identifier :=
   | x = Tok_ident; {Identifier (`raw x, ())}
-  | ~ = keyword; <>
 
 let literal_value :=
   | Kw_null; {Literal_value (`null, ())} %prec Kw_null
