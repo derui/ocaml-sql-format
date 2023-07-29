@@ -192,7 +192,19 @@ and group_by_clause () =
       let generate = expr
     end) : S))
 
-and window_clause () = Window_clause.((module Make () : S))
+and window_clause () =
+  Window_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.window_name
+
+                let generate = window_name
+              end)
+              (struct
+                type t = A.ext A.window_defn
+
+                let generate = window_defn
+              end) : S))
 
 and having_clause () =
   Having_clause.(

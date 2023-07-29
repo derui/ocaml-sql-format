@@ -193,7 +193,18 @@ let group_by_clause :=
 
 
 let window_clause :=
- | { }
+ | kw = identifier; ds = separated_nonempty_list(Tok_comma, window_clause_sublist); {
+       match kw with
+       | `keyword Kw_window -> Window_clause (ds, ())
+       | _ -> raise (Invalid_token [kw])
+     }
+
+let window_clause_sublist ==
+  | n = window_name; kw = identifier; w = window_defn; {
+            match kw with
+            | `keyword Kw_as -> (n, w)
+            | _  -> raise (Invalid_token [kw])
+          }
 
 
 let having_clause :=

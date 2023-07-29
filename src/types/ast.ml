@@ -75,7 +75,8 @@ and 'a where_clause = Where_clause of 'a expr * 'a
 
 and 'a group_by_clause = Group_by_clause of 'a expr list * 'a
 
-and 'a window_clause = Window_clause of 'a (* TODO *)
+and 'a window_clause =
+  | Window_clause of ('a window_name * 'a window_defn) list * 'a
 
 and 'a having_clause = Having_clause of 'a expr * 'a
 
