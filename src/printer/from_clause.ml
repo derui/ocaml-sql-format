@@ -4,7 +4,9 @@ open Intf
 
 module type S = PRINTER with type t = ext from_clause
 
-module Make (V : GEN with type t = ext table_or_subquery) : S = struct
+module Make
+    (V : GEN with type t = ext table_or_subquery)
+    (J : GEN with type t = ext join_clause) : S = struct
   type t = ext from_clause
 
   let print f t ~option =
@@ -27,4 +29,12 @@ module Make (V : GEN with type t = ext table_or_subquery) : S = struct
                 V.print ~option f v)
               ds)
           f ())
+    | From_clause (`join j, _) ->
+      Sfmt.keyword ~option f [ Kw_from ];
+
+      Sfmt.force_vbox option.indent_size
+        (fun f _ ->
+          let module J = (val J.generate ()) in
+          J.print ~option f j)
+        f ()
 end

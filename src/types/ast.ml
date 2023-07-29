@@ -68,7 +68,11 @@ and 'a select_clause =
   | Select_clause of quantifier option * 'a result_column list * 'a
 
 and 'a from_clause =
-  | From_clause of [ `table_or_subquery of 'a table_or_subquery list ] * 'a
+  | From_clause of
+      [ `table_or_subquery of 'a table_or_subquery list
+      | `join of 'a join_clause
+      ]
+      * 'a
 
 and 'a where_clause = Where_clause of 'a expr * 'a
 

@@ -755,6 +755,7 @@ let select_clause :=
 
 let from_clause :=
  | Kw_from; ts = separated_nonempty_list(Tok_comma, table_or_subquery); { From_clause (`table_or_subquery ts, ()) }
+ | Kw_from; j = join_clause; { From_clause (`join j, ()) }
 
 
 let where_clause :=
@@ -862,15 +863,15 @@ let join_operator :=
  | Kw_join; { Join_operator (`simple, ()) }
  | Kw_cross; Kw_join; { Join_operator (`cross, ()) }
  | Kw_natural; Kw_join; { Join_operator (`natural, ()) }
- | v = option(Kw_natural); Kw_inner; Kw_join; { Join_operator (`inner (Option.map (fun v -> `natural) v) , ()) }
+ | v = option(Kw_natural); Kw_inner; Kw_join; { Join_operator (`inner (Option.map (fun _ -> `natural) v) , ()) }
  | v = option(Kw_natural); Kw_left; option(Kw_outer); Kw_join; {
-       Join_operator (`outer ((Option.map (fun v -> `natural) v), `left) , ())
+       Join_operator (`outer ((Option.map (fun _ -> `natural) v), `left) , ())
      }
  | v = option(Kw_natural); Kw_right; option(Kw_outer); Kw_join; {
-       Join_operator (`outer ((Option.map (fun v -> `natural) v), `right) , ())
+       Join_operator (`outer ((Option.map (fun _ -> `natural) v), `right) , ())
      }
  | v = option(Kw_natural); Kw_full; option(Kw_outer); Kw_join; {
-       Join_operator (`outer ((Option.map (fun v -> `natural) v), `full) , ())
+       Join_operator (`outer ((Option.map (fun _ -> `natural) v), `full) , ())
      }
 
 

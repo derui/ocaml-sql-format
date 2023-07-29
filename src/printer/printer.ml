@@ -214,11 +214,17 @@ and select_clause () =
 
 and from_clause () =
   From_clause.(
-    (module Make (struct
-      type t = A.ext A.table_or_subquery
+    (module Make
+              (struct
+                type t = A.ext A.table_or_subquery
 
-      let generate = table_or_subquery
-    end) : S))
+                let generate = table_or_subquery
+              end)
+              (struct
+                type t = A.ext A.join_clause
+
+                let generate = join_clause
+              end) : S))
 
 and where_clause () =
   Where_clause.(
