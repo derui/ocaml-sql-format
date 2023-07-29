@@ -648,18 +648,20 @@ let sign ==
   | Op_minus; {`minus}
 
 (* literal *)
-let identifier := | x = Tok_ident; {Identifier (`raw x, ())}
+let identifier :=
+  | x = Tok_ident; {Identifier (`raw x, ())}
+  | ~ = keyword; <>
 
 let literal_value :=
-  | v = numeric_literal; { Literal_value (`numeric v, ())}
-  | v = string_literal; { Literal_value (`string v, ())}
-  | v = blob_literal; { Literal_value (`blob v, ())}
   | Kw_null; {Literal_value (`null, ())}
   | Kw_true; {Literal_value (`true', ())}
   | Kw_false; {Literal_value (`false', ())}
   | Kw_current_date; {Literal_value (`current_date, ())}
   | Kw_current_time; {Literal_value (`current_time, ())}
   | Kw_current_timestamp; {Literal_value (`current_timestamp, ())}
+  | v = numeric_literal; { Literal_value (`numeric v, ())}
+  | v = string_literal; { Literal_value (`string v, ())}
+  | v = blob_literal; { Literal_value (`blob v, ())}
 
 let numeric_literal :=
   | v = Tok_numeric; { Numeric_literal (v, ()) }
@@ -673,19 +675,19 @@ let blob_literal :=
 let bind_parameter :=
   | Tok_qmark; {Bind_parameter ()}
 
-let schema_name ==
+let schema_name :=
   | v = identifier; { Schema_name (v, ()) }
 
-let table_name ==
+let table_name :=
   | v = identifier; { Table_name (v, ()) }
 
-let column_name ==
+let column_name :=
   | v = identifier; { Column_name (v, ()) }
 
 let type_name :=
  | name = nonempty_list(identifier); Tok_lparen;
    size = signed_number; Tok_comma; max_size = signed_number;
-   Tok_lparen ;
+   Tok_rparen ;
    { Type_name (name, `with_size (size, max_size), ()) }
  | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen); { Type_name (name, `size size, ()) }
  | name = nonempty_list(identifier); { Type_name (name, `name_only, ()) }
@@ -727,19 +729,22 @@ let select_core :=
 let result_column :=
  | Op_star; { Result_column (`asterisk, ()) }
  | v = table_name; Tok_period; Op_star; { Result_column (`qualified_asterisk v, ()) }
- | e = expr; alias = option(pair(option(Kw_as), identifier)); {Result_column (`expr (e, Option.map snd alias), ())}
+ | e = expr; alias = alias; {Result_column (`expr (e, alias), ())}
 
-let table_or_subquery ==
- | sname = schema_name; Tok_period; tname = table_name; Kw_as; alias = identifier;
-           { Table_or_subquery (`name (Some sname, tname, Some alias), ()) }
- | sname = schema_name; Tok_period; tname = table_name; alias = option(identifier);
-           { Table_or_subquery (`name (Some sname, tname, alias), ()) }
- | tname = table_name; alias = option(pair(option(Kw_as), identifier));
-           { Table_or_subquery (`name (None, tname, Option.map snd alias), ()) }
+let alias ==
+  | { None }
+  | Kw_as; x = identifier; { Some x }
+  | x = identifier; {Some x}
+
+
+let table_or_subquery :=
+ | sname = schema_name; Tok_period; tname = table_name; a = alias; { Table_or_subquery (`name (Some sname, tname, a), ()) }
+ | tname = table_name; a = alias; { Table_or_subquery (`name (None, tname, a), ()) }
+
 
 let quantifier ==
-  | Kw_distinct; {`distinct}
-  | Kw_all; {`all}
+  | Kw_distinct; { `distinct }
+  | Kw_all; { `all }
 
 
 let select_clause :=
@@ -749,7 +754,7 @@ let select_clause :=
 
 
 let from_clause :=
- | ts = separated_nonempty_list(Tok_comma, table_or_subquery); { From_clause (`table_or_subquery ts, ()) }
+ | Kw_from; ts = separated_nonempty_list(Tok_comma, table_or_subquery); { From_clause (`table_or_subquery ts, ()) }
 
 
 let where_clause :=
@@ -799,9 +804,9 @@ let null_order ==
   | Kw_null; Kw_last; { `last }
 
 let frame_spec :=
- | r = Kw_range; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`range, core, e, ()) }
- | r = Kw_rows; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`rows, core, e, ()) }
- | r = Kw_groups; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`groups, core, e, ()) }
+ | Kw_range; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`range, core, e, ()) }
+ | Kw_rows; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`rows, core, e, ()) }
+ | Kw_groups; core = frame_spec_core; e = option(frame_spec_excluding);  { Frame_spec (`groups, core, e, ()) }
 
 
 let ordering_term :=

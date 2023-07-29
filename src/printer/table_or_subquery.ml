@@ -26,7 +26,9 @@ module Make
 
       Option.iter
         (fun v ->
+          Fmt.string f " ";
           Sfmt.keyword ~option f [ Kw_as ];
+          Fmt.string f " ";
           let module I = (val I.generate ()) in
           I.print ~option f v)
         alias

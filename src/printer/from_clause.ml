@@ -20,6 +20,11 @@ module Make (V : GEN with type t = ext table_or_subquery) : S = struct
             let module V = (val V.generate ()) in
             V.print ~option f d;
 
-            List.iter (fun v -> V.print ~option f v) ds)
+            List.iter
+              (fun v ->
+                Token.print ~option f Tok_comma;
+                Fmt.cut f ();
+                V.print ~option f v)
+              ds)
           f ())
 end
