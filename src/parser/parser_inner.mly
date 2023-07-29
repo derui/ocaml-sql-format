@@ -133,7 +133,13 @@ let select_statement :=
 
 
 let select_core :=
- | { }
+ | s = select_clause;
+   f = option(from_clause);
+   wh = option(where_clause);
+   g = option(group_by_clause);
+   h = option(having_clause);
+   wi = option(window_clause);
+   { Select_core (`select (s,f,wh,g,h,wi), ()) }
 
 
 let result_column :=

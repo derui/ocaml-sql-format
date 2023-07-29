@@ -50,7 +50,6 @@ and 'a select_core =
         * 'a window_clause option
       ]
       * 'a
-(* TODO *)
 
 and 'a result_column =
   | Result_column of

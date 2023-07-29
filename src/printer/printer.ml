@@ -120,7 +120,39 @@ and sql_statement () = Sql_statement.((module Make () : S))
 
 and select_startement () = Select_startement.((module Make () : S))
 
-and select_core () = Select_core.((module Make () : S))
+and select_core () =
+  Select_core.(
+    (module Make
+              (struct
+                type t = A.ext A.select_clause
+
+                let generate = select_clause
+              end)
+              (struct
+                type t = A.ext A.from_clause
+
+                let generate = from_clause
+              end)
+              (struct
+                type t = A.ext A.where_clause
+
+                let generate = where_clause
+              end)
+              (struct
+                type t = A.ext A.group_by_clause
+
+                let generate = group_by_clause
+              end)
+              (struct
+                type t = A.ext A.having_clause
+
+                let generate = having_clause
+              end)
+              (struct
+                type t = A.ext A.window_clause
+
+                let generate = window_clause
+              end) : S))
 
 and result_column () =
   Result_column.(
