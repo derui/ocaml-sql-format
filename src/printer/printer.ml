@@ -116,9 +116,21 @@ and expr () =
                 let generate = qualified_name
               end) : S))
 
-and sql_statement () = Sql_statement.((module Make () : S))
+and sql_statement () =
+  Sql_statement.(
+    (module Make (struct
+      type t = A.ext A.select_statement
 
-and select_startement () = Select_startement.((module Make () : S))
+      let generate = select_statement
+    end) : S))
+
+and select_statement () =
+  Select_statement.(
+    (module Make (struct
+      type t = A.ext A.select_core
+
+      let generate = select_core
+    end) : S))
 
 and select_core () =
   Select_core.(

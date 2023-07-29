@@ -1,13 +1,14 @@
 open Types.Ast
-open Types.Token
 open Intf
 
 module type S = PRINTER with type t = ext sql_statement
 
-module Make (V : GEN with type t = ext xxx) : S = struct
+module Make (V : GEN with type t = ext select_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
     match t with
-    | Sql_statement _ -> failwith "TODO: need implementation"
+    | Sql_statement (`select v, _) ->
+      let module V = (val V.generate ()) in
+      V.print ~option f v
 end

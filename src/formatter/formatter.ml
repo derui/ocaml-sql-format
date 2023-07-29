@@ -8,9 +8,9 @@ let get_parse_error env =
     (* debug output. *)
     Printf.printf "error in state: %d\n" (I.number state);
     try Parser.Mesasges.message (I.number state)
-    with Not_found -> "invalid syntax (no specific message for this eror)")
+    with Not_found -> "invalid syntax (no specific message for this error)")
 
-let rec parse lexbuf (checkpoint : Types.Ast.entry list I.checkpoint) =
+let rec parse lexbuf (checkpoint : Types.Statement.t list I.checkpoint) =
   match checkpoint with
   | I.InputNeeded _env ->
     let token = Lexer.token lexbuf in
@@ -35,7 +35,7 @@ let rec parse lexbuf (checkpoint : Types.Ast.entry list I.checkpoint) =
 
 let format (option : Options.t) lexbuf =
   let checkpoint =
-    Parser.Parser.Incremental.entries @@ fst
+    Parser.Parser.Incremental.statements @@ fst
     @@ Sedlexing.lexing_positions lexbuf
   in
   let result = parse lexbuf checkpoint in
