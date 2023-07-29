@@ -412,4 +412,21 @@ and join_constraint () =
                 let generate = column_name
               end) : S))
 
-and join_clause () = Join_clause.((module Make () : S))
+and join_clause () =
+  Join_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.table_or_subquery
+
+                let generate = table_or_subquery
+              end)
+              (struct
+                type t = A.ext A.join_operator
+
+                let generate = join_operator
+              end)
+              (struct
+                type t = A.ext A.join_constraint
+
+                let generate = join_constraint
+              end) : S))

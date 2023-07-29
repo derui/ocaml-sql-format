@@ -159,4 +159,8 @@ and 'a join_operator =
 and 'a join_constraint =
   | Join_constraint of [ `expr of 'a expr | `using of 'a column_name list ] * 'a
 
-and 'a join_clause = Join_clause of 'a
+and 'a join_clause =
+  | Join_clause of
+      'a table_or_subquery
+      * ('a join_operator * 'a table_or_subquery * 'a join_constraint) list
+      * 'a
