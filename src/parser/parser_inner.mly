@@ -855,3 +855,29 @@ let frame_spec_excluding :=
  | Kw_exclude; Kw_ties; {Frame_spec_excluding (`ties, ())}
  | Kw_exclude; Kw_no; Kw_others; {Frame_spec_excluding (`no_others, ())}
  | Kw_exclude; Kw_current; Kw_row; {Frame_spec_excluding (`current_row, ())}
+
+
+let join_operator :=
+ | Tok_comma; { Join_operator (`comma, ()) }
+ | Kw_join; { Join_operator (`simple, ()) }
+ | Kw_cross; Kw_join; { Join_operator (`cross, ()) }
+ | Kw_natural; Kw_join; { Join_operator (`natural, ()) }
+ | v = option(Kw_natural); Kw_inner; Kw_join; { Join_operator (`inner (Option.map (fun v -> `natural) v) , ()) }
+ | v = option(Kw_natural); Kw_left; option(Kw_outer); Kw_join; {
+       Join_operator (`outer ((Option.map (fun v -> `natural) v), `left) , ())
+     }
+ | v = option(Kw_natural); Kw_right; option(Kw_outer); Kw_join; {
+       Join_operator (`outer ((Option.map (fun v -> `natural) v), `right) , ())
+     }
+ | v = option(Kw_natural); Kw_full; option(Kw_outer); Kw_join; {
+       Join_operator (`outer ((Option.map (fun v -> `natural) v), `full) , ())
+     }
+
+
+let join_constraint :=
+ | Kw_on; e = expr; { Join_constraint (`expr e, ()) }
+ | Kw_using; ds = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name) ,Tok_rparen); { Join_constraint (`using ds, ()) }
+
+
+let join_clause :=
+ | { }

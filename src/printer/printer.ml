@@ -395,3 +395,21 @@ and frame_spec_core () =
               end) : S))
 
 and frame_spec_excluding () = Frame_spec_excluding.((module Make () : S))
+
+and join_operator () = Join_operator.((module Make () : S))
+
+and join_constraint () =
+  Join_constraint.(
+    (module Make
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end) : S))
+
+and join_clause () = Join_clause.((module Make () : S))

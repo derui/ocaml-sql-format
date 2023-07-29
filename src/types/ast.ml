@@ -144,3 +144,19 @@ and 'a frame_spec_core =
 
 and 'a frame_spec_excluding =
   | Frame_spec_excluding of [ `no_others | `current_row | `group | `ties ] * 'a
+
+and 'a join_operator =
+  | Join_operator of
+      [ `comma
+      | `cross
+      | `simple
+      | `natural
+      | `inner of [ `natural ] option
+      | `outer of [ `natural ] option * [ `left | `right | `full ]
+      ]
+      * 'a
+
+and 'a join_constraint =
+  | Join_constraint of [ `expr of 'a expr | `using of 'a column_name list ] * 'a
+
+and 'a join_clause = Join_clause of 'a
