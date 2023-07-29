@@ -81,7 +81,13 @@ and 'a having_clause = Having_clause of 'a expr * 'a
 
 and 'a window_name = Window_name of 'a identifier * 'a
 
-and 'a window_defn = Window_defn of (* TODO *) 'a
+and 'a window_defn =
+  | Window_defn of
+      'a base_window_name option
+      * 'a partition_clause option
+      * 'a order_by_clause option
+      * 'a frame_spec option
+      * 'a
 
 and 'a base_window_name = Base_window_name of 'a identifier * 'a
 

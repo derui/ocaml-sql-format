@@ -210,7 +210,29 @@ and window_name () =
       let generate = identifier
     end) : S))
 
-and window_defn () = Window_defn.((module Make () : S))
+and window_defn () =
+  Window_defn.(
+    (module Make
+              (struct
+                type t = A.ext A.base_window_name
+
+                let generate = base_window_name
+              end)
+              (struct
+                type t = A.ext A.partition_clause
+
+                let generate = partition_clause
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
+              end)
+              (struct
+                type t = A.ext A.frame_spec
+
+                let generate = frame_spec
+              end) : S))
 
 and base_window_name () =
   Base_window_name.(

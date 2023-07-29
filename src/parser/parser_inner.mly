@@ -208,7 +208,12 @@ let window_name ==
 
 
 let window_defn :=
- | { }
+ | Tok_lparen;
+   n = option(base_window_name);
+   p = option(partition_clause);
+   o = option(order_by_clause);
+   s = option(frame_spec);
+   Tok_rparen; { Window_defn (n,p,o,s, ()) }
 
 
 let base_window_name :=
