@@ -743,8 +743,18 @@ let expr :=
  | e = expr; n = ioption(Kw_not); Kw_exists; stmt = delimited(Tok_lparen, select_statement, Tok_rparen) ;{
        Expr (`exists (e, Option.map (fun _ -> `not') n, stmt), ())
      }
+(* case *)
+ | Kw_case; se = option(expr); l = nonempty_list(expr_case_when);
+   els = option(expr_case_else); Kw_end; {
+       Expr (`case (se, l, els), ())
+     }
 
 
+let expr_case_when :=
+  | Kw_when; e = expr; Kw_then; te = expr; { (e, te) }
+
+let expr_case_else :=
+  | Kw_else; e = expr;  { e }
 
 let sql_statement :=
  | s = select_statement; { Sql_statement (`select s, ()) }

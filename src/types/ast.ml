@@ -58,6 +58,7 @@ and 'a expr =
           | `table of 'a schema_name option * 'a table_name
           ]
       | `exists of 'a expr * [ `not' ] option * 'a select_statement
+      | `case of 'a expr option * ('a expr * 'a expr) list * 'a expr option
       ]
       * 'a
 

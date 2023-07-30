@@ -239,4 +239,34 @@ module Make
           let module Select_statement = (val Select_statement.generate ()) in
           Select_statement.print ~option f stmt)
         f ()
+    | Expr (`case (e, l, els), _) ->
+      Sfmt.keyword ~option f [ Kw_case ];
+      Option.iter
+        (fun e ->
+          Fmt.string f " ";
+          print ~option f e)
+        e;
+
+      List.iter
+        (fun (e1, e2) ->
+          Fmt.cut f ();
+          Sfmt.keyword ~option f [ Kw_when ];
+          Fmt.string f " ";
+          print ~option f e1;
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_then ];
+          Fmt.string f " ";
+          print ~option f e2)
+        l;
+
+      Option.iter
+        (fun e ->
+          Fmt.cut f ();
+          Sfmt.keyword ~option f [ Kw_else ];
+          Fmt.string f " ";
+          print ~option f e)
+        els;
+
+      Fmt.cut f ();
+      Sfmt.keyword ~option f [ Kw_end ]
 end
