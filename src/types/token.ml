@@ -293,6 +293,9 @@ type token =
   | Kw_nullif
   | Kw_coalesce
   | Kw_groups
+  | Kw_glob
+  | Kw_match
+  | Kw_regexp
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

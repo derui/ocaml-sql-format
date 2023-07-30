@@ -88,4 +88,57 @@ module Make
       Fmt.string f " ";
       let module Collation_name = (val Collation_name.generate ()) in
       Collation_name.print ~option f cname
+    | Expr (`like (e, not', e2, escape), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_like ];
+      Fmt.string f " ";
+      print ~option f e2;
+
+      Option.iter
+        (fun e ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_escape ];
+          Fmt.string f " ";
+          print ~option f e)
+        escape
+    | Expr (`glob (e, not', e2), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_glob ];
+      Fmt.string f " ";
+      print ~option f e2
+    | Expr (`regexp (e, not', e2), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_regexp ];
+      Fmt.string f " ";
+      print ~option f e2
+    | Expr (`match' (e, not', e2), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_match ];
+      Fmt.string f " ";
+      print ~option f e2
 end

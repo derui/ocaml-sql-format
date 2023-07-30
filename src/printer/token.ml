@@ -309,6 +309,9 @@ include (
       | Kw_nullif -> Fmt.string f @@ as_keyword "nullif" keyword
       | Kw_coalesce -> Fmt.string f @@ as_keyword "coalesce" keyword
       | Kw_groups -> Fmt.string f @@ as_keyword "groups" keyword
+      | Kw_glob -> Fmt.string f @@ as_keyword "glob" keyword
+      | Kw_match -> Fmt.string f @@ as_keyword "match" keyword
+      | Kw_regexp -> Fmt.string f @@ as_keyword "regexp" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

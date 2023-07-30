@@ -298,6 +298,9 @@ open Types.Literal
 %token Kw_nullif
 %token Kw_coalesce
 %token Kw_groups
+%token Kw_glob
+%token Kw_match
+%token Kw_regexp
 
 (* tokens *)
 %token Tok_lparen
@@ -729,6 +732,19 @@ let expr :=
    Tok_rparen;
    { Expr (`cast (e, t), ()) }
  | e = expr; Kw_collate; tname = collation_name; { Expr (`collate (e, tname), ()) }
+ | e = expr; n = ioption(Kw_not); Kw_like; e2 = expr; { Expr (`like (e, Option.map (fun _ -> `not')n, e2, None), ()) }
+ | e = expr; n = ioption(Kw_not); Kw_like; e2 = expr; Kw_escape; escape = expr; {
+       Expr (`like (e, Option.map (fun _ -> `not') n, e2, Some (escape)), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_glob; e2 = expr; {
+       Expr (`glob (e, Option.map (fun _ -> `not') n, e2), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_regexp; e2 = expr; {
+       Expr (`regexp (e, Option.map (fun _ -> `not') n, e2), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_match; e2 = expr; {
+       Expr (`match' (e, Option.map (fun _ -> `not') n, e2), ())
+     }
 
 
 let sql_statement :=

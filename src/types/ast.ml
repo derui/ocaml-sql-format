@@ -42,6 +42,10 @@ and 'a expr =
       | `nested of 'a expr list
       | `cast of 'a expr * 'a type_name
       | `collate of 'a expr * 'a collation_name
+      | `like of 'a expr * [ `not' ] option * 'a expr * 'a expr option
+      | `glob of 'a expr * [ `not' ] option * 'a expr
+      | `regexp of 'a expr * [ `not' ] option * 'a expr
+      | `match' of 'a expr * [ `not' ] option * 'a expr
       ]
       * 'a
 
