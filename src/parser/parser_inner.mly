@@ -665,12 +665,12 @@ let identifier :=
   | x = Tok_ident; {Identifier (`raw x, ())}
 
 let literal_value :=
-  | Kw_null; {Literal_value (`null, ())} %prec Kw_null
-  | Kw_true; {Literal_value (`true', ())} %prec Kw_true
-  | Kw_false; {Literal_value (`false', ())} %prec Kw_false
-  | Kw_current_date; {Literal_value (`current_date, ())} %prec Kw_current_date
-  | Kw_current_time; {Literal_value (`current_time, ())} %prec Kw_current_time
-  | Kw_current_timestamp; {Literal_value (`current_timestamp, ())} %prec Kw_current_timestamp
+  | Kw_null; {Literal_value (`null, ())}
+  | Kw_true; {Literal_value (`true', ())}
+  | Kw_false; {Literal_value (`false', ())}
+  | Kw_current_date; {Literal_value (`current_date, ())}
+  | Kw_current_time; {Literal_value (`current_time, ())}
+  | Kw_current_timestamp; {Literal_value (`current_timestamp, ())}
   | v = numeric_literal; { Literal_value (`numeric v, ())}
   | v = string_literal; { Literal_value (`string v, ())}
   | v = blob_literal; { Literal_value (`blob v, ())}
@@ -913,10 +913,10 @@ let join_clause :=
  | q = table_or_subquery; cs = list(join_clause_sublist) ; { Join_clause (q, cs, ()) }
 
 
-let unary_operator :=
- | Op_tilda; { Unary_operator (`tilda, ()) } %prec Op_tilda
- | Op_plus; { Unary_operator (`plus, ()) } %prec Op_plus
- | Op_minus; { Unary_operator (`minus, ()) } %prec Op_minus
+let unary_operator ==
+ | Op_tilda; { Unary_operator (`tilda, ()) }
+ | Op_plus; { Unary_operator (`plus, ()) }
+ | Op_minus; { Unary_operator (`minus, ()) }
 
 
 let binary_operator :=
