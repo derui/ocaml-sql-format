@@ -323,19 +323,32 @@ open Types.Literal
 %token Op_minus
 %token Op_star
 %token Op_slash
-%token Op_double_amp
+%token Op_amp
+%token Op_pipe
 %token Op_concat
 %token Op_eq
+%token Op_eq2
 %token Op_ge
 %token Op_gt
 %token Op_le
 %token Op_lt
 %token Op_ne
 %token Op_ne2
-%token Op_dereference
+%token Op_extract
+%token Op_extract_2
+%token Op_lshift
+%token Op_rshift
 %token Op_tilda
 
 %token Tok_eof
+
+%left Op_concat Op_extract Op_extract_2
+%left Op_star Op_slash Op_reminder
+%left Op_plus Op_minus
+%left Op_amp Op_pipe Op_lshift Op_rshift
+%left Op_lt Op_gt Op_le Op_ge
+%left Op_eq Op_eq2 Op_ne Op_ne2
+%left Kw_and Kw_or
 
 %start <Types.Statement.t list> statements
 
@@ -706,6 +719,8 @@ let expr :=
  | v = bind_parameter; { Expr (`parameter v, ()) }
  | v = qualified_name; { Expr (`name v, ()) }
  | op = unary_operator; v = expr; { Expr (`unary (op, v), ()) }
+ | e = expr; op = binary_operator; e2 = expr; { Expr (`binary (e, op, e2), ()) }
+ | e = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, expr), Tok_rparen); { Expr (`nested e, ()) }
 
 
 let sql_statement :=
@@ -897,3 +912,31 @@ let unary_operator :=
  | Op_tilda; { Unary_operator (`tilda, ()) } %prec Op_tilda
  | Op_plus; { Unary_operator (`plus, ()) } %prec Op_plus
  | Op_minus; { Unary_operator (`minus, ()) } %prec Op_minus
+
+
+let binary_operator :=
+ | Op_concat; { Binary_operator (`concat, ()) }
+ | Op_extract; { Binary_operator (`extract, ()) }
+ | Op_extract_2; { Binary_operator (`extract_2, ()) }
+ | Op_star; { Binary_operator (`asterisk, ()) }
+ | Op_slash; { Binary_operator (`divide, ()) }
+ | Op_plus; { Binary_operator (`plus, ()) }
+ | Op_minus; { Binary_operator (`minus, ()) }
+ | Op_amp; { Binary_operator (`land', ()) }
+ | Op_pipe; { Binary_operator (`lor', ()) }
+ | Op_lshift; { Binary_operator (`lshift, ()) }
+ | Op_rshift; { Binary_operator (`rshift, ()) }
+ | Op_lt; { Binary_operator (`lt, ()) }
+ | Op_gt; { Binary_operator (`gt, ()) }
+ | Op_le; { Binary_operator (`le, ()) }
+ | Op_ge; { Binary_operator (`ge, ()) }
+ | Op_eq; { Binary_operator (`eq, ()) }
+ | Op_eq2; { Binary_operator (`eq2, ()) }
+ | Op_ne; { Binary_operator (`ne, ()) }
+ | Op_ne2; { Binary_operator (`ne2, ()) }
+ | Kw_and; { Binary_operator (`and', ()) }
+ | Kw_or; { Binary_operator (`or', ()) }
+
+
+let function_name :=
+ | v = identifier; { Function_name (, ()) }

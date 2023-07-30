@@ -119,6 +119,16 @@ and expr () =
                 type t = A.ext A.unary_operator
 
                 let generate = unary_operator
+              end)
+              (struct
+                type t = A.ext A.binary_operator
+
+                let generate = binary_operator
+              end)
+              (struct
+                type t = A.ext A.function_name
+
+                let generate = function_name
               end) : S))
 
 and sql_statement () =
@@ -453,3 +463,13 @@ and join_clause () =
               end) : S))
 
 and unary_operator () = Unary_operator.((module Make () : S))
+
+and binary_operator () = Binary_operator.((module Make () : S))
+
+and function_name () =
+  Function_name.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))

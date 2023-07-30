@@ -32,6 +32,14 @@ and 'a expr =
       | `parameter of 'a bind_parameter
       | `name of 'a qualified_name
       | `unary of 'a unary_operator * 'a expr
+      | `binary of 'a expr * 'a binary_operator * 'a expr
+      | `function' of
+        'a function_name
+        * [ `no_arg
+          | `asterisk
+          | `exprs of [ `distinct ] option * 'a expr list
+          ]
+      | `nested of 'a expr list
       ]
       * 'a
 
@@ -175,3 +183,31 @@ and 'a join_clause =
       * 'a
 
 and 'a unary_operator = Unary_operator of [ `tilda | `plus | `minus ] * 'a
+
+and 'a binary_operator =
+  | Binary_operator of
+      [ `concat (* || *)
+      | `extract (* -> *)
+      | `extract_2 (* ->> *)
+      | `asterisk (* * *)
+      | `divide (* / *)
+      | `plus (* + *)
+      | `minus (* - *)
+      | `land' (* & *)
+      | `lor' (* | *)
+      | `lshift (* << *)
+      | `rshift (* >> *)
+      | `lt (* < *)
+      | `gt (* > *)
+      | `le (* <= *)
+      | `ge (* >= *)
+      | `eq (* = *)
+      | `eq2 (* == *)
+      | `ne (* <> *)
+      | `ne2 (* != *)
+      | `and' (* AND *)
+      | `or' (* OR *)
+      ]
+      * 'a
+
+and 'a function_name = Function_name of 'a identifier * 'a

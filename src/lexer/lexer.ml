@@ -2484,13 +2484,16 @@ let rec token buf =
   | '?' -> Tok_qmark
   | ';' -> Tok_semicolon
   | '\'' -> Tok_quote
-  | "->" -> Op_dereference
+  | "->>" -> Op_extract_2
+  | "->" -> Op_extract
   | '+' -> Op_plus
   | '-' -> Op_minus
   | '*' -> Op_star
   | '/' -> Op_slash
   | "||" -> Op_concat
-  | "&&" -> Op_double_amp
+  | "&" -> Op_amp
+  | "|" -> Op_pipe
+  | "==" -> Op_eq2
   | '=' -> Op_eq
   | ">=" -> Op_ge
   | '>' -> Op_gt
@@ -2499,5 +2502,7 @@ let rec token buf =
   | "<>" -> Op_ne
   | "!=" -> Op_ne2
   | "~" -> Op_tilda
+  | "<<" -> Op_lshift
+  | ">>" -> Op_rshift
   | eof -> Tok_eof
   | _ -> failwith "Malformed source"

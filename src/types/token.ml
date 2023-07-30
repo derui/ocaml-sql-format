@@ -316,16 +316,21 @@ type token =
   | Op_minus
   | Op_star
   | Op_slash
-  | Op_double_amp
+  | Op_amp
+  | Op_pipe
   | Op_concat
   | Op_eq
+  | Op_eq2
   | Op_ge
   | Op_gt
   | Op_le
   | Op_lt
   | Op_ne
   | Op_ne2
-  | Op_dereference
+  | Op_extract
+  | Op_extract_2
   | Op_tilda
+  | Op_lshift
+  | Op_rshift
   | Tok_eof
 [@@deriving show, eq]
