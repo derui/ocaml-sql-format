@@ -10,7 +10,8 @@ module Make
     (Name : GEN with type t = ext qualified_name)
     (Unary : GEN with type t = ext unary_operator)
     (Binary : GEN with type t = ext binary_operator)
-    (Fname : GEN with type t = ext function_name) : S = struct
+    (Fname : GEN with type t = ext function_name)
+    (Type_name : GEN with type t = ext type_name) : S = struct
   type t = ext expr
 
   let rec print f t ~option =
@@ -68,4 +69,15 @@ module Make
           Sfmt.comma ~option f ();
           print ~option f e)
         es
+    | Expr (`cast (e, tname), _) ->
+      Token.print ~option f Kw_cast;
+      Sfmt.parens ~option
+        (fun f _ ->
+          print ~option f e;
+          Fmt.string f " ";
+          Token.print ~option f Kw_as;
+          Fmt.string f " ";
+          let module Type_name = (val Type_name.generate ()) in
+          Type_name.print ~option f tname)
+        f ()
 end

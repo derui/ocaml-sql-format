@@ -700,7 +700,7 @@ let type_name :=
  | name = nonempty_list(identifier); Tok_lparen;
    size = signed_number; Tok_comma; max_size = signed_number;
    Tok_rparen ;
-   { Type_name (name, `with_size (size, max_size), ()) }
+   { Type_name (name, `with_max (size, max_size), ()) }
  | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen); { Type_name (name, `size size, ()) }
  | name = nonempty_list(identifier); { Type_name (name, `name_only, ()) }
 
@@ -721,6 +721,10 @@ let expr :=
  | op = unary_operator; v = expr; { Expr (`unary (op, v), ()) }
  | e = expr; op = binary_operator; e2 = expr; { Expr (`binary (e, op, e2), ()) }
  | e = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, expr), Tok_rparen); { Expr (`nested e, ()) }
+ | Kw_cast; Tok_lparen;
+   e = expr; Kw_as; t = type_name;
+   Tok_rparen;
+   { Expr (`cast (e, t), ()) }
 
 
 let sql_statement :=

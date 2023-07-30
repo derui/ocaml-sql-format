@@ -129,6 +129,11 @@ and expr () =
                 type t = A.ext A.function_name
 
                 let generate = function_name
+              end)
+              (struct
+                type t = A.ext A.type_name
+
+                let generate = type_name
               end) : S))
 
 and sql_statement () =

@@ -20,7 +20,7 @@ and 'a type_name =
         ]
       * 'a
 
-and 'a signed_number = Signed_number of sign * 'a numeric_literal * 'a
+and 'a signed_number = Signed_number of sign option * 'a numeric_literal * 'a
 
 and 'a qualified_name =
   | Qualified_name of
@@ -40,6 +40,7 @@ and 'a expr =
           | `exprs of [ `distinct ] option * 'a expr list
           ]
       | `nested of 'a expr list
+      | `cast of 'a expr * 'a type_name
       ]
       * 'a
 
