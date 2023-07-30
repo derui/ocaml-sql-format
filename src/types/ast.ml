@@ -41,6 +41,7 @@ and 'a expr =
           ]
       | `nested of 'a expr list
       | `cast of 'a expr * 'a type_name
+      | `collate of 'a expr * 'a collation_name
       ]
       * 'a
 

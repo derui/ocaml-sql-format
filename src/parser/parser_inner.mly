@@ -725,6 +725,7 @@ let expr :=
    e = expr; Kw_as; t = type_name;
    Tok_rparen;
    { Expr (`cast (e, t), ()) }
+ | e = expr; Kw_collate; tname = collation_name; { Expr (`collate (e, tname), ()) }
 
 
 let sql_statement :=

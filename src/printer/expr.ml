@@ -11,7 +11,8 @@ module Make
     (Unary : GEN with type t = ext unary_operator)
     (Binary : GEN with type t = ext binary_operator)
     (Fname : GEN with type t = ext function_name)
-    (Type_name : GEN with type t = ext type_name) : S = struct
+    (Type_name : GEN with type t = ext type_name)
+    (Collation_name : GEN with type t = ext collation_name) : S = struct
   type t = ext expr
 
   let rec print f t ~option =
@@ -80,4 +81,11 @@ module Make
           let module Type_name = (val Type_name.generate ()) in
           Type_name.print ~option f tname)
         f ()
+    | Expr (`collate (e, cname), _) ->
+      print ~option f e;
+      Fmt.string f " ";
+      Token.print ~option f Kw_collate;
+      Fmt.string f " ";
+      let module Collation_name = (val Collation_name.generate ()) in
+      Collation_name.print ~option f cname
 end
