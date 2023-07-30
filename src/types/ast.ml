@@ -181,7 +181,8 @@ and 'a join_constraint =
 and 'a join_clause =
   | Join_clause of
       'a table_or_subquery
-      * ('a join_operator * 'a table_or_subquery * 'a join_constraint) list
+      * ('a join_operator * 'a table_or_subquery * 'a join_constraint option)
+        list
       * 'a
 
 and 'a unary_operator = Unary_operator of [ `tilda | `plus | `minus ] * 'a

@@ -907,7 +907,7 @@ let join_constraint :=
  | Kw_using; ds = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name) ,Tok_rparen); { Join_constraint (`using ds, ()) }
 
 let join_clause_sublist ==
-  | op = join_operator; t = table_or_subquery; c =join_constraint; { (op, t, c) }
+  | op = join_operator; t = table_or_subquery; c = option(join_constraint); { (op, t, c) }
 
 let join_clause :=
  | q = table_or_subquery; cs = list(join_clause_sublist) ; { Join_clause (q, cs, ()) }

@@ -23,10 +23,13 @@ module Make
           Fmt.string f " ";
 
           V.print ~option f t;
-          Sfmt.force_vbox option.indent_size
-            (fun f _ ->
-              let module C = (val C.generate ()) in
-              C.print ~option f c)
-            f ())
+          Option.iter
+            (fun c ->
+              Sfmt.force_vbox option.indent_size
+                (fun f _ ->
+                  let module C = (val C.generate ()) in
+                  C.print ~option f c)
+                f ())
+            c)
         js
 end

@@ -425,11 +425,11 @@ statements: Kw_select Tok_qmark Tok_rparen
 ## In state 96, spurious reduction of production separated_nonempty_list(Tok_comma,result_column) -> result_column
 ## In state 95, spurious reduction of production select_clause -> Kw_select option(quantifier) separated_nonempty_list(Tok_comma,result_column)
 ## In state 110, spurious reduction of production option(from_clause) ->
-## In state 173, spurious reduction of production option(where_clause) ->
-## In state 177, spurious reduction of production option(group_by_clause) ->
-## In state 181, spurious reduction of production option(having_clause) ->
-## In state 184, spurious reduction of production option(window_clause) ->
-## In state 262, spurious reduction of production select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) option(window_clause)
+## In state 174, spurious reduction of production option(where_clause) ->
+## In state 178, spurious reduction of production option(group_by_clause) ->
+## In state 182, spurious reduction of production option(having_clause) ->
+## In state 185, spurious reduction of production option(window_clause) ->
+## In state 263, spurious reduction of production select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) option(window_clause)
 ## In state 109, spurious reduction of production select_statement -> select_core
 ## In state 108, spurious reduction of production sql_statement -> select_statement
 ## In state 107, spurious reduction of production statement -> sql_statement
@@ -723,7 +723,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_ident Kw_join Tok_string
 ##
 ## Ends in an error in state: 148.
 ##
-## list(join_clause_sublist) -> join_operator . table_or_subquery join_constraint list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
+## list(join_clause_sublist) -> join_operator . table_or_subquery option(join_constraint) list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
 ##
 ## The known suffix of the stack is as follows:
 ## join_operator
@@ -731,21 +731,14 @@ statements: Kw_select Tok_qmark Kw_from Tok_ident Kw_join Tok_string
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Kw_select Tok_qmark Kw_from Tok_ident Kw_join Tok_ident Tok_semicolon
+statements: Kw_select Tok_qmark Kw_from Tok_ident Kw_join Tok_ident Tok_ident Tok_string
 ##
 ## Ends in an error in state: 149.
 ##
-## list(join_clause_sublist) -> join_operator table_or_subquery . join_constraint list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
+## list(join_clause_sublist) -> join_operator table_or_subquery . option(join_constraint) list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
 ##
 ## The known suffix of the stack is as follows:
 ## join_operator table_or_subquery
-##
-## WARNING: This example involves spurious reductions.
-## This implies that, although the LR(1) items shown above provide an
-## accurate view of the past (what has been recognized so far), they
-## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 128, spurious reduction of production table_name -> identifier
-## In state 117, spurious reduction of production table_or_subquery -> table_name
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
@@ -829,17 +822,17 @@ statements: Kw_select Tok_qmark Kw_from Tok_ident Kw_join Tok_ident Kw_using Tok
 ##
 ## Ends in an error in state: 159.
 ##
-## list(join_clause_sublist) -> join_operator table_or_subquery join_constraint . list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
+## list(join_clause_sublist) -> join_operator table_or_subquery option(join_constraint) . list(join_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_where Kw_select Kw_having Kw_group ]
 ##
 ## The known suffix of the stack is as follows:
-## join_operator table_or_subquery join_constraint
+## join_operator table_or_subquery option(join_constraint)
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_select Tok_qmark Kw_from Tok_lparen Tok_ident Tok_comma Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 162.
+## Ends in an error in state: 163.
 ##
 ## table_or_subquery -> Tok_lparen separated_nonempty_list(Tok_comma,table_or_subquery) . Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
 ##
@@ -860,7 +853,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Tok_ident Tok_comma Tok_ident
 
 statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 164.
+## Ends in an error in state: 165.
 ##
 ## table_or_subquery -> Tok_lparen select_statement . Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
 ## table_or_subquery -> Tok_lparen select_statement . Tok_rparen Kw_as identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
@@ -877,11 +870,11 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_semic
 ## In state 96, spurious reduction of production separated_nonempty_list(Tok_comma,result_column) -> result_column
 ## In state 95, spurious reduction of production select_clause -> Kw_select option(quantifier) separated_nonempty_list(Tok_comma,result_column)
 ## In state 110, spurious reduction of production option(from_clause) ->
-## In state 173, spurious reduction of production option(where_clause) ->
-## In state 177, spurious reduction of production option(group_by_clause) ->
-## In state 181, spurious reduction of production option(having_clause) ->
-## In state 184, spurious reduction of production option(window_clause) ->
-## In state 262, spurious reduction of production select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) option(window_clause)
+## In state 174, spurious reduction of production option(where_clause) ->
+## In state 178, spurious reduction of production option(group_by_clause) ->
+## In state 182, spurious reduction of production option(having_clause) ->
+## In state 185, spurious reduction of production option(window_clause) ->
+## In state 263, spurious reduction of production select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) option(having_clause) option(window_clause)
 ## In state 109, spurious reduction of production select_statement -> select_core
 ##
 
@@ -889,7 +882,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_semic
 
 statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_rparen Tok_string
 ##
-## Ends in an error in state: 165.
+## Ends in an error in state: 166.
 ##
 ## table_or_subquery -> Tok_lparen select_statement Tok_rparen . [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
 ## table_or_subquery -> Tok_lparen select_statement Tok_rparen . Kw_as identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
@@ -903,7 +896,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_rpare
 
 statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_rparen Kw_as Tok_string
 ##
-## Ends in an error in state: 166.
+## Ends in an error in state: 167.
 ##
 ## table_or_subquery -> Tok_lparen select_statement Tok_rparen Kw_as . identifier [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
 ##
@@ -915,7 +908,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Kw_select Tok_qmark Tok_rpare
 
 statements: Kw_select Tok_qmark Kw_from Tok_lparen Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 169.
+## Ends in an error in state: 170.
 ##
 ## table_or_subquery -> Tok_lparen join_clause . Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_window Kw_where Kw_using Kw_select Kw_right Kw_on Kw_natural Kw_left Kw_join Kw_inner Kw_having Kw_group Kw_full Kw_cross ]
 ##
@@ -936,7 +929,7 @@ statements: Kw_select Tok_qmark Kw_from Tok_lparen Tok_ident Tok_semicolon
 
 statements: Kw_select Tok_qmark Kw_where Tok_semicolon
 ##
-## Ends in an error in state: 174.
+## Ends in an error in state: 175.
 ##
 ## where_clause -> Kw_where . expr [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_select Kw_having Kw_group ]
 ##
@@ -948,7 +941,7 @@ statements: Kw_select Tok_qmark Kw_where Tok_semicolon
 
 statements: Kw_select Tok_qmark Kw_where Tok_qmark Tok_ident
 ##
-## Ends in an error in state: 175.
+## Ends in an error in state: 176.
 ##
 ## expr -> expr . binary_operator expr [ Tok_semicolon Tok_rparen Tok_eof Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_window Kw_select Kw_or Kw_having Kw_group Kw_collate Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_semicolon Tok_rparen Tok_eof Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_window Kw_select Kw_or Kw_having Kw_group Kw_collate Kw_and ]
@@ -962,7 +955,7 @@ statements: Kw_select Tok_qmark Kw_where Tok_qmark Tok_ident
 
 statements: Kw_select Tok_qmark Kw_group Tok_string
 ##
-## Ends in an error in state: 178.
+## Ends in an error in state: 179.
 ##
 ## group_by_clause -> Kw_group . Kw_by separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_select Kw_having ]
 ##
@@ -974,7 +967,7 @@ statements: Kw_select Tok_qmark Kw_group Tok_string
 
 statements: Kw_select Tok_qmark Kw_group Kw_by Tok_semicolon
 ##
-## Ends in an error in state: 179.
+## Ends in an error in state: 180.
 ##
 ## group_by_clause -> Kw_group Kw_by . separated_nonempty_list(Tok_comma,expr) [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_select Kw_having ]
 ##
@@ -986,7 +979,7 @@ statements: Kw_select Tok_qmark Kw_group Kw_by Tok_semicolon
 
 statements: Kw_select Tok_qmark Kw_group Kw_by Tok_qmark Kw_rows
 ##
-## Ends in an error in state: 181.
+## Ends in an error in state: 182.
 ##
 ## select_core -> select_clause option(from_clause) option(where_clause) option(group_by_clause) . option(having_clause) option(window_clause) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ##
@@ -998,15 +991,15 @@ statements: Kw_select Tok_qmark Kw_group Kw_by Tok_qmark Kw_rows
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
 ## In state 88, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
-## In state 180, spurious reduction of production group_by_clause -> Kw_group Kw_by separated_nonempty_list(Tok_comma,expr)
-## In state 264, spurious reduction of production option(group_by_clause) -> group_by_clause
+## In state 181, spurious reduction of production group_by_clause -> Kw_group Kw_by separated_nonempty_list(Tok_comma,expr)
+## In state 265, spurious reduction of production option(group_by_clause) -> group_by_clause
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_select Tok_qmark Kw_having Tok_semicolon
 ##
-## Ends in an error in state: 182.
+## Ends in an error in state: 183.
 ##
 ## having_clause -> Kw_having . expr [ Tok_semicolon Tok_rparen Tok_eof Kw_window Kw_select ]
 ##
@@ -1018,7 +1011,7 @@ statements: Kw_select Tok_qmark Kw_having Tok_semicolon
 
 statements: Kw_select Tok_qmark Kw_having Tok_qmark Tok_ident
 ##
-## Ends in an error in state: 183.
+## Ends in an error in state: 184.
 ##
 ## expr -> expr . binary_operator expr [ Tok_semicolon Tok_rparen Tok_eof Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_window Kw_select Kw_or Kw_collate Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_semicolon Tok_rparen Tok_eof Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_window Kw_select Kw_or Kw_collate Kw_and ]
@@ -1032,7 +1025,7 @@ statements: Kw_select Tok_qmark Kw_having Tok_qmark Tok_ident
 
 statements: Kw_select Tok_qmark Kw_window Tok_string
 ##
-## Ends in an error in state: 185.
+## Ends in an error in state: 186.
 ##
 ## window_clause -> Kw_window . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ##
@@ -1044,7 +1037,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_string
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Tok_string
 ##
-## Ends in an error in state: 187.
+## Ends in an error in state: 188.
 ##
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Kw_as window_defn [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier . Kw_as window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
@@ -1057,7 +1050,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Tok_string
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_string
 ##
-## Ends in an error in state: 188.
+## Ends in an error in state: 189.
 ##
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Kw_as . window_defn [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Kw_as . window_defn Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
@@ -1070,7 +1063,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_string
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_string
 ##
-## Ends in an error in state: 189.
+## Ends in an error in state: 190.
 ##
 ## window_defn -> Tok_lparen . option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_select ]
 ##
@@ -1082,7 +1075,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_string
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_ident Tok_string
 ##
-## Ends in an error in state: 190.
+## Ends in an error in state: 191.
 ##
 ## window_defn -> Tok_lparen option(base_window_name) . option(partition_clause) option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_select ]
 ##
@@ -1094,7 +1087,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_ident T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partition Tok_string
 ##
-## Ends in an error in state: 191.
+## Ends in an error in state: 192.
 ##
 ## partition_clause -> Kw_partition . Kw_by separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Kw_rows Kw_range Kw_order Kw_groups ]
 ##
@@ -1106,7 +1099,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partitio
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partition Kw_by Tok_semicolon
 ##
-## Ends in an error in state: 192.
+## Ends in an error in state: 193.
 ##
 ## partition_clause -> Kw_partition Kw_by . separated_nonempty_list(Tok_comma,expr) [ Tok_rparen Kw_rows Kw_range Kw_order Kw_groups ]
 ##
@@ -1118,7 +1111,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partitio
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partition Kw_by Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 195.
+## Ends in an error in state: 196.
 ##
 ## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) . option(order_by_clause) option(frame_spec) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_select ]
 ##
@@ -1130,15 +1123,15 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_partitio
 ## accurate view of the past (what has been recognized so far), they
 ## may provide an INCOMPLETE view of the future (what was expected next).
 ## In state 88, spurious reduction of production separated_nonempty_list(Tok_comma,expr) -> expr
-## In state 193, spurious reduction of production partition_clause -> Kw_partition Kw_by separated_nonempty_list(Tok_comma,expr)
-## In state 194, spurious reduction of production option(partition_clause) -> partition_clause
+## In state 194, spurious reduction of production partition_clause -> Kw_partition Kw_by separated_nonempty_list(Tok_comma,expr)
+## In state 195, spurious reduction of production option(partition_clause) -> partition_clause
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Tok_string
 ##
-## Ends in an error in state: 196.
+## Ends in an error in state: 197.
 ##
 ## order_by_clause -> Kw_order . Kw_by ordering_term [ Tok_rparen Kw_rows Kw_range Kw_groups ]
 ##
@@ -1150,7 +1143,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order To
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_semicolon
 ##
-## Ends in an error in state: 197.
+## Ends in an error in state: 198.
 ##
 ## order_by_clause -> Kw_order Kw_by . ordering_term [ Tok_rparen Kw_rows Kw_range Kw_groups ]
 ##
@@ -1162,7 +1155,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 199.
+## Ends in an error in state: 200.
 ##
 ## expr -> expr . binary_operator expr [ Tok_rparen Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_rows Kw_range Kw_or Kw_null Kw_groups Kw_desc Kw_collation Kw_collate Kw_asc Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_rparen Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_rows Kw_range Kw_or Kw_null Kw_groups Kw_desc Kw_collation Kw_collate Kw_asc Kw_and ]
@@ -1176,7 +1169,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_qmark Kw_collation Tok_ident Tok_string
 ##
-## Ends in an error in state: 200.
+## Ends in an error in state: 201.
 ##
 ## ordering_term -> expr option(collation_name) . option(order) option(null_order) [ Tok_rparen Kw_rows Kw_range Kw_groups ]
 ##
@@ -1188,7 +1181,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_qmark Kw_asc Tok_string
 ##
-## Ends in an error in state: 203.
+## Ends in an error in state: 204.
 ##
 ## ordering_term -> expr option(collation_name) option(order) . option(null_order) [ Tok_rparen Kw_rows Kw_range Kw_groups ]
 ##
@@ -1200,7 +1193,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_qmark Kw_null Tok_string
 ##
-## Ends in an error in state: 204.
+## Ends in an error in state: 205.
 ##
 ## option(null_order) -> Kw_null . Kw_first [ Tok_rparen Kw_rows Kw_range Kw_groups ]
 ## option(null_order) -> Kw_null . Kw_last [ Tok_rparen Kw_rows Kw_range Kw_groups ]
@@ -1213,7 +1206,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw_by Tok_qmark Kw_null Kw_first Tok_string
 ##
-## Ends in an error in state: 210.
+## Ends in an error in state: 211.
 ##
 ## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) . option(frame_spec) Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_select ]
 ##
@@ -1225,7 +1218,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_order Kw
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_rows Tok_semicolon
 ##
-## Ends in an error in state: 211.
+## Ends in an error in state: 212.
 ##
 ## frame_spec -> Kw_rows . frame_spec_core option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1237,7 +1230,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_rows Tok
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_unbounded Tok_string
 ##
-## Ends in an error in state: 212.
+## Ends in an error in state: 213.
 ##
 ## frame_spec_core -> Kw_unbounded . Kw_preceding [ Tok_rparen Kw_exclude ]
 ##
@@ -1249,7 +1242,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_current Tok_string
 ##
-## Ends in an error in state: 214.
+## Ends in an error in state: 215.
 ##
 ## frame_spec_core -> Kw_current . Kw_row [ Tok_rparen Kw_exclude ]
 ##
@@ -1261,7 +1254,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_semicolon
 ##
-## Ends in an error in state: 216.
+## Ends in an error in state: 217.
 ##
 ## frame_spec_between -> Kw_between . frame_spec_between_1 Kw_and frame_spec_between_2 [ Tok_rparen Kw_exclude ]
 ##
@@ -1273,7 +1266,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Kw_unbounded Tok_string
 ##
-## Ends in an error in state: 217.
+## Ends in an error in state: 218.
 ##
 ## frame_spec_between_1 -> Kw_unbounded . Kw_preceding [ Kw_and ]
 ##
@@ -1285,7 +1278,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Kw_current Tok_string
 ##
-## Ends in an error in state: 219.
+## Ends in an error in state: 220.
 ##
 ## frame_spec_between_1 -> Kw_current . Kw_row [ Kw_and ]
 ##
@@ -1297,7 +1290,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Kw_following Tok_string
 ##
-## Ends in an error in state: 221.
+## Ends in an error in state: 222.
 ##
 ## frame_spec_between -> Kw_between frame_spec_between_1 . Kw_and frame_spec_between_2 [ Tok_rparen Kw_exclude ]
 ##
@@ -1309,7 +1302,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Kw_following Kw_and Tok_semicolon
 ##
-## Ends in an error in state: 222.
+## Ends in an error in state: 223.
 ##
 ## frame_spec_between -> Kw_between frame_spec_between_1 Kw_and . frame_spec_between_2 [ Tok_rparen Kw_exclude ]
 ##
@@ -1321,7 +1314,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Kw_following Kw_and Kw_unbounded Tok_string
 ##
-## Ends in an error in state: 223.
+## Ends in an error in state: 224.
 ##
 ## frame_spec_between_2 -> Kw_unbounded . Kw_following [ Tok_rparen Kw_exclude ]
 ##
@@ -1333,7 +1326,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Kw_following Kw_and Kw_current Tok_string
 ##
-## Ends in an error in state: 225.
+## Ends in an error in state: 226.
 ##
 ## frame_spec_between_2 -> Kw_current . Kw_row [ Tok_rparen Kw_exclude ]
 ##
@@ -1345,7 +1338,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Kw_following Kw_and Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 228.
+## Ends in an error in state: 229.
 ##
 ## expr -> expr . binary_operator expr [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_following Kw_collate Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_following Kw_collate Kw_and ]
@@ -1360,7 +1353,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Kw_between Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 231.
+## Ends in an error in state: 232.
 ##
 ## expr -> expr . binary_operator expr [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_following Kw_collate Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_following Kw_collate Kw_and ]
@@ -1375,7 +1368,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups K
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_rows Tok_qmark Kw_preceding Tok_string
 ##
-## Ends in an error in state: 234.
+## Ends in an error in state: 235.
 ##
 ## frame_spec -> Kw_rows frame_spec_core . option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1387,7 +1380,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_rows Tok
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Kw_preceding Kw_exclude Tok_string
 ##
-## Ends in an error in state: 235.
+## Ends in an error in state: 236.
 ##
 ## frame_spec_excluding -> Kw_exclude . Kw_group [ Tok_rparen ]
 ## frame_spec_excluding -> Kw_exclude . Kw_ties [ Tok_rparen ]
@@ -1402,7 +1395,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Kw_preceding Kw_exclude Kw_no Tok_string
 ##
-## Ends in an error in state: 237.
+## Ends in an error in state: 238.
 ##
 ## frame_spec_excluding -> Kw_exclude Kw_no . Kw_others [ Tok_rparen ]
 ##
@@ -1414,7 +1407,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Kw_preceding Kw_exclude Kw_current Tok_string
 ##
-## Ends in an error in state: 240.
+## Ends in an error in state: 241.
 ##
 ## frame_spec_excluding -> Kw_exclude Kw_current . Kw_row [ Tok_rparen ]
 ##
@@ -1426,7 +1419,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Tok_semicolon
 ##
-## Ends in an error in state: 245.
+## Ends in an error in state: 246.
 ##
 ## expr -> expr . binary_operator expr [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_collate Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_preceding Kw_or Kw_collate Kw_and ]
@@ -1440,7 +1433,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_range Tok_semicolon
 ##
-## Ends in an error in state: 247.
+## Ends in an error in state: 248.
 ##
 ## frame_spec -> Kw_range . frame_spec_core option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1452,7 +1445,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_range To
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_range Tok_qmark Kw_preceding Tok_string
 ##
-## Ends in an error in state: 248.
+## Ends in an error in state: 249.
 ##
 ## frame_spec -> Kw_range frame_spec_core . option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1464,7 +1457,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_range To
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_semicolon
 ##
-## Ends in an error in state: 250.
+## Ends in an error in state: 251.
 ##
 ## frame_spec -> Kw_groups . frame_spec_core option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1476,7 +1469,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Kw_preceding Tok_string
 ##
-## Ends in an error in state: 251.
+## Ends in an error in state: 252.
 ##
 ## frame_spec -> Kw_groups frame_spec_core . option(frame_spec_excluding) [ Tok_rparen ]
 ##
@@ -1488,7 +1481,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups Tok_qmark Kw_preceding Kw_exclude Kw_group Tok_string
 ##
-## Ends in an error in state: 253.
+## Ends in an error in state: 254.
 ##
 ## window_defn -> Tok_lparen option(base_window_name) option(partition_clause) option(order_by_clause) option(frame_spec) . Tok_rparen [ Tok_semicolon Tok_rparen Tok_eof Tok_comma Kw_select ]
 ##
@@ -1500,7 +1493,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Kw_groups T
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_rparen Tok_string
 ##
-## Ends in an error in state: 258.
+## Ends in an error in state: 259.
 ##
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Kw_as window_defn . [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Kw_as window_defn . Tok_comma separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
@@ -1513,7 +1506,7 @@ statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_rparen 
 
 statements: Kw_select Tok_qmark Kw_window Tok_ident Kw_as Tok_lparen Tok_rparen Tok_comma Tok_string
 ##
-## Ends in an error in state: 259.
+## Ends in an error in state: 260.
 ##
 ## separated_nonempty_list(Tok_comma,window_clause_sublist) -> identifier Kw_as window_defn Tok_comma . separated_nonempty_list(Tok_comma,window_clause_sublist) [ Tok_semicolon Tok_rparen Tok_eof Kw_select ]
 ##
