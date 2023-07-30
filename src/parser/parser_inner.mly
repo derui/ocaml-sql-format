@@ -215,7 +215,6 @@ open Types.Literal
 %token Kw_yaml
 %token Kw_policy
 %token Kw_interval
-%token Kw_convert
 %token Kw_cast
 %token Kw_substring
 %token Kw_extract
@@ -569,7 +568,6 @@ let keyword ==
   | Kw_yaml; {Identifier (`keyword Kw_yaml, ())}
   | Kw_policy; {Identifier (`keyword Kw_policy, ())}
   | Kw_interval; {Identifier (`keyword Kw_interval, ())}
-  | Kw_convert; {Identifier (`keyword Kw_convert, ())}
   | Kw_cast; {Identifier (`keyword Kw_cast, ())}
   | Kw_substring; {Identifier (`keyword Kw_substring, ())}
   | Kw_extract; {Identifier (`keyword Kw_extract, ())}
@@ -750,6 +748,19 @@ let expr :=
      }
  | e = expr; Kw_is; n = ioption(Kw_not); Kw_distinct; Kw_from; e2 = expr; {
        Expr (`is_distinct (e, Option.map (fun _ -> `not') n, e2), ())
+     }
+(* function *)
+ | fname = function_name; Tok_lparen; Tok_rparen; {
+       Expr (`function' (fname, `no_arg), ())
+     }
+ | fname = function_name; Tok_lparen; Op_star; Tok_rparen; {
+       Expr (`function' (fname, `asterisk), ())
+     }
+ | fname = function_name; Tok_lparen;
+   d = ioption(Kw_distinct);
+   es = separated_nonempty_list(Tok_comma, expr);
+   Tok_rparen; {
+       Expr (`function' (fname, `exprs (Option.map (fun _ -> `distinct) d, es)), ())
      }
 
 
@@ -969,5 +980,5 @@ let binary_operator :=
  | Kw_or; { Binary_operator (`or', ()) }
 
 
-let function_name :=
- | v = identifier; { Function_name (, ()) }
+let function_name ==
+ | v = identifier; { Function_name (v, ()) }
