@@ -15,6 +15,7 @@ and 'a type_name =
   | Type_name of
       'a identifier list
       * [ `name_only
+        | `array
         | `size of 'a signed_number
         | `with_max of 'a signed_number * 'a signed_number
         ]

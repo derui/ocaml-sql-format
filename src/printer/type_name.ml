@@ -24,6 +24,10 @@ module Make
   let print f t ~option =
     match t with
     | Type_name (names, `name_only, _) -> print_names ~option f names
+    | Type_name (names, `array, _) ->
+      print_names ~option f names;
+      Token.print ~option f Tok_lsbrace;
+      Token.print ~option f Tok_rsbrace
     | Type_name (names, `size size, _) ->
       print_names ~option f names;
       Sfmt.parens ~option

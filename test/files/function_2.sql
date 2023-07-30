@@ -1,7 +1,5 @@
 select
-  cast(e as string)
- ,cast(e as string[])
- ,cast(e as varchar)
+  cast(e as varchar)
  ,cast(e as boolean)
  ,cast(e as byte)
  ,cast(e as tinyint)

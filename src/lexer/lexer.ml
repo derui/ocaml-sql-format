@@ -463,10 +463,6 @@ let kw_cume_dist =
     , Chars "sS"
     , Chars "tT" )]
 
-let kw_string =
-  [%sedlex.regexp?
-    Chars "sS", Chars "tT", Chars "rR", Chars "iI", Chars "nN", Chars "gG"]
-
 let kw_varchar =
   [%sedlex.regexp?
     ( Chars "vV"
@@ -2273,31 +2269,6 @@ let rec token buf =
   | kw_dense_rank -> Kw_dense_rank
   | kw_percent_rank -> Kw_percent_rank
   | kw_cume_dist -> Kw_cume_dist
-  | kw_string -> Kw_string
-  | kw_varchar -> Kw_varchar
-  | kw_boolean -> Kw_boolean
-  | kw_byte -> Kw_byte
-  | kw_tinyint -> Kw_tinyint
-  | kw_short -> Kw_short
-  | kw_smallint -> Kw_smallint
-  | kw_char -> Kw_char
-  | kw_integer -> Kw_integer
-  | kw_long -> Kw_long
-  | kw_bigint -> Kw_bigint
-  | kw_biginteger -> Kw_biginteger
-  | kw_float -> Kw_float
-  | kw_real -> Kw_real
-  | kw_double -> Kw_double
-  | kw_bigdecimal -> Kw_bigdecimal
-  | kw_decimal -> Kw_decimal
-  | kw_object -> Kw_object
-  | kw_blob -> Kw_blob
-  | kw_clob -> Kw_clob
-  | kw_json -> Kw_json
-  | kw_varbinary -> Kw_varbinary
-  | kw_geometry -> Kw_geometry
-  | kw_geography -> Kw_geography
-  | kw_xml -> Kw_xml
   | kw_convert -> Kw_convert
   | kw_cast -> Kw_cast
   | kw_substring -> Kw_substring

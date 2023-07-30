@@ -88,6 +88,7 @@ open Types.Literal
 %token Kw_var_pop
 %token Kw_filter
 %token Kw_over
+%token Kw_convert
 %token Kw_partition
 %token Kw_range
 %token Kw_unbounded
@@ -99,31 +100,6 @@ open Types.Literal
 %token Kw_dense_rank
 %token Kw_percent_rank
 %token Kw_cume_dist
-%token Kw_string
-%token Kw_varchar
-%token Kw_boolean
-%token Kw_byte
-%token Kw_tinyint
-%token Kw_short
-%token Kw_smallint
-%token Kw_char
-%token Kw_integer
-%token Kw_long
-%token Kw_bigint
-%token Kw_biginteger
-%token Kw_float
-%token Kw_real
-%token Kw_double
-%token Kw_bigdecimal
-%token Kw_decimal
-%token Kw_object
-%token Kw_blob
-%token Kw_clob
-%token Kw_json
-%token Kw_varbinary
-%token Kw_geometry
-%token Kw_geography
-%token Kw_xml
 %token Kw_year
 %token Kw_month
 %token Kw_day
@@ -452,31 +428,6 @@ let keyword ==
   | Kw_dense_rank; {Identifier (`keyword Kw_dense_rank, ())}
   | Kw_percent_rank; {Identifier (`keyword Kw_percent_rank, ())}
   | Kw_cume_dist; {Identifier (`keyword Kw_cume_dist, ())}
-  | Kw_string; {Identifier (`keyword Kw_string, ())}
-  | Kw_varchar; {Identifier (`keyword Kw_varchar, ())}
-  | Kw_boolean; {Identifier (`keyword Kw_boolean, ())}
-  | Kw_byte; {Identifier (`keyword Kw_byte, ())}
-  | Kw_tinyint; {Identifier (`keyword Kw_tinyint, ())}
-  | Kw_short; {Identifier (`keyword Kw_short, ())}
-  | Kw_smallint; {Identifier (`keyword Kw_smallint, ())}
-  | Kw_char; {Identifier (`keyword Kw_char, ())}
-  | Kw_integer; {Identifier (`keyword Kw_integer, ())}
-  | Kw_long; {Identifier (`keyword Kw_long, ())}
-  | Kw_bigint; {Identifier (`keyword Kw_bigint, ())}
-  | Kw_biginteger; {Identifier (`keyword Kw_biginteger, ())}
-  | Kw_float; {Identifier (`keyword Kw_float, ())}
-  | Kw_real; {Identifier (`keyword Kw_real, ())}
-  | Kw_double; {Identifier (`keyword Kw_double, ())}
-  | Kw_bigdecimal; {Identifier (`keyword Kw_bigdecimal, ())}
-  | Kw_decimal; {Identifier (`keyword Kw_decimal, ())}
-  | Kw_object; {Identifier (`keyword Kw_object, ())}
-  | Kw_blob; {Identifier (`keyword Kw_blob, ())}
-  | Kw_clob; {Identifier (`keyword Kw_clob, ())}
-  | Kw_json; {Identifier (`keyword Kw_json, ())}
-  | Kw_varbinary; {Identifier (`keyword Kw_varbinary, ())}
-  | Kw_geometry; {Identifier (`keyword Kw_geometry, ())}
-  | Kw_geography; {Identifier (`keyword Kw_geography, ())}
-  | Kw_xml; {Identifier (`keyword Kw_xml, ())}
   | Kw_year; {Identifier (`keyword Kw_year, ())}
   | Kw_month; {Identifier (`keyword Kw_month, ())}
   | Kw_day; {Identifier (`keyword Kw_day, ())}
@@ -704,6 +655,7 @@ let type_name :=
    Tok_rparen ;
    { Type_name (name, `with_max (size, max_size), ()) }
  | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen); { Type_name (name, `size size, ()) }
+ | name = nonempty_list(identifier); Tok_lsbrace; Tok_rsbrace; { Type_name (name, `array, ()) }
  | name = nonempty_list(identifier); { Type_name (name, `name_only, ()) }
 
 let signed_number :=

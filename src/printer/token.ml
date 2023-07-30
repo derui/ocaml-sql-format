@@ -105,31 +105,6 @@ include (
       | Kw_dense_rank -> Fmt.string f @@ as_keyword "dense_rank" keyword
       | Kw_percent_rank -> Fmt.string f @@ as_keyword "percent_rank" keyword
       | Kw_cume_dist -> Fmt.string f @@ as_keyword "cume_dist" keyword
-      | Kw_string -> Fmt.string f @@ as_keyword "string" keyword
-      | Kw_varchar -> Fmt.string f @@ as_keyword "varchar" keyword
-      | Kw_boolean -> Fmt.string f @@ as_keyword "boolean" keyword
-      | Kw_byte -> Fmt.string f @@ as_keyword "byte" keyword
-      | Kw_tinyint -> Fmt.string f @@ as_keyword "tinyint" keyword
-      | Kw_short -> Fmt.string f @@ as_keyword "short" keyword
-      | Kw_smallint -> Fmt.string f @@ as_keyword "smallint" keyword
-      | Kw_char -> Fmt.string f @@ as_keyword "char" keyword
-      | Kw_integer -> Fmt.string f @@ as_keyword "integer" keyword
-      | Kw_long -> Fmt.string f @@ as_keyword "long" keyword
-      | Kw_bigint -> Fmt.string f @@ as_keyword "bigint" keyword
-      | Kw_biginteger -> Fmt.string f @@ as_keyword "biginteger" keyword
-      | Kw_float -> Fmt.string f @@ as_keyword "float" keyword
-      | Kw_real -> Fmt.string f @@ as_keyword "real" keyword
-      | Kw_double -> Fmt.string f @@ as_keyword "double" keyword
-      | Kw_bigdecimal -> Fmt.string f @@ as_keyword "bigdecimal" keyword
-      | Kw_decimal -> Fmt.string f @@ as_keyword "decimal" keyword
-      | Kw_object -> Fmt.string f @@ as_keyword "object" keyword
-      | Kw_blob -> Fmt.string f @@ as_keyword "blob" keyword
-      | Kw_clob -> Fmt.string f @@ as_keyword "clob" keyword
-      | Kw_json -> Fmt.string f @@ as_keyword "json" keyword
-      | Kw_varbinary -> Fmt.string f @@ as_keyword "varbinary" keyword
-      | Kw_geometry -> Fmt.string f @@ as_keyword "geometry" keyword
-      | Kw_geography -> Fmt.string f @@ as_keyword "geography" keyword
-      | Kw_xml -> Fmt.string f @@ as_keyword "xml" keyword
       | Kw_convert -> Fmt.string f @@ as_keyword "convert" keyword
       | Kw_cast -> Fmt.string f @@ as_keyword "cast" keyword
       | Kw_substring -> Fmt.string f @@ as_keyword "substring" keyword
