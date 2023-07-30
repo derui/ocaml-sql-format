@@ -17,6 +17,7 @@ module Make
 
       List.iter
         (fun (op, t, c) ->
+          Fmt.cut f ();
           let module O = (val O.generate ()) in
           O.print ~option f op;
 

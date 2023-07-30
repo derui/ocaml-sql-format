@@ -25,7 +25,7 @@ module Make () : S = struct
         | `right -> Kw_right
         | `full -> Kw_full
       in
-      Sfmt.keyword ~option f [ Kw_natural; Kw_outer; kw; Kw_join ]
+      Sfmt.keyword ~option f [ Kw_natural; kw; Kw_outer; Kw_join ]
     | Join_operator (`outer (None, kw), _) ->
       let kw =
         match kw with
@@ -33,5 +33,5 @@ module Make () : S = struct
         | `right -> Kw_right
         | `full -> Kw_full
       in
-      Sfmt.keyword ~option f [ Kw_outer; kw; Kw_join ]
+      Sfmt.keyword ~option f [ kw; Kw_outer; Kw_join ]
 end

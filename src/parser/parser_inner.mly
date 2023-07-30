@@ -348,6 +348,7 @@ open Types.Literal
 %left Op_amp Op_pipe Op_lshift Op_rshift
 %left Op_lt Op_gt Op_le Op_ge
 %left Op_eq Op_eq2 Op_ne Op_ne2
+%left Kw_not
 %left Kw_and Kw_or
 
 %start <Types.Statement.t list> statements
@@ -687,13 +688,13 @@ let blob_literal :=
 let bind_parameter :=
   | Tok_qmark; {Bind_parameter ()}
 
-let schema_name :=
+let schema_name ==
   | v = identifier; { Schema_name (v, ()) }
 
-let table_name :=
+let table_name ==
   | v = identifier; { Table_name (v, ()) }
 
-let column_name :=
+let column_name ==
   | v = identifier; { Column_name (v, ()) }
 
 let type_name :=
@@ -708,10 +709,12 @@ let signed_number :=
  | sign = option(sign); v = numeric_literal; { Signed_number (sign ,v, ()) }
 
 let qualified_name :=
+ | sname = pair(schema_name, Tok_period);
+   tname = pair(table_name, Tok_period);
+   name = column_name; { Qualified_name (Some (fst sname), Some (fst tname), name, ()) }
+ | tname = pair(table_name, Tok_period);
+   name = column_name; { Qualified_name (None, Some (fst tname), name, ()) }
  | name = column_name; { Qualified_name (None, None, name, ()) }
- | tname = table_name;Tok_period; name = column_name; { Qualified_name (None, Some tname, name, ()) }
- | sname = schema_name; Tok_period; tname = table_name;
-   Tok_period; name = column_name; { Qualified_name (Some sname, Some tname, name, ()) }
 
 
 let expr :=
@@ -917,6 +920,7 @@ let unary_operator ==
  | Op_tilda; { Unary_operator (`tilda, ()) }
  | Op_plus; { Unary_operator (`plus, ()) }
  | Op_minus; { Unary_operator (`minus, ()) }
+ | Kw_not; { Unary_operator (`not', ()) }
 
 
 let binary_operator :=

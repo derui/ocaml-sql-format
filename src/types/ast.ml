@@ -185,7 +185,8 @@ and 'a join_clause =
         list
       * 'a
 
-and 'a unary_operator = Unary_operator of [ `tilda | `plus | `minus ] * 'a
+and 'a unary_operator =
+  | Unary_operator of [ `tilda | `plus | `minus | `not' ] * 'a
 
 and 'a binary_operator =
   | Binary_operator of
