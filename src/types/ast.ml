@@ -46,6 +46,8 @@ and 'a expr =
       | `glob of 'a expr * [ `not' ] option * 'a expr
       | `regexp of 'a expr * [ `not' ] option * 'a expr
       | `match' of 'a expr * [ `not' ] option * 'a expr
+      | `is of 'a expr * [ `not' ] option * 'a expr
+      | `is_distinct of 'a expr * [ `not' ] option * 'a expr
       ]
       * 'a
 

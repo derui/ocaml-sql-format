@@ -141,4 +141,28 @@ module Make
       Sfmt.keyword ~option f [ Kw_match ];
       Fmt.string f " ";
       print ~option f e2
+    | Expr (`is (e, not', e2), _) ->
+      print ~option f e;
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_is ];
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      print ~option f e2
+    | Expr (`is_distinct (e, not', e2), _) ->
+      print ~option f e;
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_is ];
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_distinct; Kw_from ];
+      Fmt.string f " ";
+      print ~option f e2
 end
