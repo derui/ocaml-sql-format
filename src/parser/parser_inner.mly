@@ -649,21 +649,25 @@ let table_name ==
 let column_name ==
   | v = identifier; { Column_name (v, ()) }
 
+let name ==
+  | ~ = identifier; <>
+      | ~ = keyword; <>
+
 let type_name :=
- | name = nonempty_list(identifier); Tok_lparen;
+ | name = nonempty_list(name); Tok_lparen;
    size = signed_number; Tok_comma; max_size = signed_number;
    Tok_rparen ;
    { Type_name (name, `with_max (size, max_size, None), ()) }
- | name = nonempty_list(identifier); Tok_lparen;
+ | name = nonempty_list(name); Tok_lparen;
    size = signed_number; Tok_comma; max_size = signed_number;
    Tok_rparen ;Tok_lsbrace; Tok_rsbrace;
    { Type_name (name, `with_max (size, max_size, Some `array), ()) }
- | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen);
+ | name = nonempty_list(name); size = delimited(Tok_lparen, signed_number, Tok_rparen);
    { Type_name (name, `size (size, None), ()) }
- | name = nonempty_list(identifier); size = delimited(Tok_lparen, signed_number, Tok_rparen);
+ | name = nonempty_list(name); size = delimited(Tok_lparen, signed_number, Tok_rparen);
    Tok_lsbrace; Tok_rsbrace; { Type_name (name, `size (size, Some `array), ()) }
- | name = nonempty_list(identifier); Tok_lsbrace; Tok_rsbrace; { Type_name (name, `array, ()) }
- | name = nonempty_list(identifier); { Type_name (name, `name_only, ()) }
+ | name = nonempty_list(name); Tok_lsbrace; Tok_rsbrace; { Type_name (name, `array, ()) }
+ | name = nonempty_list(name); { Type_name (name, `name_only, ()) }
 
 let signed_number :=
  | sign = option(sign); v = numeric_literal; { Signed_number (sign ,v, ()) }
