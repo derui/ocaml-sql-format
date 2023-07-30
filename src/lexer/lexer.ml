@@ -2131,7 +2131,9 @@ let unsigned_integer = [%sedlex.regexp? Plus digit]
 
 let decimal =
   [%sedlex.regexp?
-    unsigned_integer, '.', unsigned_integer | '.', unsigned_integer]
+    ( unsigned_integer
+    | unsigned_integer, '.', unsigned_integer
+    | '.', unsigned_integer )]
 
 let exponent = [%sedlex.regexp? Chars "eE", Opt (Chars "+-"), unsigned_integer]
 
