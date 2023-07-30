@@ -16,8 +16,8 @@ and 'a type_name =
       'a identifier list
       * [ `name_only
         | `array
-        | `size of 'a signed_number
-        | `with_max of 'a signed_number * 'a signed_number
+        | `size of 'a signed_number * [ `array ] option
+        | `with_max of 'a signed_number * 'a signed_number * [ `array ] option
         ]
       * 'a
 

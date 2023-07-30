@@ -28,14 +28,19 @@ module Make
       print_names ~option f names;
       Token.print ~option f Tok_lsbrace;
       Token.print ~option f Tok_rsbrace
-    | Type_name (names, `size size, _) ->
+    | Type_name (names, `size (size, ary), _) ->
       print_names ~option f names;
       Sfmt.parens ~option
         (fun f _ ->
           let module N = (val N.generate ()) in
           N.print ~option f size)
-        f ()
-    | Type_name (names, `with_max (size, max_size), _) ->
+        f ();
+      Option.iter
+        (fun _ ->
+          Token.print ~option f Tok_lsbrace;
+          Token.print ~option f Tok_rsbrace)
+        ary
+    | Type_name (names, `with_max (size, max_size, ary), _) ->
       print_names ~option f names;
       Sfmt.parens ~option
         (fun f _ ->
@@ -43,5 +48,10 @@ module Make
           N.print ~option f size;
           Sfmt.comma ~option f ();
           N.print ~option f max_size)
-        f ()
+        f ();
+      Option.iter
+        (fun _ ->
+          Token.print ~option f Tok_lsbrace;
+          Token.print ~option f Tok_rsbrace)
+        ary
 end

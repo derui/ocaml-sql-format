@@ -2488,4 +2488,6 @@ let rec token buf =
   | "<<" -> Op_lshift
   | ">>" -> Op_rshift
   | eof -> Tok_eof
-  | _ -> failwith "Malformed source"
+  | _ ->
+    failwith
+      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
