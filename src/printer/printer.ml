@@ -139,6 +139,21 @@ and expr () =
                 type t = A.ext A.collation_name
 
                 let generate = collation_name
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
+              end)
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end)
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
               end) : S))
 
 and sql_statement () =

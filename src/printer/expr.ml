@@ -12,7 +12,10 @@ module Make
     (Binary : GEN with type t = ext binary_operator)
     (Fname : GEN with type t = ext function_name)
     (Type_name : GEN with type t = ext type_name)
-    (Collation_name : GEN with type t = ext collation_name) : S = struct
+    (Collation_name : GEN with type t = ext collation_name)
+    (Select_statement : GEN with type t = ext select_statement)
+    (Schema_name : GEN with type t = ext schema_name)
+    (Table_name : GEN with type t = ext table_name) : S = struct
   type t = ext expr
 
   let rec print f t ~option =
@@ -165,4 +168,75 @@ module Make
       Sfmt.keyword ~option f [ Kw_distinct; Kw_from ];
       Fmt.string f " ";
       print ~option f e2
+    | Expr (`between (e, not', ef, el), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_between ];
+      Fmt.string f " ";
+      print ~option f ef;
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_and ];
+      Fmt.string f " ";
+      print ~option f el
+    | Expr (`in' (e, not', v), _) -> (
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_in ];
+      Fmt.string f " ";
+
+      match v with
+      | `stmt v ->
+        Sfmt.parens ~indent:() ~option
+          (fun f _ ->
+            let module Select_statement = (val Select_statement.generate ()) in
+            Select_statement.print ~option f v)
+          f ()
+      | `expr v ->
+        Sfmt.parens ~indent:() ~option
+          (fun f _ ->
+            let e = List.hd v
+            and es = List.tl v in
+            print ~option f e;
+
+            List.iter
+              (fun e ->
+                Sfmt.comma ~option f ();
+                print ~option f e)
+              es)
+          f ()
+      | `table (sname, tname) ->
+        Option.iter
+          (fun v ->
+            let module Schema_name = (val Schema_name.generate ()) in
+            Schema_name.print ~option f v;
+            Token.print ~option f Tok_period)
+          sname;
+
+        let module Table_name = (val Table_name.generate ()) in
+        Table_name.print ~option f tname)
+    | Expr (`exists (e, not', stmt), _) ->
+      print ~option f e;
+      Option.iter
+        (fun _ ->
+          Fmt.string f " ";
+          Sfmt.keyword ~option f [ Kw_not ])
+        not';
+      Fmt.string f " ";
+      Sfmt.keyword ~option f [ Kw_exists ];
+      Fmt.string f " ";
+      Sfmt.parens ~indent:() ~option
+        (fun f _ ->
+          let module Select_statement = (val Select_statement.generate ()) in
+          Select_statement.print ~option f stmt)
+        f ()
 end

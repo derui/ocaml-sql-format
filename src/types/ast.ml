@@ -49,6 +49,15 @@ and 'a expr =
       | `match' of 'a expr * [ `not' ] option * 'a expr
       | `is of 'a expr * [ `not' ] option * 'a expr
       | `is_distinct of 'a expr * [ `not' ] option * 'a expr
+      | `between of 'a expr * [ `not' ] option * 'a expr * 'a expr
+      | `in' of
+        'a expr
+        * [ `not' ] option
+        * [ `stmt of 'a select_statement
+          | `expr of 'a expr list
+          | `table of 'a schema_name option * 'a table_name
+          ]
+      | `exists of 'a expr * [ `not' ] option * 'a select_statement
       ]
       * 'a
 

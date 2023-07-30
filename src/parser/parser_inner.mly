@@ -725,6 +725,25 @@ let expr :=
    Tok_rparen; {
        Expr (`function' (fname, `exprs (Option.map (fun _ -> `distinct) d, es)), ())
      }
+(* between *)
+ | e = expr; n = ioption(Kw_not); Kw_between; e1 = expr; Kw_and; e2 = expr; {
+       Expr (`between (e, Option.map (fun _ -> `not') n, e1, e2), ())
+     }
+(* in *)
+ | e = expr; n = ioption(Kw_not); Kw_in; stmt = delimited(Tok_lparen, select_statement, Tok_rparen); {
+       Expr (`in' (e, Option.map (fun _ -> `not') n, `stmt stmt), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_in; es = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, expr), Tok_rparen); {
+       Expr (`in' (e, Option.map (fun _ -> `not') n, `expr es), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_in; sname = option(pair(schema_name, Tok_period)); tname = table_name; {
+       Expr (`in' (e, Option.map (fun _ -> `not') n, `table (Option.map fst sname, tname)), ())
+     }
+(* exists *)
+ | e = expr; n = ioption(Kw_not); Kw_exists; stmt = delimited(Tok_lparen, select_statement, Tok_rparen) ;{
+       Expr (`exists (e, Option.map (fun _ -> `not') n, stmt), ())
+     }
+
 
 
 let sql_statement :=
