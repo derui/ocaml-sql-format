@@ -15,7 +15,8 @@ let comma ~option fmt _ =
 let force_vbox width pf fmt v =
   newline fmt ();
   indent width fmt ();
-  (Fmt.vbox ~indent:0 pf) fmt v
+  (Fmt.vbox ~indent:0 pf) fmt v;
+  newline fmt ()
 
 (** [term_box fmt pf v] wraps hovbox with [pf]. *)
 let term_box pf fmt v = (Fmt.hovbox ~indent:0 pf) fmt v
@@ -26,7 +27,6 @@ let parens ?indent:need_indent ~option pf fmt v =
   match need_indent with
   | Some _ ->
     (force_vbox option.indent_size pf) fmt v;
-    newline fmt ();
     Token.print fmt Tok_rparen ~option
   | None ->
     pf fmt v;

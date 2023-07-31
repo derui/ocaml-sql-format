@@ -32,6 +32,5 @@ module Make (V : GEN with type t = ext result_column) : S = struct
                 Fmt.cut f ();
                 V.print ~option f v)
               ds)
-        f ();
-      Sfmt.newline f ()
+        f ()
 end
