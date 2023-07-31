@@ -516,4 +516,17 @@ and function' () =
                 type t = A.ext A.function_name
 
                 let generate = function_name
+              end)
+              (struct
+                type t = A.ext A.filter_clause
+
+                let generate = filter_clause
               end) : S))
+
+and filter_clause () =
+  Filter_clause.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))

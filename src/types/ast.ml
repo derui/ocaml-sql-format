@@ -234,7 +234,11 @@ and 'a function' =
   | Function of
       [ `no_arg of 'a function_name
       | `asterisk of 'a function_name
-      | `generic of 'a function_name * [ `distinct ] option * 'a expr list
+      | `generic of
+        'a function_name
+        * [ `distinct ] option
+        * 'a expr list
+        * 'a filter_clause option
       | `extract of
         [ `year
         | `month
@@ -249,3 +253,5 @@ and 'a function' =
       | `position of 'a expr * 'a expr
       ]
       * 'a
+
+and 'a filter_clause = Filter_clause of 'a expr * 'a

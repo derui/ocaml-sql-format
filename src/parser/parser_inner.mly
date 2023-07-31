@@ -989,8 +989,8 @@ let function_ :=
  | fname = function_name; Tok_lparen;
    d = ioption(Kw_distinct);
    es = separated_nonempty_list(Tok_comma, expr);
-   Tok_rparen; {
-       Function (`generic (fname, Option.map (fun _ -> `distinct) d, es), ())
+   Tok_rparen; fil = option(filter_clause); {
+       Function (`generic (fname, Option.map (fun _ -> `distinct) d, es, fil), ())
      }
  | Kw_extract; Tok_lparen; unit = extractor; Kw_from; e = expr; Tok_rparen; { Function (`extract (unit, e), ()) }
  | Kw_position; Tok_lparen; e1 = expr; Kw_in; e2 = expr; Tok_rparen; { Function (`position (e1, e2), ()) }
@@ -1004,3 +1004,7 @@ let extractor :=
   | Kw_second; { `second }
   | Kw_quarter; { `quarter }
   | Kw_epoch; { `epoch }
+
+
+let filter_clause :=
+ | Kw_filter; e = delimited(Tok_lparen, Kw_where; e = expr; {e} ,Tok_rparen); { Filter_clause (e, ()) }

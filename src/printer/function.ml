@@ -6,7 +6,8 @@ module type S = PRINTER with type t = ext function'
 
 module Make
     (V : GEN with type t = ext expr)
-    (Fname : GEN with type t = ext function_name) : S = struct
+    (Fname : GEN with type t = ext function_name)
+    (Filter_clause : GEN with type t = ext filter_clause) : S = struct
   type t = ext function'
 
   let print f t ~option =
@@ -19,7 +20,7 @@ module Make
       let module Fname = (val Fname.generate ()) in
       Fname.print ~option f fname;
       Sfmt.parens ~option (fun f _ -> Token.print ~option f Op_star) f ()
-    | Function (`generic (fname, distinct, es), _) ->
+    | Function (`generic (fname, distinct, es, fil), _) ->
       let module Fname = (val Fname.generate ()) in
       Fname.print ~option f fname;
       Sfmt.parens ~option
@@ -40,7 +41,14 @@ module Make
               Sfmt.comma ~option f ();
               V.print ~option f e)
             es)
-        f ()
+        f ();
+
+      Option.iter
+        (fun fil ->
+          Fmt.string f " ";
+          let module Filter_clause = (val Filter_clause.generate ()) in
+          Filter_clause.print ~option f fil)
+        fil
     | Function (`extract (unit, e), _) ->
       Token.print ~option f Kw_extract;
       Sfmt.parens ~option
