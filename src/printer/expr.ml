@@ -15,7 +15,8 @@ module Make
     (Collation_name : GEN with type t = ext collation_name)
     (Select_statement : GEN with type t = ext select_statement)
     (Schema_name : GEN with type t = ext schema_name)
-    (Table_name : GEN with type t = ext table_name) : S = struct
+    (Table_name : GEN with type t = ext table_name)
+    (Function : GEN with type t = ext function') : S = struct
   type t = ext expr
 
   let rec print f t ~option =
@@ -38,31 +39,9 @@ module Make
       let module Binary = (val Binary.generate ()) in
       Binary.print ~option f op;
       print ~option f e2
-    | Expr (`function' (fname, typ), _) ->
-      let module Fname = (val Fname.generate ()) in
-      Fname.print ~option f fname;
-      Sfmt.parens ~option
-        (fun f _ ->
-          match typ with
-          | `no_arg -> ()
-          | `asterisk -> Token.print ~option f Op_star
-          | `exprs (distinct, es) ->
-            Option.iter
-              (fun _ ->
-                Token.print ~option f Kw_distinct;
-                Fmt.string f " ")
-              distinct;
-
-            let e = List.hd es
-            and es = List.tl es in
-            print ~option f e;
-
-            List.iter
-              (fun e ->
-                Sfmt.comma ~option f ();
-                print ~option f e)
-              es)
-        f ()
+    | Expr (`function' v, _) ->
+      let module Function = (val Function.generate ()) in
+      Function.print ~option f v
     | Expr (`nested es, _) ->
       let e = List.hd es in
       let es = List.tl es in
@@ -223,7 +202,29 @@ module Make
           sname;
 
         let module Table_name = (val Table_name.generate ()) in
-        Table_name.print ~option f tname)
+        Table_name.print ~option f tname
+      | `function' (sname, name, es) ->
+        Option.iter
+          (fun v ->
+            let module Schema_name = (val Schema_name.generate ()) in
+            Schema_name.print ~option f v;
+            Token.print ~option f Tok_period)
+          sname;
+
+        let module Fname = (val Fname.generate ()) in
+        Fname.print ~option f name;
+        Sfmt.parens ~option
+          (fun f _ ->
+            let e = List.hd es
+            and es = List.tl es in
+
+            print ~option f e;
+            List.iter
+              (fun e ->
+                Sfmt.comma ~option f ();
+                print ~option f e)
+              es)
+          f ())
     | Expr (`exists (e, not', stmt), _) ->
       print ~option f e;
       Option.iter

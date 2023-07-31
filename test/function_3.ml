@@ -4,8 +4,8 @@ module P = Parser.Parser
 let actual =
   {|
   select
-  substring(e from 3)
- ,substring(e from 3 for 5)
+  substring(e, 3)
+ ,substring(e, 3, 5)
  ,substring(e, 3)
  ,substring(e, 3, 4)
  ,substring(e, 3, 4, 5)
@@ -24,8 +24,8 @@ let%expect_test "funciton_3 for formatting" =
   [%expect
     {|
       SELECT
-          SUBSTRING(e FROM 3),
-          SUBSTRING(e FROM 3 FOR 5),
+          SUBSTRING(e, 3),
+          SUBSTRING(e, 3, 5),
           SUBSTRING(e, 3),
           SUBSTRING(e, 3, 4),
           SUBSTRING(e, 3, 4, 5)

@@ -392,6 +392,7 @@ let keyword ==
   | Kw_cross; {Identifier (`keyword Kw_cross, ())}
   | Kw_join; {Identifier (`keyword Kw_join, ())}
   | Kw_on; {Identifier (`keyword Kw_on, ())}
+  | Kw_convert; {Identifier (`keyword Kw_convert, ())}
   | Kw_case; {Identifier (`keyword Kw_case, ())}
   | Kw_when; {Identifier (`keyword Kw_when, ())}
   | Kw_then; {Identifier (`keyword Kw_then, ())}
@@ -520,8 +521,6 @@ let keyword ==
   | Kw_policy; {Identifier (`keyword Kw_policy, ())}
   | Kw_interval; {Identifier (`keyword Kw_interval, ())}
   | Kw_cast; {Identifier (`keyword Kw_cast, ())}
-  | Kw_substring; {Identifier (`keyword Kw_substring, ())}
-  | Kw_extract; {Identifier (`keyword Kw_extract, ())}
   | Kw_trim; {Identifier (`keyword Kw_trim, ())}
   | Kw_to_chars; {Identifier (`keyword Kw_to_chars, ())}
   | Kw_to_bytes; {Identifier (`keyword Kw_to_bytes, ())}
@@ -653,6 +652,17 @@ let name ==
   | ~ = identifier; <>
       | ~ = keyword; <>
 
+let function_keyword ==
+  | Kw_convert; {Identifier (`keyword Kw_convert, ())}
+  | Kw_extract; {Identifier (`keyword Kw_extract, ())}
+  | Kw_substring; {Identifier (`keyword Kw_substring, ())}
+  | Kw_trim; {Identifier (`keyword Kw_trim, ())}
+
+
+let function_name :=
+  | v = identifier; { Function_name (v, ())}
+  | v = function_keyword; { Function_name (v, ())}
+
 let type_name :=
  | name = nonempty_list(name); Tok_lparen;
    size = signed_number; Tok_comma; max_size = signed_number;
@@ -669,8 +679,10 @@ let type_name :=
  | name = nonempty_list(name); Tok_lsbrace; Tok_rsbrace; { Type_name (name, `array, ()) }
  | name = nonempty_list(name); { Type_name (name, `name_only, ()) }
 
+
 let signed_number :=
  | sign = option(sign); v = numeric_literal; { Signed_number (sign ,v, ()) }
+
 
 let qualified_name :=
  | sname = pair(schema_name, Tok_period);
@@ -713,18 +725,7 @@ let expr :=
        Expr (`is_distinct (e, Option.map (fun _ -> `not') n, e2), ())
      }
 (* function *)
- | fname = function_name; Tok_lparen; Tok_rparen; {
-       Expr (`function' (fname, `no_arg), ())
-     }
- | fname = function_name; Tok_lparen; Op_star; Tok_rparen; {
-       Expr (`function' (fname, `asterisk), ())
-     }
- | fname = function_name; Tok_lparen;
-   d = ioption(Kw_distinct);
-   es = separated_nonempty_list(Tok_comma, expr);
-   Tok_rparen; {
-       Expr (`function' (fname, `exprs (Option.map (fun _ -> `distinct) d, es)), ())
-     }
+ | f = function_; {Expr (`function' f, ())}
 (* between *)
  | e = expr; n = ioption(Kw_not); Kw_between; e1 = expr; Kw_and; e2 = expr; {
        Expr (`between (e, Option.map (fun _ -> `not') n, e1, e2), ())
@@ -738,6 +739,11 @@ let expr :=
      }
  | e = expr; n = ioption(Kw_not); Kw_in; sname = option(pair(schema_name, Tok_period)); tname = table_name; {
        Expr (`in' (e, Option.map (fun _ -> `not') n, `table (Option.map fst sname, tname)), ())
+     }
+ | e = expr; n = ioption(Kw_not); Kw_in; sname = option(pair(schema_name, Tok_period)); name = function_name;
+   es = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, expr), Tok_rparen);
+   {
+       Expr (`in' (e, Option.map (fun _ -> `not') n, `function' (Option.map fst sname, name, es)), ())
      }
 (* exists *)
  | e = expr; n = ioption(Kw_not); Kw_exists; stmt = delimited(Tok_lparen, select_statement, Tok_rparen) ;{
@@ -972,5 +978,28 @@ let binary_operator :=
  | Kw_or; { Binary_operator (`or', ()) }
 
 
-let function_name ==
- | v = identifier; { Function_name (v, ()) }
+let function_ :=
+ | fname = function_name; Tok_lparen; Tok_rparen; {
+       Function (`no_arg fname, ())
+     }
+ | fname = function_name; Tok_lparen; Op_star; Tok_rparen; {
+       Function (`asterisk fname, ())
+     }
+ | fname = function_name; Tok_lparen;
+   d = ioption(Kw_distinct);
+   es = separated_nonempty_list(Tok_comma, expr);
+   Tok_rparen; {
+       Function (`generic (fname, Option.map (fun _ -> `distinct) d, es), ())
+     }
+ | Kw_extract; Tok_lparen; unit = extractor; Kw_from; e = expr; Tok_rparen; { Function (`extract (unit, e), ()) }
+ | Kw_position; Tok_lparen; e1 = expr; Kw_in; e2 = expr; Tok_rparen; { Function (`position (e1, e2), ()) }
+
+let extractor :=
+  | Kw_year; { `year }
+  | Kw_month; { `month }
+  | Kw_day; { `day }
+  | Kw_hour; { `hour }
+  | Kw_minute; { `minute }
+  | Kw_second; { `second }
+  | Kw_quarter; { `quarter }
+  | Kw_epoch; { `epoch }

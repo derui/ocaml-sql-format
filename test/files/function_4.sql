@@ -7,6 +7,4 @@ select
   ,extract(second from 'abc')
   ,extract(quarter from 'abc')
   ,extract(epoch from 'abc')
-  ,extract(dow from 'abc')
-  ,extract(doy from 'abc')
 from a

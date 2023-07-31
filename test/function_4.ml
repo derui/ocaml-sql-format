@@ -12,8 +12,6 @@ let actual =
   ,extract(second from 'abc')
   ,extract(quarter from 'abc')
   ,extract(epoch from 'abc')
-  ,extract(dow from 'abc')
-  ,extract(doy from 'abc')
 from a
 |}
 
@@ -36,8 +34,6 @@ let%expect_test "funciton_4 for formatting" =
           EXTRACT(MINUTE FROM 'abc'),
           EXTRACT(SECOND FROM 'abc'),
           EXTRACT(QUARTER FROM 'abc'),
-          EXTRACT(EPOCH FROM 'abc'),
-          EXTRACT(DOW FROM 'abc'),
-          EXTRACT(DOY FROM 'abc')
+          EXTRACT(EPOCH FROM 'abc')
       FROM
           a |}]

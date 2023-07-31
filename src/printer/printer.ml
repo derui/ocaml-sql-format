@@ -154,6 +154,11 @@ and expr () =
                 type t = A.ext A.table_name
 
                 let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.function'
+
+                let generate = function'
               end) : S))
 
 and sql_statement () =
@@ -498,3 +503,17 @@ and function_name () =
 
       let generate = identifier
     end) : S))
+
+and function' () =
+  Function.(
+    (module Make
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.function_name
+
+                let generate = function_name
+              end) : S))

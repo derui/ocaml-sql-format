@@ -34,12 +34,7 @@ and 'a expr =
       | `name of 'a qualified_name
       | `unary of 'a unary_operator * 'a expr
       | `binary of 'a expr * 'a binary_operator * 'a expr
-      | `function' of
-        'a function_name
-        * [ `no_arg
-          | `asterisk
-          | `exprs of [ `distinct ] option * 'a expr list
-          ]
+      | `function' of 'a function'
       | `nested of 'a expr list
       | `cast of 'a expr * 'a type_name
       | `collate of 'a expr * 'a collation_name
@@ -56,6 +51,8 @@ and 'a expr =
         * [ `stmt of 'a select_statement
           | `expr of 'a expr list
           | `table of 'a schema_name option * 'a table_name
+          | `function' of
+            'a schema_name option * 'a function_name * 'a expr list
           ]
       | `exists of 'a expr * [ `not' ] option * 'a select_statement
       | `case of 'a expr option * ('a expr * 'a expr) list * 'a expr option
@@ -232,3 +229,23 @@ and 'a binary_operator =
       * 'a
 
 and 'a function_name = Function_name of 'a identifier * 'a
+
+and 'a function' =
+  | Function of
+      [ `no_arg of 'a function_name
+      | `asterisk of 'a function_name
+      | `generic of 'a function_name * [ `distinct ] option * 'a expr list
+      | `extract of
+        [ `year
+        | `month
+        | `day
+        | `hour
+        | `minute
+        | `second
+        | `quarter
+        | `epoch
+        ]
+        * 'a expr
+      | `position of 'a expr * 'a expr
+      ]
+      * 'a
