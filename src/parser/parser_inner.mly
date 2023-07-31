@@ -657,6 +657,7 @@ let function_keyword ==
   | Kw_extract; {Identifier (`keyword Kw_extract, ())}
   | Kw_substring; {Identifier (`keyword Kw_substring, ())}
   | Kw_trim; {Identifier (`keyword Kw_trim, ())}
+  | Kw_count; {Identifier (`keyword Kw_count, ())}
 
 
 let function_name :=
