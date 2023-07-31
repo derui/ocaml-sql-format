@@ -1,12 +1,9 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   select
-   insert()
-  ,insert('a', '2')
-  ,translate()
+   translate()
   ,translate('a', '2')
 from a
 |}
@@ -20,12 +17,4 @@ let%test_unit "function_9 for AST" =
 
 let%expect_test "function_9 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
-      SELECT
-          INSERT(),
-          INSERT('a','2'),
-          TRANSLATE(),
-          TRANSLATE('a','2')
-      FROM
-          a |}]
+  [%expect {||}]

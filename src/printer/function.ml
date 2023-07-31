@@ -79,4 +79,31 @@ module Make
           Fmt.string f " ";
           V.print ~option f e2)
         f ()
+    | Function (`trim (spec, c, e), _) ->
+      Token.print ~option f Kw_trim;
+      Sfmt.parens ~option
+        (fun f _ ->
+          let module V = (val V.generate ()) in
+          Option.iter
+            (fun kw ->
+              let kw =
+                match kw with
+                | `leading -> Kw_leading
+                | `trailing -> Kw_trailing
+                | `both -> Kw_both
+              in
+              Sfmt.keyword ~option f [ kw ];
+              Fmt.string f " ")
+            spec;
+
+          Option.iter
+            (fun e ->
+              V.print ~option f e;
+              Fmt.string f " ")
+            c;
+
+          Sfmt.keyword ~option f [ Kw_from ];
+          Fmt.string f " ";
+          V.print ~option f e)
+        f ()
 end

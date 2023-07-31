@@ -251,6 +251,8 @@ and 'a function' =
         ]
         * 'a expr
       | `position of 'a expr * 'a expr
+      | `trim of
+        [ `leading | `trailing | `both ] option * 'a expr option * 'a expr
       ]
       * 'a
 

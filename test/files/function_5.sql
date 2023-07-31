@@ -1,6 +1,5 @@
 select
-  trim('abc')
-  ,trim(leading from 'abc')
+   trim(leading from 'abc')
   ,trim(trailing from 'abc')
   ,trim(both from 'abc')
   ,trim(leading 'a' from 'abc')

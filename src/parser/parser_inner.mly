@@ -108,20 +108,9 @@ open Types.Literal
 %token Kw_second
 %token Kw_quarter
 %token Kw_epoch
-%token Kw_dow
-%token Kw_doy
 %token Kw_leading
 %token Kw_trailing
 %token Kw_both
-%token Kw_sql_tsi_frac_second
-%token Kw_sql_tsi_second
-%token Kw_sql_tsi_minute
-%token Kw_sql_tsi_hour
-%token Kw_sql_tsi_day
-%token Kw_sql_tsi_week
-%token Kw_sql_tsi_month
-%token Kw_sql_tsi_quarter
-%token Kw_sql_tsi_year
 %token Kw_insert
 %token Kw_within
 %token Kw_exception
@@ -157,7 +146,6 @@ open Types.Literal
 %token Kw_version
 %token Kw_including
 %token Kw_excluding
-%token Kw_xmldeclaration
 %token Kw_variadic
 %token Kw_raise
 %token Kw_chain
@@ -197,12 +185,6 @@ open Types.Literal
 %token Kw_trim
 %token Kw_to_chars
 %token Kw_to_bytes
-%token Kw_timestampadd
-%token Kw_timestampdiff
-%token Kw_user
-%token Kw_xmlconcat
-%token Kw_xmlcomment
-%token Kw_xmltext
 %token Kw_translate
 %token Kw_position
 %token Kw_listagg
@@ -437,20 +419,9 @@ let keyword ==
   | Kw_second; {Identifier (`keyword Kw_second, ())}
   | Kw_quarter; {Identifier (`keyword Kw_quarter, ())}
   | Kw_epoch; {Identifier (`keyword Kw_epoch, ())}
-  | Kw_dow; {Identifier (`keyword Kw_dow, ())}
-  | Kw_doy; {Identifier (`keyword Kw_doy, ())}
   | Kw_leading; {Identifier (`keyword Kw_leading, ())}
   | Kw_trailing; {Identifier (`keyword Kw_trailing, ())}
   | Kw_both; {Identifier (`keyword Kw_both, ())}
-  | Kw_sql_tsi_frac_second; {Identifier (`keyword Kw_sql_tsi_frac_second, ())}
-  | Kw_sql_tsi_second; {Identifier (`keyword Kw_sql_tsi_second, ())}
-  | Kw_sql_tsi_minute; {Identifier (`keyword Kw_sql_tsi_minute, ())}
-  | Kw_sql_tsi_hour; {Identifier (`keyword Kw_sql_tsi_hour, ())}
-  | Kw_sql_tsi_day; {Identifier (`keyword Kw_sql_tsi_day, ())}
-  | Kw_sql_tsi_week; {Identifier (`keyword Kw_sql_tsi_week, ())}
-  | Kw_sql_tsi_month; {Identifier (`keyword Kw_sql_tsi_month, ())}
-  | Kw_sql_tsi_quarter; {Identifier (`keyword Kw_sql_tsi_quarter, ())}
-  | Kw_sql_tsi_year; {Identifier (`keyword Kw_sql_tsi_year, ())}
   | Kw_insert; {Identifier (`keyword Kw_insert, ())}
   | Kw_within; {Identifier (`keyword Kw_within, ())}
   | Kw_exception; {Identifier (`keyword Kw_exception, ())}
@@ -486,7 +457,6 @@ let keyword ==
   | Kw_version; {Identifier (`keyword Kw_version, ())}
   | Kw_including; {Identifier (`keyword Kw_including, ())}
   | Kw_excluding; {Identifier (`keyword Kw_excluding, ())}
-  | Kw_xmldeclaration; {Identifier (`keyword Kw_xmldeclaration, ())}
   | Kw_variadic; {Identifier (`keyword Kw_variadic, ())}
   | Kw_raise; {Identifier (`keyword Kw_raise, ())}
   | Kw_chain; {Identifier (`keyword Kw_chain, ())}
@@ -524,12 +494,6 @@ let keyword ==
   | Kw_trim; {Identifier (`keyword Kw_trim, ())}
   | Kw_to_chars; {Identifier (`keyword Kw_to_chars, ())}
   | Kw_to_bytes; {Identifier (`keyword Kw_to_bytes, ())}
-  | Kw_timestampadd; {Identifier (`keyword Kw_timestampadd, ())}
-  | Kw_timestampdiff; {Identifier (`keyword Kw_timestampdiff, ())}
-  | Kw_user; {Identifier (`keyword Kw_user, ())}
-  | Kw_xmlconcat; {Identifier (`keyword Kw_xmlconcat, ())}
-  | Kw_xmlcomment; {Identifier (`keyword Kw_xmlcomment, ())}
-  | Kw_xmltext; {Identifier (`keyword Kw_xmltext, ())}
   | Kw_translate; {Identifier (`keyword Kw_translate, ())}
   | Kw_position; {Identifier (`keyword Kw_position, ())}
   | Kw_listagg; {Identifier (`keyword Kw_listagg, ())}
@@ -658,6 +622,14 @@ let function_keyword ==
   | Kw_substring; {Identifier (`keyword Kw_substring, ())}
   | Kw_trim; {Identifier (`keyword Kw_trim, ())}
   | Kw_count; {Identifier (`keyword Kw_count, ())}
+  | Kw_current_date; {Identifier (`keyword Kw_current_date, ())}
+  | Kw_current_time; {Identifier (`keyword Kw_current_time, ())}
+  | Kw_current_timestamp; {Identifier (`keyword Kw_current_timestamp, ())}
+  | Kw_to_chars; {Identifier (`keyword Kw_to_chars, ())}
+  | Kw_to_bytes; {Identifier (`keyword Kw_to_bytes, ())}
+  | Kw_left; {Identifier (`keyword Kw_left, ())}
+  | Kw_right; {Identifier (`keyword Kw_right, ())}
+  | Kw_translate; {Identifier (`keyword Kw_translate, ())}
 
 
 let function_name :=
@@ -994,6 +966,15 @@ let function_ :=
      }
  | Kw_extract; Tok_lparen; unit = extractor; Kw_from; e = expr; Tok_rparen; { Function (`extract (unit, e), ()) }
  | Kw_position; Tok_lparen; e1 = expr; Kw_in; e2 = expr; Tok_rparen; { Function (`position (e1, e2), ()) }
+ | Kw_trim; Tok_lparen;
+   s = option(trim_specification);
+   c = option(expr);
+   Kw_from; e = expr; Tok_rparen; { Function (`trim (s, c, e), ()) }
+
+let trim_specification :=
+  | Kw_leading; {`leading}
+  | Kw_trailing; {`trailing}
+  | Kw_both; {`both}
 
 let extractor :=
   | Kw_year; { `year }

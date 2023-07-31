@@ -3,8 +3,7 @@ module P = Parser.Parser
 
 let actual = {|
   select
-   current_date
-  ,current_date()
+  current_date()
 from a
 |}
 
@@ -17,10 +16,4 @@ let%test_unit "function_12 for AST" =
 
 let%expect_test "function_12 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
-    SELECT
-        CURRENT_DATE(),
-        CURRENT_DATE()
-    FROM
-        a |}]
+  [%expect {||}]

@@ -101,20 +101,9 @@ type token =
   | Kw_second
   | Kw_quarter
   | Kw_epoch
-  | Kw_dow
-  | Kw_doy
   | Kw_leading
   | Kw_trailing
   | Kw_both
-  | Kw_sql_tsi_frac_second
-  | Kw_sql_tsi_second
-  | Kw_sql_tsi_minute
-  | Kw_sql_tsi_hour
-  | Kw_sql_tsi_day
-  | Kw_sql_tsi_week
-  | Kw_sql_tsi_month
-  | Kw_sql_tsi_quarter
-  | Kw_sql_tsi_year
   | Kw_insert
   | Kw_within
   | Kw_exception
@@ -150,7 +139,6 @@ type token =
   | Kw_version
   | Kw_including
   | Kw_excluding
-  | Kw_xmldeclaration
   | Kw_variadic
   | Kw_raise
   | Kw_chain
@@ -192,12 +180,6 @@ type token =
   | Kw_trim
   | Kw_to_chars
   | Kw_to_bytes
-  | Kw_timestampadd
-  | Kw_timestampdiff
-  | Kw_user
-  | Kw_xmlconcat
-  | Kw_xmlcomment
-  | Kw_xmltext
   | Kw_translate
   | Kw_position
   | Kw_listagg

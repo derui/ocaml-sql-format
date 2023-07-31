@@ -11,24 +11,24 @@ module Make
 
   let print f t ~option =
     match t with
-    | From_clause (`table_or_subquery ts, _) -> (
-      match ts with
-      | [] -> failwith "Invalid path"
-      | d :: ds ->
-        Sfmt.keyword ~option f [ Kw_from ];
+    | From_clause (`table_or_subquery ts, _) ->
+      let d = List.hd ts
+      and ds = List.tl ts in
 
-        Sfmt.force_vbox option.indent_size
-          (fun f _ ->
-            let module V = (val V.generate ()) in
-            V.print ~option f d;
+      Sfmt.keyword ~option f [ Kw_from ];
 
-            List.iter
-              (fun v ->
-                Token.print ~option f Tok_comma;
-                Fmt.cut f ();
-                V.print ~option f v)
-              ds)
-          f ())
+      Sfmt.force_vbox option.indent_size
+        (fun f _ ->
+          let module V = (val V.generate ()) in
+          V.print ~option f d;
+
+          List.iter
+            (fun v ->
+              Token.print ~option f Tok_comma;
+              Fmt.cut f ();
+              V.print ~option f v)
+            ds)
+        f ()
     | From_clause (`join j, _) ->
       Sfmt.keyword ~option f [ Kw_from ];
 
