@@ -740,7 +740,7 @@ let sql_statement :=
 
 
 let select_statement :=
- | c = select_core; { Select_statement (c, ())}
+ | c = select_core; limit = option(limit_clause); { Select_statement (c, limit, ())}
 
 
 let select_core :=
@@ -989,3 +989,9 @@ let extractor :=
 
 let filter_clause :=
  | Kw_filter; e = delimited(Tok_lparen, Kw_where; e = expr; {e} ,Tok_rparen); { Filter_clause (e, ()) }
+
+
+let limit_clause :=
+ | Kw_limit; e = expr;  { Limit_clause (e, `no_offset, ()) }
+ | Kw_limit; e = expr; Kw_offset; e2 = expr;  { Limit_clause (e, `offset e2, ()) }
+ | Kw_limit; e = expr; Tok_comma; e2 = expr; { Limit_clause (e, `comma e2, ()) }

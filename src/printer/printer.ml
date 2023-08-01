@@ -171,11 +171,17 @@ and sql_statement () =
 
 and select_statement () =
   Select_statement.(
-    (module Make (struct
-      type t = A.ext A.select_core
+    (module Make
+              (struct
+                type t = A.ext A.select_core
 
-      let generate = select_core
-    end) : S))
+                let generate = select_core
+              end)
+              (struct
+                type t = A.ext A.limit_clause
+
+                let generate = limit_clause
+              end) : S))
 
 and select_core () =
   Select_core.(
@@ -525,6 +531,14 @@ and function' () =
 
 and filter_clause () =
   Filter_clause.(
+    (module Make (struct
+      type t = A.ext A.expr
+
+      let generate = expr
+    end) : S))
+
+and limit_clause () =
+  Limit_clause.(
     (module Make (struct
       type t = A.ext A.expr
 

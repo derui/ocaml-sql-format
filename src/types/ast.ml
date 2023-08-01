@@ -62,7 +62,8 @@ and 'a expr =
 and 'a sql_statement =
   | Sql_statement of [ `select of 'a select_statement ] * 'a
 
-and 'a select_statement = Select_statement of 'a select_core * 'a
+and 'a select_statement =
+  | Select_statement of 'a select_core * 'a limit_clause option * 'a
 
 and 'a select_core =
   | Select_core of
@@ -257,3 +258,7 @@ and 'a function' =
       * 'a
 
 and 'a filter_clause = Filter_clause of 'a expr * 'a
+
+and 'a limit_clause =
+  | Limit_clause of
+      'a expr * [ `no_offset | `offset of 'a expr | `comma of 'a expr ] * 'a
