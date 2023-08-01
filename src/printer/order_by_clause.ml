@@ -11,7 +11,20 @@ module Make (V : GEN with type t = ext ordering_term) : S = struct
     match t with
     | Order_by_clause (v, _) ->
       Sfmt.keyword ~option f [ Kw_order; Kw_by ];
-      Fmt.string f " ";
-      let module V = (val V.generate ()) in
-      V.print ~option f v
+
+      Sfmt.force_vbox option.indent_size
+        (fun f _ ->
+          let v = List.hd v
+          and vs = List.tl v in
+
+          let module V = (val V.generate ()) in
+          V.print ~option f v;
+
+          List.iter
+            (fun v ->
+              Token.print ~option f Tok_comma;
+              Fmt.cut f ();
+              V.print ~option f v)
+            vs)
+        f ()
 end

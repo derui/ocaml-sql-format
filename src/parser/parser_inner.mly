@@ -740,7 +740,7 @@ let sql_statement :=
 
 
 let select_statement :=
- | c = select_core; limit = option(limit_clause); { Select_statement (c, limit, ())}
+ | c = select_core; order = option(order_by_clause); limit = option(limit_clause); { Select_statement (c, order, limit, ())}
 
 
 let select_core :=
@@ -828,7 +828,7 @@ let base_window_name :=
 
 
 let order_by_clause :=
-  | Kw_order; Kw_by; term = ordering_term; {Order_by_clause (term, ())}
+  | Kw_order; Kw_by; term = separated_nonempty_list(Tok_comma, ordering_term); {Order_by_clause (term, ())}
 
 let order ==
   | Kw_asc; {`asc}

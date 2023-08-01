@@ -181,6 +181,11 @@ and select_statement () =
                 type t = A.ext A.limit_clause
 
                 let generate = limit_clause
+              end)
+              (struct
+                type t = A.ext A.order_by_clause
+
+                let generate = order_by_clause
               end) : S))
 
 and select_core () =

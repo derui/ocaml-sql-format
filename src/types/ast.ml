@@ -63,7 +63,8 @@ and 'a sql_statement =
   | Sql_statement of [ `select of 'a select_statement ] * 'a
 
 and 'a select_statement =
-  | Select_statement of 'a select_core * 'a limit_clause option * 'a
+  | Select_statement of
+      'a select_core * 'a order_by_clause option * 'a limit_clause option * 'a
 
 and 'a select_core =
   | Select_core of
@@ -125,7 +126,7 @@ and 'a window_defn =
 
 and 'a base_window_name = Base_window_name of 'a identifier * 'a
 
-and 'a order_by_clause = Order_by_clause of 'a ordering_term * 'a
+and 'a order_by_clause = Order_by_clause of 'a ordering_term list * 'a
 
 and 'a frame_spec =
   | Frame_spec of
