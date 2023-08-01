@@ -11,6 +11,7 @@ module Make (V : GEN with type t = ext expr) : S = struct
     match t with
     | Filter_clause (e, _) ->
       Sfmt.keyword ~option f [ Kw_filter ];
+      Fmt.string f " ";
       Sfmt.parens ~option
         (fun f _ ->
           Sfmt.keyword ~option f [ Kw_where ];

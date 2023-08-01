@@ -630,6 +630,11 @@ let function_keyword ==
   | Kw_left; {Identifier (`keyword Kw_left, ())}
   | Kw_right; {Identifier (`keyword Kw_right, ())}
   | Kw_translate; {Identifier (`keyword Kw_translate, ())}
+  | Kw_row_number; {Identifier (`keyword Kw_row_number, ())}
+  | Kw_rank; {Identifier (`keyword Kw_rank, ())}
+  | Kw_dense_rank; {Identifier (`keyword Kw_dense_rank, ())}
+  | Kw_percent_rank; {Identifier (`keyword Kw_percent_rank, ())}
+  | Kw_cume_dist; {Identifier (`keyword Kw_cume_dist, ())}
 
 
 let function_name :=
@@ -952,17 +957,25 @@ let binary_operator :=
 
 
 let function_ :=
- | fname = function_name; Tok_lparen; Tok_rparen; {
-       Function (`no_arg fname, ())
+ | fname = function_name; Tok_lparen; Tok_rparen;
+    fil = option(filter_clause);
+    over = option(over_clause); {
+       Function (`no_arg (fname, fil, over), ())
      }
- | fname = function_name; Tok_lparen; Op_star; Tok_rparen; {
-       Function (`asterisk fname, ())
-     }
+ | fname = function_name; Tok_lparen; Op_star; Tok_rparen;
+   fil = option(filter_clause);
+   over = option(over_clause);
+   {
+     Function (`asterisk (fname, fil, over), ())
+   }
  | fname = function_name; Tok_lparen;
    d = ioption(Kw_distinct);
    es = separated_nonempty_list(Tok_comma, expr);
-   Tok_rparen; fil = option(filter_clause); {
-       Function (`generic (fname, Option.map (fun _ -> `distinct) d, es, fil), ())
+   Tok_rparen;
+   fil = option(filter_clause);
+   over = option(over_clause);
+   {
+       Function (`generic (fname, Option.map (fun _ -> `distinct) d, es, fil, over), ())
      }
  | Kw_extract; Tok_lparen; unit = extractor; Kw_from; e = expr; Tok_rparen; { Function (`extract (unit, e), ()) }
  | Kw_position; Tok_lparen; e1 = expr; Kw_in; e2 = expr; Tok_rparen; { Function (`position (e1, e2), ()) }
@@ -995,3 +1008,8 @@ let limit_clause :=
  | Kw_limit; e = expr;  { Limit_clause (e, `no_offset, ()) }
  | Kw_limit; e = expr; Kw_offset; e2 = expr;  { Limit_clause (e, `offset e2, ()) }
  | Kw_limit; e = expr; Tok_comma; e2 = expr; { Limit_clause (e, `comma e2, ()) }
+
+
+let over_clause :=
+ | Kw_over; n = name; { Over_clause (`name n, ()) }
+ | Kw_over; e = window_defn; { Over_clause (`defn e, ()) }

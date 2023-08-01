@@ -532,6 +532,11 @@ and function' () =
                 type t = A.ext A.filter_clause
 
                 let generate = filter_clause
+              end)
+              (struct
+                type t = A.ext A.over_clause
+
+                let generate = over_clause
               end) : S))
 
 and filter_clause () =
@@ -549,3 +554,17 @@ and limit_clause () =
 
       let generate = expr
     end) : S))
+
+and over_clause () =
+  Over_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.window_defn
+
+                let generate = window_defn
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end) : S))

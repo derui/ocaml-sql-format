@@ -8,7 +8,7 @@ module Make () : S = struct
   type t = ext binary_operator
 
   let wrap ~option f t =
-    Fmt.sp f ();
+    Fmt.string f " ";
     Token.print ~option f t;
     Fmt.string f " "
 
@@ -34,11 +34,11 @@ module Make () : S = struct
     | Binary_operator (`ne, _) -> wrap ~option f Op_ne
     | Binary_operator (`ne2, _) -> wrap ~option f Op_ne2
     | Binary_operator (`and', _) ->
-      Fmt.cut f ();
+      Fmt.string f " ";
       Token.print ~option f Kw_and;
       Fmt.string f " "
     | Binary_operator (`or', _) ->
-      Fmt.cut f ();
+      Fmt.string f " ";
       Token.print ~option f Kw_or;
       Fmt.string f " "
 end

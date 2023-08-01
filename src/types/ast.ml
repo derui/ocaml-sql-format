@@ -234,13 +234,16 @@ and 'a function_name = Function_name of 'a identifier * 'a
 
 and 'a function' =
   | Function of
-      [ `no_arg of 'a function_name
-      | `asterisk of 'a function_name
+      [ `no_arg of
+        'a function_name * 'a filter_clause option * 'a over_clause option
+      | `asterisk of
+        'a function_name * 'a filter_clause option * 'a over_clause option
       | `generic of
         'a function_name
         * [ `distinct ] option
         * 'a expr list
         * 'a filter_clause option
+        * 'a over_clause option
       | `extract of
         [ `year
         | `month
@@ -263,3 +266,6 @@ and 'a filter_clause = Filter_clause of 'a expr * 'a
 and 'a limit_clause =
   | Limit_clause of
       'a expr * [ `no_offset | `offset of 'a expr | `comma of 'a expr ] * 'a
+
+and 'a over_clause =
+  | Over_clause of [ `name of 'a identifier | `defn of 'a window_defn ] * 'a

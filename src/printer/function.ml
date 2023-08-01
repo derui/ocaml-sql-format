@@ -7,20 +7,47 @@ module type S = PRINTER with type t = ext function'
 module Make
     (V : GEN with type t = ext expr)
     (Fname : GEN with type t = ext function_name)
-    (Filter_clause : GEN with type t = ext filter_clause) : S = struct
+    (Filter_clause : GEN with type t = ext filter_clause)
+    (Over_clause : GEN with type t = ext over_clause) : S = struct
   type t = ext function'
 
   let print f t ~option =
     match t with
-    | Function (`no_arg fname, _) ->
+    | Function (`no_arg (fname, fil, over), _) ->
       let module Fname = (val Fname.generate ()) in
       Fname.print ~option f fname;
-      Sfmt.parens ~option (fun _ _ -> ()) f ()
-    | Function (`asterisk fname, _) ->
+      Sfmt.parens ~option (fun _ _ -> ()) f ();
+      Option.iter
+        (fun fil ->
+          Fmt.string f " ";
+          let module Filter_clause = (val Filter_clause.generate ()) in
+          Filter_clause.print ~option f fil)
+        fil;
+
+      Option.iter
+        (fun over ->
+          Fmt.string f " ";
+          let module Over_clause = (val Over_clause.generate ()) in
+          Over_clause.print ~option f over)
+        over
+    | Function (`asterisk (fname, fil, over), _) ->
       let module Fname = (val Fname.generate ()) in
       Fname.print ~option f fname;
-      Sfmt.parens ~option (fun f _ -> Token.print ~option f Op_star) f ()
-    | Function (`generic (fname, distinct, es, fil), _) ->
+      Sfmt.parens ~option (fun f _ -> Token.print ~option f Op_star) f ();
+      Option.iter
+        (fun fil ->
+          Fmt.string f " ";
+          let module Filter_clause = (val Filter_clause.generate ()) in
+          Filter_clause.print ~option f fil)
+        fil;
+
+      Option.iter
+        (fun over ->
+          Fmt.string f " ";
+          let module Over_clause = (val Over_clause.generate ()) in
+          Over_clause.print ~option f over)
+        over
+    | Function (`generic (fname, distinct, es, fil, over), _) ->
       let module Fname = (val Fname.generate ()) in
       Fname.print ~option f fname;
       Sfmt.parens ~option
@@ -48,7 +75,14 @@ module Make
           Fmt.string f " ";
           let module Filter_clause = (val Filter_clause.generate ()) in
           Filter_clause.print ~option f fil)
-        fil
+        fil;
+
+      Option.iter
+        (fun over ->
+          Fmt.string f " ";
+          let module Over_clause = (val Over_clause.generate ()) in
+          Over_clause.print ~option f over)
+        over
     | Function (`extract (unit, e), _) ->
       Token.print ~option f Kw_extract;
       Sfmt.parens ~option
