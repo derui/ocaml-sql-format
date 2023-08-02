@@ -1025,3 +1025,8 @@ let common_table_expression :=
                                                               | None -> `materialized});
    stmt = delimited(Tok_lparen, select_statement ,Tok_rparen);
    { Common_table_expression (t, col, mat, stmt, ()) }
+
+
+let with_clause :=
+ | Kw_with; o = option(Kw_recursive); cs = separated_nonempty_list(Tok_comma, common_table_expression);
+   { With_clause (Option.map (fun _ -> `recursive) o, cs, ())  }

@@ -587,3 +587,11 @@ and common_table_expression () =
 
                 let generate = select_statement
               end) : S))
+
+and with_clause () =
+  With_clause.(
+    (module Make (struct
+      type t = A.ext A.common_table_expression
+
+      let generate = common_table_expression
+    end) : S))

@@ -277,3 +277,6 @@ and 'a common_table_expression =
       * [ `not_materialized | `materialized ] option
       * 'a select_statement
       * 'a
+
+and 'a with_clause =
+  | With_clause of [ `recursive ] option * 'a common_table_expression list * 'a
