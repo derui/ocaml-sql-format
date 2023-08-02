@@ -1878,6 +1878,21 @@ let kw_regexp =
 let kw_match =
   [%sedlex.regexp? Chars "mM", Chars "aA", Chars "tT", Chars "cC", Chars "hH"]
 
+let kw_materialized =
+  [%sedlex.regexp?
+    ( Chars "mM"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "iI"
+    , Chars "zZ"
+    , Chars "eE"
+    , Chars "dD" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2192,6 +2207,8 @@ let rec token buf =
   | kw_glob -> Kw_glob
   | kw_match -> Kw_match
   | kw_regexp -> Kw_regexp
+  | kw_materialized -> Kw_materialized
+  (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)

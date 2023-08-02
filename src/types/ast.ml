@@ -269,3 +269,11 @@ and 'a limit_clause =
 
 and 'a over_clause =
   | Over_clause of [ `name of 'a identifier | `defn of 'a window_defn ] * 'a
+
+and 'a common_table_expression =
+  | Common_table_expression of
+      'a table_name
+      * 'a column_name list option
+      * [ `not_materialized | `materialized ] option
+      * 'a select_statement
+      * 'a

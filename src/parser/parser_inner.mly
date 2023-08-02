@@ -258,6 +258,7 @@ open Types.Literal
 %token Kw_glob
 %token Kw_match
 %token Kw_regexp
+%token Kw_materialized
 
 (* tokens *)
 %token Tok_lparen
@@ -564,6 +565,7 @@ let keyword ==
   | Kw_nullif; {Identifier (`keyword Kw_nullif, ())}
   | Kw_coalesce; {Identifier (`keyword Kw_coalesce, ())}
   | Kw_groups; {Identifier (`keyword Kw_groups, ())}
+  | Kw_materialized; {Identifier (`keyword Kw_materialized, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -1013,3 +1015,13 @@ let limit_clause :=
 let over_clause :=
  | Kw_over; n = name; { Over_clause (`name n, ()) }
  | Kw_over; e = window_defn; { Over_clause (`defn e, ()) }
+
+
+let common_table_expression :=
+ | t = table_name;
+   col = option(delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name), Tok_rparen));
+   Kw_as; mat = option(o = option(Kw_not); Kw_materialized; { match o with
+                                                              | Some _ -> `not_materialized
+                                                              | None -> `materialized});
+   stmt = delimited(Tok_lparen, select_statement ,Tok_rparen);
+   { Common_table_expression (t, col, mat, stmt, ()) }

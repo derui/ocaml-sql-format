@@ -568,3 +568,22 @@ and over_clause () =
 
                 let generate = identifier
               end) : S))
+
+and common_table_expression () =
+  Common_table_expression.(
+    (module Make
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
+              end) : S))

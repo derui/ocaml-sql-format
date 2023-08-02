@@ -253,6 +253,7 @@ type token =
   | Kw_glob
   | Kw_match
   | Kw_regexp
+  | Kw_materialized
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

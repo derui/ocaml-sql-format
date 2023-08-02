@@ -267,6 +267,7 @@ include (
       | Kw_glob -> Fmt.string f @@ as_keyword "glob" keyword
       | Kw_match -> Fmt.string f @@ as_keyword "match" keyword
       | Kw_regexp -> Fmt.string f @@ as_keyword "regexp" keyword
+      | Kw_materialized -> Fmt.string f @@ as_keyword "materialized" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
