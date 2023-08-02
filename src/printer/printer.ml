@@ -595,3 +595,5 @@ and with_clause () =
 
       let generate = common_table_expression
     end) : S))
+
+and compound_operator () = Compound_operator.((module Make () : S))

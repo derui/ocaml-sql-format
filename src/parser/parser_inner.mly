@@ -1030,3 +1030,13 @@ let common_table_expression :=
 let with_clause :=
  | Kw_with; o = option(Kw_recursive); cs = separated_nonempty_list(Tok_comma, common_table_expression);
    { With_clause (Option.map (fun _ -> `recursive) o, cs, ())  }
+
+
+let compound_operator :=
+ | Kw_union; o = option(Kw_all); {
+       let v = match o with
+         | None -> `union
+         | Some _ -> `union_all in
+       Compound_operator (o, ()) }
+ | Kw_intersect; { Compound_operator (`intersect, ()) }
+ | Kw_except; { Compound_operator (`except, ()) }

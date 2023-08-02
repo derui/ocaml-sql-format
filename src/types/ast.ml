@@ -280,3 +280,6 @@ and 'a common_table_expression =
 
 and 'a with_clause =
   | With_clause of [ `recursive ] option * 'a common_table_expression list * 'a
+
+and 'a compound_operator =
+  | Compound_operator of [ `union | `union_all | `intersect | `except ] * 'a
