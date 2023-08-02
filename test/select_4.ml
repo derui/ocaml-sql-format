@@ -3,12 +3,10 @@ module P = Parser.Parser
 
 let actual =
   {|
-  with a as (
- select 1 from b
-),
+with a as (select 1 from b),
 "abc" (e) as (select 2 from c),
-multi_column (e, b, f) as (select 3 from d)
-select * from a, "abc"
+foo (e, b, f) as (select 3 from d)
+select * from a, "abc", foo
 |}
 
 let option = F.Options.default
@@ -25,25 +23,33 @@ let%expect_test "select_4 for formatting" =
     WITH a AS (
         SELECT
             1
+
         FROM
             b
-    )
 
-    , "abc" (e) AS (
+    )
+    ,
+    "abc" (e) AS (
         SELECT
             2
+
         FROM
             c
-    )
 
-    , multi_column (e, b, f) AS (
+    )
+    ,
+    foo (e, b, f) AS (
         SELECT
             3
+
         FROM
             d
+
     )
     SELECT
         *
+
     FROM
         a,
-        "abc" |}]
+        "abc",
+        foo |}]

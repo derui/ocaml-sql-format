@@ -24,6 +24,6 @@ let%expect_test "where_9 for formatting" =
           *
       FROM
           "table" AS b
+
       WHERE
-          b IS DISTINCT FROM a
-          OR  b IS NOT DISTINCT FROM 'a' |}]
+          b IS DISTINCT FROM a OR b IS NOT DISTINCT FROM 'a' |}]

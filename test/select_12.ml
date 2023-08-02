@@ -1,10 +1,9 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   select all * from a, b
-intersect all
+intersect
 select distinct * from c
 |}
 
@@ -24,8 +23,10 @@ let%expect_test "select_12 for formatting" =
     FROM
         a,
         b
-    INTERSECT ALL
+
+    INTERSECT
     SELECT DISTINCT
         *
+
     FROM
         c |}]

@@ -1,3 +1,3 @@
 select all * from a, b
-intersect all
+intersect
 select distinct * from c

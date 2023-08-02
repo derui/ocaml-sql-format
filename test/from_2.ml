@@ -20,6 +20,7 @@ let%expect_test "multiple tables in from for formatting" =
     {|
     SELECT
         *
+
     FROM
         test_table AS abc,
         ident AS "next",

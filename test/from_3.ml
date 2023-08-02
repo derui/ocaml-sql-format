@@ -16,4 +16,28 @@ let%test_unit "from_3 for AST" =
 
 let%expect_test "from_3 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        *
+
+    FROM
+        a,
+        (
+            SELECT
+                c,
+                d,
+                f
+
+            FROM
+                e
+
+        ) v_v,
+        (
+            SELECT
+                abc
+
+            FROM
+                f
+
+        ) e |}]

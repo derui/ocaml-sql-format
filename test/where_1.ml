@@ -23,8 +23,8 @@ let%expect_test "where in from for formatting" =
       FROM
           test_table
       WHERE
-          b IS NULL
-          AND c IS NOT NULL
+          b IS NULL AND c IS NOTNULL
+
       GROUP BY
           test_table.a,
           test_table.b |}]

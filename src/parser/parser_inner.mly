@@ -637,6 +637,13 @@ let function_keyword ==
   | Kw_dense_rank; {Identifier (`keyword Kw_dense_rank, ())}
   | Kw_percent_rank; {Identifier (`keyword Kw_percent_rank, ())}
   | Kw_cume_dist; {Identifier (`keyword Kw_cume_dist, ())}
+  | Kw_sum; {Identifier (`keyword Kw_sum, ())}
+  | Kw_min; {Identifier (`keyword Kw_min, ())}
+  | Kw_max; {Identifier (`keyword Kw_max, ())}
+  | Kw_every; {Identifier (`keyword Kw_every, ())}
+  | Kw_some; {Identifier (`keyword Kw_some, ())}
+  | Kw_any; {Identifier (`keyword Kw_any, ())}
+  | Kw_avg; {Identifier (`keyword Kw_avg, ())}
 
 
 let function_name :=
@@ -745,9 +752,15 @@ let expr_case_else :=
 let sql_statement :=
  | s = select_statement; { Sql_statement (`select s, ()) }
 
+let select_statement_list :=
+  | x = select_core; { [(None, x)] }
+  | x = select_core; o = compound_operator; l = select_statement_list; { (Some o, x) :: l }
 
 let select_statement :=
- | c = select_core; order = option(order_by_clause); limit = option(limit_clause); { Select_statement (c, order, limit, ())}
+ | wc = option(with_clause);
+   cs = select_statement_list;
+   order = option(order_by_clause);
+   limit = option(limit_clause); { Select_statement (wc, cs, order, limit, ())}
 
 
 let select_core :=
@@ -1037,6 +1050,6 @@ let compound_operator :=
        let v = match o with
          | None -> `union
          | Some _ -> `union_all in
-       Compound_operator (o, ()) }
+       Compound_operator (v, ()) }
  | Kw_intersect; { Compound_operator (`intersect, ()) }
  | Kw_except; { Compound_operator (`except, ()) }

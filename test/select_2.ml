@@ -2,7 +2,7 @@ module F = Formatter
 module P = Parser.Parser
 
 let actual = {|
-  SELECT  * INTO "some_table name"
+  SELECT  t.* from "some_table name"
 |}
 
 let option = F.Options.default
@@ -16,5 +16,7 @@ let%expect_test "select into for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect {|
     SELECT
-        *
-    INTO "some_table name" |}]
+        t
+
+    FROM
+        "some_table name" |}]

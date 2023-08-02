@@ -25,6 +25,7 @@ module Make (V : GEN with type t = ext common_table_expression) : S = struct
       List.iter
         (fun c ->
           Sfmt.comma ~option f ();
+          Sfmt.newline f ();
           V.print ~option f c;
           Sfmt.newline f ())
         cs

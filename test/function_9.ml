@@ -17,4 +17,11 @@ let%test_unit "function_9 for AST" =
 
 let%expect_test "function_9 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        TRANSLATE(),
+        TRANSLATE('a', '2')
+
+    FROM
+        a |}]

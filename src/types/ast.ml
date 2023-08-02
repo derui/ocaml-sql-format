@@ -64,7 +64,11 @@ and 'a sql_statement =
 
 and 'a select_statement =
   | Select_statement of
-      'a select_core * 'a order_by_clause option * 'a limit_clause option * 'a
+      'a with_clause option
+      * ('a compound_operator option * 'a select_core) list
+      * 'a order_by_clause option
+      * 'a limit_clause option
+      * 'a
 
 and 'a select_core =
   | Select_core of

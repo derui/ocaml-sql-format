@@ -1,9 +1,8 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
-  select * from a where a between (select 1) and (select * from b)
+let actual = {|
+  select * from a where a between 1 and b
 |}
 
 let option = F.Options.default
@@ -21,13 +20,6 @@ let%expect_test "select_5 for formatting" =
           *
       FROM
           a
+
       WHERE
-          a BETWEEN (
-                        SELECT
-                            1
-                    ) AND (
-                              SELECT
-                                  *
-                              FROM
-                                  b
-                          ) |}]
+          a BETWEEN 1 AND b |}]

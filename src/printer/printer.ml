@@ -186,6 +186,16 @@ and select_statement () =
                 type t = A.ext A.order_by_clause
 
                 let generate = order_by_clause
+              end)
+              (struct
+                type t = A.ext A.with_clause
+
+                let generate = with_clause
+              end)
+              (struct
+                type t = A.ext A.compound_operator
+
+                let generate = compound_operator
               end) : S))
 
 and select_core () =

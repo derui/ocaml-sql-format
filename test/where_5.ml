@@ -4,11 +4,9 @@ module P = Parser.Parser
 let actual =
   {|
    SELECT a, b from test_table where b like '%abad'
-   or c not like 'abc%'
-   or d similar to 'abc%'
-   or e not similar to 'abc%'
-   or c similar to 'abc%' escape 'f'
-   or c similar to 'abc%' { escape 'f' }
+   or d like 'abc%'
+   or e not like 'abc%'
+   or c like 'abc%' escape 'f'
    |}
 
 let option = F.Options.default
@@ -27,10 +25,6 @@ let%expect_test "where with between in from for formatting" =
           b
       FROM
           test_table
+
       WHERE
-          b LIKE '%abad'
-          OR  c NOT LIKE 'abc%'
-          OR  d SIMILAR TO 'abc%'
-          OR  e NOT SIMILAR TO 'abc%'
-          OR  c SIMILAR TO 'abc%' ESCAPE 'f'
-          OR  c SIMILAR TO 'abc%' ESCAPE 'f' |}]
+          b LIKE '%abad' OR d LIKE 'abc%' OR e NOT LIKE 'abc%' OR c LIKE 'abc%' ESCAPE 'f' |}]

@@ -20,4 +20,13 @@ let%test_unit "function_8 for AST" =
 
 let%expect_test "function_8 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        LEFT(),
+        LEFT('a', '2'),
+        RIGHT(),
+        RIGHT('a', '2')
+
+    FROM
+        a |}]

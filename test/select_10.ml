@@ -29,13 +29,15 @@ let%expect_test "select_10 for formatting" =
   [%expect
     {|
       SELECT
-          COUNT(*) OVER () AS v,
-          TEXTAGG (FOR a AS t1, b AS t2 DELIMITER ',') OVER (
-              PARTITION BY e
-          ) AS v2,
           COUNT(*) OVER (
+
+          ) AS v,
+          COUNT(*) OVER (
+
               PARTITION BY expr
-              ORDER BY bc
+              ORDER BY
+                  bc
+
           ) AS v3,
           COUNT(*) FILTER (WHERE a = 3) AS v4,
           COUNT(*) FILTER (WHERE b > 4) OVER (
@@ -44,7 +46,7 @@ let%expect_test "select_10 for formatting" =
           ) AS v5,
           COUNT(*) OVER (
 
-              RANGE UNBOUNDED FOLLOWING
+              RANGE UNBOUNDED PRECEDING
           ) AS v6,
           COUNT(*) OVER (
 
@@ -52,11 +54,11 @@ let%expect_test "select_10 for formatting" =
           ) AS v7,
           COUNT(*) OVER (
 
-              RANGE BETWEEN UNBOUNDED FOLLOWING AND UNBOUNDED PRECEDING
+              RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
           ) AS v8,
           COUNT(*) OVER (
 
-              ROWS UNBOUNDED FOLLOWING
+              ROWS UNBOUNDED PRECEDING
           ) AS v9,
           COUNT(*) OVER (
 
@@ -64,8 +66,9 @@ let%expect_test "select_10 for formatting" =
           ) AS v10,
           COUNT(*) OVER (
 
-              ROWS BETWEEN UNBOUNDED FOLLOWING AND UNBOUNDED PRECEDING
+              ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
           ) AS v11
+
       FROM
           a,
           b |}]

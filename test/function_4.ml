@@ -35,5 +35,6 @@ let%expect_test "funciton_4 for formatting" =
           EXTRACT(SECOND FROM 'abc'),
           EXTRACT(QUARTER FROM 'abc'),
           EXTRACT(EPOCH FROM 'abc')
+
       FROM
           a |}]

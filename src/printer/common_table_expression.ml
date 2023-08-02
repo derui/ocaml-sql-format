@@ -15,10 +15,10 @@ module Make
     | Common_table_expression (tname, columns, mat, stmt, _) ->
       let module Table_name = (val Table_name.generate ()) in
       Table_name.print ~option f tname;
+      Fmt.string f " ";
 
       Option.iter
         (fun cols ->
-          Fmt.string f " ";
           Sfmt.parens ~option
             (fun f _ ->
               let c = List.hd cols
@@ -32,7 +32,8 @@ module Make
                   Sfmt.comma ~option f ();
                   Column_name.print ~option f c)
                 cs)
-            f ())
+            f ();
+          Fmt.string f " ")
         columns;
       let kw =
         match mat with

@@ -3,7 +3,7 @@ module P = Parser.Parser
 
 let actual =
   {|
-   SELECT a, b from test_table where b like_regex 'abad' or c not like_regex ab
+   SELECT a, b from test_table where b regexp 'abad' or c not regexp ab
    |}
 
 let option = F.Options.default
@@ -22,6 +22,6 @@ let%expect_test "where with between in from for formatting" =
           b
       FROM
           test_table
+
       WHERE
-          b LIKE_REGEX 'abad'
-          OR  c NOT LIKE_REGEX ab |}]
+          b REGEXP 'abad' OR c NOT REGEXP ab |}]

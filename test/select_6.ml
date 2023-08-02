@@ -29,12 +29,13 @@ let%expect_test "select_6 for formatting" =
     {|
     SELECT
         CASE a * 10
-            WHEN 15 THEN 11
-            WHEN c THEN 12
-            ELSE 13
+        WHEN 15 THEN 11
+        WHEN c THEN 12
+        ELSE 13
         END AS v,
         CASE a * 10
-            WHEN 5 THEN 1
+        WHEN 5 THEN 1
         END AS v
+
     FROM
         a |}]

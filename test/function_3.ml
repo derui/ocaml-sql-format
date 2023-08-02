@@ -29,5 +29,6 @@ let%expect_test "funciton_3 for formatting" =
           SUBSTRING(e, 3),
           SUBSTRING(e, 3, 4),
           SUBSTRING(e, 3, 4, 5)
+
       FROM
           a |}]

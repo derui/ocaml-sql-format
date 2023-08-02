@@ -46,4 +46,39 @@ let%test_unit "function_2 for AST" =
 
 let%expect_test "function_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        CAST(e AS varchar),
+        CAST(e AS boolean),
+        CAST(e AS byte),
+        CAST(e AS tinyint),
+        CAST(e AS short),
+        CAST(e AS smallint),
+        CAST(e AS char(3)[]),
+        CAST(e AS integer),
+        CAST(e AS long),
+        CAST(e AS bigint),
+        CAST(e AS biginteger),
+        CAST(e AS float),
+        CAST(e AS real),
+        CAST(e AS double),
+        CAST(e AS bigdecimal(1)),
+        CAST(e AS bigdecimal(1, 3)),
+        CAST(e AS decimal(3, 1)),
+        CAST(e AS DATE),
+        CAST(e AS TIME),
+        CAST(e AS TIMESTAMP),
+        CAST(e AS object),
+        CAST(e AS blob),
+        CAST(e AS clob),
+        CAST(e AS json),
+        CAST(e AS varbinary),
+        CAST(e AS geometry),
+        CAST(e AS geography),
+        CAST(e AS xml),
+        CAST(e AS other_type),
+        CAST(e AS other_type[])
+
+    FROM
+        a |}]

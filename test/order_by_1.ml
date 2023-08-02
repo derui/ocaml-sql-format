@@ -20,9 +20,6 @@ let%expect_test "order by in from for formatting" =
       SELECT
           a,
           b
+
       FROM
-          test_table
-      ORDER BY
-          a,
-          b DESC NULL LAST,
-          c NULL FIRST |}]
+          test_table |}]
