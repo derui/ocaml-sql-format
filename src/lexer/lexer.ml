@@ -1893,6 +1893,40 @@ let kw_materialized =
     , Chars "eE"
     , Chars "dD" )]
 
+let kw_abort =
+  [%sedlex.regexp? Chars "aA", Chars "bB", Chars "oO", Chars "rR", Chars "tT"]
+
+let kw_ignore =
+  [%sedlex.regexp?
+    Chars "iI", Chars "gG", Chars "nN", Chars "oO", Chars "rR", Chars "eE"]
+
+let kw_replace =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "pP"
+    , Chars "lL"
+    , Chars "aA"
+    , Chars "cC"
+    , Chars "eE" )]
+
+let kw_rollback =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "oO"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "bB"
+    , Chars "aA"
+    , Chars "cC"
+    , Chars "kK" )]
+
+let kw_fail = [%sedlex.regexp? Chars "fF", Chars "aA", Chars "iI", Chars "lL"]
+
+let kw_update =
+  [%sedlex.regexp?
+    Chars "uU", Chars "pP", Chars "dD", Chars "aA", Chars "tT", Chars "eE"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2208,6 +2242,12 @@ let rec token buf =
   | kw_match -> Kw_match
   | kw_regexp -> Kw_regexp
   | kw_materialized -> Kw_materialized
+  | kw_abort -> Kw_abort
+  | kw_ignore -> Kw_ignore
+  | kw_replace -> Kw_replace
+  | kw_rollback -> Kw_rollback
+  | kw_fail -> Kw_fail
+  | kw_update -> Kw_update
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

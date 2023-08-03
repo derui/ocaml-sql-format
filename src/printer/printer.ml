@@ -163,11 +163,17 @@ and expr () =
 
 and sql_statement () =
   Sql_statement.(
-    (module Make (struct
-      type t = A.ext A.select_statement
+    (module Make
+              (struct
+                type t = A.ext A.select_statement
 
-      let generate = select_statement
-    end) : S))
+                let generate = select_statement
+              end)
+              (struct
+                type t = A.ext A.update_statement
+
+                let generate = update_statement
+              end) : S))
 
 and select_statement () =
   Select_statement.(
@@ -607,3 +613,46 @@ and with_clause () =
     end) : S))
 
 and compound_operator () = Compound_operator.((module Make () : S))
+
+and update_statement () =
+  Update_statement.(
+    (module Make
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.from_clause
+
+                let generate = from_clause
+              end)
+              (struct
+                type t = A.ext A.where_clause
+
+                let generate = where_clause
+              end) : S))
+
+and qualified_table_name () =
+  Qualified_table_name.(
+    (module Make
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.schema_name
+
+                let generate = schema_name
+              end) : S))

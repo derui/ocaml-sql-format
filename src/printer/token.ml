@@ -268,6 +268,12 @@ include (
       | Kw_match -> Fmt.string f @@ as_keyword "match" keyword
       | Kw_regexp -> Fmt.string f @@ as_keyword "regexp" keyword
       | Kw_materialized -> Fmt.string f @@ as_keyword "materialized" keyword
+      | Kw_abort -> Fmt.string f @@ as_keyword "abort" keyword
+      | Kw_ignore -> Fmt.string f @@ as_keyword "ignore" keyword
+      | Kw_replace -> Fmt.string f @@ as_keyword "replace" keyword
+      | Kw_rollback -> Fmt.string f @@ as_keyword "rollback" keyword
+      | Kw_fail -> Fmt.string f @@ as_keyword "fail" keyword
+      | Kw_update -> Fmt.string f @@ as_keyword "update" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -254,6 +254,12 @@ type token =
   | Kw_match
   | Kw_regexp
   | Kw_materialized
+  | Kw_abort
+  | Kw_ignore
+  | Kw_replace
+  | Kw_rollback
+  | Kw_fail
+  | Kw_update
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

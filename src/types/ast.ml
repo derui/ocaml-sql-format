@@ -60,7 +60,8 @@ and 'a expr =
       * 'a
 
 and 'a sql_statement =
-  | Sql_statement of [ `select of 'a select_statement ] * 'a
+  | Sql_statement of
+      [ `select of 'a select_statement | `update of 'a update_statement ] * 'a
 
 and 'a select_statement =
   | Select_statement of
@@ -287,3 +288,18 @@ and 'a with_clause =
 
 and 'a compound_operator =
   | Compound_operator of [ `union | `union_all | `intersect | `except ] * 'a
+
+and 'a update_statement =
+  | Update_statement of
+      [ `abort | `fail | `ignore | `replace | `rollback ] option
+      * 'a qualified_table_name
+      * [ `column of 'a column_name * 'a expr
+        | `list of 'a column_name list * 'a expr
+        ]
+        list
+      * 'a from_clause option
+      * 'a where_clause option
+      * 'a
+
+and 'a qualified_table_name =
+  | Qualified_table_name of 'a schema_name option * 'a table_name * 'a

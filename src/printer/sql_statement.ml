@@ -3,7 +3,9 @@ open Intf
 
 module type S = PRINTER with type t = ext sql_statement
 
-module Make (V : GEN with type t = ext select_statement) : S = struct
+module Make
+    (V : GEN with type t = ext select_statement)
+    (U : GEN with type t = ext update_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -11,4 +13,7 @@ module Make (V : GEN with type t = ext select_statement) : S = struct
     | Sql_statement (`select v, _) ->
       let module V = (val V.generate ()) in
       V.print ~option f v
+    | Sql_statement (`update v, _) ->
+      let module U = (val U.generate ()) in
+      U.print ~option f v
 end

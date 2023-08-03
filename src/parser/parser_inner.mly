@@ -259,6 +259,12 @@ open Types.Literal
 %token Kw_match
 %token Kw_regexp
 %token Kw_materialized
+%token Kw_abort
+%token Kw_ignore
+%token Kw_replace
+%token Kw_rollback
+%token Kw_fail
+%token Kw_update
 
 (* tokens *)
 %token Tok_lparen
@@ -566,6 +572,12 @@ let keyword ==
   | Kw_coalesce; {Identifier (`keyword Kw_coalesce, ())}
   | Kw_groups; {Identifier (`keyword Kw_groups, ())}
   | Kw_materialized; {Identifier (`keyword Kw_materialized, ())}
+  | Kw_abort; {Identifier (`keyword Kw_abort, ())}
+  | Kw_ignore; {Identifier (`keyword Kw_ignore, ())}
+  | Kw_replace; {Identifier (`keyword Kw_replace, ())}
+  | Kw_rollback; {Identifier (`keyword Kw_rollback, ())}
+  | Kw_fail; {Identifier (`keyword Kw_fail, ())}
+  | Kw_update; {Identifier (`keyword Kw_update, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -751,6 +763,7 @@ let expr_case_else :=
 
 let sql_statement :=
  | s = select_statement; { Sql_statement (`select s, ()) }
+ | x = update_statement; { Sql_statement (`update x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1053,3 +1066,30 @@ let compound_operator :=
        Compound_operator (v, ()) }
  | Kw_intersect; { Compound_operator (`intersect, ()) }
  | Kw_except; { Compound_operator (`except, ()) }
+
+let update_statement_option :=
+  | Kw_or; Kw_abort; { `abort}
+  | Kw_or; Kw_fail; { `fail}
+  | Kw_or; Kw_ignore; { `ignore}
+  | Kw_or; Kw_replace; { `replace}
+  | Kw_or; Kw_rollback; { `rollback}
+
+let column_name_list :=
+  | e = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name) ,Tok_rparen); { e }
+
+let update_statement_columns :=
+  | c = column_name; Op_eq ; e = expr; { `column (c, e) }
+  | c = column_name_list; Op_eq ; e = expr; { `list (c, e) }
+
+let update_statement :=
+ | Kw_update; opt = option(update_statement_option);
+   name = qualified_table_name;
+   Kw_set;
+   cols = separated_nonempty_list(Tok_comma, update_statement_columns);
+   from = option(from_clause);
+   where = option(where_clause);
+   { Update_statement (opt, name, cols, from, where, ()) }
+
+
+let qualified_table_name :=
+ | sname = ioption(schema_name); tname = table_name; { Qualified_table_name(sname, tname, ()) }
