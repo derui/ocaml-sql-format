@@ -27,6 +27,5 @@ let%expect_test "select_12 for formatting" =
     INTERSECT
     SELECT DISTINCT
         *
-
     FROM
         c |}]

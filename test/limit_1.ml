@@ -19,6 +19,5 @@ let%expect_test "limit in from for formatting" =
       SELECT
           a,
           b
-
       FROM
           test_table |}]

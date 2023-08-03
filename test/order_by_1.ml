@@ -20,6 +20,5 @@ let%expect_test "order by in from for formatting" =
       SELECT
           a,
           b
-
       FROM
           test_table |}]

@@ -19,6 +19,5 @@ let%expect_test "function_12 for formatting" =
   [%expect {|
     SELECT
         CURRENT_DATE()
-
     FROM
         a |}]

@@ -26,12 +26,10 @@ let%expect_test "where_8 for formatting" =
           *
       FROM
           "table" AS b
-
       WHERE
           b IN (
               SELECT
                   c * 151
-
               FROM
                   table_c
 
@@ -47,7 +45,6 @@ let%expect_test "where_8 for formatting" =
                   d,
                   e,
                   "f g"
-
               FROM
                   table_d
 

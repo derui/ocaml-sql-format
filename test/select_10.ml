@@ -68,7 +68,6 @@ let%expect_test "select_10 for formatting" =
 
               ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
           ) AS v11
-
       FROM
           a,
           b |}]

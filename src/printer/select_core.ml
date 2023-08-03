@@ -20,35 +20,30 @@ module Make
 
       Option.iter
         (fun from ->
-          Fmt.cut f ();
           let module From = (val From.generate ()) in
           From.print ~option f from)
         from;
 
       Option.iter
         (fun wh ->
-          Fmt.cut f ();
           let module Where = (val Where.generate ()) in
           Where.print ~option f wh)
         wh;
 
       Option.iter
         (fun g ->
-          Fmt.cut f ();
           let module Group = (val Group.generate ()) in
           Group.print ~option f g)
         g;
 
       Option.iter
         (fun h ->
-          Fmt.cut f ();
           let module Having = (val Having.generate ()) in
           Having.print ~option f h)
         h;
 
       Option.iter
         (fun wi ->
-          Fmt.cut f ();
           let module Window = (val Window.generate ()) in
           Window.print ~option f wi)
         wi

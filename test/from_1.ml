@@ -17,6 +17,5 @@ let%expect_test "simplest sql for formatting" =
   [%expect {|
     SELECT
         *
-
     FROM
         test_table |}]

@@ -23,6 +23,5 @@ let%expect_test "having in from for formatting" =
         test_table
     GROUP BY
         a
-
     HAVING
         b |}]

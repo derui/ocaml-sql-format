@@ -22,6 +22,5 @@ let%expect_test "function_9 for formatting" =
     SELECT
         TRANSLATE(),
         TRANSLATE('a', '2')
-
     FROM
         a |}]

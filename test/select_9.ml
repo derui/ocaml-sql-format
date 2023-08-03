@@ -39,7 +39,6 @@ let%expect_test "select_9 for formatting" =
           EVERY(e) AS v7,
           SOME(b.e) AS v12,
           ANY(e) AS v13
-
       FROM
           a,
           b |}]

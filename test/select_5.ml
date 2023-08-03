@@ -20,6 +20,5 @@ let%expect_test "select_5 for formatting" =
           *
       FROM
           a
-
       WHERE
           a BETWEEN 1 AND b |}]

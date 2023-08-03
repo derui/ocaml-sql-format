@@ -33,6 +33,5 @@ let%expect_test "function_5 for formatting" =
         TRIM(TRAILING ' ' FROM 'abc'),
         TRIM(BOTH e FROM 'abc'),
         TRIM('a' FROM 'abc')
-
     FROM
         a |}]

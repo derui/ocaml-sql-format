@@ -20,7 +20,6 @@ let%expect_test "from_5 for formatting" =
     {|
       SELECT
           *
-
       FROM
           a
           CROSS JOIN (

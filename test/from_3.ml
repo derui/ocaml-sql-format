@@ -20,7 +20,6 @@ let%expect_test "from_3 for formatting" =
     {|
     SELECT
         *
-
     FROM
         a,
         (
@@ -28,7 +27,6 @@ let%expect_test "from_3 for formatting" =
                 c,
                 d,
                 f
-
             FROM
                 e
 
@@ -36,7 +34,6 @@ let%expect_test "from_3 for formatting" =
         (
             SELECT
                 abc
-
             FROM
                 f
 

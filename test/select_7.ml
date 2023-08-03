@@ -35,6 +35,5 @@ let%expect_test "select_7 for formatting" =
         CASE
         WHEN a THEN 3
         END AS e
-
     FROM
         a |}]

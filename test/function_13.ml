@@ -27,6 +27,5 @@ let%expect_test "function_13 for formatting" =
         test(1, 3, 'a'),
         COUNT(3),
         session(DISTINCT e) FILTER (WHERE v > 50)
-
     FROM
         a |}]

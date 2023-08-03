@@ -22,6 +22,5 @@ let%expect_test "where_11 for formatting" =
         *
     FROM
         "table"
-
     WHERE
         b > 1 AND b > 3 OR c > 3 AND c < 500 AND d > 3 |}]

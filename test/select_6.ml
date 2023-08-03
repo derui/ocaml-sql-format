@@ -36,6 +36,5 @@ let%expect_test "select_6 for formatting" =
         CASE a * 10
         WHEN 5 THEN 1
         END AS v
-
     FROM
         a |}]

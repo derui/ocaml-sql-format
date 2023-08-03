@@ -23,7 +23,6 @@ let%expect_test "select_4 for formatting" =
     WITH a AS (
         SELECT
             1
-
         FROM
             b
 
@@ -32,7 +31,6 @@ let%expect_test "select_4 for formatting" =
     "abc" (e) AS (
         SELECT
             2
-
         FROM
             c
 
@@ -41,14 +39,12 @@ let%expect_test "select_4 for formatting" =
     foo (e, b, f) AS (
         SELECT
             3
-
         FROM
             d
 
     )
     SELECT
         *
-
     FROM
         a,
         "abc",

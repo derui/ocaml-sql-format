@@ -48,7 +48,6 @@ let%expect_test "select_11 for formatting" =
             PARTITION BY e
             ROWS 3 PRECEDING
         ) AS v4
-
     FROM
         a,
         b |}]
