@@ -76,6 +76,7 @@ module Make
           List.iter
             (fun c ->
               Sfmt.comma ~option f ();
+              Fmt.cut f ();
               print_col ~option f c)
             cs)
         f ();

@@ -1092,4 +1092,5 @@ let update_statement :=
 
 
 let qualified_table_name :=
- | sname = ioption(schema_name); tname = table_name; { Qualified_table_name(sname, tname, ()) }
+ | sname = ioption(pair(schema_name, Tok_period)); tname = table_name;
+   { Qualified_table_name(Option.map fst sname, tname, ()) }
