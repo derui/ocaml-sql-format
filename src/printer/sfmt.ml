@@ -11,26 +11,26 @@ let comma ~option fmt _ =
   Token.print ~option fmt Tok_comma;
   Fmt.string fmt " "
 
-(** [force_vbox fmt pf v] wraps box with [pf]. *)
-let force_vbox width pf fmt v =
-  newline fmt ();
-  indent width fmt ();
-  (Fmt.vbox ~indent:0 pf) fmt v;
-  newline fmt ()
+(** [force_vbox fmt ppf v] wraps box with [ppf]. *)
+let force_vbox width ppf fmt v =
+  Format.pp_print_break fmt 0 width;
+  (Fmt.vbox ~indent:0 ppf) fmt v;
+  Fmt.cut fmt ()
 
 (** [term_box fmt pf v] wraps hovbox with [pf]. *)
 let term_box pf fmt v = (Fmt.hovbox ~indent:0 pf) fmt v
 
 (** [parens ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
-let parens ?indent:need_indent ~option pf fmt v =
+let parens ~option pf fmt v =
   Token.print fmt Tok_lparen ~option;
-  match need_indent with
-  | Some _ ->
-    (force_vbox option.indent_size pf) fmt v;
-    Token.print fmt Tok_rparen ~option
-  | None ->
-    pf fmt v;
-    Token.print fmt Tok_rparen ~option
+  pf fmt v;
+  Token.print fmt Tok_rparen ~option
+
+(** [ ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
+let parens_box ~option pf fmt v =
+  Token.print fmt Tok_lparen ~option;
+  (force_vbox option.indent_size pf) fmt v;
+  Token.print fmt Tok_rparen ~option
 
 let keyword ~option fmt = function
   | [] -> failwith "need least one keyword"

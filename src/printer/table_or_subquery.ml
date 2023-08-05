@@ -35,7 +35,7 @@ module Make
           I.print ~option f v)
         alias
     | Table_or_subquery (`statement (v, alias), _) ->
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           let module Statement = (val Statement.generate ()) in
           Statement.print ~option f v)
@@ -48,7 +48,7 @@ module Make
           I.print ~option f v)
         alias
     | Table_or_subquery (`nested vs, _) ->
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           let v = List.hd vs in
           let vs = List.tl vs in
@@ -63,7 +63,7 @@ module Make
             vs)
         f ()
     | Table_or_subquery (`join v, _) ->
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           let module Join = (val Join.generate ()) in
           Join.print ~option f v)

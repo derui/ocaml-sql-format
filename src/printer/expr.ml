@@ -175,13 +175,13 @@ module Make
 
       match v with
       | `stmt v ->
-        Sfmt.parens ~indent:() ~option
+        Sfmt.parens_box ~option
           (fun f _ ->
             let module Select_statement = (val Select_statement.generate ()) in
             Select_statement.print ~option f v)
           f ()
       | `expr v ->
-        Sfmt.parens ~indent:() ~option
+        Sfmt.parens_box ~option
           (fun f _ ->
             let e = List.hd v
             and es = List.tl v in
@@ -235,7 +235,7 @@ module Make
       Fmt.string f " ";
       Sfmt.keyword ~option f [ Kw_exists ];
       Fmt.string f " ";
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           let module Select_statement = (val Select_statement.generate ()) in
           Select_statement.print ~option f stmt)

@@ -44,7 +44,7 @@ module Make
       Sfmt.keyword ~option f kw;
       Fmt.string f " ";
 
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           let module Select = (val Select.generate ()) in
           Select.print ~option f stmt)

@@ -1084,14 +1084,15 @@ let update_statement_columns :=
   | c = column_name_list; Op_eq ; e = expr; { `list (c, e) }
 
 let update_statement :=
- | Kw_update; opt = option(update_statement_option);
+ | w = option(with_clause);
+   Kw_update; opt = option(update_statement_option);
    name = qualified_table_name;
    Kw_set;
    cols = separated_nonempty_list(Tok_comma, update_statement_columns);
    from = option(from_clause);
    where = option(where_clause);
    returning = option(returning_clause);
-   { Update_statement (opt, name, cols, from, where, returning, ()) }
+   { Update_statement (w, opt, name, cols, from, where, returning, ()) }
 
 
 let qualified_table_name :=

@@ -13,7 +13,7 @@ module Make
   let print f t ~option =
     match t with
     | Window_defn (n, p, o, s, _) ->
-      Sfmt.parens ~indent:() ~option
+      Sfmt.parens_box ~option
         (fun f _ ->
           Option.iter
             (fun v ->

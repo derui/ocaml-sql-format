@@ -646,6 +646,11 @@ and update_statement () =
                 type t = A.ext A.returning_clause
 
                 let generate = returning_clause
+              end)
+              (struct
+                type t = A.ext A.with_clause
+
+                let generate = with_clause
               end) : S))
 
 and qualified_table_name () =

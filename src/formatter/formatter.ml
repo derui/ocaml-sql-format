@@ -42,7 +42,9 @@ let format (option : Options.t) lexbuf =
   let buffer = Buffer.create 16 in
   let formatter = Format.formatter_of_buffer buffer in
   Format.pp_set_margin formatter option.max_line_length;
+  Format.pp_open_vbox formatter 0;
   List.iter (Entry_printer.print formatter ~option) result;
+  Format.pp_close_box formatter ();
   Format.pp_print_flush formatter ();
   Buffer.to_bytes buffer |> String.of_bytes
 
