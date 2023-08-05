@@ -660,6 +660,11 @@ and qualified_table_name () =
                 type t = A.ext A.schema_name
 
                 let generate = schema_name
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
               end) : S))
 
 and returning_clause () =

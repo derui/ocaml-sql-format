@@ -303,7 +303,8 @@ and 'a update_statement =
       * 'a
 
 and 'a qualified_table_name =
-  | Qualified_table_name of 'a schema_name option * 'a table_name * 'a
+  | Qualified_table_name of
+      'a schema_name option * 'a table_name * 'a identifier option * 'a
 
 and 'a returning_clause =
   | Returning_clause of

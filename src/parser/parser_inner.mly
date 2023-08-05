@@ -1095,8 +1095,10 @@ let update_statement :=
 
 
 let qualified_table_name :=
- | sname = ioption(pair(schema_name, Tok_period)); tname = table_name;
-   { Qualified_table_name(Option.map fst sname, tname, ()) }
+ | sname = ioption(pair(schema_name, Tok_period));
+   tname = table_name;
+   alias = option(Kw_as; i = identifier; {i});
+   { Qualified_table_name(Option.map fst sname, tname, alias, ()) }
 
 let returning_subclause :=
   | Op_star; { `asterisk }
