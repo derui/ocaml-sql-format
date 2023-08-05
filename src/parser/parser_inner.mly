@@ -265,6 +265,7 @@ open Types.Literal
 %token Kw_rollback
 %token Kw_fail
 %token Kw_update
+%token Kw_returning
 
 (* tokens *)
 %token Tok_lparen
@@ -578,6 +579,7 @@ let keyword ==
   | Kw_rollback; {Identifier (`keyword Kw_rollback, ())}
   | Kw_fail; {Identifier (`keyword Kw_fail, ())}
   | Kw_update; {Identifier (`keyword Kw_update, ())}
+  | Kw_returning; {Identifier (`keyword Kw_returning, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -1088,9 +1090,17 @@ let update_statement :=
    cols = separated_nonempty_list(Tok_comma, update_statement_columns);
    from = option(from_clause);
    where = option(where_clause);
-   { Update_statement (opt, name, cols, from, where, ()) }
+   returning = option(returning_clause);
+   { Update_statement (opt, name, cols, from, where, returning, ()) }
 
 
 let qualified_table_name :=
  | sname = ioption(pair(schema_name, Tok_period)); tname = table_name;
    { Qualified_table_name(Option.map fst sname, tname, ()) }
+
+let returning_subclause :=
+  | Op_star; { `asterisk }
+  | e = expr; alias = option(option(Kw_as); i = identifier; {i}); {`expr (e, alias)}
+
+let returning_clause :=
+ | Kw_returning; es = separated_nonempty_list(Tok_comma, returning_subclause); { Returning_clause (es, ()) }

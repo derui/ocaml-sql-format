@@ -9,7 +9,8 @@ module Make
     (Q : GEN with type t = ext qualified_table_name)
     (E : GEN with type t = ext expr)
     (From : GEN with type t = ext from_clause)
-    (Where : GEN with type t = ext where_clause) : S = struct
+    (Where : GEN with type t = ext where_clause)
+    (Returning : GEN with type t = ext returning_clause) : S = struct
   type t = ext update_statement
 
   let print_opt ~option f = function
@@ -52,7 +53,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | Update_statement (opt, qname, cols, from, where, _) ->
+    | Update_statement (opt, qname, cols, from, where, returning, _) ->
       Sfmt.keyword ~option f [ Kw_update ];
       Fmt.string f " ";
 
@@ -91,5 +92,11 @@ module Make
         (fun v ->
           let module Where = (val Where.generate ()) in
           Where.print ~option f v)
-        where
+        where;
+
+      Option.iter
+        (fun v ->
+          let module Returning = (val Returning.generate ()) in
+          Returning.print ~option f v)
+        returning
 end

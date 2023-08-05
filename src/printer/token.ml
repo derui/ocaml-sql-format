@@ -274,6 +274,7 @@ include (
       | Kw_rollback -> Fmt.string f @@ as_keyword "rollback" keyword
       | Kw_fail -> Fmt.string f @@ as_keyword "fail" keyword
       | Kw_update -> Fmt.string f @@ as_keyword "update" keyword
+      | Kw_returning -> Fmt.string f @@ as_keyword "returning" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

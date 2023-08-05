@@ -299,7 +299,12 @@ and 'a update_statement =
         list
       * 'a from_clause option
       * 'a where_clause option
+      * 'a returning_clause option
       * 'a
 
 and 'a qualified_table_name =
   | Qualified_table_name of 'a schema_name option * 'a table_name * 'a
+
+and 'a returning_clause =
+  | Returning_clause of
+      [ `asterisk | `expr of 'a expr * 'a identifier option ] list * 'a

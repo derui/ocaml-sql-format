@@ -260,6 +260,7 @@ type token =
   | Kw_rollback
   | Kw_fail
   | Kw_update
+  | Kw_returning
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

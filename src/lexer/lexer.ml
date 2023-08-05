@@ -1927,6 +1927,18 @@ let kw_update =
   [%sedlex.regexp?
     Chars "uU", Chars "pP", Chars "dD", Chars "aA", Chars "tT", Chars "eE"]
 
+let kw_returning =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "tT"
+    , Chars "uU"
+    , Chars "rR"
+    , Chars "nN"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "gG" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2248,6 +2260,7 @@ let rec token buf =
   | kw_rollback -> Kw_rollback
   | kw_fail -> Kw_fail
   | kw_update -> Kw_update
+  | kw_returning -> Kw_returning
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

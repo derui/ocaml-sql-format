@@ -641,6 +641,11 @@ and update_statement () =
                 type t = A.ext A.where_clause
 
                 let generate = where_clause
+              end)
+              (struct
+                type t = A.ext A.returning_clause
+
+                let generate = returning_clause
               end) : S))
 
 and qualified_table_name () =
@@ -655,4 +660,18 @@ and qualified_table_name () =
                 type t = A.ext A.schema_name
 
                 let generate = schema_name
+              end) : S))
+
+and returning_clause () =
+  Returning_clause.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
               end) : S))
