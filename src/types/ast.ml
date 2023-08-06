@@ -61,7 +61,11 @@ and 'a expr =
 
 and 'a sql_statement =
   | Sql_statement of
-      [ `select of 'a select_statement | `update of 'a update_statement ] * 'a
+      [ `select of 'a select_statement
+      | `update of 'a update_statement
+      | `delete of 'a delete_statement
+      ]
+      * 'a
 
 and 'a select_statement =
   | Select_statement of
@@ -310,3 +314,11 @@ and 'a qualified_table_name =
 and 'a returning_clause =
   | Returning_clause of
       [ `asterisk | `expr of 'a expr * 'a identifier option ] list * 'a
+
+and 'a delete_statement =
+  | Delete_statement of
+      'a with_clause option
+      * 'a qualified_table_name
+      * 'a where_clause option
+      * 'a returning_clause option
+      * 'a

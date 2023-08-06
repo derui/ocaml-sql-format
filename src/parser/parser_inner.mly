@@ -266,6 +266,7 @@ open Types.Literal
 %token Kw_fail
 %token Kw_update
 %token Kw_returning
+%token Kw_delete
 
 (* tokens *)
 %token Tok_lparen
@@ -580,6 +581,7 @@ let keyword ==
   | Kw_fail; {Identifier (`keyword Kw_fail, ())}
   | Kw_update; {Identifier (`keyword Kw_update, ())}
   | Kw_returning; {Identifier (`keyword Kw_returning, ())}
+  | Kw_delete; {Identifier (`keyword Kw_delete, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -766,6 +768,7 @@ let expr_case_else :=
 let sql_statement :=
  | s = select_statement; { Sql_statement (`select s, ()) }
  | x = update_statement; { Sql_statement (`update x, ()) }
+ | x = delete_statement; { Sql_statement (`delete x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1107,3 +1110,12 @@ let returning_subclause :=
 
 let returning_clause :=
  | Kw_returning; es = separated_nonempty_list(Tok_comma, returning_subclause); { Returning_clause (es, ()) }
+
+
+let delete_statement :=
+ | w = option(with_clause);
+   Kw_delete; Kw_from;
+   name = qualified_table_name;
+   where = option(where_clause);
+   returning = option(returning_clause);
+   { Delete_statement (w, name, where, returning, ()) }

@@ -261,6 +261,7 @@ type token =
   | Kw_fail
   | Kw_update
   | Kw_returning
+  | Kw_delete
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string
