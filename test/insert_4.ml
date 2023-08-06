@@ -17,4 +17,23 @@ let%test_unit "insert_4 for AST" =
 
 let%expect_test "insert_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    INSERT INTO a (
+        a,
+        b,
+        c,
+        d,
+        e
+    )
+    SELECT
+        1,
+        2,
+        3,
+        4,
+        5
+    FROM
+        v
+    WHERE
+        a = 'c' AND b LIKE '%afb'
+    RETURNING id, id2 |}]

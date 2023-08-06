@@ -14,4 +14,16 @@ let%test_unit "insert_2 for AST" =
 
 let%expect_test "insert_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {||}]
+  [%expect
+    {|
+    INSERT INTO a (
+        a,
+        b,
+        c,
+        d,
+        e
+    )
+    VALUES
+        (1, 2, 3),
+        (4, 5, 6),
+        (7, 8, 9) |}]

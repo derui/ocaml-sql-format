@@ -267,6 +267,7 @@ open Types.Literal
 %token Kw_update
 %token Kw_returning
 %token Kw_delete
+%token Kw_savepoint
 
 (* tokens *)
 %token Tok_lparen
@@ -582,6 +583,7 @@ let keyword ==
   | Kw_update; {Identifier (`keyword Kw_update, ())}
   | Kw_returning; {Identifier (`keyword Kw_returning, ())}
   | Kw_delete; {Identifier (`keyword Kw_delete, ())}
+  | Kw_savepoint; {Identifier (`keyword Kw_savepoint, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -770,6 +772,7 @@ let sql_statement :=
  | x = update_statement; { Sql_statement (`update x, ()) }
  | x = delete_statement; { Sql_statement (`delete x, ()) }
  | x = insert_statement; { Sql_statement (`insert x, ()) }
+ | x = savepoint_statement; { Sql_statement (`savepoint x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1129,3 +1132,7 @@ let insert_statement :=
    stmt = insert_sub_statement;
    returning = option(returning_clause);
    { Insert_statement (w, name, cols, stmt, returning, ()) }
+
+
+let savepoint_statement :=
+ | Kw_savepoint; i = identifier; { Savepoint_statement (i, ()) }

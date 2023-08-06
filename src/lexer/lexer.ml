@@ -1943,6 +1943,18 @@ let kw_delete =
   [%sedlex.regexp?
     Chars "dD", Chars "eE", Chars "lL", Chars "eE", Chars "tT", Chars "eE"]
 
+let kw_savepoint =
+  [%sedlex.regexp?
+    ( Chars "sS"
+    , Chars "aA"
+    , Chars "vV"
+    , Chars "eE"
+    , Chars "pP"
+    , Chars "oO"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "tT" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2266,6 +2278,7 @@ let rec token buf =
   | kw_update -> Kw_update
   | kw_returning -> Kw_returning
   | kw_delete -> Kw_delete
+  | kw_savepoint -> Kw_savepoint
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

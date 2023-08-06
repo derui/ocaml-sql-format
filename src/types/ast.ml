@@ -65,6 +65,7 @@ and 'a sql_statement =
       | `update of 'a update_statement
       | `delete of 'a delete_statement
       | `insert of 'a insert_statement
+      | `savepoint of 'a savepoint_statement
       ]
       * 'a
 
@@ -331,3 +332,5 @@ and 'a insert_statement =
       * [ `values of 'a expr list list | `select of 'a select_statement ]
       * 'a returning_clause option
       * 'a
+
+and 'a savepoint_statement = Savepoint_statement of 'a identifier * 'a
