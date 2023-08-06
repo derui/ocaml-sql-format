@@ -30,11 +30,9 @@ let%expect_test "where_10 for formatting" =
                   1
               FROM
                   a
-
           ) AND NOTb EXISTS (
               SELECT
                   3
               FROM
                   b
-
           ) |}]

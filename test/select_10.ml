@@ -37,7 +37,6 @@ let%expect_test "select_10 for formatting" =
               PARTITION BY expr
               ORDER BY
                   bc
-
           ) AS v3,
           COUNT(*) FILTER (WHERE a = 3) AS v4,
           COUNT(*) FILTER (WHERE b > 4) OVER (

@@ -91,18 +91,21 @@ module Make
 
       Option.iter
         (fun v ->
+          Fmt.cut f ();
           let module From = (val From.generate ()) in
           From.print ~option f v)
         from;
 
       Option.iter
         (fun v ->
+          Fmt.cut f ();
           let module Where = (val Where.generate ()) in
           Where.print ~option f v)
         where;
 
       Option.iter
         (fun v ->
+          Fmt.cut f ();
           let module Returning = (val Returning.generate ()) in
           Returning.print ~option f v)
         returning

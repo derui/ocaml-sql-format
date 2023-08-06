@@ -25,7 +25,6 @@ let%expect_test "select_4 for formatting" =
             1
         FROM
             b
-
     )
     ,
     "abc" (e) AS (
@@ -33,7 +32,6 @@ let%expect_test "select_4 for formatting" =
             2
         FROM
             c
-
     )
     ,
     foo (e, b, f) AS (
@@ -41,7 +39,6 @@ let%expect_test "select_4 for formatting" =
             3
         FROM
             d
-
     )
     SELECT
         *

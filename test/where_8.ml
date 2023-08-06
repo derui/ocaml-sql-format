@@ -32,7 +32,6 @@ let%expect_test "where_8 for formatting" =
                   c * 151
               FROM
                   table_c
-
           ) OR b IN (
               1, 34, 'abc'
           ) AND c NOT IN (
@@ -47,5 +46,4 @@ let%expect_test "where_8 for formatting" =
                   "f g"
               FROM
                   table_d
-
           ) |}]

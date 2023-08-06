@@ -36,7 +36,6 @@ let%expect_test "select_11 for formatting" =
             PARTITION BY e
             ORDER BY
                 a DESC
-
         ) AS v3,
         PERCENT_RANK() FILTER (WHERE e < 1500) OVER (
 

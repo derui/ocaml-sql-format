@@ -30,12 +30,9 @@ let%expect_test "from_4 for formatting" =
         CROSS JOIN f
         INNER JOIN b AS b_2
             ON a.id = b.id
-
         JOIN b
             ON a.id = b.id
-
         LEFT OUTER JOIN c
             ON a.id = c.id
-
         FULL OUTER JOIN d
             ON a.id = d.id |}]

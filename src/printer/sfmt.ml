@@ -14,8 +14,7 @@ let comma ~option fmt _ =
 (** [force_vbox fmt ppf v] wraps box with [ppf]. *)
 let force_vbox width ppf fmt v =
   Format.pp_print_break fmt 0 width;
-  (Fmt.vbox ~indent:0 ppf) fmt v;
-  Fmt.cut fmt ()
+  (Fmt.vbox ~indent:0 ppf) fmt v
 
 (** [term_box fmt pf v] wraps hovbox with [pf]. *)
 let term_box pf fmt v = (Fmt.hovbox ~indent:0 pf) fmt v
@@ -30,6 +29,7 @@ let parens ~option pf fmt v =
 let parens_box ~option pf fmt v =
   Token.print fmt Tok_lparen ~option;
   (force_vbox option.indent_size pf) fmt v;
+  Fmt.cut fmt ();
   Token.print fmt Tok_rparen ~option
 
 let keyword ~option fmt = function

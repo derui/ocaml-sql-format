@@ -44,7 +44,6 @@ let%expect_test "update_5 for formatting" =
         c
         INNER JOIN d
             ON d.id = c.id
-
     WHERE
         c >= 10
     RETURNING b.id |}]

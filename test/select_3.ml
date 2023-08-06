@@ -21,7 +21,6 @@ let%expect_test "select into for formatting" =
         *
     FROM
         "some_table name"
-
     UNION
     SELECT
         t.b

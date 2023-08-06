@@ -29,12 +29,10 @@ let%expect_test "from_3 for formatting" =
                 f
             FROM
                 e
-
         ) v_v,
         (
             SELECT
                 abc
             FROM
                 f
-
         ) e |}]

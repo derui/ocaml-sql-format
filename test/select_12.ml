@@ -23,7 +23,6 @@ let%expect_test "select_12 for formatting" =
     FROM
         a,
         b
-
     INTERSECT
     SELECT DISTINCT
         *

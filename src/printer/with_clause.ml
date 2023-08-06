@@ -21,12 +21,12 @@ module Make (V : GEN with type t = ext common_table_expression) : S = struct
       let c = List.hd cs
       and cs = List.tl cs in
       V.print ~option f c;
-      Sfmt.newline f ();
+      Fmt.cut f ();
       List.iter
         (fun c ->
           Sfmt.comma ~option f ();
-          Sfmt.newline f ();
+          Fmt.cut f ();
           V.print ~option f c;
-          Sfmt.newline f ())
+          Fmt.cut f ())
         cs
 end
