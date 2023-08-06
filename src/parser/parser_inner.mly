@@ -769,6 +769,7 @@ let sql_statement :=
  | s = select_statement; { Sql_statement (`select s, ()) }
  | x = update_statement; { Sql_statement (`update x, ()) }
  | x = delete_statement; { Sql_statement (`delete x, ()) }
+ | x = insert_statement; { Sql_statement (`insert x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1112,3 +1113,19 @@ let delete_statement :=
    where = option(where_clause);
    returning = option(returning_clause);
    { Delete_statement (w, name, where, returning, ()) }
+
+let insert_sub_statement :=
+  | Kw_values;
+    values = separated_nonempty_list(Tok_comma, delimited(Tok_lparen, separated_nonempty_list(Tok_comma, expr), Tok_rparen));
+    { `values values }
+  | x = select_statement;
+    { `select x }
+
+let insert_statement :=
+ | w = option(with_clause);
+   Kw_insert; Kw_into;
+   name = qualified_table_name;
+   cols = option(delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name), Tok_rparen));
+   stmt = insert_sub_statement;
+   returning = option(returning_clause);
+   { Insert_statement (w, name, cols, stmt, returning, ()) }

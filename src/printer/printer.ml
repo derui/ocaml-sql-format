@@ -178,6 +178,11 @@ and sql_statement () =
                 type t = A.ext A.delete_statement
 
                 let generate = delete_statement
+              end)
+              (struct
+                type t = A.ext A.insert_statement
+
+                let generate = insert_statement
               end) : S))
 
 and select_statement () =
@@ -713,4 +718,38 @@ and delete_statement () =
                 type t = A.ext A.returning_clause
 
                 let generate = returning_clause
+              end) : S))
+
+and insert_statement () =
+  Insert_statement.(
+    (module Make
+              (struct
+                type t = A.ext A.with_clause
+
+                let generate = with_clause
+              end)
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
+              end)
+              (struct
+                type t = A.ext A.returning_clause
+
+                let generate = returning_clause
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
               end) : S))

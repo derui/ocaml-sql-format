@@ -64,6 +64,7 @@ and 'a sql_statement =
       [ `select of 'a select_statement
       | `update of 'a update_statement
       | `delete of 'a delete_statement
+      | `insert of 'a insert_statement
       ]
       * 'a
 
@@ -319,5 +320,14 @@ and 'a delete_statement =
       'a with_clause option
       * 'a qualified_table_name
       * 'a where_clause option
+      * 'a returning_clause option
+      * 'a
+
+and 'a insert_statement =
+  | Insert_statement of
+      'a with_clause option
+      * 'a qualified_table_name
+      * 'a column_name list option
+      * [ `values of 'a expr list list | `select of 'a select_statement ]
       * 'a returning_clause option
       * 'a
