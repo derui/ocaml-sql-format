@@ -9,7 +9,8 @@ module Make
     (D : GEN with type t = ext delete_statement)
     (I : GEN with type t = ext insert_statement)
     (Savepoint : GEN with type t = ext savepoint_statement)
-    (Rollback : GEN with type t = ext rollback_statement) : S = struct
+    (Rollback : GEN with type t = ext rollback_statement)
+    (Drop_table : GEN with type t = ext drop_table_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -32,4 +33,7 @@ module Make
     | Sql_statement (`rollback v, _) ->
       let module Rollback = (val Rollback.generate ()) in
       Rollback.print ~option f v
+    | Sql_statement (`drop_table v, _) ->
+      let module Drop_table = (val Drop_table.generate ()) in
+      Drop_table.print ~option f v
 end

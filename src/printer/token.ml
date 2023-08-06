@@ -278,6 +278,8 @@ include (
       | Kw_delete -> Fmt.string f @@ as_keyword "delete" keyword
       | Kw_savepoint -> Fmt.string f @@ as_keyword "savepoint" keyword
       | Kw_transaction -> Fmt.string f @@ as_keyword "transaction" keyword
+      | Kw_if -> Fmt.string f @@ as_keyword "if" keyword
+      | Kw_drop -> Fmt.string f @@ as_keyword "drop" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

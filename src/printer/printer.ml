@@ -193,6 +193,11 @@ and sql_statement () =
                 type t = A.ext A.rollback_statement
 
                 let generate = rollback_statement
+              end)
+              (struct
+                type t = A.ext A.drop_table_statement
+
+                let generate = drop_table_statement
               end) : S))
 
 and select_statement () =
@@ -778,4 +783,12 @@ and rollback_statement () =
       type t = A.ext L.identifier
 
       let generate = identifier
+    end) : S))
+
+and drop_table_statement () =
+  Drop_table_statement.(
+    (module Make (struct
+      type t = A.ext A.qualified_table_name
+
+      let generate = qualified_table_name
     end) : S))

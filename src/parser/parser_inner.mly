@@ -269,6 +269,8 @@ open Types.Literal
 %token Kw_delete
 %token Kw_savepoint
 %token Kw_transaction
+%token Kw_if
+%token Kw_drop
 
 (* tokens *)
 %token Tok_lparen
@@ -586,6 +588,8 @@ let keyword ==
   | Kw_delete; {Identifier (`keyword Kw_delete, ())}
   | Kw_savepoint; {Identifier (`keyword Kw_savepoint, ())}
   | Kw_transaction; {Identifier (`keyword Kw_transaction, ())}
+  | Kw_if; {Identifier (`keyword Kw_if, ())}
+  | Kw_drop; {Identifier (`keyword Kw_drop, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -776,6 +780,7 @@ let sql_statement :=
  | x = insert_statement; { Sql_statement (`insert x, ()) }
  | x = savepoint_statement; { Sql_statement (`savepoint x, ()) }
  | x = rollback_statement; { Sql_statement (`rollback x, ()) }
+ | x = drop_table_statement; { Sql_statement (`drop_table x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1145,3 +1150,10 @@ let rollback_statement :=
  | Kw_rollback; ioption(Kw_transaction); { Rollback_statement (None, ()) }
  | Kw_rollback; ioption(Kw_transaction); Kw_to; ioption(Kw_savepoint); i = identifier;
    { Rollback_statement (Some i, ()) }
+
+
+let drop_table_statement :=
+ | Kw_drop; Kw_table;
+   e = option(Kw_if; Kw_exists);
+   n = qualified_table_name;
+   { Drop_table_statement (Option.map (fun () -> `exists) e, n, ()) }
