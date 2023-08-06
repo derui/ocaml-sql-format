@@ -1,9 +1,8 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
-  update or rollback sche.tbl as c set a = 3, b = 4 where c >= 10
+let actual = {|
+  update sche.tbl as c set a = 3, b = 4 where c >= 10
 |}
 
 let option = F.Options.default
@@ -17,7 +16,7 @@ let%expect_test "update_3 for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect
     {|
-    UPDATE OR ROLLBACK sche.tbl AS c
+    UPDATE sche.tbl AS c
     SET
         a = 3,
         b = 4

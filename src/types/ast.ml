@@ -296,7 +296,6 @@ and 'a compound_operator =
 and 'a update_statement =
   | Update_statement of
       'a with_clause option
-      * [ `abort | `fail | `ignore | `replace | `rollback ] option
       * 'a qualified_table_name
       * [ `column of 'a column_name * 'a expr
         | `list of 'a column_name list * 'a expr

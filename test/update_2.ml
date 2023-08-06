@@ -2,7 +2,7 @@ module F = Formatter
 module P = Parser.Parser
 
 let actual = {|
-  update or abort sche.tbl set a = 3, b = 4
+  update sche.tbl set a = 3, b = 4
 |}
 
 let option = F.Options.default
@@ -14,9 +14,8 @@ let%test_unit "update_2 for AST" =
 
 let%expect_test "update_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
-    UPDATE OR ABORT sche.tbl
+  [%expect {|
+    UPDATE sche.tbl
     SET
         a = 3,
         b = 4 |}]

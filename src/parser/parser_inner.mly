@@ -1072,13 +1072,6 @@ let compound_operator :=
  | Kw_intersect; { Compound_operator (`intersect, ()) }
  | Kw_except; { Compound_operator (`except, ()) }
 
-let update_statement_option :=
-  | Kw_or; Kw_abort; { `abort}
-  | Kw_or; Kw_fail; { `fail}
-  | Kw_or; Kw_ignore; { `ignore}
-  | Kw_or; Kw_replace; { `replace}
-  | Kw_or; Kw_rollback; { `rollback}
-
 let column_name_list :=
   | e = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, column_name) ,Tok_rparen); { e }
 
@@ -1088,14 +1081,14 @@ let update_statement_columns :=
 
 let update_statement :=
  | w = option(with_clause);
-   Kw_update; opt = option(update_statement_option);
+   Kw_update;
    name = qualified_table_name;
    Kw_set;
    cols = separated_nonempty_list(Tok_comma, update_statement_columns);
    from = option(from_clause);
    where = option(where_clause);
    returning = option(returning_clause);
-   { Update_statement (w, opt, name, cols, from, where, returning, ()) }
+   { Update_statement (w, name, cols, from, where, returning, ()) }
 
 
 let qualified_table_name :=

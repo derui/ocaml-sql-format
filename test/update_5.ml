@@ -8,7 +8,7 @@ let actual =
 ), d as (
    select id from c
 )
-update or rollback sche.tbl set a = 3, b = 4 from c inner join d on d.id = c.id where c >= 10
+update sche.tbl set a = 3, b = 4 from c inner join d on d.id = c.id where c >= 10
 returning b.id
 |}
 
@@ -36,7 +36,7 @@ let%expect_test "update_5 for formatting" =
         FROM
             c
     )
-    UPDATE OR ROLLBACK sche.tbl
+    UPDATE sche.tbl
     SET
         a = 3,
         b = 4

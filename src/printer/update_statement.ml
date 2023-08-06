@@ -14,13 +14,6 @@ module Make
     (With : GEN with type t = ext with_clause) : S = struct
   type t = ext update_statement
 
-  let print_opt ~option f = function
-    | `abort -> Sfmt.keyword ~option f [ Kw_or; Kw_abort ]
-    | `fail -> Sfmt.keyword ~option f [ Kw_or; Kw_fail ]
-    | `ignore -> Sfmt.keyword ~option f [ Kw_or; Kw_ignore ]
-    | `replace -> Sfmt.keyword ~option f [ Kw_or; Kw_replace ]
-    | `rollback -> Sfmt.keyword ~option f [ Kw_or; Kw_rollback ]
-
   let print_col ~option f = function
     | `column (c, e) ->
       let module V = (val V.generate ()) in
@@ -54,7 +47,7 @@ module Make
 
   let print f t ~option =
     match t with
-    | Update_statement (w, opt, qname, cols, from, where, returning, _) ->
+    | Update_statement (w, qname, cols, from, where, returning, _) ->
       Option.iter
         (fun w ->
           let module With = (val With.generate ()) in
@@ -63,12 +56,6 @@ module Make
 
       Sfmt.keyword ~option f [ Kw_update ];
       Fmt.string f " ";
-
-      Option.iter
-        (fun opt ->
-          print_opt ~option f opt;
-          Fmt.string f " ")
-        opt;
 
       let module Q = (val Q.generate ()) in
       Q.print ~option f qname;
