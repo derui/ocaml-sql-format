@@ -188,6 +188,11 @@ and sql_statement () =
                 type t = A.ext A.savepoint_statement
 
                 let generate = savepoint_statement
+              end)
+              (struct
+                type t = A.ext A.rollback_statement
+
+                let generate = rollback_statement
               end) : S))
 
 and select_statement () =
@@ -761,6 +766,14 @@ and insert_statement () =
 
 and savepoint_statement () =
   Savepoint_statement.(
+    (module Make (struct
+      type t = A.ext L.identifier
+
+      let generate = identifier
+    end) : S))
+
+and rollback_statement () =
+  Rollback_statement.(
     (module Make (struct
       type t = A.ext L.identifier
 

@@ -263,6 +263,7 @@ type token =
   | Kw_returning
   | Kw_delete
   | Kw_savepoint
+  | Kw_transaction
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

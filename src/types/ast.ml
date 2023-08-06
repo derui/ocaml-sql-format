@@ -66,6 +66,7 @@ and 'a sql_statement =
       | `delete of 'a delete_statement
       | `insert of 'a insert_statement
       | `savepoint of 'a savepoint_statement
+      | `rollback of 'a rollback_statement
       ]
       * 'a
 
@@ -334,3 +335,5 @@ and 'a insert_statement =
       * 'a
 
 and 'a savepoint_statement = Savepoint_statement of 'a identifier * 'a
+
+and 'a rollback_statement = Rollback_statement of 'a identifier option * 'a
