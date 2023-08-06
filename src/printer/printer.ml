@@ -198,6 +198,11 @@ and sql_statement () =
                 type t = A.ext A.drop_table_statement
 
                 let generate = drop_table_statement
+              end)
+              (struct
+                type t = A.ext A.begin_statement
+
+                let generate = begin_statement
               end) : S))
 
 and select_statement () =
@@ -792,3 +797,5 @@ and drop_table_statement () =
 
       let generate = qualified_table_name
     end) : S))
+
+and begin_statement () = Begin_statement.((module Make () : S))

@@ -280,6 +280,7 @@ include (
       | Kw_transaction -> Fmt.string f @@ as_keyword "transaction" keyword
       | Kw_if -> Fmt.string f @@ as_keyword "if" keyword
       | Kw_drop -> Fmt.string f @@ as_keyword "drop" keyword
+      | Kw_begin -> Fmt.string f @@ as_keyword "begin" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

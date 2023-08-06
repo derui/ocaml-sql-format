@@ -266,6 +266,7 @@ type token =
   | Kw_transaction
   | Kw_if
   | Kw_drop
+  | Kw_begin
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string
