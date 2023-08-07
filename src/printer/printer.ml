@@ -208,6 +208,11 @@ and sql_statement () =
                 type t = A.ext A.commit_statement
 
                 let generate = commit_statement
+              end)
+              (struct
+                type t = A.ext A.drop_index_statement
+
+                let generate = drop_index_statement
               end) : S))
 
 and select_statement () =
@@ -806,3 +811,11 @@ and drop_table_statement () =
 and begin_statement () = Begin_statement.((module Make () : S))
 
 and commit_statement () = Commit_statement.((module Make () : S))
+
+and drop_index_statement () =
+  Drop_index_statement.(
+    (module Make (struct
+      type t = A.ext A.qualified_table_name
+
+      let generate = qualified_table_name
+    end) : S))

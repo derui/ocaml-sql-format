@@ -787,6 +787,7 @@ let sql_statement :=
  | x = drop_table_statement; { Sql_statement (`drop_table x, ()) }
  | x = begin_statement; { Sql_statement (`begin' x, ()) }
  | x = commit_statement; { Sql_statement (`commit x, ()) }
+ | x = drop_index_statement; { Sql_statement (`drop_index x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1171,3 +1172,10 @@ let begin_statement :=
 
 let commit_statement :=
   | Kw_commit; t = ioption(Kw_transaction); { Commit_statement (Option.map (fun _ -> `transaction) t, ()) }
+
+
+let drop_index_statement :=
+ | Kw_drop; Kw_index;
+   e = option(Kw_if; Kw_exists);
+   n = qualified_table_name;
+   { Drop_index_statement (Option.map (fun () -> `exists) e, n, ()) }
