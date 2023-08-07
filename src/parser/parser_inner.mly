@@ -731,10 +731,10 @@ let expr :=
  | e = expr; n = ioption(Kw_not); Kw_match; e2 = expr; {
        Expr (`match' (e, Option.map (fun _ -> `not') n, e2), ())
      }
- | e = expr; Kw_is; n = ioption(Kw_not); e2 = expr; {
+ | e = expr; Kw_is; n = option(Kw_not); e2 = expr; {
        Expr (`is (e, Option.map (fun _ -> `not') n, e2), ())
      }
- | e = expr; Kw_is; n = ioption(Kw_not); Kw_distinct; Kw_from; e2 = expr; {
+ | e = expr; Kw_is; n = option(Kw_not); Kw_distinct; Kw_from; e2 = expr; {
        Expr (`is_distinct (e, Option.map (fun _ -> `not') n, e2), ())
      }
 (* function *)
