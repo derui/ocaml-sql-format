@@ -791,6 +791,7 @@ let sql_statement :=
  | x = commit_statement; { Sql_statement (`commit x, ()) }
  | x = drop_index_statement; { Sql_statement (`drop_index x, ()) }
  | x = drop_trigger_statement; { Sql_statement (`drop_trigger x, ()) }
+ | x = drop_view_statement; { Sql_statement (`drop_view x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1189,3 +1190,10 @@ let drop_trigger_statement :=
    e = option(Kw_if; Kw_exists);
    n = qualified_table_name;
    { Drop_trigger_statement (Option.map (fun () -> `exists) e, n, ()) }
+
+
+let drop_view_statement :=
+ | Kw_drop; Kw_view;
+   e = option(Kw_if; Kw_exists);
+   n = qualified_table_name;
+   { Drop_view_statement (Option.map (fun () -> `exists) e, n, ()) }

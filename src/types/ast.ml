@@ -72,6 +72,7 @@ and 'a sql_statement =
       | `commit of 'a commit_statement
       | `drop_index of 'a drop_index_statement
       | `drop_trigger of 'a drop_trigger_statement
+      | `drop_view of 'a drop_view_statement
       ]
       * 'a
 
@@ -355,3 +356,6 @@ and 'a drop_index_statement =
 
 and 'a drop_trigger_statement =
   | Drop_trigger_statement of [ `exists ] option * 'a qualified_table_name * 'a
+
+and 'a drop_view_statement =
+  | Drop_view_statement of [ `exists ] option * 'a qualified_table_name * 'a
