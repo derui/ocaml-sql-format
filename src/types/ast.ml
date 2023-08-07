@@ -69,6 +69,7 @@ and 'a sql_statement =
       | `rollback of 'a rollback_statement
       | `drop_table of 'a drop_table_statement
       | `begin' of 'a begin_statement
+      | `commit of 'a commit_statement
       ]
       * 'a
 
@@ -344,3 +345,5 @@ and 'a drop_table_statement =
   | Drop_table_statement of [ `exists ] option * 'a qualified_table_name * 'a
 
 and 'a begin_statement = Begin_statement of [ `transaction ] option * 'a
+
+and 'a commit_statement = Commit_statement of [ `transaction ] option * 'a

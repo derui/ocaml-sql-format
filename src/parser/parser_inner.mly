@@ -272,6 +272,7 @@ open Types.Literal
 %token Kw_if
 %token Kw_drop
 %token Kw_begin
+%token Kw_commit
 
 (* tokens *)
 %token Tok_lparen
@@ -592,6 +593,7 @@ let keyword ==
   | Kw_if; {Identifier (`keyword Kw_if, ())}
   | Kw_drop; {Identifier (`keyword Kw_drop, ())}
   | Kw_begin; {Identifier (`keyword Kw_begin, ())}
+  | Kw_commit; {Identifier (`keyword Kw_commit, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -784,6 +786,7 @@ let sql_statement :=
  | x = rollback_statement; { Sql_statement (`rollback x, ()) }
  | x = drop_table_statement; { Sql_statement (`drop_table x, ()) }
  | x = begin_statement; { Sql_statement (`begin' x, ()) }
+ | x = commit_statement; { Sql_statement (`commit x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1164,3 +1167,7 @@ let drop_table_statement :=
 
 let begin_statement :=
   | Kw_begin; t = ioption(Kw_transaction); { Begin_statement (Option.map (fun _ -> `transaction) t, ()) }
+
+
+let commit_statement :=
+  | Kw_commit; t = ioption(Kw_transaction); { Commit_statement (Option.map (fun _ -> `transaction) t, ()) }

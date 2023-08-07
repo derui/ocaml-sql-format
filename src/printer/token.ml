@@ -281,6 +281,7 @@ include (
       | Kw_if -> Fmt.string f @@ as_keyword "if" keyword
       | Kw_drop -> Fmt.string f @@ as_keyword "drop" keyword
       | Kw_begin -> Fmt.string f @@ as_keyword "begin" keyword
+      | Kw_commit -> Fmt.string f @@ as_keyword "commit" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

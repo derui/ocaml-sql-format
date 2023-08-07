@@ -203,6 +203,11 @@ and sql_statement () =
                 type t = A.ext A.begin_statement
 
                 let generate = begin_statement
+              end)
+              (struct
+                type t = A.ext A.commit_statement
+
+                let generate = commit_statement
               end) : S))
 
 and select_statement () =
@@ -799,3 +804,5 @@ and drop_table_statement () =
     end) : S))
 
 and begin_statement () = Begin_statement.((module Make () : S))
+
+and commit_statement () = Commit_statement.((module Make () : S))

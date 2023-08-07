@@ -1976,6 +1976,10 @@ let kw_drop = [%sedlex.regexp? Chars "dD", Chars "rR", Chars "oO", Chars "pP"]
 let kw_begin =
   [%sedlex.regexp? Chars "bB", Chars "eE", Chars "gG", Chars "iI", Chars "nN"]
 
+let kw_commit =
+  [%sedlex.regexp?
+    Chars "cC", Chars "oO", Chars "mM", Chars "mM", Chars "iI", Chars "tT"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2304,6 +2308,7 @@ let rec token buf =
   | kw_if -> Kw_if
   | kw_drop -> Kw_drop
   | kw_begin -> Kw_begin
+  | kw_commit -> Kw_commit
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
