@@ -273,6 +273,7 @@ open Types.Literal
 %token Kw_drop
 %token Kw_begin
 %token Kw_commit
+%token Kw_trigger
 
 (* tokens *)
 %token Tok_lparen
@@ -594,6 +595,7 @@ let keyword ==
   | Kw_drop; {Identifier (`keyword Kw_drop, ())}
   | Kw_begin; {Identifier (`keyword Kw_begin, ())}
   | Kw_commit; {Identifier (`keyword Kw_commit, ())}
+  | Kw_trigger; {Identifier (`keyword Kw_trigger, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -788,6 +790,7 @@ let sql_statement :=
  | x = begin_statement; { Sql_statement (`begin' x, ()) }
  | x = commit_statement; { Sql_statement (`commit x, ()) }
  | x = drop_index_statement; { Sql_statement (`drop_index x, ()) }
+ | x = drop_trigger_statement; { Sql_statement (`drop_trigger x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1179,3 +1182,10 @@ let drop_index_statement :=
    e = option(Kw_if; Kw_exists);
    n = qualified_table_name;
    { Drop_index_statement (Option.map (fun () -> `exists) e, n, ()) }
+
+
+let drop_trigger_statement :=
+ | Kw_drop; Kw_trigger;
+   e = option(Kw_if; Kw_exists);
+   n = qualified_table_name;
+   { Drop_trigger_statement (Option.map (fun () -> `exists) e, n, ()) }

@@ -13,7 +13,8 @@ module Make
     (Drop_table : GEN with type t = ext drop_table_statement)
     (Begin : GEN with type t = ext begin_statement)
     (Commit : GEN with type t = ext commit_statement)
-    (Drop_index : GEN with type t = ext drop_index_statement) : S = struct
+    (Drop_index : GEN with type t = ext drop_index_statement)
+    (Drop_trigger : GEN with type t = ext drop_trigger_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -48,4 +49,7 @@ module Make
     | Sql_statement (`drop_index v, _) ->
       let module Drop_index = (val Drop_index.generate ()) in
       Drop_index.print ~option f v
+    | Sql_statement (`drop_trigger v, _) ->
+      let module Drop_trigger = (val Drop_trigger.generate ()) in
+      Drop_trigger.print ~option f v
 end

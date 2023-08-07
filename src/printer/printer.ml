@@ -213,6 +213,11 @@ and sql_statement () =
                 type t = A.ext A.drop_index_statement
 
                 let generate = drop_index_statement
+              end)
+              (struct
+                type t = A.ext A.drop_trigger_statement
+
+                let generate = drop_trigger_statement
               end) : S))
 
 and select_statement () =
@@ -814,6 +819,14 @@ and commit_statement () = Commit_statement.((module Make () : S))
 
 and drop_index_statement () =
   Drop_index_statement.(
+    (module Make (struct
+      type t = A.ext A.qualified_table_name
+
+      let generate = qualified_table_name
+    end) : S))
+
+and drop_trigger_statement () =
+  Drop_trigger_statement.(
     (module Make (struct
       type t = A.ext A.qualified_table_name
 
