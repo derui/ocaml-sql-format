@@ -359,3 +359,7 @@ and 'a drop_trigger_statement =
 
 and 'a drop_view_statement =
   | Drop_view_statement of [ `exists ] option * 'a qualified_table_name * 'a
+
+and 'a foreign_key_constraint =
+  | Foreign_key_constraint of
+      'a qualified_table_name * 'a column_name list option * 'a

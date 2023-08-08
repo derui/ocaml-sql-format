@@ -274,6 +274,7 @@ open Types.Literal
 %token Kw_begin
 %token Kw_commit
 %token Kw_trigger
+%token Kw_references
 
 (* tokens *)
 %token Tok_lparen
@@ -596,6 +597,7 @@ let keyword ==
   | Kw_begin; {Identifier (`keyword Kw_begin, ())}
   | Kw_commit; {Identifier (`keyword Kw_commit, ())}
   | Kw_trigger; {Identifier (`keyword Kw_trigger, ())}
+  | Kw_references; {Identifier (`keyword Kw_references, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -1197,3 +1199,8 @@ let drop_view_statement :=
    e = option(Kw_if; Kw_exists);
    n = qualified_table_name;
    { Drop_view_statement (Option.map (fun () -> `exists) e, n, ()) }
+
+
+let foreign_key_constraint :=
+ | Kw_references; t = qualified_table_name; cs = option(column_name_list);
+   { Foreign_key_constraint (t, cs, ()) }

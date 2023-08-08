@@ -283,6 +283,7 @@ include (
       | Kw_begin -> Fmt.string f @@ as_keyword "begin" keyword
       | Kw_commit -> Fmt.string f @@ as_keyword "commit" keyword
       | Kw_trigger -> Fmt.string f @@ as_keyword "trigger" keyword
+      | Kw_references -> Fmt.string f @@ as_keyword "references" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

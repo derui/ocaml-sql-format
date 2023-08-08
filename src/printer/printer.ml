@@ -845,3 +845,17 @@ and drop_view_statement () =
 
       let generate = qualified_table_name
     end) : S))
+
+and foreign_key_constraint () =
+  Foreign_key_constraint.(
+    (module Make
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end) : S))

@@ -269,6 +269,7 @@ type token =
   | Kw_begin
   | Kw_commit
   | Kw_trigger
+  | Kw_references
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string
