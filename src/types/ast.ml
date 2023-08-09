@@ -385,3 +385,25 @@ and 'a column_constraint =
 and 'a column_def =
   | Column_def of
       'a column_name * 'a type_name option * 'a column_constraint list * 'a
+
+and 'a table_constraint =
+  | Table_constraint of
+      'a identifier option
+      * [ `primary_key of 'a identifier list
+        | `unique of 'a identifier list
+        | `check of 'a expr
+        | `foreign of 'a column_name list
+        ]
+      * 'a
+
+and 'a foreign_key_clause =
+  | Foreign_key_clause of
+      'a qualified_table_name
+      * 'a column_name list option
+      * [ `trigger of
+          [ `delete | `update ]
+          * [ `set_null | `set_default | `cascade | `restrict | `no_action ]
+        | `match' of 'a identifier
+        | `deferrable of [ `not ] option * [ `deferred | `immediate ] option
+        ]
+      * 'a

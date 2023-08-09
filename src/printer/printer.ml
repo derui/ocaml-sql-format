@@ -912,3 +912,7 @@ and column_def () =
 
                 let generate = column_constraint
               end) : S))
+
+and table_constraint () = Table_constraint.((module Make () : S))
+
+and foreign_key_clause () = Foreign_key_clause.((module Make () : S))

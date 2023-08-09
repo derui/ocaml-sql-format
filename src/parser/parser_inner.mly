@@ -281,6 +281,13 @@ open Types.Literal
 %token Kw_generated
 %token Kw_always
 %token Kw_check
+%token Kw_cascade
+%token Kw_restrict
+%token Kw_action
+%token Kw_deferrable
+%token Kw_initially
+%token Kw_deferred
+%token Kw_immediate
 
 (* tokens *)
 %token Tok_lparen
@@ -610,6 +617,13 @@ let keyword ==
   | Kw_generated; {Identifier (`keyword Kw_generated, ())}
   | Kw_always; {Identifier (`keyword Kw_always, ())}
   | Kw_check; {Identifier (`keyword Kw_check, ())}
+  | Kw_cascade; {Identifier (`keyword Kw_cascade, ())}
+  | Kw_restrict; {Identifier (`keyword Kw_restrict, ())}
+  | Kw_action; {Identifier (`keyword Kw_action, ())}
+  | Kw_deferrable; {Identifier (`keyword Kw_deferrable, ())}
+  | Kw_initially; {Identifier (`keyword Kw_initially, ())}
+  | Kw_deferred; {Identifier (`keyword Kw_deferred, ())}
+  | Kw_immediate; {Identifier (`keyword Kw_immediate, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -1252,3 +1266,36 @@ let column_constraint :=
 
 let column_def :=
  | c = column_name; typ = option(type_name); cl = list(column_constraint); { Column_def (c, typ, cl, ()) }
+
+
+let table_constraint :=
+ | { }
+
+
+let foreign_key_clause_trigger_option ==
+    | Kw_set; Kw_null; { (`set_null) }
+    | Kw_set; Kw_default; { (`set_null) }
+    | Kw_cascade; { (`cascade) }
+    | Kw_restrict; { (`restrict) }
+    | Kw_no; Kw_action; { (`no_action) }
+
+let foreign_key_clause_trigger_type ==
+    | Kw_delete; { (`delete) }
+    | Kw_update; { (`update) }
+
+let foreign_key_clause_defer_option ==
+    | Kw_initially; Kw_deferred; { (`deferred) }
+    | Kw_initially; Kw_immediate; { (`immediate) }
+
+let foreign_key_clause :=
+ | Kw_references; n = qualified_table_name; cl = option(column_name_list);
+    Kw_on; typ = foreign_key_clause_trigger_type; opt = foreign_key_clause_trigger_option;
+    { Foreign_key_clause (n, cl, `trigger (typ, opt), ()) }
+
+ | Kw_references; n = qualified_table_name; cl = option(column_name_list);
+    Kw_match; name = identifier;
+    { Foreign_key_clause (n, cl, `match' name, ()) }
+
+ | Kw_references; n = qualified_table_name; cl = option(column_name_list);
+    nt = ioption(Kw_not); Kw_deferrable; opt = option(foreign_key_clause_defer_option);
+    { Foreign_key_clause (n, cl, `deferrable (Option.map (fun _ -> `not) nt, opt), ()) }

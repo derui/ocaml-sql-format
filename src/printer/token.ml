@@ -290,6 +290,13 @@ include (
       | Kw_generated -> Fmt.string f @@ as_keyword "generated" keyword
       | Kw_always -> Fmt.string f @@ as_keyword "always" keyword
       | Kw_check -> Fmt.string f @@ as_keyword "check" keyword
+      | Kw_cascade -> Fmt.string f @@ as_keyword "cascade" keyword
+      | Kw_restrict -> Fmt.string f @@ as_keyword "restrict" keyword
+      | Kw_action -> Fmt.string f @@ as_keyword "action" keyword
+      | Kw_deferrable -> Fmt.string f @@ as_keyword "deferrable" keyword
+      | Kw_initially -> Fmt.string f @@ as_keyword "initially" keyword
+      | Kw_deferred -> Fmt.string f @@ as_keyword "deferred" keyword
+      | Kw_immediate -> Fmt.string f @@ as_keyword "immediate" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -276,6 +276,13 @@ type token =
   | Kw_generated
   | Kw_always
   | Kw_check
+  | Kw_cascade
+  | Kw_restrict
+  | Kw_action
+  | Kw_deferrable
+  | Kw_initially
+  | Kw_deferred
+  | Kw_immediate
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

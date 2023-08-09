@@ -2049,6 +2049,79 @@ let kw_always =
 let kw_check =
   [%sedlex.regexp? Chars "cC", Chars "hH", Chars "eE", Chars "cC", Chars "kK"]
 
+let kw_restrict =
+  [%sedlex.regexp?
+    ( Chars "rR"
+    , Chars "eE"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "cC"
+    , Chars "tT" )]
+
+let kw_cascade =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "aA"
+    , Chars "sS"
+    , Chars "cC"
+    , Chars "aA"
+    , Chars "dD"
+    , Chars "eE" )]
+
+let kw_action =
+  [%sedlex.regexp?
+    Chars "aA", Chars "cC", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
+
+let kw_deferrable =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "fF"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "bB"
+    , Chars "lL"
+    , Chars "eE" )]
+
+let kw_initially =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "nN"
+    , Chars "iI"
+    , Chars "tT"
+    , Chars "iI"
+    , Chars "aA"
+    , Chars "lL"
+    , Chars "lL"
+    , Chars "yY" )]
+
+let kw_deferred =
+  [%sedlex.regexp?
+    ( Chars "dD"
+    , Chars "eE"
+    , Chars "fF"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_immediate =
+  [%sedlex.regexp?
+    ( Chars "iI"
+    , Chars "mM"
+    , Chars "mM"
+    , Chars "eE"
+    , Chars "dD"
+    , Chars "iI"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2386,6 +2459,13 @@ let rec token buf =
   | kw_generated -> Kw_generated
   | kw_always -> Kw_always
   | kw_check -> Kw_check
+  | kw_cascade -> Kw_cascade
+  | kw_restrict -> Kw_restrict
+  | kw_action -> Kw_action
+  | kw_deferrable -> Kw_deferrable
+  | kw_initially -> Kw_initially
+  | kw_deferred -> Kw_deferred
+  | kw_immediate -> Kw_immediate
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
