@@ -893,3 +893,22 @@ and column_constraint () =
 
                 let generate = identifier
               end) : S))
+
+and column_def () =
+  Column_def.(
+    (module Make
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.type_name
+
+                let generate = type_name
+              end)
+              (struct
+                type t = A.ext A.column_constraint
+
+                let generate = column_constraint
+              end) : S))

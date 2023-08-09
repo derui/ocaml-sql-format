@@ -1248,3 +1248,7 @@ let column_constraint :=
     { Column_constraint (n, `foreign_key c, ()) }
   | n = option(constraint_name); Kw_generated; Kw_always; Kw_as; e = delimited(Tok_lparen, expr, Tok_rparen);
     { Column_constraint (n, `generated e, ()) }
+
+
+let column_def :=
+ | c = column_name; typ = option(type_name); cl = list(column_constraint); { Column_def (c, typ, cl, ()) }

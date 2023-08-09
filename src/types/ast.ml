@@ -381,3 +381,7 @@ and 'a column_constraint =
         | `generated of 'a expr
         ]
       * 'a
+
+and 'a column_def =
+  | Column_def of
+      'a column_name * 'a type_name option * 'a column_constraint list * 'a
