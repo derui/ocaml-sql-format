@@ -270,6 +270,12 @@ type token =
   | Kw_commit
   | Kw_trigger
   | Kw_references
+  | Kw_constraint
+  | Kw_primary
+  | Kw_unique
+  | Kw_generated
+  | Kw_always
+  | Kw_check
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

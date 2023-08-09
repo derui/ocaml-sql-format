@@ -363,3 +363,21 @@ and 'a drop_view_statement =
 and 'a foreign_key_constraint =
   | Foreign_key_constraint of
       'a qualified_table_name * 'a column_name list option * 'a
+
+and 'a column_constraint =
+  | Column_constraint of
+      'a identifier option
+      * [ `primary_key of [ `asc | `desc ] option * [ `auto_increment ] option
+        | `not_null
+        | `unique
+        | `check of 'a expr
+        | `default of
+          [ `expr of 'a expr
+          | `literal of 'a literal_value
+          | `signed of 'a signed_number
+          ]
+        | `collate of 'a collation_name
+        | `foreign_key of 'a foreign_key_constraint
+        | `generated of 'a expr
+        ]
+      * 'a

@@ -284,6 +284,12 @@ include (
       | Kw_commit -> Fmt.string f @@ as_keyword "commit" keyword
       | Kw_trigger -> Fmt.string f @@ as_keyword "trigger" keyword
       | Kw_references -> Fmt.string f @@ as_keyword "references" keyword
+      | Kw_constraint -> Fmt.string f @@ as_keyword "constraint" keyword
+      | Kw_primary -> Fmt.string f @@ as_keyword "primary" keyword
+      | Kw_unique -> Fmt.string f @@ as_keyword "unique" keyword
+      | Kw_generated -> Fmt.string f @@ as_keyword "generated" keyword
+      | Kw_always -> Fmt.string f @@ as_keyword "always" keyword
+      | Kw_check -> Fmt.string f @@ as_keyword "check" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -859,3 +859,37 @@ and foreign_key_constraint () =
 
                 let generate = column_name
               end) : S))
+
+and column_constraint () =
+  Column_constraint.(
+    (module Make
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.collation_name
+
+                let generate = collation_name
+              end)
+              (struct
+                type t = A.ext L.literal_value
+
+                let generate = literal_value
+              end)
+              (struct
+                type t = A.ext A.signed_number
+
+                let generate = signed_number
+              end)
+              (struct
+                type t = A.ext A.foreign_key_constraint
+
+                let generate = foreign_key_constraint
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end) : S))

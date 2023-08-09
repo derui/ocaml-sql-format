@@ -2003,6 +2003,52 @@ let kw_references =
     , Chars "eE"
     , Chars "sS" )]
 
+let kw_constraint =
+  [%sedlex.regexp?
+    ( Chars "cC"
+    , Chars "oO"
+    , Chars "nN"
+    , Chars "sS"
+    , Chars "tT"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "iI"
+    , Chars "nN"
+    , Chars "tT" )]
+
+let kw_primary =
+  [%sedlex.regexp?
+    ( Chars "pP"
+    , Chars "rR"
+    , Chars "iI"
+    , Chars "mM"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "yY" )]
+
+let kw_unique =
+  [%sedlex.regexp?
+    Chars "uU", Chars "nN", Chars "iI", Chars "qQ", Chars "uU", Chars "eE"]
+
+let kw_generated =
+  [%sedlex.regexp?
+    ( Chars "gG"
+    , Chars "eE"
+    , Chars "nN"
+    , Chars "eE"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "tT"
+    , Chars "eE"
+    , Chars "dD" )]
+
+let kw_always =
+  [%sedlex.regexp?
+    Chars "aA", Chars "lL", Chars "wW", Chars "aA", Chars "yY", Chars "sS"]
+
+let kw_check =
+  [%sedlex.regexp? Chars "cC", Chars "hH", Chars "eE", Chars "cC", Chars "kK"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2334,6 +2380,12 @@ let rec token buf =
   | kw_commit -> Kw_commit
   | kw_trigger -> Kw_trigger
   | kw_references -> Kw_references
+  | kw_constraint -> Kw_constraint
+  | kw_primary -> Kw_primary
+  | kw_unique -> Kw_unique
+  | kw_generated -> Kw_generated
+  | kw_always -> Kw_always
+  | kw_check -> Kw_check
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

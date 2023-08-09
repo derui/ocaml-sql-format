@@ -275,6 +275,12 @@ open Types.Literal
 %token Kw_commit
 %token Kw_trigger
 %token Kw_references
+%token Kw_constraint
+%token Kw_primary
+%token Kw_unique
+%token Kw_generated
+%token Kw_always
+%token Kw_check
 
 (* tokens *)
 %token Tok_lparen
@@ -598,6 +604,12 @@ let keyword ==
   | Kw_commit; {Identifier (`keyword Kw_commit, ())}
   | Kw_trigger; {Identifier (`keyword Kw_trigger, ())}
   | Kw_references; {Identifier (`keyword Kw_references, ())}
+  | Kw_constraint; {Identifier (`keyword Kw_constraint, ())}
+  | Kw_primary; {Identifier (`keyword Kw_primary, ())}
+  | Kw_unique; {Identifier (`keyword Kw_unique, ())}
+  | Kw_generated; {Identifier (`keyword Kw_generated, ())}
+  | Kw_always; {Identifier (`keyword Kw_always, ())}
+  | Kw_check; {Identifier (`keyword Kw_check, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -1204,3 +1216,35 @@ let drop_view_statement :=
 let foreign_key_constraint :=
  | Kw_references; t = qualified_table_name; cs = option(column_name_list);
    { Foreign_key_constraint (t, cs, ()) }
+
+let constraint_name ==
+  | Kw_constraint; n = identifier; { n }
+
+let primary_key_order ==
+  | Kw_asc; { `asc }
+            | Kw_desc; {`desc}
+
+let column_constraint :=
+  | n = option(constraint_name); Kw_primary; Kw_key; odr = option(primary_key_order);
+    ai = option(Kw_auto_increment; {`auto_increment}) ;
+    { Column_constraint (n, `primary_key odr, ai, ()) }
+  | n = option(constraint_name); Kw_not; Kw_null;
+    { Column_constraint (n, `not_null, ()) }
+  | n = option(constraint_name); Kw_unique;
+    { Column_constraint (n, `unique, ()) }
+  | n = option(constraint_name); Kw_check; e = delimited(Tok_lparen, expr, Tok_rparen);
+    { Column_constraint (n, `check e, ()) }
+  | n = option(constraint_name); Kw_default; e = delimited(Tok_lparen, expr, Tok_rparen);
+    { Column_constraint (n, `default (`expr e), ()) }
+  | n = option(constraint_name); Kw_default; l = literal_value;
+    { Column_constraint (n, `default (`literal e), ()) }
+  | n = option(constraint_name); Kw_default; s = signed_number;
+    { Column_constraint (n, `default (`signed s), ()) }
+  | n = option(constraint_name); Kw_collate; v = collation_name;
+    { Column_constraint (n, `collate v, ()) }
+  | n = option(constraint_name); Kw_collate; v = collation_name;
+    { Column_constraint (n, `collate v, ()) }
+  | n = option(constraint_name); c = foreign_key_constraint;
+    { Column_constraint (n, `foreign_key c, ()) }
+  | n = option(constraint_name); Kw_generated; Kw_always; Kw_as; e = delimited(Tok_lparen, expr, Tok_rparen);
+    { Column_constraint (n, `generated e, ()) }
