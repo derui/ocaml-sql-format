@@ -283,6 +283,10 @@ type token =
   | Kw_initially
   | Kw_deferred
   | Kw_immediate
+  | Kw_create
+  | Kw_temp
+  | Kw_temporary
+  | Kw_foreign
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

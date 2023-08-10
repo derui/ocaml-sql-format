@@ -223,6 +223,11 @@ and sql_statement () =
                 type t = A.ext A.drop_view_statement
 
                 let generate = drop_view_statement
+              end)
+              (struct
+                type t = A.ext A.create_table_statement
+
+                let generate = create_table_statement
               end) : S))
 
 and select_statement () =
@@ -913,6 +918,69 @@ and column_def () =
                 let generate = column_constraint
               end) : S))
 
-and table_constraint () = Table_constraint.((module Make () : S))
+and table_constraint () =
+  Table_constraint.(
+    (module Make
+              (struct
+                type t = A.ext L.identifier
 
-and foreign_key_clause () = Foreign_key_clause.((module Make () : S))
+                let generate = identifier
+              end)
+              (struct
+                type t = A.ext A.expr
+
+                let generate = expr
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.foreign_key_clause
+
+                let generate = foreign_key_clause
+              end) : S))
+
+and foreign_key_clause () =
+  Foreign_key_clause.(
+    (module Make
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext L.identifier
+
+                let generate = identifier
+              end) : S))
+
+and create_table_statement () =
+  Create_table_statement.(
+    (module Make
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
+              end)
+              (struct
+                type t = A.ext A.column_def
+
+                let generate = column_def
+              end)
+              (struct
+                type t = A.ext A.table_constraint
+
+                let generate = table_constraint
+              end) : S))

@@ -73,6 +73,7 @@ and 'a sql_statement =
       | `drop_index of 'a drop_index_statement
       | `drop_trigger of 'a drop_trigger_statement
       | `drop_view of 'a drop_view_statement
+      | `create_table of 'a create_table_statement
       ]
       * 'a
 
@@ -392,7 +393,7 @@ and 'a table_constraint =
       * [ `primary_key of 'a identifier list
         | `unique of 'a identifier list
         | `check of 'a expr
-        | `foreign of 'a column_name list
+        | `foreign of 'a column_name list * 'a foreign_key_clause
         ]
       * 'a
 
@@ -405,5 +406,15 @@ and 'a foreign_key_clause =
           * [ `set_null | `set_default | `cascade | `restrict | `no_action ]
         | `match' of 'a identifier
         | `deferrable of [ `not ] option * [ `deferred | `immediate ] option
+        ]
+      * 'a
+
+and 'a create_table_statement =
+  | Create_table_statement of
+      [ `temp ] option
+      * [ `exists ] option
+      * 'a qualified_table_name
+      * [ `select of 'a select_statement
+        | `def of 'a column_def list * 'a table_constraint list
         ]
       * 'a

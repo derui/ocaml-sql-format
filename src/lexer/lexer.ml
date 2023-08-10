@@ -2122,6 +2122,34 @@ let kw_immediate =
     , Chars "tT"
     , Chars "eE" )]
 
+let kw_create =
+  [%sedlex.regexp?
+    Chars "cC", Chars "rR", Chars "eE", Chars "aA", Chars "tT", Chars "eE"]
+
+let kw_temp = [%sedlex.regexp? Chars "tT", Chars "eE", Chars "mM", Chars "pP"]
+
+let kw_temporary =
+  [%sedlex.regexp?
+    ( Chars "tT"
+    , Chars "eE"
+    , Chars "mM"
+    , Chars "pP"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "aA"
+    , Chars "rR"
+    , Chars "yY" )]
+
+let kw_foreign =
+  [%sedlex.regexp?
+    ( Chars "fF"
+    , Chars "oO"
+    , Chars "rR"
+    , Chars "eE"
+    , Chars "iI"
+    , Chars "gG"
+    , Chars "nN" )]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2466,6 +2494,10 @@ let rec token buf =
   | kw_initially -> Kw_initially
   | kw_deferred -> Kw_deferred
   | kw_immediate -> Kw_immediate
+  | kw_create -> Kw_create
+  | kw_temp -> Kw_temp
+  | kw_temporary -> Kw_temporary
+  | kw_foreign -> Kw_foreign
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

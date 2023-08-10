@@ -297,6 +297,10 @@ include (
       | Kw_initially -> Fmt.string f @@ as_keyword "initially" keyword
       | Kw_deferred -> Fmt.string f @@ as_keyword "deferred" keyword
       | Kw_immediate -> Fmt.string f @@ as_keyword "immediate" keyword
+      | Kw_create -> Fmt.string f @@ as_keyword "create" keyword
+      | Kw_temp -> Fmt.string f @@ as_keyword "temp" keyword
+      | Kw_temporary -> Fmt.string f @@ as_keyword "temporary" keyword
+      | Kw_foreign -> Fmt.string f @@ as_keyword "foreign" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

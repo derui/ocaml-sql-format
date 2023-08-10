@@ -288,6 +288,10 @@ open Types.Literal
 %token Kw_initially
 %token Kw_deferred
 %token Kw_immediate
+%token Kw_create
+%token Kw_temp
+%token Kw_temporary
+%token Kw_foreign
 
 (* tokens *)
 %token Tok_lparen
@@ -624,6 +628,10 @@ let keyword ==
   | Kw_initially; {Identifier (`keyword Kw_initially, ())}
   | Kw_deferred; {Identifier (`keyword Kw_deferred, ())}
   | Kw_immediate; {Identifier (`keyword Kw_immediate, ())}
+  | Kw_create; {Identifier (`keyword Kw_create, ())}
+  | Kw_temp; {Identifier (`keyword Kw_temp, ())}
+  | Kw_temporary; {Identifier (`keyword Kw_temporary, ())}
+  | Kw_foreign; {Identifier (`keyword Kw_foreign, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -820,6 +828,7 @@ let sql_statement :=
  | x = drop_index_statement; { Sql_statement (`drop_index x, ()) }
  | x = drop_trigger_statement; { Sql_statement (`drop_trigger x, ()) }
  | x = drop_view_statement; { Sql_statement (`drop_view x, ()) }
+ | x = create_table_statement; { Sql_statement (`create_table x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1241,7 +1250,7 @@ let primary_key_order ==
 let column_constraint :=
   | n = option(constraint_name); Kw_primary; Kw_key; odr = option(primary_key_order);
     ai = option(Kw_auto_increment; {`auto_increment}) ;
-    { Column_constraint (n, `primary_key odr, ai, ()) }
+    { Column_constraint (n, `primary_key (odr, ai), ()) }
   | n = option(constraint_name); Kw_not; Kw_null;
     { Column_constraint (n, `not_null, ()) }
   | n = option(constraint_name); Kw_unique;
@@ -1251,7 +1260,7 @@ let column_constraint :=
   | n = option(constraint_name); Kw_default; e = delimited(Tok_lparen, expr, Tok_rparen);
     { Column_constraint (n, `default (`expr e), ()) }
   | n = option(constraint_name); Kw_default; l = literal_value;
-    { Column_constraint (n, `default (`literal e), ()) }
+    { Column_constraint (n, `default (`literal l), ()) }
   | n = option(constraint_name); Kw_default; s = signed_number;
     { Column_constraint (n, `default (`signed s), ()) }
   | n = option(constraint_name); Kw_collate; v = collation_name;
@@ -1269,21 +1278,34 @@ let column_def :=
 
 
 let table_constraint :=
- | { }
+ | name = option(constraint_name);
+   Kw_primary; Kw_key; cs = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, identifier) ,Tok_rparen);
+   { Table_constraint (name, `primary_key cs, ())
+}
+ | name = option(constraint_name);
+   Kw_unique; cs = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, identifier) ,Tok_rparen);
+   { Table_constraint (name, `unique cs, ()) }
 
+ | name = option(constraint_name);
+   Kw_check; e = delimited(Tok_lparen, expr ,Tok_rparen);
+   { Table_constraint (name, `check e, ()) }
 
-let foreign_key_clause_trigger_option ==
+ | name = option(constraint_name);
+   Kw_foreign; Kw_key; cs = column_name_list; fk = foreign_key_clause;
+   { Table_constraint (name, `foreign (cs, fk), ()) }
+
+let foreign_key_clause_trigger_option :=
     | Kw_set; Kw_null; { (`set_null) }
     | Kw_set; Kw_default; { (`set_null) }
     | Kw_cascade; { (`cascade) }
     | Kw_restrict; { (`restrict) }
     | Kw_no; Kw_action; { (`no_action) }
 
-let foreign_key_clause_trigger_type ==
+let foreign_key_clause_trigger_type :=
     | Kw_delete; { (`delete) }
     | Kw_update; { (`update) }
 
-let foreign_key_clause_defer_option ==
+let foreign_key_clause_defer_option :=
     | Kw_initially; Kw_deferred; { (`deferred) }
     | Kw_initially; Kw_immediate; { (`immediate) }
 
@@ -1299,3 +1321,22 @@ let foreign_key_clause :=
  | Kw_references; n = qualified_table_name; cl = option(column_name_list);
     nt = ioption(Kw_not); Kw_deferrable; opt = option(foreign_key_clause_defer_option);
     { Foreign_key_clause (n, cl, `deferrable (Option.map (fun _ -> `not) nt, opt), ()) }
+
+let create_table_temp_option ==
+  | Kw_temp; { `temp }
+  | Kw_temporary; { `temp }
+
+let create_table_statement :=
+  | Kw_create; temp = option(create_table_temp_option); Kw_table;
+    exists = ioption(Kw_if; Kw_not; Kw_exists; { `exists });
+    name = qualified_table_name;
+    Kw_as; stmt = select_statement;
+    { Create_table_statement (temp, exists, name, `select stmt, ()) }
+  | Kw_create; temp = option(create_table_temp_option); Kw_table;
+    exists = ioption(Kw_if; Kw_not; Kw_exists; { `exists });
+    name = qualified_table_name;
+    Tok_lparen;
+    coldef = separated_nonempty_list(Tok_comma, column_def);
+    constraints = list(pair(Tok_comma, table_constraint));
+    Tok_rparen;
+    { Create_table_statement (temp, exists, name, `def (coldef ,constraints), ()) }
