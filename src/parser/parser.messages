@@ -8703,8 +8703,8 @@ statements: Kw_update Tok_ident Tok_string
 ##
 ## Ends in an error in state: 1341.
 ##
-## qualified_table_name -> identifier . option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin Kw_as ]
-## qualified_table_name -> identifier . Tok_period identifier option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin Kw_as ]
+## qualified_table_name -> identifier . option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin ]
+## qualified_table_name -> identifier . Tok_period identifier option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier
@@ -8716,7 +8716,7 @@ statements: Kw_update Tok_ident Tok_period Tok_string
 ##
 ## Ends in an error in state: 1342.
 ##
-## qualified_table_name -> identifier Tok_period . identifier option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin Kw_as ]
+## qualified_table_name -> identifier Tok_period . identifier option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period
@@ -8728,7 +8728,7 @@ statements: Kw_update Tok_ident Tok_period Tok_ident Tok_string
 ##
 ## Ends in an error in state: 1343.
 ##
-## qualified_table_name -> identifier Tok_period identifier . option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin Kw_as ]
+## qualified_table_name -> identifier Tok_period identifier . option(__anonymous_2) [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## identifier Tok_period identifier
@@ -8740,7 +8740,7 @@ statements: Kw_update Tok_ident Kw_as Tok_string
 ##
 ## Ends in an error in state: 1344.
 ##
-## option(__anonymous_2) -> Kw_as . identifier [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin Kw_as ]
+## option(__anonymous_2) -> Kw_as . identifier [ Tok_semicolon Tok_rparen Tok_lparen Tok_eof Tok_comma Kw_with Kw_where Kw_values Kw_update Kw_unique Kw_set Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_references Kw_primary Kw_on Kw_not Kw_match Kw_insert Kw_generated Kw_drop Kw_delete Kw_deferrable Kw_default Kw_create Kw_constraint Kw_commit Kw_collate Kw_check Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_as
@@ -8860,10 +8860,10 @@ statements: Kw_create Tok_string
 ##
 ## Ends in an error in state: 1363.
 ##
-## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create . option(create_table_temp_option) Kw_table qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create
@@ -8875,10 +8875,10 @@ statements: Kw_create Kw_temp Tok_string
 ##
 ## Ends in an error in state: 1366.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table Kw_if Kw_not Kw_exists qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table Kw_if Kw_not Kw_exists qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) . Kw_table qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create option(create_table_temp_option)
@@ -8890,10 +8890,10 @@ statements: Kw_create Kw_table Tok_string
 ##
 ## Ends in an error in state: 1367.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . Kw_if Kw_not Kw_exists qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . Kw_if Kw_not Kw_exists qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . Kw_if Kw_not Kw_exists qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . Kw_if Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table . qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create option(create_table_temp_option) Kw_table
@@ -8905,8 +8905,8 @@ statements: Kw_create Kw_table Kw_if Tok_string
 ##
 ## Ends in an error in state: 1368.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if . Kw_not Kw_exists qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if . Kw_not Kw_exists qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if . Kw_not Kw_exists qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if . Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create option(create_table_temp_option) Kw_table Kw_if
@@ -8918,8 +8918,8 @@ statements: Kw_create Kw_table Kw_if Kw_not Tok_string
 ##
 ## Ends in an error in state: 1369.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not . Kw_exists qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not . Kw_exists qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not . Kw_exists qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not . Kw_exists qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not
@@ -8931,8 +8931,8 @@ statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_string
 ##
 ## Ends in an error in state: 1370.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists . qualified_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists . qualified_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists . qualified_nonalias_table_name Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists . qualified_nonalias_table_name Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
 ## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists
@@ -8940,22 +8940,15 @@ statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_string
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_ident Tok_semicolon
+statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_ident Tok_period Tok_ident Tok_string
 ##
 ## Ends in an error in state: 1371.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name . Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name . Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name . Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name . Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name
-##
-## WARNING: This example involves spurious reductions.
-## This implies that, although the LR(1) items shown above provide an
-## accurate view of the past (what has been recognized so far), they
-## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 1341, spurious reduction of production option(__anonymous_2) ->
-## In state 1347, spurious reduction of production qualified_table_name -> identifier option(__anonymous_2)
+## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
@@ -8964,10 +8957,10 @@ statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_ident Tok_lparen Tok_s
 ##
 ## Ends in an error in state: 1372.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Tok_lparen . separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen . separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Tok_lparen
+## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Tok_lparen
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
@@ -9762,65 +9755,83 @@ statements: Kw_create Kw_table Tok_ident Tok_lparen Tok_ident Tok_comma Tok_stri
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_ident Kw_as Tok_ident Kw_as Tok_string
+statements: Kw_create Kw_table Kw_if Kw_not Kw_exists Tok_ident Kw_as Tok_string
 ##
 ## Ends in an error in state: 1479.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Kw_as . select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Kw_as . select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_table_name Kw_as
+## Kw_create option(create_table_temp_option) Kw_table Kw_if Kw_not Kw_exists qualified_nonalias_table_name Kw_as
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Kw_create Kw_table Tok_ident Tok_semicolon
+statements: Kw_create Kw_table Tok_ident Tok_string
 ##
 ## Ends in an error in state: 1481.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_table_name . Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_table_name . Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## qualified_nonalias_table_name -> identifier . [ Tok_lparen Kw_as ]
+## qualified_nonalias_table_name -> identifier . Tok_period identifier [ Tok_lparen Kw_as ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table qualified_table_name
+## identifier
 ##
-## WARNING: This example involves spurious reductions.
-## This implies that, although the LR(1) items shown above provide an
-## accurate view of the past (what has been recognized so far), they
-## may provide an INCOMPLETE view of the future (what was expected next).
-## In state 1341, spurious reduction of production option(__anonymous_2) ->
-## In state 1347, spurious reduction of production qualified_table_name -> identifier option(__anonymous_2)
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Kw_create Kw_table Tok_ident Tok_period Tok_string
+##
+## Ends in an error in state: 1482.
+##
+## qualified_nonalias_table_name -> identifier Tok_period . identifier [ Tok_lparen Kw_as ]
+##
+## The known suffix of the stack is as follows:
+## identifier Tok_period
+##
+
+<YOUR SYNTAX ERROR MESSAGE HERE>
+
+statements: Kw_create Kw_table Tok_ident Tok_period Tok_ident Tok_string
+##
+## Ends in an error in state: 1484.
+##
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name . Kw_as select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name . Tok_lparen separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+##
+## The known suffix of the stack is as follows:
+## Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_create Kw_table Tok_ident Tok_lparen Tok_string
 ##
-## Ends in an error in state: 1482.
+## Ends in an error in state: 1485.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_table_name Tok_lparen . separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name Tok_lparen . separated_nonempty_list(Tok_comma,create_table_coldef) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table qualified_table_name Tok_lparen
+## Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name Tok_lparen
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
-statements: Kw_create Kw_table Tok_ident Kw_as Tok_ident Kw_as Tok_string
+statements: Kw_create Kw_table Tok_ident Kw_as Tok_string
 ##
-## Ends in an error in state: 1485.
+## Ends in an error in state: 1488.
 ##
-## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_table_name Kw_as . select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
+## create_table_statement -> Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name Kw_as . select_statement [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
 ## The known suffix of the stack is as follows:
-## Kw_create option(create_table_temp_option) Kw_table qualified_table_name Kw_as
+## Kw_create option(create_table_temp_option) Kw_table qualified_nonalias_table_name Kw_as
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_commit Tok_string
 ##
-## Ends in an error in state: 1487.
+## Ends in an error in state: 1490.
 ##
 ## commit_statement -> Kw_commit . [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## commit_statement -> Kw_commit . Kw_transaction [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -9833,7 +9844,7 @@ statements: Kw_commit Tok_string
 
 statements: Kw_begin Tok_string
 ##
-## Ends in an error in state: 1489.
+## Ends in an error in state: 1492.
 ##
 ## begin_statement -> Kw_begin . [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## begin_statement -> Kw_begin . Kw_transaction [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -9846,7 +9857,7 @@ statements: Kw_begin Tok_string
 
 statements: Kw_begin Kw_transaction Kw_returning
 ##
-## Ends in an error in state: 1493.
+## Ends in an error in state: 1496.
 ##
 ## nonempty_list(pair(statement,option(Tok_semicolon))) -> statement . option(Tok_semicolon) [ Tok_eof ]
 ## nonempty_list(pair(statement,option(Tok_semicolon))) -> statement . option(Tok_semicolon) nonempty_list(pair(statement,option(Tok_semicolon))) [ Tok_eof ]
@@ -9859,7 +9870,7 @@ statements: Kw_begin Kw_transaction Kw_returning
 
 statements: Kw_begin Tok_semicolon Tok_string
 ##
-## Ends in an error in state: 1495.
+## Ends in an error in state: 1498.
 ##
 ## nonempty_list(pair(statement,option(Tok_semicolon))) -> statement option(Tok_semicolon) . [ Tok_eof ]
 ## nonempty_list(pair(statement,option(Tok_semicolon))) -> statement option(Tok_semicolon) . nonempty_list(pair(statement,option(Tok_semicolon))) [ Tok_eof ]
@@ -9872,7 +9883,7 @@ statements: Kw_begin Tok_semicolon Tok_string
 
 statements: Kw_update Tok_string
 ##
-## Ends in an error in state: 1501.
+## Ends in an error in state: 1504.
 ##
 ## update_statement -> option(with_clause) Kw_update . qualified_table_name Kw_set separated_nonempty_list(Tok_comma,update_statement_columns) option(from_clause) option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9884,7 +9895,7 @@ statements: Kw_update Tok_string
 
 statements: Kw_update Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 1502.
+## Ends in an error in state: 1505.
 ##
 ## update_statement -> option(with_clause) Kw_update qualified_table_name . Kw_set separated_nonempty_list(Tok_comma,update_statement_columns) option(from_clause) option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9903,7 +9914,7 @@ statements: Kw_update Tok_ident Tok_semicolon
 
 statements: Kw_update Tok_ident Kw_set Tok_string
 ##
-## Ends in an error in state: 1503.
+## Ends in an error in state: 1506.
 ##
 ## update_statement -> option(with_clause) Kw_update qualified_table_name Kw_set . separated_nonempty_list(Tok_comma,update_statement_columns) option(from_clause) option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9915,7 +9926,7 @@ statements: Kw_update Tok_ident Kw_set Tok_string
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Tok_comma Tok_string
 ##
-## Ends in an error in state: 1505.
+## Ends in an error in state: 1508.
 ##
 ## separated_nonempty_list(Tok_comma,update_statement_columns) -> update_statement_columns Tok_comma . separated_nonempty_list(Tok_comma,update_statement_columns) [ Tok_semicolon Tok_eof Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_from Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9927,7 +9938,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Tok_comma Tok_s
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Tok_string
 ##
-## Ends in an error in state: 1507.
+## Ends in an error in state: 1510.
 ##
 ## update_statement_columns -> identifier . Op_eq expr [ Tok_semicolon Tok_eof Tok_comma Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_from Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9939,7 +9950,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Tok_string
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_semicolon
 ##
-## Ends in an error in state: 1508.
+## Ends in an error in state: 1511.
 ##
 ## update_statement_columns -> identifier Op_eq . expr [ Tok_semicolon Tok_eof Tok_comma Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_from Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -9951,7 +9962,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_semicolon
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_escape
 ##
-## Ends in an error in state: 1509.
+## Ends in an error in state: 1512.
 ##
 ## expr -> expr . binary_operator expr [ Tok_semicolon Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_from Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_semicolon Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_from Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_and ]
@@ -9989,7 +10000,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_escape
 
 statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Tok_string
 ##
-## Ends in an error in state: 1510.
+## Ends in an error in state: 1513.
 ##
 ## update_statement_columns -> column_name_list . Op_eq expr [ Tok_semicolon Tok_eof Tok_comma Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_from Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10001,7 +10012,7 @@ statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Tok_strin
 
 statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Op_eq Tok_semicolon
 ##
-## Ends in an error in state: 1511.
+## Ends in an error in state: 1514.
 ##
 ## update_statement_columns -> column_name_list Op_eq . expr [ Tok_semicolon Tok_eof Tok_comma Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_from Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10013,7 +10024,7 @@ statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Op_eq Tok
 
 statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Op_eq Tok_qmark Kw_escape
 ##
-## Ends in an error in state: 1512.
+## Ends in an error in state: 1515.
 ##
 ## expr -> expr . binary_operator expr [ Tok_semicolon Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_from Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_semicolon Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_where Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_from Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_and ]
@@ -10051,7 +10062,7 @@ statements: Kw_update Tok_ident Kw_set Tok_lparen Tok_ident Tok_rparen Op_eq Tok
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_from Tok_ident Tok_rparen
 ##
-## Ends in an error in state: 1514.
+## Ends in an error in state: 1517.
 ##
 ## update_statement -> option(with_clause) Kw_update qualified_table_name Kw_set separated_nonempty_list(Tok_comma,update_statement_columns) option(from_clause) . option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10073,7 +10084,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_from Tok_ide
 
 statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_where Tok_qmark Tok_rparen
 ##
-## Ends in an error in state: 1515.
+## Ends in an error in state: 1518.
 ##
 ## update_statement -> option(with_clause) Kw_update qualified_table_name Kw_set separated_nonempty_list(Tok_comma,update_statement_columns) option(from_clause) option(where_clause) . option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10092,7 +10103,7 @@ statements: Kw_update Tok_ident Kw_set Tok_ident Op_eq Tok_qmark Kw_where Tok_qm
 
 statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_semicolon
 ##
-## Ends in an error in state: 1516.
+## Ends in an error in state: 1519.
 ##
 ## returning_clause -> Kw_returning . separated_nonempty_list(Tok_comma,returning_subclause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10104,7 +10115,7 @@ statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_semicolon
 
 statements: Kw_delete Kw_from Tok_ident Kw_returning Op_star Tok_string
 ##
-## Ends in an error in state: 1519.
+## Ends in an error in state: 1522.
 ##
 ## separated_nonempty_list(Tok_comma,returning_subclause) -> returning_subclause . [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## separated_nonempty_list(Tok_comma,returning_subclause) -> returning_subclause . Tok_comma separated_nonempty_list(Tok_comma,returning_subclause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -10117,7 +10128,7 @@ statements: Kw_delete Kw_from Tok_ident Kw_returning Op_star Tok_string
 
 statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Tok_comma Tok_semicolon
 ##
-## Ends in an error in state: 1520.
+## Ends in an error in state: 1523.
 ##
 ## separated_nonempty_list(Tok_comma,returning_subclause) -> returning_subclause Tok_comma . separated_nonempty_list(Tok_comma,returning_subclause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10129,7 +10140,7 @@ statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Tok_comma Tok_sem
 
 statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Kw_escape
 ##
-## Ends in an error in state: 1522.
+## Ends in an error in state: 1525.
 ##
 ## expr -> expr . binary_operator expr [ Tok_semicolon Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_as Kw_and ]
 ## expr -> expr . Kw_collate collation_name [ Tok_semicolon Tok_ident Tok_eof Tok_comma Op_star Op_slash Op_rshift Op_plus Op_pipe Op_ne2 Op_ne Op_minus Op_lt Op_lshift Op_le Op_gt Op_ge Op_extract_2 Op_extract Op_eq2 Op_eq Op_concat Op_amp Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_regexp Kw_or Kw_not Kw_match Kw_like Kw_is Kw_insert Kw_in Kw_glob Kw_exists Kw_drop Kw_delete Kw_create Kw_commit Kw_collate Kw_between Kw_begin Kw_as Kw_and ]
@@ -10167,7 +10178,7 @@ statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Kw_escape
 
 statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Kw_as Tok_string
 ##
-## Ends in an error in state: 1525.
+## Ends in an error in state: 1528.
 ##
 ## option(__anonymous_3) -> option(Kw_as) . identifier [ Tok_semicolon Tok_eof Tok_comma Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10179,7 +10190,7 @@ statements: Kw_delete Kw_from Tok_ident Kw_returning Tok_qmark Kw_as Tok_string
 
 statements: Kw_insert Tok_string
 ##
-## Ends in an error in state: 1529.
+## Ends in an error in state: 1532.
 ##
 ## insert_statement -> option(with_clause) Kw_insert . Kw_into qualified_table_name option(delimited(Tok_lparen,separated_nonempty_list(Tok_comma,column_name),Tok_rparen)) insert_sub_statement option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10191,7 +10202,7 @@ statements: Kw_insert Tok_string
 
 statements: Kw_insert Kw_into Tok_string
 ##
-## Ends in an error in state: 1530.
+## Ends in an error in state: 1533.
 ##
 ## insert_statement -> option(with_clause) Kw_insert Kw_into . qualified_table_name option(delimited(Tok_lparen,separated_nonempty_list(Tok_comma,column_name),Tok_rparen)) insert_sub_statement option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10203,7 +10214,7 @@ statements: Kw_insert Kw_into Tok_string
 
 statements: Kw_insert Kw_into Tok_ident Tok_semicolon
 ##
-## Ends in an error in state: 1531.
+## Ends in an error in state: 1534.
 ##
 ## insert_statement -> option(with_clause) Kw_insert Kw_into qualified_table_name . option(delimited(Tok_lparen,separated_nonempty_list(Tok_comma,column_name),Tok_rparen)) insert_sub_statement option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10222,7 +10233,7 @@ statements: Kw_insert Kw_into Tok_ident Tok_semicolon
 
 statements: Kw_insert Kw_into Tok_ident Tok_lparen Tok_ident Tok_rparen Tok_string
 ##
-## Ends in an error in state: 1532.
+## Ends in an error in state: 1535.
 ##
 ## insert_statement -> option(with_clause) Kw_insert Kw_into qualified_table_name option(delimited(Tok_lparen,separated_nonempty_list(Tok_comma,column_name),Tok_rparen)) . insert_sub_statement option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10234,7 +10245,7 @@ statements: Kw_insert Kw_into Tok_ident Tok_lparen Tok_ident Tok_rparen Tok_stri
 
 statements: Kw_insert Kw_into Tok_ident Kw_values Tok_string
 ##
-## Ends in an error in state: 1533.
+## Ends in an error in state: 1536.
 ##
 ## insert_sub_statement -> Kw_values . separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10246,7 +10257,7 @@ statements: Kw_insert Kw_into Tok_ident Kw_values Tok_string
 
 statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_semicolon
 ##
-## Ends in an error in state: 1534.
+## Ends in an error in state: 1537.
 ##
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen . separated_nonempty_list(Tok_comma,expr) Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen . separated_nonempty_list(Tok_comma,expr) Tok_rparen Tok_comma separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -10259,7 +10270,7 @@ statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_semicolon
 
 statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Kw_rows
 ##
-## Ends in an error in state: 1535.
+## Ends in an error in state: 1538.
 ##
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen separated_nonempty_list(Tok_comma,expr) . Tok_rparen [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen separated_nonempty_list(Tok_comma,expr) . Tok_rparen Tok_comma separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -10278,7 +10289,7 @@ statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Kw_rows
 
 statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Tok_rparen Tok_string
 ##
-## Ends in an error in state: 1536.
+## Ends in an error in state: 1539.
 ##
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen separated_nonempty_list(Tok_comma,expr) Tok_rparen . [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen separated_nonempty_list(Tok_comma,expr) Tok_rparen . Tok_comma separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
@@ -10291,7 +10302,7 @@ statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Tok_rpare
 
 statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Tok_rparen Tok_comma Tok_string
 ##
-## Ends in an error in state: 1537.
+## Ends in an error in state: 1540.
 ##
 ## separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) -> Tok_lparen separated_nonempty_list(Tok_comma,expr) Tok_rparen Tok_comma . separated_nonempty_list(Tok_comma,delimited(Tok_lparen,separated_nonempty_list(Tok_comma,expr),Tok_rparen)) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_returning Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10303,7 +10314,7 @@ statements: Kw_insert Kw_into Tok_ident Kw_values Tok_lparen Tok_qmark Tok_rpare
 
 statements: Kw_insert Kw_into Tok_ident Kw_select Tok_qmark Tok_rparen
 ##
-## Ends in an error in state: 1541.
+## Ends in an error in state: 1544.
 ##
 ## insert_statement -> option(with_clause) Kw_insert Kw_into qualified_table_name option(delimited(Tok_lparen,separated_nonempty_list(Tok_comma,column_name),Tok_rparen)) insert_sub_statement . option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10327,14 +10338,14 @@ statements: Kw_insert Kw_into Tok_ident Kw_select Tok_qmark Tok_rparen
 ## In state 1217, spurious reduction of production option(order_by_clause) ->
 ## In state 1218, spurious reduction of production option(limit_clause) ->
 ## In state 1225, spurious reduction of production select_statement -> option(with_clause) select_statement_list option(order_by_clause) option(limit_clause)
-## In state 1540, spurious reduction of production insert_sub_statement -> select_statement
+## In state 1543, spurious reduction of production insert_sub_statement -> select_statement
 ##
 
 <YOUR SYNTAX ERROR MESSAGE HERE>
 
 statements: Kw_delete Tok_string
 ##
-## Ends in an error in state: 1543.
+## Ends in an error in state: 1546.
 ##
 ## delete_statement -> option(with_clause) Kw_delete . Kw_from qualified_table_name option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10346,7 +10357,7 @@ statements: Kw_delete Tok_string
 
 statements: Kw_delete Kw_from Tok_string
 ##
-## Ends in an error in state: 1544.
+## Ends in an error in state: 1547.
 ##
 ## delete_statement -> option(with_clause) Kw_delete Kw_from . qualified_table_name option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10358,7 +10369,7 @@ statements: Kw_delete Kw_from Tok_string
 
 statements: Kw_delete Kw_from Tok_ident Tok_rparen
 ##
-## Ends in an error in state: 1545.
+## Ends in an error in state: 1548.
 ##
 ## delete_statement -> option(with_clause) Kw_delete Kw_from qualified_table_name . option(where_clause) option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##
@@ -10377,7 +10388,7 @@ statements: Kw_delete Kw_from Tok_ident Tok_rparen
 
 statements: Kw_delete Kw_from Tok_ident Kw_where Tok_qmark Tok_rparen
 ##
-## Ends in an error in state: 1546.
+## Ends in an error in state: 1549.
 ##
 ## delete_statement -> option(with_clause) Kw_delete Kw_from qualified_table_name option(where_clause) . option(returning_clause) [ Tok_semicolon Tok_eof Kw_with Kw_update Kw_select Kw_savepoint Kw_rollback Kw_insert Kw_drop Kw_delete Kw_create Kw_commit Kw_begin ]
 ##

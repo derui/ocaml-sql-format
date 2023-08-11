@@ -31,7 +31,6 @@ module Make
       Q.print ~option f qname;
       Fmt.string f " ";
       Sfmt.keyword ~option f [ Kw_as ];
-      Fmt.string f " ";
       Sfmt.force_vbox option.indent_size
         (fun f _ ->
           let module S = (val S.generate ()) in

@@ -1157,6 +1157,11 @@ let qualified_table_name :=
    alias = option(Kw_as; i = identifier; {i});
    { Qualified_table_name(Option.map fst sname, tname, alias, ()) }
 
+let qualified_nonalias_table_name :=
+ | sname = ioption(pair(schema_name, Tok_period));
+   tname = table_name;
+   { Qualified_table_name(Option.map fst sname, tname, None, ()) }
+
 let returning_subclause :=
   | Op_star; { `asterisk }
   | e = expr; alias = option(option(Kw_as); i = identifier; {i}); {`expr (e, alias)}
@@ -1332,14 +1337,27 @@ let create_table_coldef ==
 
 let create_table_statement :=
   | Kw_create; temp = option(create_table_temp_option); Kw_table;
-    exists = ioption(Kw_if; Kw_not; Kw_exists; { `exists });
-    name = qualified_table_name;
+    Kw_if; Kw_not; Kw_exists;
+    name = qualified_nonalias_table_name;
     Kw_as; stmt = select_statement;
-    { Create_table_statement (temp, exists, name, `select stmt, ()) }
+    { Create_table_statement (temp, Some `exists, name, `select stmt, ()) }
+
   | Kw_create; temp = option(create_table_temp_option); Kw_table;
-    exists = ioption(Kw_if; Kw_not; Kw_exists; { `exists });
-    name = qualified_table_name;
+    name = qualified_nonalias_table_name;
+    Kw_as; stmt = select_statement;
+    { Create_table_statement (temp, None, name, `select stmt, ()) }
+
+  | Kw_create; temp = option(create_table_temp_option); Kw_table;
+    Kw_if; Kw_not; Kw_exists;
+    name = qualified_nonalias_table_name;
     Tok_lparen;
     coldef = separated_nonempty_list(Tok_comma, create_table_coldef);
     Tok_rparen;
-    { Create_table_statement (temp, exists, name, `def coldef, ()) }
+    { Create_table_statement (temp, Some `exists, name, `def coldef, ()) }
+
+  | Kw_create; temp = option(create_table_temp_option); Kw_table;
+    name = qualified_nonalias_table_name;
+    Tok_lparen;
+    coldef = separated_nonempty_list(Tok_comma, create_table_coldef);
+    Tok_rparen;
+    { Create_table_statement (temp, None, name, `def coldef, ()) }
