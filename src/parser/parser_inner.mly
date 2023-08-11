@@ -1265,8 +1265,6 @@ let column_constraint :=
     { Column_constraint (n, `default (`signed s), ()) }
   | n = option(constraint_name); Kw_collate; v = collation_name;
     { Column_constraint (n, `collate v, ()) }
-  | n = option(constraint_name); Kw_collate; v = collation_name;
-    { Column_constraint (n, `collate v, ()) }
   | n = option(constraint_name); c = foreign_key_constraint;
     { Column_constraint (n, `foreign_key c, ()) }
   | n = option(constraint_name); Kw_generated; Kw_always; Kw_as; e = delimited(Tok_lparen, expr, Tok_rparen);
@@ -1290,7 +1288,7 @@ let table_constraint :=
    Kw_check; e = delimited(Tok_lparen, expr ,Tok_rparen);
    { Table_constraint (name, `check e, ()) }
 
- | name = option(constraint_name);
+| name = option(constraint_name);
    Kw_foreign; Kw_key; cs = column_name_list; fk = foreign_key_clause;
    { Table_constraint (name, `foreign (cs, fk), ()) }
 
@@ -1309,22 +1307,28 @@ let foreign_key_clause_defer_option :=
     | Kw_initially; Kw_deferred; { (`deferred) }
     | Kw_initially; Kw_immediate; { (`immediate) }
 
+let foreign_key_clause_sublist :=
+  | Kw_on; typ = foreign_key_clause_trigger_type; opt = foreign_key_clause_trigger_option; { `trigger (typ, opt) }
+  | Kw_match; name = identifier;  { `match' name }
+
+
 let foreign_key_clause :=
  | Kw_references; n = qualified_table_name; cl = option(column_name_list);
-    Kw_on; typ = foreign_key_clause_trigger_type; opt = foreign_key_clause_trigger_option;
-    { Foreign_key_clause (n, cl, `trigger (typ, opt), ()) }
+   sublist = list(foreign_key_clause_sublist);
+    { Foreign_key_clause (n, cl, sublist, None, ()) }
 
  | Kw_references; n = qualified_table_name; cl = option(column_name_list);
-    Kw_match; name = identifier;
-    { Foreign_key_clause (n, cl, `match' name, ()) }
-
- | Kw_references; n = qualified_table_name; cl = option(column_name_list);
-    nt = ioption(Kw_not); Kw_deferrable; opt = option(foreign_key_clause_defer_option);
-    { Foreign_key_clause (n, cl, `deferrable (Option.map (fun _ -> `not) nt, opt), ()) }
+   sublist = list(foreign_key_clause_sublist);
+   nt = ioption(Kw_not); Kw_deferrable; opt = option(foreign_key_clause_defer_option);
+    { Foreign_key_clause (n, cl, sublist, Some (Option.map (fun _ -> `not) nt, opt), ()) }
 
 let create_table_temp_option ==
   | Kw_temp; { `temp }
   | Kw_temporary; { `temp }
+
+let create_table_coldef ==
+    | x = column_def; { `coldef x }
+    | x = table_constraint; { `constraint' x }
 
 let create_table_statement :=
   | Kw_create; temp = option(create_table_temp_option); Kw_table;
@@ -1336,7 +1340,6 @@ let create_table_statement :=
     exists = ioption(Kw_if; Kw_not; Kw_exists; { `exists });
     name = qualified_table_name;
     Tok_lparen;
-    coldef = separated_nonempty_list(Tok_comma, column_def);
-    constraints = list(pair(Tok_comma, table_constraint));
+    coldef = separated_nonempty_list(Tok_comma, create_table_coldef);
     Tok_rparen;
-    { Create_table_statement (temp, exists, name, `def (coldef ,constraints), ()) }
+    { Create_table_statement (temp, exists, name, `def coldef, ()) }

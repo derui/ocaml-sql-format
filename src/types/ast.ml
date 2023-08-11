@@ -405,8 +405,9 @@ and 'a foreign_key_clause =
           [ `delete | `update ]
           * [ `set_null | `set_default | `cascade | `restrict | `no_action ]
         | `match' of 'a identifier
-        | `deferrable of [ `not ] option * [ `deferred | `immediate ] option
         ]
+        list
+      * ([ `not ] option * [ `deferred | `immediate ] option) option
       * 'a
 
 and 'a create_table_statement =
@@ -415,6 +416,8 @@ and 'a create_table_statement =
       * [ `exists ] option
       * 'a qualified_table_name
       * [ `select of 'a select_statement
-        | `def of 'a column_def list * 'a table_constraint list
+        | `def of
+          [ `coldef of 'a column_def | `constraint' of 'a table_constraint ]
+          list
         ]
       * 'a

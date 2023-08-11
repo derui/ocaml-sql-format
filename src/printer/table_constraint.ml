@@ -12,16 +12,21 @@ module Make
     (FK : GEN with type t = ext foreign_key_clause) : S = struct
   type t = ext table_constraint
 
+  let print_constraint_name ~option f n =
+    let module I = (val I.generate ()) in
+    Option.iter
+      (fun v ->
+        Sfmt.keyword ~option f [ Kw_constraint ];
+        Fmt.string f " ";
+        I.print ~option f v;
+        Fmt.string f " ")
+      n
+
   let print f t ~option =
     match t with
     | Table_constraint (n, `primary_key cs, _) ->
       let module I = (val I.generate ()) in
-      Option.iter
-        (fun v ->
-          Sfmt.keyword ~option f [ Kw_constraint ];
-          Fmt.string f " ";
-          I.print ~option f v)
-        n;
+      print_constraint_name ~option f n;
 
       Sfmt.keyword ~option f [ Kw_primary; Kw_key ];
       Fmt.string f " ";
@@ -39,12 +44,7 @@ module Make
         f ()
     | Table_constraint (n, `unique cs, _) ->
       let module I = (val I.generate ()) in
-      Option.iter
-        (fun v ->
-          Sfmt.keyword ~option f [ Kw_constraint ];
-          Fmt.string f " ";
-          I.print ~option f v)
-        n;
+      print_constraint_name ~option f n;
 
       Sfmt.keyword ~option f [ Kw_unique ];
       Fmt.string f " ";
@@ -62,12 +62,7 @@ module Make
         f ()
     | Table_constraint (n, `check e, _) ->
       let module I = (val I.generate ()) in
-      Option.iter
-        (fun v ->
-          Sfmt.keyword ~option f [ Kw_constraint ];
-          Fmt.string f " ";
-          I.print ~option f v)
-        n;
+      print_constraint_name ~option f n;
 
       Sfmt.keyword ~option f [ Kw_check ];
       Fmt.string f " ";
@@ -77,13 +72,7 @@ module Make
           E.print ~option f e)
         f ()
     | Table_constraint (n, `foreign (cs, fk), _) ->
-      Option.iter
-        (fun v ->
-          Sfmt.keyword ~option f [ Kw_constraint ];
-          Fmt.string f " ";
-          let module I = (val I.generate ()) in
-          I.print ~option f v)
-        n;
+      print_constraint_name ~option f n;
 
       let module C = (val C.generate ()) in
       Sfmt.keyword ~option f [ Kw_foreign; Kw_key ];

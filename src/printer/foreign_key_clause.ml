@@ -29,15 +29,8 @@ module Make
             cs)
         f ()
 
-  let print f t ~option =
-    match t with
-    | Foreign_key_clause (n, cs, `trigger (typ, opt), _) ->
-      let module Q = (val Q.generate ()) in
-      Q.print ~option f n;
-
-      print_cs ~option f cs;
-      Fmt.string f " ";
-
+  let print_sublist ~option f = function
+    | `trigger (typ, opt) ->
       let kw =
         match typ with
         | `delete -> [ Kw_on; Kw_delete ]
@@ -53,33 +46,43 @@ module Make
       in
       Fmt.string f " ";
       Sfmt.keyword ~option f kw
-    | Foreign_key_clause (n, cs, `match' name, _) ->
-      let module Q = (val Q.generate ()) in
-      Q.print ~option f n;
-
-      print_cs ~option f cs;
-      Fmt.string f " ";
+    | `match' name ->
       Sfmt.keyword ~option f [ Kw_match ];
       Fmt.string f " ";
       let module I = (val I.generate ()) in
       I.print ~option f name
-    | Foreign_key_clause (n, cs, `deferrable (not', opt), _) ->
+
+  let print f t ~option =
+    match t with
+    | Foreign_key_clause (n, cs, sublist, deferred, _) ->
+      Sfmt.keyword ~option f [ Kw_references ];
+      Fmt.string f " ";
       let module Q = (val Q.generate ()) in
       Q.print ~option f n;
 
       print_cs ~option f cs;
       Fmt.string f " ";
-      let kw =
-        match not' with
-        | None -> [ Kw_deferrable ]
-        | Some _ -> [ Kw_not; Kw_deferrable ]
-      in
-      let kw =
-        match opt with
-        | None -> kw
-        | Some `deferred -> List.append kw [ Kw_initially; Kw_deferred ]
-        | Some `immediate -> List.append kw [ Kw_initially; Kw_immediate ]
-      in
 
-      Sfmt.keyword ~option f kw
+      List.iter
+        (fun v ->
+          Fmt.cut f ();
+          print_sublist ~option f v)
+        sublist;
+
+      Option.iter
+        (fun (not', opt) ->
+          let kw =
+            match not' with
+            | None -> [ Kw_deferrable ]
+            | Some _ -> [ Kw_not; Kw_deferrable ]
+          in
+          let kw =
+            match opt with
+            | None -> kw
+            | Some `deferred -> List.append kw [ Kw_initially; Kw_deferred ]
+            | Some `immediate -> List.append kw [ Kw_initially; Kw_immediate ]
+          in
+
+          Sfmt.keyword ~option f kw)
+        deferred
 end

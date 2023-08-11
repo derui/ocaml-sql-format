@@ -17,7 +17,6 @@ module Make
 
   let print_exists ~option f = function
     | Some _ ->
-      Fmt.string f " ";
       Sfmt.keyword ~option f [ Kw_if; Kw_not; Kw_exists ];
       Fmt.string f " "
     | None -> ()
@@ -26,6 +25,7 @@ module Make
     match t with
     | Create_table_statement (temp, exists, qname, `select stmt, _) ->
       print_header ~option f temp;
+      Fmt.string f " ";
       print_exists ~option f exists;
       let module Q = (val Q.generate ()) in
       Q.print ~option f qname;
@@ -37,9 +37,9 @@ module Make
           let module S = (val S.generate ()) in
           S.print ~option f stmt)
         f ()
-    | Create_table_statement
-        (temp, exists, qname, `def (coldefs, constraints), _) ->
+    | Create_table_statement (temp, exists, qname, `def coldefs, _) ->
       print_header ~option f temp;
+      Fmt.string f " ";
       print_exists ~option f exists;
       let module Q = (val Q.generate ()) in
       Q.print ~option f qname;
@@ -49,22 +49,20 @@ module Make
           let coldef = List.hd coldefs
           and coldefs = List.tl coldefs in
 
+          let module TC = (val TC.generate ()) in
           let module Def = (val Def.generate ()) in
-          Def.print ~option f coldef;
+          let print_def = function
+            | `coldef x -> Def.print ~option f x
+            | `constraint' x -> TC.print ~option f x
+          in
+
+          print_def coldef;
 
           List.iter
             (fun coldef ->
               Sfmt.comma ~option f ();
               Fmt.cut f ();
-              Def.print ~option f coldef)
-            coldefs;
-
-          let module TC = (val TC.generate ()) in
-          List.iter
-            (fun cs ->
-              Sfmt.comma ~option f ();
-              Fmt.cut f ();
-              TC.print ~option f cs)
-            constraints)
+              print_def coldef)
+            coldefs)
         f ()
 end
