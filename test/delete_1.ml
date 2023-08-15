@@ -17,4 +17,4 @@ let%expect_test "delete_1 for formatting" =
   [%expect {|
     DELETE FROM other_table
     WHERE
-        id >= 50 |}]
+        id >= 50; |}]

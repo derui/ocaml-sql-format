@@ -23,4 +23,4 @@ let%expect_test "create_view_1 for formatting" =
             c
         FROM
             foo,
-            bar |}]
+            bar; |}]

@@ -29,4 +29,4 @@ let%expect_test "insert_3 for formatting" =
         (1, 2, 3),
         (4, 5, 6),
         (7, 8, 9)
-    RETURNING id, id2 |}]
+    RETURNING id, id2; |}]

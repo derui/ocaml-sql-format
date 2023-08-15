@@ -26,4 +26,4 @@ let%expect_test "from_5 for formatting" =
               b AS "t"
               LEFT OUTER JOIN c
                   ON a.id = b.id
-          ) |}]
+          ); |}]

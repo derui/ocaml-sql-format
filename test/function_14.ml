@@ -23,4 +23,4 @@ let%expect_test "function_14 for formatting" =
         CURRENT_TIMESTAMP(3),
         CURRENT_TIME(4)
     FROM
-        a |}]
+        a; |}]

@@ -21,4 +21,4 @@ let%expect_test "update_3 for formatting" =
         a = 3,
         b = 4
     WHERE
-        c >= 10 |}]
+        c >= 10; |}]

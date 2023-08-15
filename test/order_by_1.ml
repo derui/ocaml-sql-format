@@ -21,4 +21,4 @@ let%expect_test "order by in from for formatting" =
           a,
           b
       FROM
-          test_table |}]
+          test_table; |}]

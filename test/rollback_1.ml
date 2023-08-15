@@ -14,4 +14,4 @@ let%test_unit "rollback_1 for AST" =
 
 let%expect_test "rollback_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| ROLLBACK TRANSACTION |}]
+  [%expect {| ROLLBACK TRANSACTION; |}]

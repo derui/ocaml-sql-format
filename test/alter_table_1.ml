@@ -14,4 +14,4 @@ let%test_unit "alter_table_1 for AST" =
 
 let%expect_test "alter_table_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| ALTER TABLE a.b RENAME TO"foo_bar" |}]
+  [%expect {| ALTER TABLE a.b RENAME TO "foo_bar"; |}]

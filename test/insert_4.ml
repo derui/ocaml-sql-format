@@ -36,4 +36,4 @@ let%expect_test "insert_4 for formatting" =
         v
     WHERE
         a = 'c' AND b LIKE '%afb'
-    RETURNING id, id2 |}]
+    RETURNING id, id2; |}]

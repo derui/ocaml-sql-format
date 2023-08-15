@@ -25,4 +25,4 @@ let%expect_test "create_table_4 for formatting" =
         FROM
             c_d
             INNER JOIN e_f
-                ON id = a_id |}]
+                ON id = a_id; |}]

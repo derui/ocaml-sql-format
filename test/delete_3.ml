@@ -43,4 +43,4 @@ let%expect_test "delete_3 for formatting" =
     )
     DELETE FROM other_table
     WHERE
-        id >= 50 |}]
+        id >= 50; |}]

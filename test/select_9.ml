@@ -41,4 +41,4 @@ let%expect_test "select_9 for formatting" =
           ANY(e) AS v13
       FROM
           a,
-          b |}]
+          b; |}]

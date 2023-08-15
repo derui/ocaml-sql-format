@@ -23,4 +23,4 @@ let%expect_test "multiple tables in from for formatting" =
     FROM
         test_table AS abc,
         ident AS "next",
-        third |}]
+        third; |}]

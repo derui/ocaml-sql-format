@@ -80,4 +80,4 @@ let%expect_test "function_2 for formatting" =
         CAST(e AS other_type),
         CAST(e AS other_type[])
     FROM
-        a |}]
+        a; |}]

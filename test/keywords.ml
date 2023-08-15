@@ -16,10 +16,10 @@ let%expect_test "lower for formatting" =
   print_endline @@ F.from_string actual ~option:{ option with keyword = `Lower };
   [%expect {|
     select
-        * |}]
+        *; |}]
 
 let%expect_test "upper for formatting" =
   print_endline @@ F.from_string actual ~option:{ option with keyword = `Upper };
   [%expect {|
     SELECT
-        * |}]
+        *; |}]

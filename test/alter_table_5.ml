@@ -14,4 +14,4 @@ let%test_unit "alter_table_5 for AST" =
 
 let%expect_test "alter_table_5 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| ALTER TABLE a.b DROP COLUMN c1 |}]
+  [%expect {| ALTER TABLE a.b DROP COLUMN c1; |}]

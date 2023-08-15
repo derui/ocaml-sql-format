@@ -69,4 +69,4 @@ let%expect_test "select_10 for formatting" =
           ) AS v11
       FROM
           a,
-          b |}]
+          b; |}]

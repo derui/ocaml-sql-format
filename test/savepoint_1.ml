@@ -14,4 +14,4 @@ let%test_unit "savepoint_1 for AST" =
 
 let%expect_test "savepoint_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| SAVEPOINT "abcd_efg" |}]
+  [%expect {| SAVEPOINT "abcd_efg"; |}]

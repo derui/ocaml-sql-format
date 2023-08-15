@@ -20,6 +20,7 @@ module Make
       V.print ~option f qname;
       Fmt.string f " ";
       Sfmt.keyword ~option f [ Kw_rename; Kw_to ];
+      Fmt.string f " ";
       let module T = (val T.generate ()) in
       T.print ~option f tname
     | Alter_table_statement (qname, `rename_col (oldname, newname), _) ->

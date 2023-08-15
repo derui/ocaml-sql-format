@@ -29,4 +29,4 @@ let%expect_test "create_view_3 for formatting" =
             foo
             INNER JOIN bar
                 ON a = c
-            CROSS JOIN test |}]
+            CROSS JOIN test; |}]

@@ -4,4 +4,7 @@ let print f t ~option =
   match t with
   | Sql_statement _ as v ->
     let module D = (val Printer.sql_statement ()) in
-    D.print f v ~option
+    D.print f v ~option;
+    Fmt.string f ";";
+    Fmt.cut f ();
+    Fmt.cut f ()

@@ -26,4 +26,4 @@ let%expect_test "where with between in from for formatting" =
       FROM
           test_table
       WHERE
-          b LIKE '%abad' OR d LIKE 'abc%' OR e NOT LIKE 'abc%' OR c LIKE 'abc%' ESCAPE 'f' |}]
+          b LIKE '%abad' OR d LIKE 'abc%' OR e NOT LIKE 'abc%' OR c LIKE 'abc%' ESCAPE 'f'; |}]

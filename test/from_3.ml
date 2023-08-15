@@ -35,4 +35,4 @@ let%expect_test "from_3 for formatting" =
                 abc
             FROM
                 f
-        ) e |}]
+        ) e; |}]

@@ -18,4 +18,4 @@ let%expect_test "select into for formatting" =
     SELECT
         t
     FROM
-        "some_table name" |}]
+        "some_table name"; |}]

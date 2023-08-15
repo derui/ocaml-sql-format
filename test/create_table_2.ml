@@ -25,4 +25,4 @@ let%expect_test "create_table_2 for formatting" =
         b varchar(2) CONSTRAINT pk PRIMARY KEY NOT NULL UNIQUE,
         c decimal(1) CHECK(c > 3),
         e blob COLLATE something CONSTRAINT pp GENERATED ALWAYS AS(3)
-    ) |}]
+    ); |}]

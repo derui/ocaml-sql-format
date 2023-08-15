@@ -14,4 +14,4 @@ let%test_unit "begin_2 for AST" =
 
 let%expect_test "begin_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| BEGIN TRANSACTION |}]
+  [%expect {| BEGIN TRANSACTION; |}]

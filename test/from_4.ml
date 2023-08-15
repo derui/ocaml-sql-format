@@ -35,4 +35,4 @@ let%expect_test "from_4 for formatting" =
         LEFT OUTER JOIN c
             ON a.id = c.id
         FULL OUTER JOIN d
-            ON a.id = d.id |}]
+            ON a.id = d.id; |}]

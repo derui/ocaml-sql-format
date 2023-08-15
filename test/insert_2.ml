@@ -26,4 +26,4 @@ let%expect_test "insert_2 for formatting" =
     VALUES
         (1, 2, 3),
         (4, 5, 6),
-        (7, 8, 9) |}]
+        (7, 8, 9); |}]

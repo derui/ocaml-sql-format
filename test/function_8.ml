@@ -28,4 +28,4 @@ let%expect_test "function_8 for formatting" =
         RIGHT(),
         RIGHT('a', '2')
     FROM
-        a |}]
+        a; |}]

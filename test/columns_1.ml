@@ -21,4 +21,4 @@ let%expect_test "column for formatting" =
         b,
         c,
         d,
-        e |}]
+        e; |}]

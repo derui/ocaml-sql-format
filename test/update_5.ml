@@ -46,4 +46,4 @@ let%expect_test "update_5 for formatting" =
             ON d.id = c.id
     WHERE
         c >= 10
-    RETURNING b.id |}]
+    RETURNING b.id; |}]

@@ -24,4 +24,4 @@ let%expect_test "having in from for formatting" =
     GROUP BY
         a
     HAVING
-        b |}]
+        b; |}]

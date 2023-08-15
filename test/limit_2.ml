@@ -20,4 +20,4 @@ let%expect_test "limit in from for formatting" =
           a,
           b
       FROM
-          test_table |}]
+          test_table; |}]

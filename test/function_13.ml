@@ -28,4 +28,4 @@ let%expect_test "function_13 for formatting" =
         COUNT(3),
         session(DISTINCT e) FILTER (WHERE v > 50)
     FROM
-        a |}]
+        a; |}]

@@ -14,4 +14,4 @@ let%test_unit "commit_2 for AST" =
 
 let%expect_test "commit_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| COMMIT TRANSACTION |}]
+  [%expect {| COMMIT TRANSACTION; |}]

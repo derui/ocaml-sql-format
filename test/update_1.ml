@@ -17,4 +17,4 @@ let%expect_test "update_1 for formatting" =
   [%expect {|
     UPDATE "tbl"
     SET
-        a = 3 |}]
+        a = 3; |}]

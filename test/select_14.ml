@@ -23,4 +23,4 @@ let%expect_test "select_14 for formatting" =
     SELECT
         very_looooooooooooooooooooooooooooooooooooong_identifier * very_loooooooooooooooooooooooooooooooooooooooooong / very_loooooooooooooooooooooooooooooooooong + very_looooooooooooooooooooooooooooooooooooong_identifier * very_loooooooooooooooooooooooooooooooooooooooooong / very_loooooooooooooooooooooooooooooooooong
     FROM
-        a |}]
+        a; |}]

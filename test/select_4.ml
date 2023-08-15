@@ -45,4 +45,4 @@ let%expect_test "select_4 for formatting" =
     FROM
         a,
         "abc",
-        foo |}]
+        foo; |}]

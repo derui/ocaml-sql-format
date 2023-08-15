@@ -22,4 +22,4 @@ let%expect_test "delete_2 for formatting" =
     DELETE FROM other_table AS c
     WHERE
         id >= 50 OR id < 500
-    RETURNING * |}]
+    RETURNING *; |}]

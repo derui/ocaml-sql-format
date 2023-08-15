@@ -16,4 +16,4 @@ let%expect_test "simplest sql for formatting" =
   print_endline @@ F.from_string actual ~option;
   [%expect {|
     SELECT
-        * |}]
+        *; |}]

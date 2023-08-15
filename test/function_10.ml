@@ -26,4 +26,4 @@ let%expect_test "function_10 for formatting" =
           POSITION('abcdefd'IN 5),
           POSITION('abcdefd'IN c.de)
       FROM
-          a |}]
+          a; |}]

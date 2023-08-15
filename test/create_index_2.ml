@@ -22,4 +22,4 @@ let%expect_test "create_index_2 for formatting" =
         b,
         c
     ) WHERE
-        a > 15 |}]
+        a > 15; |}]

@@ -20,4 +20,4 @@ let%expect_test "function_12 for formatting" =
     SELECT
         CURRENT_DATE()
     FROM
-        a |}]
+        a; |}]

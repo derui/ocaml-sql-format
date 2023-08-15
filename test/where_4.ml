@@ -23,4 +23,4 @@ let%expect_test "where with between in from for formatting" =
       FROM
           test_table
       WHERE
-          b REGEXP 'abad' OR c NOT REGEXP ab |}]
+          b REGEXP 'abad' OR c NOT REGEXP ab; |}]

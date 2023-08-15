@@ -27,4 +27,4 @@ let%expect_test "select_12 for formatting" =
     SELECT DISTINCT
         *
     FROM
-        c |}]
+        c; |}]

@@ -23,4 +23,4 @@ let%expect_test "create_table_1 for formatting" =
     CREATE TABLE a (
         b varchar CONSTRAINT pk PRIMARY KEY,
         c decimal(1)
-    ) |}]
+    ); |}]

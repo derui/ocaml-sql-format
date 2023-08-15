@@ -20,4 +20,4 @@ let%expect_test "create_index_1 for formatting" =
         a,
         b,
         c
-    ) |}]
+    ); |}]

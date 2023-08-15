@@ -18,4 +18,4 @@ let%expect_test "update_2 for formatting" =
     UPDATE sche.tbl
     SET
         a = 3,
-        b = 4 |}]
+        b = 4; |}]

@@ -23,4 +23,4 @@ let%expect_test "function_9 for formatting" =
         TRANSLATE(),
         TRANSLATE('a', '2')
     FROM
-        a |}]
+        a; |}]

@@ -36,4 +36,4 @@ let%expect_test "select_7 for formatting" =
         WHEN a THEN 3
         END AS e
     FROM
-        a |}]
+        a; |}]

@@ -35,4 +35,4 @@ let%expect_test "where_10 for formatting" =
                   3
               FROM
                   b
-          ) |}]
+          ); |}]

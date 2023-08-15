@@ -19,4 +19,4 @@ let%expect_test "create_index_4 for formatting" =
     {|
     CREATE INDEX IF NOT EXISTS about.a ON foo (
         long_column_name
-    ) |}]
+    ); |}]

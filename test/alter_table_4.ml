@@ -14,4 +14,4 @@ let%test_unit "alter_table_4 for AST" =
 
 let%expect_test "alter_table_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| ALTER TABLE a.b ADD COLUMN new_col varchar(50) NOT NULL |}]
+  [%expect {| ALTER TABLE a.b ADD COLUMN new_col varchar(50) NOT NULL; |}]

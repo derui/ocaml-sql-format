@@ -46,4 +46,4 @@ let%expect_test "where_8 for formatting" =
                   "f g"
               FROM
                   table_d
-          ) |}]
+          ); |}]

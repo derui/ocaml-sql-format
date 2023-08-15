@@ -17,4 +17,4 @@ let%expect_test "insert_1 for formatting" =
   [%expect {|
     INSERT INTO a
     VALUES
-        (1) |}]
+        (1); |}]

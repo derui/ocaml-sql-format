@@ -26,4 +26,4 @@ let%expect_test "where in from for formatting" =
           b IS NULL AND c IS NOT NULL
       GROUP BY
           test_table.a,
-          test_table.b |}]
+          test_table.b; |}]

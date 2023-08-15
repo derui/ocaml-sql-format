@@ -14,4 +14,4 @@ let%test_unit "drop_index_3 for AST" =
 
 let%expect_test "drop_index_3 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| DROP INDEX IF EXISTS foo.abc |}]
+  [%expect {| DROP INDEX IF EXISTS foo.abc; |}]

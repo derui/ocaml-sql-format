@@ -64,4 +64,4 @@ let%expect_test "create_table_3 for formatting" =
         FOREIGN KEY (c) REFERENCES d
         MATCH "v"
         MATCH "d"NOT DEFERRABLE INITIALLY IMMEDIATE
-    ) |}]
+    ); |}]

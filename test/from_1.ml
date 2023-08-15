@@ -18,4 +18,4 @@ let%expect_test "simplest sql for formatting" =
     SELECT
         *
     FROM
-        test_table |}]
+        test_table; |}]

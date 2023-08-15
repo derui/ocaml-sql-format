@@ -14,4 +14,4 @@ let%test_unit "drop_view_1 for AST" =
 
 let%expect_test "drop_view_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect {| DROP TABLE abc |}]
+  [%expect {| DROP TABLE abc; |}]

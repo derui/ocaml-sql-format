@@ -37,4 +37,4 @@ let%expect_test "select_6 for formatting" =
         WHEN 5 THEN 1
         END AS v
     FROM
-        a |}]
+        a; |}]
