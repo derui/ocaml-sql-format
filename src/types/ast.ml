@@ -75,6 +75,7 @@ and 'a sql_statement =
       | `drop_view of 'a drop_view_statement
       | `create_table of 'a create_table_statement
       | `create_index of 'a create_index_statement
+      | `create_view of 'a create_view_statement
       ]
       * 'a
 
@@ -431,4 +432,13 @@ and 'a create_index_statement =
       * 'a table_name
       * 'a identifier list
       * 'a expr option
+      * 'a
+
+and 'a create_view_statement =
+  | Create_view_statement of
+      [ `temp ] option
+      * [ `exists ] option
+      * 'a qualified_table_name
+      * 'a column_name list option
+      * 'a select_statement
       * 'a

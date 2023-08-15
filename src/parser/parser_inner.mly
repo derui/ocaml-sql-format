@@ -830,6 +830,7 @@ let sql_statement :=
  | x = drop_view_statement; { Sql_statement (`drop_view x, ()) }
  | x = create_table_statement; { Sql_statement (`create_table x, ()) }
  | x = create_index_statement; { Sql_statement (`create_index x, ()) }
+ | x = create_view_statement; { Sql_statement (`create_view x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1379,3 +1380,17 @@ let create_index_statement :=
    index_cols = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, identifier), Tok_rparen);
    expr = option(Kw_where; e = expr; {e});
    { Create_index_statement (Option.map (fun _ -> `unique) unique, Some `exists, name, table_name, index_cols, expr, ()) }
+
+let create_view_statement :=
+ | Kw_create; temp = ioption(create_table_temp_option);  Kw_view;
+   name = qualified_nonalias_table_name;
+   cols = option(column_name_list);
+   Kw_as; stmt = select_statement;
+   { Create_view_statement (temp, None, name, cols, stmt, ()) }
+
+ | Kw_create; temp = ioption(create_table_temp_option);  Kw_view;
+   Kw_if; Kw_not; Kw_exists;
+   name = qualified_nonalias_table_name;
+   cols = option(column_name_list);
+   Kw_as; stmt = select_statement;
+   { Create_view_statement (temp, Some `exists, name, cols, stmt, ()) }

@@ -233,6 +233,11 @@ and sql_statement () =
                 type t = A.ext A.create_index_statement
 
                 let generate = create_index_statement
+              end)
+              (struct
+                type t = A.ext A.create_view_statement
+
+                let generate = create_view_statement
               end) : S))
 
 and select_statement () =
@@ -1012,4 +1017,23 @@ and create_index_statement () =
                 type t = A.ext A.expr
 
                 let generate = expr
+              end) : S))
+
+and create_view_statement () =
+  Create_view_statement.(
+    (module Make
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.select_statement
+
+                let generate = select_statement
               end) : S))
