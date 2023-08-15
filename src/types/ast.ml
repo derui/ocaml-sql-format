@@ -74,6 +74,7 @@ and 'a sql_statement =
       | `drop_trigger of 'a drop_trigger_statement
       | `drop_view of 'a drop_view_statement
       | `create_table of 'a create_table_statement
+      | `create_index of 'a create_index_statement
       ]
       * 'a
 
@@ -420,4 +421,14 @@ and 'a create_table_statement =
           [ `coldef of 'a column_def | `constraint' of 'a table_constraint ]
           list
         ]
+      * 'a
+
+and 'a create_index_statement =
+  | Create_index_statement of
+      [ `unique ] option
+      * [ `exists ] option
+      * 'a qualified_table_name
+      * 'a table_name
+      * 'a identifier list
+      * 'a expr option
       * 'a

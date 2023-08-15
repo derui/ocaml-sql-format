@@ -829,6 +829,7 @@ let sql_statement :=
  | x = drop_trigger_statement; { Sql_statement (`drop_trigger x, ()) }
  | x = drop_view_statement; { Sql_statement (`drop_view x, ()) }
  | x = create_table_statement; { Sql_statement (`create_table x, ()) }
+ | x = create_index_statement; { Sql_statement (`create_index x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1361,3 +1362,20 @@ let create_table_statement :=
     coldef = separated_nonempty_list(Tok_comma, create_table_coldef);
     Tok_rparen;
     { Create_table_statement (temp, None, name, `def coldef, ()) }
+
+
+let create_index_statement :=
+ | Kw_create; unique = ioption(Kw_unique); Kw_index;
+   name = qualified_nonalias_table_name;
+   Kw_on; table_name = table_name;
+   index_cols = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, identifier), Tok_rparen);
+   expr = option(Kw_where; e = expr; {e});
+   { Create_index_statement (Option.map (fun _ -> `unique) unique, None, name, table_name, index_cols, expr, ()) }
+
+ | Kw_create; unique = ioption(Kw_unique); Kw_index;
+   Kw_if; Kw_not; Kw_exists;
+   name = qualified_nonalias_table_name;
+   Kw_on; table_name = table_name;
+   index_cols = delimited(Tok_lparen, separated_nonempty_list(Tok_comma, identifier), Tok_rparen);
+   expr = option(Kw_where; e = expr; {e});
+   { Create_index_statement (Option.map (fun _ -> `unique) unique, Some `exists, name, table_name, index_cols, expr, ()) }

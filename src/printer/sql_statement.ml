@@ -16,7 +16,8 @@ module Make
     (Drop_index : GEN with type t = ext drop_index_statement)
     (Drop_trigger : GEN with type t = ext drop_trigger_statement)
     (Drop_view : GEN with type t = ext drop_view_statement)
-    (Create_table : GEN with type t = ext create_table_statement) : S = struct
+    (Create_table : GEN with type t = ext create_table_statement)
+    (Create_index : GEN with type t = ext create_index_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -60,4 +61,7 @@ module Make
     | Sql_statement (`create_table v, _) ->
       let module Create_table = (val Create_table.generate ()) in
       Create_table.print ~option f v
+    | Sql_statement (`create_index v, _) ->
+      let module Create_index = (val Create_index.generate ()) in
+      Create_index.print ~option f v
 end
