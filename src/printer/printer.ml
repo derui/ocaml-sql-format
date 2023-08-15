@@ -238,6 +238,11 @@ and sql_statement () =
                 type t = A.ext A.create_view_statement
 
                 let generate = create_view_statement
+              end)
+              (struct
+                type t = A.ext A.alter_table_statement
+
+                let generate = alter_table_statement
               end) : S))
 
 and select_statement () =
@@ -1036,4 +1041,28 @@ and create_view_statement () =
                 type t = A.ext A.select_statement
 
                 let generate = select_statement
+              end) : S))
+
+and alter_table_statement () =
+  Alter_table_statement.(
+    (module Make
+              (struct
+                type t = A.ext A.qualified_table_name
+
+                let generate = qualified_table_name
+              end)
+              (struct
+                type t = A.ext A.table_name
+
+                let generate = table_name
+              end)
+              (struct
+                type t = A.ext A.column_name
+
+                let generate = column_name
+              end)
+              (struct
+                type t = A.ext A.column_def
+
+                let generate = column_def
               end) : S))

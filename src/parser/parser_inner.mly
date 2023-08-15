@@ -292,6 +292,9 @@ open Types.Literal
 %token Kw_temp
 %token Kw_temporary
 %token Kw_foreign
+%token Kw_alter
+%token Kw_add
+%token Kw_column
 
 (* tokens *)
 %token Tok_lparen
@@ -632,6 +635,9 @@ let keyword ==
   | Kw_temp; {Identifier (`keyword Kw_temp, ())}
   | Kw_temporary; {Identifier (`keyword Kw_temporary, ())}
   | Kw_foreign; {Identifier (`keyword Kw_foreign, ())}
+  | Kw_alter; {Identifier (`keyword Kw_alter, ())}
+  | Kw_add; {Identifier (`keyword Kw_add, ())}
+  | Kw_column; {Identifier (`keyword Kw_column, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -831,6 +837,7 @@ let sql_statement :=
  | x = create_table_statement; { Sql_statement (`create_table x, ()) }
  | x = create_index_statement; { Sql_statement (`create_index x, ()) }
  | x = create_view_statement; { Sql_statement (`create_view x, ()) }
+ | x = alter_table_statement; { Sql_statement (`alter_table x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1394,3 +1401,21 @@ let create_view_statement :=
    cols = option(column_name_list);
    Kw_as; stmt = select_statement;
    { Create_view_statement (temp, Some `exists, name, cols, stmt, ()) }
+
+
+let alter_table_statement :=
+ | Kw_alter; Kw_table; name = qualified_nonalias_table_name;
+   Kw_rename; Kw_to; new_name = table_name;
+   { Alter_table_statement (name, `rename_table new_name, ()) }
+ | Kw_alter; Kw_table; name = qualified_nonalias_table_name;
+   Kw_rename; ioption(Kw_column);
+   old_name = column_name; Kw_to; new_name = column_name;
+   { Alter_table_statement (name, `rename_col (old_name, new_name), ()) }
+ | Kw_alter; Kw_table; name = qualified_nonalias_table_name;
+   Kw_add; ioption(Kw_column);
+   coldef = column_def;
+   { Alter_table_statement (name, `add coldef, ()) }
+ | Kw_alter; Kw_table; name = qualified_nonalias_table_name;
+   Kw_drop; ioption(Kw_column);
+   cname = column_name;
+   { Alter_table_statement (name, `drop cname, ()) }

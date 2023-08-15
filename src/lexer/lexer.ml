@@ -2150,6 +2150,15 @@ let kw_foreign =
     , Chars "gG"
     , Chars "nN" )]
 
+let kw_alter =
+  [%sedlex.regexp? Chars "aA", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
+
+let kw_add = [%sedlex.regexp? Chars "aA", Chars "dD", Chars "dD"]
+
+let kw_column =
+  [%sedlex.regexp?
+    Chars "cC", Chars "oO", Chars "lL", Chars "uU", Chars "mM", Chars "nN"]
+
 (* 'token *)
 let space = [%sedlex.regexp? Plus (Chars " \t")]
 
@@ -2498,6 +2507,9 @@ let rec token buf =
   | kw_temp -> Kw_temp
   | kw_temporary -> Kw_temporary
   | kw_foreign -> Kw_foreign
+  | kw_alter -> Kw_alter
+  | kw_add -> Kw_add
+  | kw_column -> Kw_column
   (* literals *)
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)

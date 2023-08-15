@@ -18,7 +18,8 @@ module Make
     (Drop_view : GEN with type t = ext drop_view_statement)
     (Create_table : GEN with type t = ext create_table_statement)
     (Create_index : GEN with type t = ext create_index_statement)
-    (Create_view : GEN with type t = ext create_view_statement) : S = struct
+    (Create_view : GEN with type t = ext create_view_statement)
+    (Alter_table : GEN with type t = ext alter_table_statement) : S = struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -68,4 +69,7 @@ module Make
     | Sql_statement (`create_view v, _) ->
       let module Create_view = (val Create_view.generate ()) in
       Create_view.print ~option f v
+    | Sql_statement (`alter_table v, _) ->
+      let module Alter_table = (val Alter_table.generate ()) in
+      Alter_table.print ~option f v
 end

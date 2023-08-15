@@ -287,6 +287,9 @@ type token =
   | Kw_temp
   | Kw_temporary
   | Kw_foreign
+  | Kw_alter
+  | Kw_add
+  | Kw_column
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

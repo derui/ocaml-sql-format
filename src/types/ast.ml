@@ -76,6 +76,7 @@ and 'a sql_statement =
       | `create_table of 'a create_table_statement
       | `create_index of 'a create_index_statement
       | `create_view of 'a create_view_statement
+      | `alter_table of 'a alter_table_statement
       ]
       * 'a
 
@@ -441,4 +442,14 @@ and 'a create_view_statement =
       * 'a qualified_table_name
       * 'a column_name list option
       * 'a select_statement
+      * 'a
+
+and 'a alter_table_statement =
+  | Alter_table_statement of
+      'a qualified_table_name
+      * [ `rename_table of 'a table_name
+        | `rename_col of 'a column_name * 'a column_name
+        | `add of 'a column_def
+        | `drop of 'a column_name
+        ]
       * 'a

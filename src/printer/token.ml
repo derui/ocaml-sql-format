@@ -301,6 +301,9 @@ include (
       | Kw_temp -> Fmt.string f @@ as_keyword "temp" keyword
       | Kw_temporary -> Fmt.string f @@ as_keyword "temporary" keyword
       | Kw_foreign -> Fmt.string f @@ as_keyword "foreign" keyword
+      | Kw_alter -> Fmt.string f @@ as_keyword "alter" keyword
+      | Kw_add -> Fmt.string f @@ as_keyword "add" keyword
+      | Kw_column -> Fmt.string f @@ as_keyword "column" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"
