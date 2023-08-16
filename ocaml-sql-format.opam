@@ -20,6 +20,8 @@ depends: [
   "ppx_expect" { with-test }
   "menhir" { build }
   "fmt"
+  "cmdliner" { < "1.3.0" }
+  "otoml" { < "1.1.0" }
 ]
 available: ["ocaml" >= "4.09.0"]
 description: """
