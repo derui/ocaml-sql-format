@@ -19,7 +19,9 @@ module Make
     (Create_table : GEN with type t = ext create_table_statement)
     (Create_index : GEN with type t = ext create_index_statement)
     (Create_view : GEN with type t = ext create_view_statement)
-    (Alter_table : GEN with type t = ext alter_table_statement) : S = struct
+    (Alter_table : GEN with type t = ext alter_table_statement)
+    (Create_trigger : GEN with type t = ext create_trigger_statement) : S =
+struct
   type t = ext sql_statement
 
   let print f t ~option =
@@ -72,4 +74,7 @@ module Make
     | Sql_statement (`alter_table v, _) ->
       let module Alter_table = (val Alter_table.generate ()) in
       Alter_table.print ~option f v
+    | Sql_statement (`create_trigger v, _) ->
+      let module Create_trigger = (val Create_trigger.generate ()) in
+      Create_trigger.print ~option f v
 end

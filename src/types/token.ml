@@ -290,6 +290,9 @@ type token =
   | Kw_alter
   | Kw_add
   | Kw_column
+  | Kw_before
+  | Kw_each
+  | Kw_of
   (* tokens *)
   | Tok_ident of string
   | Tok_string of string

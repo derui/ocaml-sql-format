@@ -77,6 +77,7 @@ and 'a sql_statement =
       | `create_index of 'a create_index_statement
       | `create_view of 'a create_view_statement
       | `alter_table of 'a alter_table_statement
+      | `create_trigger of 'a create_trigger_statement
       ]
       * 'a
 
@@ -452,4 +453,22 @@ and 'a alter_table_statement =
         | `add of 'a column_def
         | `drop of 'a column_name
         ]
+      * 'a
+
+and 'a create_trigger_statement =
+  | Create_trigger_statement of
+      [ `temp ] option
+      * [ `exists ] option
+      * 'a qualified_table_name
+      * [ `before | `after | `instead ]
+      * [ `delete | `insert | `update of 'a column_name list option ]
+      * 'a table_name
+      * [ `for_each ] option
+      * 'a expr option
+      * [ `update of 'a update_statement
+        | `delete of 'a delete_statement
+        | `insert of 'a insert_statement
+        | `select of 'a select_statement
+        ]
+        list
       * 'a

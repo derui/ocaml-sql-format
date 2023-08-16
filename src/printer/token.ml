@@ -304,6 +304,9 @@ include (
       | Kw_alter -> Fmt.string f @@ as_keyword "alter" keyword
       | Kw_add -> Fmt.string f @@ as_keyword "add" keyword
       | Kw_column -> Fmt.string f @@ as_keyword "column" keyword
+      | Kw_before -> Fmt.string f @@ as_keyword "before" keyword
+      | Kw_each -> Fmt.string f @@ as_keyword "each" keyword
+      | Kw_of -> Fmt.string f @@ as_keyword "of" keyword
       (* 'token *)
       | Tok_lparen -> Fmt.string f "("
       | Tok_rparen -> Fmt.string f ")"

@@ -295,6 +295,9 @@ open Types.Literal
 %token Kw_alter
 %token Kw_add
 %token Kw_column
+%token Kw_before
+%token Kw_each
+%token Kw_of
 
 (* tokens *)
 %token Tok_lparen
@@ -638,6 +641,9 @@ let keyword ==
   | Kw_alter; {Identifier (`keyword Kw_alter, ())}
   | Kw_add; {Identifier (`keyword Kw_add, ())}
   | Kw_column; {Identifier (`keyword Kw_column, ())}
+  | Kw_before; {Identifier (`keyword Kw_before, ())}
+  | Kw_each; {Identifier (`keyword Kw_each, ())}
+  | Kw_of; {Identifier (`keyword Kw_of, ())}
 
 let statements :=
   | v = nonempty_list(pair(statement, option(Tok_semicolon))); Tok_eof; { List.map fst v }
@@ -838,6 +844,7 @@ let sql_statement :=
  | x = create_index_statement; { Sql_statement (`create_index x, ()) }
  | x = create_view_statement; { Sql_statement (`create_view x, ()) }
  | x = alter_table_statement; { Sql_statement (`alter_table x, ()) }
+ | x = create_trigger_statement; { Sql_statement (`create_trigger x, ()) }
 
 let select_statement_list :=
   | x = select_core; { [(None, x)] }
@@ -1419,3 +1426,40 @@ let alter_table_statement :=
    Kw_drop; ioption(Kw_column);
    cname = column_name;
    { Alter_table_statement (name, `drop cname, ()) }
+
+
+let create_trigger_statement_method ==
+  | Kw_delete; {`delete}
+  | Kw_insert; {`insert}
+  | Kw_update; cols = option(Kw_of; cs = column_name_list; {cs}); {`update cols}
+
+let create_trigger_statement_timing ==
+  | Kw_before; { `before}
+  | Kw_after; { `after}
+  | Kw_instead; Kw_of; { `instead}
+
+let create_trigger_statement_for_each_row :=
+    | Kw_for; Kw_each; Kw_row; { `for_each }
+
+let create_trigger_statement_when_expr :=
+    | Kw_when; e = expr; { e }
+
+let create_trigger_statement_stmt ==
+  | s = update_statement; { `update s }
+  | s = insert_statement; { `insert s }
+  | s = delete_statement; { `delete s }
+  | s = select_statement; { `select s }
+
+let create_trigger_statement :=
+ | Kw_create; temp = ioption(create_table_temp_option); Kw_trigger;
+   exists = ioption(Kw_if;Kw_not;Kw_exists; {`exists});
+   name = qualified_nonalias_table_name;
+   timing = create_trigger_statement_timing;
+   met = create_trigger_statement_method;
+   Kw_on; tname = table_name;
+   for_each = option(create_trigger_statement_for_each_row);
+   expr = option(create_trigger_statement_when_expr);
+   Kw_begin;
+   stmt = nonempty_list(pair(create_trigger_statement_stmt, Tok_semicolon));
+   Kw_end;
+   { Create_trigger_statement (temp, exists, name, timing, met, tname, for_each, expr, List.map fst stmt, ()) }
