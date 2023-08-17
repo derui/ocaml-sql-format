@@ -19,14 +19,17 @@ let arg_config =
     & opt file "~/.ocaml-sql-format.toml"
     & info [ "c"; "config" ] ~env ~doc ~docv:"CONFIG")
 
-let main _ _ files =
-  let option = Formatter.Options.default in
+let main _ config files =
+  let option = ref Formatter.Options.default in
+
+  if Sys.file_exists config then option := Config.parse config else ();
+
   List.iter
     (fun file ->
       let ic = open_in file in
-      let ret = Formatter.from_channel ~option ic in
+      let ret = Formatter.from_channel ~option:!option ic in
       close_in ic;
-      Printf.printf "%s\n" ret)
+      Printf.printf "\n%s\n" ret)
     files
 
 let main_t = Term.(const main $ arg_overwrite $ arg_config $ arg_files)
