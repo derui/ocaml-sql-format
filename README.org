@@ -1,0 +1,78 @@
+* SQL formatter built by OCaml
+This tool is a simple formatter for SQL.
+
+#+begin_example
+The currently supported SQL syntax is minimum that maintainers use on a daily basis.
+#+end_example
+
+** Plans
+
+- [ ] Support various syntax
+- [ ] Support RDBMS-specific dialects
+
+
+* Usage
+
+#+begin_src shell
+  # print formatted SQL in <file.sql> to stdout
+  $ ocaml-sql-format file.sql
+
+  # You can redirect to other file
+  $ ocaml-sql-format file.sql > other.sql
+
+  # Can pass multiple files as arguments
+  $ ocaml-sql-format file1.sql file2.sql
+
+  # In-place update
+  $ ocaml-sql-format -w file.sql
+  $ ocaml-sql-format --write file.sql
+
+  # Specify configuration
+  $ ocaml-sql-format -c <config file> file.sql
+#+end_src
+
+* Configuration
+Users can change some behaviors by configuration file. Format of configuration file is [[https://toml.io/en/v1.0.0][toml]]. Configuration file content is below.
+
+#+begin_src toml
+  [settings]
+
+  # format SQL keywords to UPPERCASE or lowercase
+  # Default value is `upper`
+  keyword = "lower"               # lowercase
+  keyword = "upper"               # UPPERCASE
+
+  # Size of indentation that is used to some statement, such as select, update, or some expressions.
+  # Default value is 4
+  indent_size = 2
+
+  # Maximum line length to detect wrap expression.
+  # Default value is 100
+  max_line_length = 80
+#+end_src
+
+* Development
+This repository uses [[https://taskfile.dev/][Task]] to manage some development tasks. But if you do not install Task, you can use [[https://dune.readthedocs.io/en/stable/overview.html][dune]] directly.
+
+** Requirements
+- dune
+- opam
+- Task (optional)
+
+** Commands
+#+begin_src shell
+  # build executable
+  $ task build
+
+  # bulid tools for development
+  $ task build-tool
+
+  # run teest
+  $ task test
+
+  # promote result into expectation tests
+  $ task promote
+#+end_src
+
+* LICENSE
+MIT
