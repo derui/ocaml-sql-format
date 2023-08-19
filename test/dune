@@ -5,4 +5,4 @@
  (preprocess (pps ppx_expect)))
 
 (cram
-  (deps %{bin:ocaml-sql-format}))
+  (deps %{bin:ocaml-sql-format} (glob_files files/cram/*)))
