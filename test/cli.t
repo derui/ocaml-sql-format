@@ -22,6 +22,9 @@ Format with default format options
   
 
 
+
+
+
 Format with config file
   $ ../../install/default/bin/ocaml-sql-format -c files/cram/lower.toml files/cram/sample.sql
   
@@ -44,6 +47,9 @@ Format with config file
       c = 3;
   
   
+
+
+
 Format with config file that changes indent size
   $ ../../install/default/bin/ocaml-sql-format -c files/cram/indent.toml files/cram/sample.sql
   
@@ -65,4 +71,28 @@ Format with config file that changes indent size
   HAVING
     c = 3;
   
+  
+
+
+
+Inplace formatted file
+  $ ../../install/default/bin/ocaml-sql-format -w files/cram/inplace.sql
+  $ cat files/cram/inplace.sql
+  SELECT
+      a,
+      b,
+      c,
+      d,
+      e,
+      long,
+      a.long_foo
+  FROM
+      a
+      INNER JOIN c
+          ON c.id = a.c_id
+  GROUP BY
+      a,
+      b
+  HAVING
+      c = 3;
   
