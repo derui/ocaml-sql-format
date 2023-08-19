@@ -3,3 +3,6 @@
  (libraries ocaml-sql-format.formatter sedlex)
  (inline_tests)
  (preprocess (pps ppx_expect)))
+
+(cram
+  (deps %{bin:ocaml-sql-format}))
