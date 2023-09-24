@@ -2522,6 +2522,8 @@ let rec token buf =
   | kw_each -> Kw_each
   | kw_of -> Kw_of
   (* literals *)
+  | "--" -> inline_comment buf
+  | "/*" -> block_comment buf
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
@@ -2564,6 +2566,29 @@ let rec token buf =
   | "<<" -> Op_lshift
   | ">>" -> Op_rshift
   | eof -> Tok_eof
+  | _ ->
+    failwith
+      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
+
+and inline_comment buf =
+  match%sedlex buf with
+  | newline ->
+    Sedlexing.new_line buf;
+    token buf
+  | eof -> Tok_eof
+  | any -> inline_comment buf
+  | _ ->
+    failwith
+      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
+
+and block_comment buf =
+  match%sedlex buf with
+  | newline ->
+    Sedlexing.new_line buf;
+    block_comment buf
+  | eof -> Tok_eof
+  | "*/" -> token buf
+  | any -> block_comment buf
   | _ ->
     failwith
       (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
