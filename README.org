@@ -74,5 +74,23 @@ This repository uses [[https://taskfile.dev/][Task]] to manage some development 
   $ task promote
 #+end_src
 
+** Generators
+
+
+*** Generator for keyword
+Keyword generation for sedlex.
+
+#+begin_src shell
+  task keyword KEYWORD=<keyword>
+#+end_src
+
+
+*** Generator for syntax
+Syntax generation. This command generates OCaml sources for Cst/Printer/Parser
+
+#+begin_src shell
+  $ task new-ast -- "syntax name"
+#+end_src
+
 * LICENSE
 MIT
