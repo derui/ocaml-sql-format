@@ -311,6 +311,9 @@ type token =
   | Tok_qmark
   | Tok_semicolon
   | Tok_quote
+  | Tok_space of string
+  | Tok_line_comment of string
+  | Tok_block_comment of string
   (* operators *)
   | Op_plus
   | Op_minus

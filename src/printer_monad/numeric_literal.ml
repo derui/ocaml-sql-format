@@ -1,13 +1,13 @@
-open Types.Ast
-open Types.Literal
 open Intf
+module M = Monad
 
-module type S = PRINTER with type t = ext numeric_literal
-
-module Make () : S = struct
-  type t = ext numeric_literal
-
-  let print f t ~option:_ =
-    match t with
-    | Numeric_literal (v, _) -> Fmt.string f v
+module Make () : PRINTER_M = struct
+  let print () =
+    let open M.Let_syntax in
+    let open M.Syntax in
+    let* () = M.skip_comments () in
+    let* c = M.current () in
+    match c with
+    | Tok_numeric v -> M.bump () *> M.pp (fun fmt -> Fmt.string fmt v)
+    | _ -> M.return ()
 end

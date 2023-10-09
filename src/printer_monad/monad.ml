@@ -36,6 +36,9 @@ module Syntax = struct
   let ( <$> ) = map
 
   let ( <*> ) = apply
+
+  (** evaluate [x] and [y], then return only result of [y] *)
+  let ( *> ) x y = (fun _ y -> y) <$> x <*> y
 end
 
 module Let_syntax = struct
@@ -43,6 +46,16 @@ module Let_syntax = struct
 end
 
 let data () data = Ok (data, data)
+
+let pp ppf =
+  let open Let_syntax in
+  let* data' = data () in
+  return @@ ppf data'.fmt
+
+let options () =
+  let open Let_syntax in
+  let* data' = data () in
+  return data'.options
 
 (** get current token. If token did not read before, read an token. *)
 let current () =
@@ -67,6 +80,7 @@ let bump () =
     let token = data'.lexer () in
     return token
 
+(** indent by size *)
 let indent_by size =
   let open Let_syntax in
   let* data' = data () in
@@ -75,7 +89,51 @@ let indent_by size =
 
   return (fun ppf -> (Fmt.vbox ~indent:0 ppf) fmt ())
 
+(** indent by size in option *)
 let indent () =
   let open Let_syntax in
   let* data' = data () in
   indent_by data'.options.indent_size
+
+(** skip white spaces *)
+let rec skip_ws () =
+  let open Let_syntax in
+  let* v = current () in
+  match v with
+  | Token.Tok_space _ ->
+    let* _ = bump () in
+    skip_ws ()
+  | _ -> return ()
+
+(** skip white space and comments. Print comments if remove_comment option is
+    false *)
+let skip_comments () =
+  let rec comments' () =
+    let open Let_syntax in
+    let* v = current () in
+    let* options = options () in
+    match v with
+    | Token.Tok_space _ ->
+      let* _ = bump () in
+      comments' ()
+    | Token.Tok_line_comment c ->
+      let* _ = bump () in
+      let* _ =
+        if not options.remove_comment then
+          pp (fun fmt ->
+              Fmt.string fmt c;
+              Format.pp_force_newline fmt ())
+        else return ()
+      in
+
+      comments' ()
+    | Token.Tok_block_comment c ->
+      let* _ = bump () in
+      let* _ =
+        if not options.remove_comment then pp (fun fmt -> Fmt.string fmt c)
+        else return ()
+      in
+      comments' ()
+    | _ -> return ()
+  in
+  comments' ()

@@ -11,7 +11,8 @@ type t =
         (* insert newline between with element list. Default is true  *)
   ; need_newline_between_elements : bool
         (* maximum line length. Default is 100 *)
-  ; max_line_length : int
+  ; max_line_length : int (* remove comments from formatted source *)
+  ; remove_comment : bool
   ; reserved : unit
   }
 [@@deriving show, eq]
@@ -21,5 +22,6 @@ let default =
   ; indent_size = 4
   ; need_newline_between_elements = true
   ; max_line_length = 100
+  ; remove_comment = false
   ; reserved = ()
   }
