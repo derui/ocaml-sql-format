@@ -1,0 +1,5 @@
+(library
+ (name printer_monad)
+ (public_name ocaml-sql-format.printer-monad)
+ (flags (:standard -safe-string))
+ (libraries fmt ocaml-sql-format.types))
