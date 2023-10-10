@@ -4,10 +4,9 @@ module M = Monad
 module Make () : PRINTER_M = struct
   let print () =
     let open M.Let_syntax in
-    let open M.Syntax in
     let* () = M.skip_comments () in
     let* c = M.current () in
     match c with
-    | Tok_string v -> M.bump () *> M.pp (fun fmt -> Fmt.string fmt v)
+    | Tok_string _ -> Token.print ()
     | _ -> M.return ()
 end

@@ -30,6 +30,8 @@ let bind : 'a t -> ('a -> 'b t) -> 'b t =
 
 let return v p = Ok (v, p)
 
+let fail v _ = Error v
+
 module Syntax = struct
   let ( >>= ) = bind
 

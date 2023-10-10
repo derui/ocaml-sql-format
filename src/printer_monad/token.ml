@@ -1,5 +1,6 @@
 open Types.Token
 open Intf
+module M = Monad
 
 let as_keyword original = function
   | `Upper -> String.uppercase_ascii original
@@ -7,344 +8,441 @@ let as_keyword original = function
 
 include (
   struct
-    type t = token
-
-    let print f t ~option:{ Options.keyword; _ } =
-      match t with
-      | Kw_all -> Fmt.string f @@ as_keyword "all" keyword
-      | Kw_select -> Fmt.string f @@ as_keyword "select" keyword
-      | Kw_as -> Fmt.string f @@ as_keyword "as" keyword
-      | Kw_from -> Fmt.string f @@ as_keyword "from" keyword
-      | Kw_distinct -> Fmt.string f @@ as_keyword "distinct" keyword
-      | Kw_true -> Fmt.string f @@ as_keyword "true" keyword
-      | Kw_false -> Fmt.string f @@ as_keyword "false" keyword
-      | Kw_unknown -> Fmt.string f @@ as_keyword "unknown" keyword
-      | Kw_null -> Fmt.string f @@ as_keyword "null" keyword
-      | Kw_date -> Fmt.string f @@ as_keyword "date" keyword
-      | Kw_time -> Fmt.string f @@ as_keyword "time" keyword
-      | Kw_timestamp -> Fmt.string f @@ as_keyword "timestamp" keyword
-      | Kw_or -> Fmt.string f @@ as_keyword "or" keyword
-      | Kw_not -> Fmt.string f @@ as_keyword "not" keyword
-      | Kw_and -> Fmt.string f @@ as_keyword "and" keyword
-      | Kw_into -> Fmt.string f @@ as_keyword "into" keyword
-      | Kw_union -> Fmt.string f @@ as_keyword "union" keyword
-      | Kw_except -> Fmt.string f @@ as_keyword "except" keyword
-      | Kw_intersect -> Fmt.string f @@ as_keyword "intersect" keyword
-      | Kw_by -> Fmt.string f @@ as_keyword "by" keyword
-      | Kw_group -> Fmt.string f @@ as_keyword "group" keyword
-      | Kw_rollup -> Fmt.string f @@ as_keyword "rollup" keyword
-      | Kw_having -> Fmt.string f @@ as_keyword "having" keyword
-      | Kw_where -> Fmt.string f @@ as_keyword "where" keyword
-      | Kw_order -> Fmt.string f @@ as_keyword "order" keyword
-      | Kw_asc -> Fmt.string f @@ as_keyword "asc" keyword
-      | Kw_desc -> Fmt.string f @@ as_keyword "desc" keyword
-      | Kw_first -> Fmt.string f @@ as_keyword "first" keyword
-      | Kw_last -> Fmt.string f @@ as_keyword "last" keyword
-      | Kw_limit -> Fmt.string f @@ as_keyword "limit" keyword
-      | Kw_offset -> Fmt.string f @@ as_keyword "offset" keyword
-      | Kw_row -> Fmt.string f @@ as_keyword "row" keyword
-      | Kw_rows -> Fmt.string f @@ as_keyword "rows" keyword
-      | Kw_fetch -> Fmt.string f @@ as_keyword "fetch" keyword
-      | Kw_next -> Fmt.string f @@ as_keyword "next" keyword
-      | Kw_only -> Fmt.string f @@ as_keyword "only" keyword
-      | Kw_is -> Fmt.string f @@ as_keyword "is" keyword
-      | Kw_between -> Fmt.string f @@ as_keyword "between" keyword
-      | Kw_like_regex -> Fmt.string f @@ as_keyword "like_regex" keyword
-      | Kw_similar -> Fmt.string f @@ as_keyword "similar" keyword
-      | Kw_to -> Fmt.string f @@ as_keyword "to" keyword
-      | Kw_escape -> Fmt.string f @@ as_keyword "escape" keyword
-      | Kw_like -> Fmt.string f @@ as_keyword "like" keyword
-      | Kw_any -> Fmt.string f @@ as_keyword "any" keyword
-      | Kw_some -> Fmt.string f @@ as_keyword "some" keyword
-      | Kw_in -> Fmt.string f @@ as_keyword "in" keyword
-      | Kw_exists -> Fmt.string f @@ as_keyword "exists" keyword
-      | Kw_with -> Fmt.string f @@ as_keyword "with" keyword
-      | Kw_table -> Fmt.string f @@ as_keyword "table" keyword
-      | Kw_lateral -> Fmt.string f @@ as_keyword "lateral" keyword
-      | Kw_left -> Fmt.string f @@ as_keyword "left" keyword
-      | Kw_right -> Fmt.string f @@ as_keyword "right" keyword
-      | Kw_full -> Fmt.string f @@ as_keyword "full" keyword
-      | Kw_outer -> Fmt.string f @@ as_keyword "outer" keyword
-      | Kw_inner -> Fmt.string f @@ as_keyword "inner" keyword
-      | Kw_cross -> Fmt.string f @@ as_keyword "cross" keyword
-      | Kw_join -> Fmt.string f @@ as_keyword "join" keyword
-      | Kw_on -> Fmt.string f @@ as_keyword "on" keyword
-      | Kw_case -> Fmt.string f @@ as_keyword "case" keyword
-      | Kw_when -> Fmt.string f @@ as_keyword "when" keyword
-      | Kw_then -> Fmt.string f @@ as_keyword "then" keyword
-      | Kw_end -> Fmt.string f @@ as_keyword "end" keyword
-      | Kw_else -> Fmt.string f @@ as_keyword "else" keyword
-      | Kw_textagg -> Fmt.string f @@ as_keyword "textagg" keyword
-      | Kw_for -> Fmt.string f @@ as_keyword "for" keyword
-      | Kw_delimiter -> Fmt.string f @@ as_keyword "delimiter" keyword
-      | Kw_quote -> Fmt.string f @@ as_keyword "quote" keyword
-      | Kw_no -> Fmt.string f @@ as_keyword "no" keyword
-      | Kw_header -> Fmt.string f @@ as_keyword "header" keyword
-      | Kw_encoding -> Fmt.string f @@ as_keyword "encoding" keyword
-      | Kw_count -> Fmt.string f @@ as_keyword "count" keyword
-      | Kw_count_big -> Fmt.string f @@ as_keyword "count_big" keyword
-      | Kw_avg -> Fmt.string f @@ as_keyword "avg" keyword
-      | Kw_sum -> Fmt.string f @@ as_keyword "sum" keyword
-      | Kw_min -> Fmt.string f @@ as_keyword "min" keyword
-      | Kw_max -> Fmt.string f @@ as_keyword "max" keyword
-      | Kw_every -> Fmt.string f @@ as_keyword "every" keyword
-      | Kw_stddev_pop -> Fmt.string f @@ as_keyword "stddev_pop" keyword
-      | Kw_stddev_samp -> Fmt.string f @@ as_keyword "stddev_samp" keyword
-      | Kw_var_samp -> Fmt.string f @@ as_keyword "var_samp" keyword
-      | Kw_var_pop -> Fmt.string f @@ as_keyword "var_pop" keyword
-      | Kw_filter -> Fmt.string f @@ as_keyword "filter" keyword
-      | Kw_over -> Fmt.string f @@ as_keyword "over" keyword
-      | Kw_partition -> Fmt.string f @@ as_keyword "partition" keyword
-      | Kw_range -> Fmt.string f @@ as_keyword "range" keyword
-      | Kw_unbounded -> Fmt.string f @@ as_keyword "unbounded" keyword
-      | Kw_following -> Fmt.string f @@ as_keyword "following" keyword
-      | Kw_preceding -> Fmt.string f @@ as_keyword "preceding" keyword
-      | Kw_current -> Fmt.string f @@ as_keyword "current" keyword
-      | Kw_row_number -> Fmt.string f @@ as_keyword "row_number" keyword
-      | Kw_rank -> Fmt.string f @@ as_keyword "rank" keyword
-      | Kw_dense_rank -> Fmt.string f @@ as_keyword "dense_rank" keyword
-      | Kw_percent_rank -> Fmt.string f @@ as_keyword "percent_rank" keyword
-      | Kw_cume_dist -> Fmt.string f @@ as_keyword "cume_dist" keyword
-      | Kw_convert -> Fmt.string f @@ as_keyword "convert" keyword
-      | Kw_cast -> Fmt.string f @@ as_keyword "cast" keyword
-      | Kw_substring -> Fmt.string f @@ as_keyword "substring" keyword
-      | Kw_extract -> Fmt.string f @@ as_keyword "extract" keyword
-      | Kw_year -> Fmt.string f @@ as_keyword "year" keyword
-      | Kw_month -> Fmt.string f @@ as_keyword "month" keyword
-      | Kw_day -> Fmt.string f @@ as_keyword "day" keyword
-      | Kw_hour -> Fmt.string f @@ as_keyword "hour" keyword
-      | Kw_minute -> Fmt.string f @@ as_keyword "minute" keyword
-      | Kw_second -> Fmt.string f @@ as_keyword "second" keyword
-      | Kw_quarter -> Fmt.string f @@ as_keyword "quarter" keyword
-      | Kw_epoch -> Fmt.string f @@ as_keyword "epoch" keyword
-      | Kw_trim -> Fmt.string f @@ as_keyword "trim" keyword
-      | Kw_leading -> Fmt.string f @@ as_keyword "leading" keyword
-      | Kw_trailing -> Fmt.string f @@ as_keyword "trailing" keyword
-      | Kw_both -> Fmt.string f @@ as_keyword "both" keyword
-      | Kw_to_chars -> Fmt.string f @@ as_keyword "to_chars" keyword
-      | Kw_to_bytes -> Fmt.string f @@ as_keyword "to_bytes" keyword
-      | Kw_insert -> Fmt.string f @@ as_keyword "insert" keyword
-      | Kw_translate -> Fmt.string f @@ as_keyword "translate" keyword
-      | Kw_position -> Fmt.string f @@ as_keyword "position" keyword
-      | Kw_listagg -> Fmt.string f @@ as_keyword "listagg" keyword
-      | Kw_within -> Fmt.string f @@ as_keyword "within" keyword
-      | Kw_current_date -> Fmt.string f @@ as_keyword "current_date" keyword
-      | Kw_current_timestamp ->
-        Fmt.string f @@ as_keyword "current_timestamp" keyword
-      | Kw_current_time -> Fmt.string f @@ as_keyword "current_time" keyword
-      | Kw_exception -> Fmt.string f @@ as_keyword "exception" keyword
-      | Kw_serial -> Fmt.string f @@ as_keyword "serial" keyword
-      | Kw_index -> Fmt.string f @@ as_keyword "index" keyword
-      | Kw_instead -> Fmt.string f @@ as_keyword "instead" keyword
-      | Kw_view -> Fmt.string f @@ as_keyword "view" keyword
-      | Kw_enabled -> Fmt.string f @@ as_keyword "enabled" keyword
-      | Kw_disabled -> Fmt.string f @@ as_keyword "disabled" keyword
-      | Kw_key -> Fmt.string f @@ as_keyword "key" keyword
-      | Kw_document -> Fmt.string f @@ as_keyword "document" keyword
-      | Kw_content -> Fmt.string f @@ as_keyword "content" keyword
-      | Kw_empty -> Fmt.string f @@ as_keyword "empty" keyword
-      | Kw_ordinality -> Fmt.string f @@ as_keyword "ordinality" keyword
-      | Kw_path -> Fmt.string f @@ as_keyword "path" keyword
-      | Kw_querystring -> Fmt.string f @@ as_keyword "querystring" keyword
-      | Kw_namespace -> Fmt.string f @@ as_keyword "namespace" keyword
-      | Kw_result -> Fmt.string f @@ as_keyword "result" keyword
-      | Kw_accesspattern -> Fmt.string f @@ as_keyword "accesspattern" keyword
-      | Kw_auto_increment -> Fmt.string f @@ as_keyword "auto_increment" keyword
-      | Kw_wellformed -> Fmt.string f @@ as_keyword "wellformed" keyword
-      | Kw_texttable -> Fmt.string f @@ as_keyword "texttable" keyword
-      | Kw_arraytable -> Fmt.string f @@ as_keyword "arraytable" keyword
-      | Kw_jsontable -> Fmt.string f @@ as_keyword "jsontable" keyword
-      | Kw_selector -> Fmt.string f @@ as_keyword "selector" keyword
-      | Kw_skip -> Fmt.string f @@ as_keyword "skip" keyword
-      | Kw_width -> Fmt.string f @@ as_keyword "width" keyword
-      | Kw_passing -> Fmt.string f @@ as_keyword "passing" keyword
-      | Kw_name -> Fmt.string f @@ as_keyword "name" keyword
-      | Kw_columns -> Fmt.string f @@ as_keyword "columns" keyword
-      | Kw_nulls -> Fmt.string f @@ as_keyword "nulls" keyword
-      | Kw_objecttable -> Fmt.string f @@ as_keyword "objecttable" keyword
-      | Kw_version -> Fmt.string f @@ as_keyword "version" keyword
-      | Kw_including -> Fmt.string f @@ as_keyword "including" keyword
-      | Kw_excluding -> Fmt.string f @@ as_keyword "excluding" keyword
-      | Kw_variadic -> Fmt.string f @@ as_keyword "variadic" keyword
-      | Kw_raise -> Fmt.string f @@ as_keyword "raise" keyword
-      | Kw_chain -> Fmt.string f @@ as_keyword "chain" keyword
-      | Kw_jsonarray_agg -> Fmt.string f @@ as_keyword "jsonarray_agg" keyword
-      | Kw_jsonobject -> Fmt.string f @@ as_keyword "jsonobject" keyword
-      | Kw_preserve -> Fmt.string f @@ as_keyword "preserve" keyword
-      | Kw_upsert -> Fmt.string f @@ as_keyword "upsert" keyword
-      | Kw_after -> Fmt.string f @@ as_keyword "after" keyword
-      | Kw_type -> Fmt.string f @@ as_keyword "type" keyword
-      | Kw_translator -> Fmt.string f @@ as_keyword "translator" keyword
-      | Kw_jaas -> Fmt.string f @@ as_keyword "jaas" keyword
-      | Kw_condition -> Fmt.string f @@ as_keyword "condition" keyword
-      | Kw_mask -> Fmt.string f @@ as_keyword "mask" keyword
-      | Kw_access -> Fmt.string f @@ as_keyword "access" keyword
-      | Kw_control -> Fmt.string f @@ as_keyword "control" keyword
-      | Kw_none -> Fmt.string f @@ as_keyword "none" keyword
-      | Kw_data -> Fmt.string f @@ as_keyword "data" keyword
-      | Kw_database -> Fmt.string f @@ as_keyword "database" keyword
-      | Kw_privileges -> Fmt.string f @@ as_keyword "privileges" keyword
-      | Kw_role -> Fmt.string f @@ as_keyword "role" keyword
-      | Kw_schema -> Fmt.string f @@ as_keyword "schema" keyword
-      | Kw_use -> Fmt.string f @@ as_keyword "use" keyword
-      | Kw_repository -> Fmt.string f @@ as_keyword "repository" keyword
-      | Kw_rename -> Fmt.string f @@ as_keyword "rename" keyword
-      | Kw_domain -> Fmt.string f @@ as_keyword "domain" keyword
-      | Kw_usage -> Fmt.string f @@ as_keyword "usage" keyword
-      | Kw_explain -> Fmt.string f @@ as_keyword "explain" keyword
-      | Kw_analyze -> Fmt.string f @@ as_keyword "analyze" keyword
-      | Kw_text -> Fmt.string f @@ as_keyword "text" keyword
-      | Kw_format -> Fmt.string f @@ as_keyword "format" keyword
-      | Kw_yaml -> Fmt.string f @@ as_keyword "yaml" keyword
-      | Kw_policy -> Fmt.string f @@ as_keyword "policy" keyword
-      | Kw_session_user -> Fmt.string f @@ as_keyword "session_user" keyword
-      | Kw_interval -> Fmt.string f @@ as_keyword "interval" keyword
-      | Kw_tablesample -> Fmt.string f @@ as_keyword "tablesample" keyword
-      | Kw_bernoulli -> Fmt.string f @@ as_keyword "bernoulli" keyword
-      | Kw_system -> Fmt.string f @@ as_keyword "system" keyword
-      | Kw_repeatable -> Fmt.string f @@ as_keyword "repeatable" keyword
-      | Kw_unnest -> Fmt.string f @@ as_keyword "unnest" keyword
-      | Kw_module -> Fmt.string f @@ as_keyword "module" keyword
-      | Kw_collate -> Fmt.string f @@ as_keyword "collate" keyword
-      | Kw_cube -> Fmt.string f @@ as_keyword "cube" keyword
-      | Kw_grouping -> Fmt.string f @@ as_keyword "grouping" keyword
-      | Kw_sets -> Fmt.string f @@ as_keyword "sets" keyword
-      | Kw_ties -> Fmt.string f @@ as_keyword "ties" keyword
-      | Kw_others -> Fmt.string f @@ as_keyword "others" keyword
-      | Kw_exclude -> Fmt.string f @@ as_keyword "exclude" keyword
-      | Kw_window -> Fmt.string f @@ as_keyword "window" keyword
-      | Kw_using -> Fmt.string f @@ as_keyword "using" keyword
-      | Kw_natural -> Fmt.string f @@ as_keyword "natural" keyword
-      | Kw_corresponding -> Fmt.string f @@ as_keyword "corresponding" keyword
-      | Kw_recursive -> Fmt.string f @@ as_keyword "recursive" keyword
-      | Kw_cycle -> Fmt.string f @@ as_keyword "cycle" keyword
-      | Kw_default -> Fmt.string f @@ as_keyword "default" keyword
-      | Kw_set -> Fmt.string f @@ as_keyword "set" keyword
-      | Kw_depth -> Fmt.string f @@ as_keyword "depth" keyword
-      | Kw_breadth -> Fmt.string f @@ as_keyword "breadth" keyword
-      | Kw_search -> Fmt.string f @@ as_keyword "search" keyword
-      | Kw_values -> Fmt.string f @@ as_keyword "values" keyword
-      | Kw_value -> Fmt.string f @@ as_keyword "value" keyword
-      | Kw_element -> Fmt.string f @@ as_keyword "element" keyword
-      | Kw_zone -> Fmt.string f @@ as_keyword "zone" keyword
-      | Kw_local -> Fmt.string f @@ as_keyword "local" keyword
-      | Kw_at -> Fmt.string f @@ as_keyword "at" keyword
-      | Kw_abs -> Fmt.string f @@ as_keyword "abs" keyword
-      | Kw_array -> Fmt.string f @@ as_keyword "array" keyword
-      | Kw_multiset -> Fmt.string f @@ as_keyword "multiset" keyword
-      | Kw_localtime -> Fmt.string f @@ as_keyword "localtime" keyword
-      | Kw_localtimestamp -> Fmt.string f @@ as_keyword "localtimestamp" keyword
-      | Kw_characters -> Fmt.string f @@ as_keyword "characters" keyword
-      | Kw_code_units -> Fmt.string f @@ as_keyword "code_units" keyword
-      | Kw_octets -> Fmt.string f @@ as_keyword "octets" keyword
-      | Kw_without -> Fmt.string f @@ as_keyword "without" keyword
-      | Kw_scope -> Fmt.string f @@ as_keyword "scope" keyword
-      | Kw_ref -> Fmt.string f @@ as_keyword "ref" keyword
-      | Kw_precision -> Fmt.string f @@ as_keyword "precision" keyword
-      | Kw_numeric -> Fmt.string f @@ as_keyword "numeric" keyword
-      | Kw_dec -> Fmt.string f @@ as_keyword "dec" keyword
-      | Kw_int -> Fmt.string f @@ as_keyword "int" keyword
-      | Kw_binary -> Fmt.string f @@ as_keyword "binary" keyword
-      | Kw_large -> Fmt.string f @@ as_keyword "large" keyword
-      | Kw_national -> Fmt.string f @@ as_keyword "national" keyword
-      | Kw_varying -> Fmt.string f @@ as_keyword "varying" keyword
-      | Kw_character -> Fmt.string f @@ as_keyword "character" keyword
-      | Kw_nchar -> Fmt.string f @@ as_keyword "nchar" keyword
-      | Kw_nclob -> Fmt.string f @@ as_keyword "nclob" keyword
-      | Kw_collation -> Fmt.string f @@ as_keyword "collation" keyword
-      | Kw_indicator -> Fmt.string f @@ as_keyword "indicator" keyword
-      | Kw_current_user -> Fmt.string f @@ as_keyword "current_user" keyword
-      | Kw_system_user -> Fmt.string f @@ as_keyword "system_user" keyword
-      | Kw_current_default_transform_group ->
-        Fmt.string f @@ as_keyword "current_default_transform_group" keyword
-      | Kw_current_transform_group_for_type ->
-        Fmt.string f @@ as_keyword "current_transform_group_for_type" keyword
-      | Kw_current_path -> Fmt.string f @@ as_keyword "current_path" keyword
-      | Kw_current_role -> Fmt.string f @@ as_keyword "current_role" keyword
-      | Kw_nullif -> Fmt.string f @@ as_keyword "nullif" keyword
-      | Kw_coalesce -> Fmt.string f @@ as_keyword "coalesce" keyword
-      | Kw_groups -> Fmt.string f @@ as_keyword "groups" keyword
-      | Kw_glob -> Fmt.string f @@ as_keyword "glob" keyword
-      | Kw_match -> Fmt.string f @@ as_keyword "match" keyword
-      | Kw_regexp -> Fmt.string f @@ as_keyword "regexp" keyword
-      | Kw_materialized -> Fmt.string f @@ as_keyword "materialized" keyword
-      | Kw_abort -> Fmt.string f @@ as_keyword "abort" keyword
-      | Kw_ignore -> Fmt.string f @@ as_keyword "ignore" keyword
-      | Kw_replace -> Fmt.string f @@ as_keyword "replace" keyword
-      | Kw_rollback -> Fmt.string f @@ as_keyword "rollback" keyword
-      | Kw_fail -> Fmt.string f @@ as_keyword "fail" keyword
-      | Kw_update -> Fmt.string f @@ as_keyword "update" keyword
-      | Kw_returning -> Fmt.string f @@ as_keyword "returning" keyword
-      | Kw_delete -> Fmt.string f @@ as_keyword "delete" keyword
-      | Kw_savepoint -> Fmt.string f @@ as_keyword "savepoint" keyword
-      | Kw_transaction -> Fmt.string f @@ as_keyword "transaction" keyword
-      | Kw_if -> Fmt.string f @@ as_keyword "if" keyword
-      | Kw_drop -> Fmt.string f @@ as_keyword "drop" keyword
-      | Kw_begin -> Fmt.string f @@ as_keyword "begin" keyword
-      | Kw_commit -> Fmt.string f @@ as_keyword "commit" keyword
-      | Kw_trigger -> Fmt.string f @@ as_keyword "trigger" keyword
-      | Kw_references -> Fmt.string f @@ as_keyword "references" keyword
-      | Kw_constraint -> Fmt.string f @@ as_keyword "constraint" keyword
-      | Kw_primary -> Fmt.string f @@ as_keyword "primary" keyword
-      | Kw_unique -> Fmt.string f @@ as_keyword "unique" keyword
-      | Kw_generated -> Fmt.string f @@ as_keyword "generated" keyword
-      | Kw_always -> Fmt.string f @@ as_keyword "always" keyword
-      | Kw_check -> Fmt.string f @@ as_keyword "check" keyword
-      | Kw_cascade -> Fmt.string f @@ as_keyword "cascade" keyword
-      | Kw_restrict -> Fmt.string f @@ as_keyword "restrict" keyword
-      | Kw_action -> Fmt.string f @@ as_keyword "action" keyword
-      | Kw_deferrable -> Fmt.string f @@ as_keyword "deferrable" keyword
-      | Kw_initially -> Fmt.string f @@ as_keyword "initially" keyword
-      | Kw_deferred -> Fmt.string f @@ as_keyword "deferred" keyword
-      | Kw_immediate -> Fmt.string f @@ as_keyword "immediate" keyword
-      | Kw_create -> Fmt.string f @@ as_keyword "create" keyword
-      | Kw_temp -> Fmt.string f @@ as_keyword "temp" keyword
-      | Kw_temporary -> Fmt.string f @@ as_keyword "temporary" keyword
-      | Kw_foreign -> Fmt.string f @@ as_keyword "foreign" keyword
-      | Kw_alter -> Fmt.string f @@ as_keyword "alter" keyword
-      | Kw_add -> Fmt.string f @@ as_keyword "add" keyword
-      | Kw_column -> Fmt.string f @@ as_keyword "column" keyword
-      | Kw_before -> Fmt.string f @@ as_keyword "before" keyword
-      | Kw_each -> Fmt.string f @@ as_keyword "each" keyword
-      | Kw_of -> Fmt.string f @@ as_keyword "of" keyword
-      (* 'token *)
-      | Tok_lparen -> Fmt.string f "("
-      | Tok_rparen -> Fmt.string f ")"
-      | Tok_ident v -> Fmt.string f v
-      | Tok_string v -> Fmt.string f v
-      | Tok_numeric v -> Fmt.string f v
-      | Tok_blob v -> Fmt.string f v
-      | Tok_period -> Fmt.string f "."
-      | Tok_comma -> Fmt.string f ","
-      | Tok_colon -> Fmt.string f ":"
-      | Tok_dollar -> Fmt.string f "$"
-      | Tok_lbrace -> Fmt.string f "{"
-      | Tok_rbrace -> Fmt.string f "}"
-      | Tok_lsbrace -> Fmt.string f "["
-      | Tok_rsbrace -> Fmt.string f "]"
-      | Tok_qmark -> Fmt.string f "?"
-      | Tok_semicolon -> Fmt.string f ";"
-      | Tok_quote -> Fmt.string f "'"
-      | Op_plus -> Fmt.string f "+"
-      | Op_minus -> Fmt.string f "-"
-      | Op_star -> Fmt.string f "*"
-      | Op_slash -> Fmt.string f "/"
-      | Op_concat -> Fmt.string f "||"
-      | Op_amp -> Fmt.string f "&"
-      | Op_pipe -> Fmt.string f "|"
-      | Op_eq -> Fmt.string f "="
-      | Op_eq2 -> Fmt.string f "=="
-      | Op_ge -> Fmt.string f ">="
-      | Op_gt -> Fmt.string f ">"
-      | Op_le -> Fmt.string f "<="
-      | Op_lt -> Fmt.string f "<"
-      | Op_ne -> Fmt.string f "<>"
-      | Op_ne2 -> Fmt.string f "!="
-      | Op_extract -> Fmt.string f "->"
-      | Op_extract_2 -> Fmt.string f "->>"
-      | Op_tilda -> Fmt.string f "~"
-      | Op_lshift -> Fmt.string f "<<"
-      | Op_rshift -> Fmt.string f ">>"
-      | Tok_eof -> failwith "Can not stringify EOF"
+    let print () =
+      let open M.Let_syntax in
+      let* options = M.options () in
+      let* c = M.current () in
+      let* kw =
+        match c with
+        | Kw_all -> M.return @@ as_keyword "all" options.Options.keyword
+        | Kw_select -> M.return @@ as_keyword "select" options.Options.keyword
+        | Kw_as -> M.return @@ as_keyword "as" options.Options.keyword
+        | Kw_from -> M.return @@ as_keyword "from" options.Options.keyword
+        | Kw_distinct ->
+          M.return @@ as_keyword "distinct" options.Options.keyword
+        | Kw_true -> M.return @@ as_keyword "true" options.Options.keyword
+        | Kw_false -> M.return @@ as_keyword "false" options.Options.keyword
+        | Kw_unknown -> M.return @@ as_keyword "unknown" options.Options.keyword
+        | Kw_null -> M.return @@ as_keyword "null" options.Options.keyword
+        | Kw_date -> M.return @@ as_keyword "date" options.Options.keyword
+        | Kw_time -> M.return @@ as_keyword "time" options.Options.keyword
+        | Kw_timestamp ->
+          M.return @@ as_keyword "timestamp" options.Options.keyword
+        | Kw_or -> M.return @@ as_keyword "or" options.Options.keyword
+        | Kw_not -> M.return @@ as_keyword "not" options.Options.keyword
+        | Kw_and -> M.return @@ as_keyword "and" options.Options.keyword
+        | Kw_into -> M.return @@ as_keyword "into" options.Options.keyword
+        | Kw_union -> M.return @@ as_keyword "union" options.Options.keyword
+        | Kw_except -> M.return @@ as_keyword "except" options.Options.keyword
+        | Kw_intersect ->
+          M.return @@ as_keyword "intersect" options.Options.keyword
+        | Kw_by -> M.return @@ as_keyword "by" options.Options.keyword
+        | Kw_group -> M.return @@ as_keyword "group" options.Options.keyword
+        | Kw_rollup -> M.return @@ as_keyword "rollup" options.Options.keyword
+        | Kw_having -> M.return @@ as_keyword "having" options.Options.keyword
+        | Kw_where -> M.return @@ as_keyword "where" options.Options.keyword
+        | Kw_order -> M.return @@ as_keyword "order" options.Options.keyword
+        | Kw_asc -> M.return @@ as_keyword "asc" options.Options.keyword
+        | Kw_desc -> M.return @@ as_keyword "desc" options.Options.keyword
+        | Kw_first -> M.return @@ as_keyword "first" options.Options.keyword
+        | Kw_last -> M.return @@ as_keyword "last" options.Options.keyword
+        | Kw_limit -> M.return @@ as_keyword "limit" options.Options.keyword
+        | Kw_offset -> M.return @@ as_keyword "offset" options.Options.keyword
+        | Kw_row -> M.return @@ as_keyword "row" options.Options.keyword
+        | Kw_rows -> M.return @@ as_keyword "rows" options.Options.keyword
+        | Kw_fetch -> M.return @@ as_keyword "fetch" options.Options.keyword
+        | Kw_next -> M.return @@ as_keyword "next" options.Options.keyword
+        | Kw_only -> M.return @@ as_keyword "only" options.Options.keyword
+        | Kw_is -> M.return @@ as_keyword "is" options.Options.keyword
+        | Kw_between -> M.return @@ as_keyword "between" options.Options.keyword
+        | Kw_like_regex ->
+          M.return @@ as_keyword "like_regex" options.Options.keyword
+        | Kw_similar -> M.return @@ as_keyword "similar" options.Options.keyword
+        | Kw_to -> M.return @@ as_keyword "to" options.Options.keyword
+        | Kw_escape -> M.return @@ as_keyword "escape" options.Options.keyword
+        | Kw_like -> M.return @@ as_keyword "like" options.Options.keyword
+        | Kw_any -> M.return @@ as_keyword "any" options.Options.keyword
+        | Kw_some -> M.return @@ as_keyword "some" options.Options.keyword
+        | Kw_in -> M.return @@ as_keyword "in" options.Options.keyword
+        | Kw_exists -> M.return @@ as_keyword "exists" options.Options.keyword
+        | Kw_with -> M.return @@ as_keyword "with" options.Options.keyword
+        | Kw_table -> M.return @@ as_keyword "table" options.Options.keyword
+        | Kw_lateral -> M.return @@ as_keyword "lateral" options.Options.keyword
+        | Kw_left -> M.return @@ as_keyword "left" options.Options.keyword
+        | Kw_right -> M.return @@ as_keyword "right" options.Options.keyword
+        | Kw_full -> M.return @@ as_keyword "full" options.Options.keyword
+        | Kw_outer -> M.return @@ as_keyword "outer" options.Options.keyword
+        | Kw_inner -> M.return @@ as_keyword "inner" options.Options.keyword
+        | Kw_cross -> M.return @@ as_keyword "cross" options.Options.keyword
+        | Kw_join -> M.return @@ as_keyword "join" options.Options.keyword
+        | Kw_on -> M.return @@ as_keyword "on" options.Options.keyword
+        | Kw_case -> M.return @@ as_keyword "case" options.Options.keyword
+        | Kw_when -> M.return @@ as_keyword "when" options.Options.keyword
+        | Kw_then -> M.return @@ as_keyword "then" options.Options.keyword
+        | Kw_end -> M.return @@ as_keyword "end" options.Options.keyword
+        | Kw_else -> M.return @@ as_keyword "else" options.Options.keyword
+        | Kw_textagg -> M.return @@ as_keyword "textagg" options.Options.keyword
+        | Kw_for -> M.return @@ as_keyword "for" options.Options.keyword
+        | Kw_delimiter ->
+          M.return @@ as_keyword "delimiter" options.Options.keyword
+        | Kw_quote -> M.return @@ as_keyword "quote" options.Options.keyword
+        | Kw_no -> M.return @@ as_keyword "no" options.Options.keyword
+        | Kw_header -> M.return @@ as_keyword "header" options.Options.keyword
+        | Kw_encoding ->
+          M.return @@ as_keyword "encoding" options.Options.keyword
+        | Kw_count -> M.return @@ as_keyword "count" options.Options.keyword
+        | Kw_count_big ->
+          M.return @@ as_keyword "count_big" options.Options.keyword
+        | Kw_avg -> M.return @@ as_keyword "avg" options.Options.keyword
+        | Kw_sum -> M.return @@ as_keyword "sum" options.Options.keyword
+        | Kw_min -> M.return @@ as_keyword "min" options.Options.keyword
+        | Kw_max -> M.return @@ as_keyword "max" options.Options.keyword
+        | Kw_every -> M.return @@ as_keyword "every" options.Options.keyword
+        | Kw_stddev_pop ->
+          M.return @@ as_keyword "stddev_pop" options.Options.keyword
+        | Kw_stddev_samp ->
+          M.return @@ as_keyword "stddev_samp" options.Options.keyword
+        | Kw_var_samp ->
+          M.return @@ as_keyword "var_samp" options.Options.keyword
+        | Kw_var_pop -> M.return @@ as_keyword "var_pop" options.Options.keyword
+        | Kw_filter -> M.return @@ as_keyword "filter" options.Options.keyword
+        | Kw_over -> M.return @@ as_keyword "over" options.Options.keyword
+        | Kw_partition ->
+          M.return @@ as_keyword "partition" options.Options.keyword
+        | Kw_range -> M.return @@ as_keyword "range" options.Options.keyword
+        | Kw_unbounded ->
+          M.return @@ as_keyword "unbounded" options.Options.keyword
+        | Kw_following ->
+          M.return @@ as_keyword "following" options.Options.keyword
+        | Kw_preceding ->
+          M.return @@ as_keyword "preceding" options.Options.keyword
+        | Kw_current -> M.return @@ as_keyword "current" options.Options.keyword
+        | Kw_row_number ->
+          M.return @@ as_keyword "row_number" options.Options.keyword
+        | Kw_rank -> M.return @@ as_keyword "rank" options.Options.keyword
+        | Kw_dense_rank ->
+          M.return @@ as_keyword "dense_rank" options.Options.keyword
+        | Kw_percent_rank ->
+          M.return @@ as_keyword "percent_rank" options.Options.keyword
+        | Kw_cume_dist ->
+          M.return @@ as_keyword "cume_dist" options.Options.keyword
+        | Kw_convert -> M.return @@ as_keyword "convert" options.Options.keyword
+        | Kw_cast -> M.return @@ as_keyword "cast" options.Options.keyword
+        | Kw_substring ->
+          M.return @@ as_keyword "substring" options.Options.keyword
+        | Kw_extract -> M.return @@ as_keyword "extract" options.Options.keyword
+        | Kw_year -> M.return @@ as_keyword "year" options.Options.keyword
+        | Kw_month -> M.return @@ as_keyword "month" options.Options.keyword
+        | Kw_day -> M.return @@ as_keyword "day" options.Options.keyword
+        | Kw_hour -> M.return @@ as_keyword "hour" options.Options.keyword
+        | Kw_minute -> M.return @@ as_keyword "minute" options.Options.keyword
+        | Kw_second -> M.return @@ as_keyword "second" options.Options.keyword
+        | Kw_quarter -> M.return @@ as_keyword "quarter" options.Options.keyword
+        | Kw_epoch -> M.return @@ as_keyword "epoch" options.Options.keyword
+        | Kw_trim -> M.return @@ as_keyword "trim" options.Options.keyword
+        | Kw_leading -> M.return @@ as_keyword "leading" options.Options.keyword
+        | Kw_trailing ->
+          M.return @@ as_keyword "trailing" options.Options.keyword
+        | Kw_both -> M.return @@ as_keyword "both" options.Options.keyword
+        | Kw_to_chars ->
+          M.return @@ as_keyword "to_chars" options.Options.keyword
+        | Kw_to_bytes ->
+          M.return @@ as_keyword "to_bytes" options.Options.keyword
+        | Kw_insert -> M.return @@ as_keyword "insert" options.Options.keyword
+        | Kw_translate ->
+          M.return @@ as_keyword "translate" options.Options.keyword
+        | Kw_position ->
+          M.return @@ as_keyword "position" options.Options.keyword
+        | Kw_listagg -> M.return @@ as_keyword "listagg" options.Options.keyword
+        | Kw_within -> M.return @@ as_keyword "within" options.Options.keyword
+        | Kw_current_date ->
+          M.return @@ as_keyword "current_date" options.Options.keyword
+        | Kw_current_timestamp ->
+          M.return @@ as_keyword "current_timestamp" options.Options.keyword
+        | Kw_current_time ->
+          M.return @@ as_keyword "current_time" options.Options.keyword
+        | Kw_exception ->
+          M.return @@ as_keyword "exception" options.Options.keyword
+        | Kw_serial -> M.return @@ as_keyword "serial" options.Options.keyword
+        | Kw_index -> M.return @@ as_keyword "index" options.Options.keyword
+        | Kw_instead -> M.return @@ as_keyword "instead" options.Options.keyword
+        | Kw_view -> M.return @@ as_keyword "view" options.Options.keyword
+        | Kw_enabled -> M.return @@ as_keyword "enabled" options.Options.keyword
+        | Kw_disabled ->
+          M.return @@ as_keyword "disabled" options.Options.keyword
+        | Kw_key -> M.return @@ as_keyword "key" options.Options.keyword
+        | Kw_document ->
+          M.return @@ as_keyword "document" options.Options.keyword
+        | Kw_content -> M.return @@ as_keyword "content" options.Options.keyword
+        | Kw_empty -> M.return @@ as_keyword "empty" options.Options.keyword
+        | Kw_ordinality ->
+          M.return @@ as_keyword "ordinality" options.Options.keyword
+        | Kw_path -> M.return @@ as_keyword "path" options.Options.keyword
+        | Kw_querystring ->
+          M.return @@ as_keyword "querystring" options.Options.keyword
+        | Kw_namespace ->
+          M.return @@ as_keyword "namespace" options.Options.keyword
+        | Kw_result -> M.return @@ as_keyword "result" options.Options.keyword
+        | Kw_accesspattern ->
+          M.return @@ as_keyword "accesspattern" options.Options.keyword
+        | Kw_auto_increment ->
+          M.return @@ as_keyword "auto_increment" options.Options.keyword
+        | Kw_wellformed ->
+          M.return @@ as_keyword "wellformed" options.Options.keyword
+        | Kw_texttable ->
+          M.return @@ as_keyword "texttable" options.Options.keyword
+        | Kw_arraytable ->
+          M.return @@ as_keyword "arraytable" options.Options.keyword
+        | Kw_jsontable ->
+          M.return @@ as_keyword "jsontable" options.Options.keyword
+        | Kw_selector ->
+          M.return @@ as_keyword "selector" options.Options.keyword
+        | Kw_skip -> M.return @@ as_keyword "skip" options.Options.keyword
+        | Kw_width -> M.return @@ as_keyword "width" options.Options.keyword
+        | Kw_passing -> M.return @@ as_keyword "passing" options.Options.keyword
+        | Kw_name -> M.return @@ as_keyword "name" options.Options.keyword
+        | Kw_columns -> M.return @@ as_keyword "columns" options.Options.keyword
+        | Kw_nulls -> M.return @@ as_keyword "nulls" options.Options.keyword
+        | Kw_objecttable ->
+          M.return @@ as_keyword "objecttable" options.Options.keyword
+        | Kw_version -> M.return @@ as_keyword "version" options.Options.keyword
+        | Kw_including ->
+          M.return @@ as_keyword "including" options.Options.keyword
+        | Kw_excluding ->
+          M.return @@ as_keyword "excluding" options.Options.keyword
+        | Kw_variadic ->
+          M.return @@ as_keyword "variadic" options.Options.keyword
+        | Kw_raise -> M.return @@ as_keyword "raise" options.Options.keyword
+        | Kw_chain -> M.return @@ as_keyword "chain" options.Options.keyword
+        | Kw_jsonarray_agg ->
+          M.return @@ as_keyword "jsonarray_agg" options.Options.keyword
+        | Kw_jsonobject ->
+          M.return @@ as_keyword "jsonobject" options.Options.keyword
+        | Kw_preserve ->
+          M.return @@ as_keyword "preserve" options.Options.keyword
+        | Kw_upsert -> M.return @@ as_keyword "upsert" options.Options.keyword
+        | Kw_after -> M.return @@ as_keyword "after" options.Options.keyword
+        | Kw_type -> M.return @@ as_keyword "type" options.Options.keyword
+        | Kw_translator ->
+          M.return @@ as_keyword "translator" options.Options.keyword
+        | Kw_jaas -> M.return @@ as_keyword "jaas" options.Options.keyword
+        | Kw_condition ->
+          M.return @@ as_keyword "condition" options.Options.keyword
+        | Kw_mask -> M.return @@ as_keyword "mask" options.Options.keyword
+        | Kw_access -> M.return @@ as_keyword "access" options.Options.keyword
+        | Kw_control -> M.return @@ as_keyword "control" options.Options.keyword
+        | Kw_none -> M.return @@ as_keyword "none" options.Options.keyword
+        | Kw_data -> M.return @@ as_keyword "data" options.Options.keyword
+        | Kw_database ->
+          M.return @@ as_keyword "database" options.Options.keyword
+        | Kw_privileges ->
+          M.return @@ as_keyword "privileges" options.Options.keyword
+        | Kw_role -> M.return @@ as_keyword "role" options.Options.keyword
+        | Kw_schema -> M.return @@ as_keyword "schema" options.Options.keyword
+        | Kw_use -> M.return @@ as_keyword "use" options.Options.keyword
+        | Kw_repository ->
+          M.return @@ as_keyword "repository" options.Options.keyword
+        | Kw_rename -> M.return @@ as_keyword "rename" options.Options.keyword
+        | Kw_domain -> M.return @@ as_keyword "domain" options.Options.keyword
+        | Kw_usage -> M.return @@ as_keyword "usage" options.Options.keyword
+        | Kw_explain -> M.return @@ as_keyword "explain" options.Options.keyword
+        | Kw_analyze -> M.return @@ as_keyword "analyze" options.Options.keyword
+        | Kw_text -> M.return @@ as_keyword "text" options.Options.keyword
+        | Kw_format -> M.return @@ as_keyword "format" options.Options.keyword
+        | Kw_yaml -> M.return @@ as_keyword "yaml" options.Options.keyword
+        | Kw_policy -> M.return @@ as_keyword "policy" options.Options.keyword
+        | Kw_session_user ->
+          M.return @@ as_keyword "session_user" options.Options.keyword
+        | Kw_interval ->
+          M.return @@ as_keyword "interval" options.Options.keyword
+        | Kw_tablesample ->
+          M.return @@ as_keyword "tablesample" options.Options.keyword
+        | Kw_bernoulli ->
+          M.return @@ as_keyword "bernoulli" options.Options.keyword
+        | Kw_system -> M.return @@ as_keyword "system" options.Options.keyword
+        | Kw_repeatable ->
+          M.return @@ as_keyword "repeatable" options.Options.keyword
+        | Kw_unnest -> M.return @@ as_keyword "unnest" options.Options.keyword
+        | Kw_module -> M.return @@ as_keyword "module" options.Options.keyword
+        | Kw_collate -> M.return @@ as_keyword "collate" options.Options.keyword
+        | Kw_cube -> M.return @@ as_keyword "cube" options.Options.keyword
+        | Kw_grouping ->
+          M.return @@ as_keyword "grouping" options.Options.keyword
+        | Kw_sets -> M.return @@ as_keyword "sets" options.Options.keyword
+        | Kw_ties -> M.return @@ as_keyword "ties" options.Options.keyword
+        | Kw_others -> M.return @@ as_keyword "others" options.Options.keyword
+        | Kw_exclude -> M.return @@ as_keyword "exclude" options.Options.keyword
+        | Kw_window -> M.return @@ as_keyword "window" options.Options.keyword
+        | Kw_using -> M.return @@ as_keyword "using" options.Options.keyword
+        | Kw_natural -> M.return @@ as_keyword "natural" options.Options.keyword
+        | Kw_corresponding ->
+          M.return @@ as_keyword "corresponding" options.Options.keyword
+        | Kw_recursive ->
+          M.return @@ as_keyword "recursive" options.Options.keyword
+        | Kw_cycle -> M.return @@ as_keyword "cycle" options.Options.keyword
+        | Kw_default -> M.return @@ as_keyword "default" options.Options.keyword
+        | Kw_set -> M.return @@ as_keyword "set" options.Options.keyword
+        | Kw_depth -> M.return @@ as_keyword "depth" options.Options.keyword
+        | Kw_breadth -> M.return @@ as_keyword "breadth" options.Options.keyword
+        | Kw_search -> M.return @@ as_keyword "search" options.Options.keyword
+        | Kw_values -> M.return @@ as_keyword "values" options.Options.keyword
+        | Kw_value -> M.return @@ as_keyword "value" options.Options.keyword
+        | Kw_element -> M.return @@ as_keyword "element" options.Options.keyword
+        | Kw_zone -> M.return @@ as_keyword "zone" options.Options.keyword
+        | Kw_local -> M.return @@ as_keyword "local" options.Options.keyword
+        | Kw_at -> M.return @@ as_keyword "at" options.Options.keyword
+        | Kw_abs -> M.return @@ as_keyword "abs" options.Options.keyword
+        | Kw_array -> M.return @@ as_keyword "array" options.Options.keyword
+        | Kw_multiset ->
+          M.return @@ as_keyword "multiset" options.Options.keyword
+        | Kw_localtime ->
+          M.return @@ as_keyword "localtime" options.Options.keyword
+        | Kw_localtimestamp ->
+          M.return @@ as_keyword "localtimestamp" options.Options.keyword
+        | Kw_characters ->
+          M.return @@ as_keyword "characters" options.Options.keyword
+        | Kw_code_units ->
+          M.return @@ as_keyword "code_units" options.Options.keyword
+        | Kw_octets -> M.return @@ as_keyword "octets" options.Options.keyword
+        | Kw_without -> M.return @@ as_keyword "without" options.Options.keyword
+        | Kw_scope -> M.return @@ as_keyword "scope" options.Options.keyword
+        | Kw_ref -> M.return @@ as_keyword "ref" options.Options.keyword
+        | Kw_precision ->
+          M.return @@ as_keyword "precision" options.Options.keyword
+        | Kw_numeric -> M.return @@ as_keyword "numeric" options.Options.keyword
+        | Kw_dec -> M.return @@ as_keyword "dec" options.Options.keyword
+        | Kw_int -> M.return @@ as_keyword "int" options.Options.keyword
+        | Kw_binary -> M.return @@ as_keyword "binary" options.Options.keyword
+        | Kw_large -> M.return @@ as_keyword "large" options.Options.keyword
+        | Kw_national ->
+          M.return @@ as_keyword "national" options.Options.keyword
+        | Kw_varying -> M.return @@ as_keyword "varying" options.Options.keyword
+        | Kw_character ->
+          M.return @@ as_keyword "character" options.Options.keyword
+        | Kw_nchar -> M.return @@ as_keyword "nchar" options.Options.keyword
+        | Kw_nclob -> M.return @@ as_keyword "nclob" options.Options.keyword
+        | Kw_collation ->
+          M.return @@ as_keyword "collation" options.Options.keyword
+        | Kw_indicator ->
+          M.return @@ as_keyword "indicator" options.Options.keyword
+        | Kw_current_user ->
+          M.return @@ as_keyword "current_user" options.Options.keyword
+        | Kw_system_user ->
+          M.return @@ as_keyword "system_user" options.Options.keyword
+        | Kw_current_default_transform_group ->
+          M.return
+          @@ as_keyword "current_default_transform_group"
+               options.Options.keyword
+        | Kw_current_transform_group_for_type ->
+          M.return
+          @@ as_keyword "current_transform_group_for_type"
+               options.Options.keyword
+        | Kw_current_path ->
+          M.return @@ as_keyword "current_path" options.Options.keyword
+        | Kw_current_role ->
+          M.return @@ as_keyword "current_role" options.Options.keyword
+        | Kw_nullif -> M.return @@ as_keyword "nullif" options.Options.keyword
+        | Kw_coalesce ->
+          M.return @@ as_keyword "coalesce" options.Options.keyword
+        | Kw_groups -> M.return @@ as_keyword "groups" options.Options.keyword
+        | Kw_glob -> M.return @@ as_keyword "glob" options.Options.keyword
+        | Kw_match -> M.return @@ as_keyword "match" options.Options.keyword
+        | Kw_regexp -> M.return @@ as_keyword "regexp" options.Options.keyword
+        | Kw_materialized ->
+          M.return @@ as_keyword "materialized" options.Options.keyword
+        | Kw_abort -> M.return @@ as_keyword "abort" options.Options.keyword
+        | Kw_ignore -> M.return @@ as_keyword "ignore" options.Options.keyword
+        | Kw_replace -> M.return @@ as_keyword "replace" options.Options.keyword
+        | Kw_rollback ->
+          M.return @@ as_keyword "rollback" options.Options.keyword
+        | Kw_fail -> M.return @@ as_keyword "fail" options.Options.keyword
+        | Kw_update -> M.return @@ as_keyword "update" options.Options.keyword
+        | Kw_returning ->
+          M.return @@ as_keyword "returning" options.Options.keyword
+        | Kw_delete -> M.return @@ as_keyword "delete" options.Options.keyword
+        | Kw_savepoint ->
+          M.return @@ as_keyword "savepoint" options.Options.keyword
+        | Kw_transaction ->
+          M.return @@ as_keyword "transaction" options.Options.keyword
+        | Kw_if -> M.return @@ as_keyword "if" options.Options.keyword
+        | Kw_drop -> M.return @@ as_keyword "drop" options.Options.keyword
+        | Kw_begin -> M.return @@ as_keyword "begin" options.Options.keyword
+        | Kw_commit -> M.return @@ as_keyword "commit" options.Options.keyword
+        | Kw_trigger -> M.return @@ as_keyword "trigger" options.Options.keyword
+        | Kw_references ->
+          M.return @@ as_keyword "references" options.Options.keyword
+        | Kw_constraint ->
+          M.return @@ as_keyword "constraint" options.Options.keyword
+        | Kw_primary -> M.return @@ as_keyword "primary" options.Options.keyword
+        | Kw_unique -> M.return @@ as_keyword "unique" options.Options.keyword
+        | Kw_generated ->
+          M.return @@ as_keyword "generated" options.Options.keyword
+        | Kw_always -> M.return @@ as_keyword "always" options.Options.keyword
+        | Kw_check -> M.return @@ as_keyword "check" options.Options.keyword
+        | Kw_cascade -> M.return @@ as_keyword "cascade" options.Options.keyword
+        | Kw_restrict ->
+          M.return @@ as_keyword "restrict" options.Options.keyword
+        | Kw_action -> M.return @@ as_keyword "action" options.Options.keyword
+        | Kw_deferrable ->
+          M.return @@ as_keyword "deferrable" options.Options.keyword
+        | Kw_initially ->
+          M.return @@ as_keyword "initially" options.Options.keyword
+        | Kw_deferred ->
+          M.return @@ as_keyword "deferred" options.Options.keyword
+        | Kw_immediate ->
+          M.return @@ as_keyword "immediate" options.Options.keyword
+        | Kw_create -> M.return @@ as_keyword "create" options.Options.keyword
+        | Kw_temp -> M.return @@ as_keyword "temp" options.Options.keyword
+        | Kw_temporary ->
+          M.return @@ as_keyword "temporary" options.Options.keyword
+        | Kw_foreign -> M.return @@ as_keyword "foreign" options.Options.keyword
+        | Kw_alter -> M.return @@ as_keyword "alter" options.Options.keyword
+        | Kw_add -> M.return @@ as_keyword "add" options.Options.keyword
+        | Kw_column -> M.return @@ as_keyword "column" options.Options.keyword
+        | Kw_before -> M.return @@ as_keyword "before" options.Options.keyword
+        | Kw_each -> M.return @@ as_keyword "each" options.Options.keyword
+        | Kw_of -> M.return @@ as_keyword "of" options.Options.keyword
+        (* 'token *)
+        | Tok_lparen -> M.return @@ "("
+        | Tok_rparen -> M.return @@ ")"
+        | Tok_ident v -> M.return @@ v
+        | Tok_string v -> M.return @@ v
+        | Tok_numeric v -> M.return @@ v
+        | Tok_blob v -> M.return @@ v
+        | Tok_period -> M.return @@ "."
+        | Tok_comma -> M.return @@ ","
+        | Tok_colon -> M.return @@ ":"
+        | Tok_dollar -> M.return @@ "$"
+        | Tok_lbrace -> M.return @@ "{"
+        | Tok_rbrace -> M.return @@ "}"
+        | Tok_lsbrace -> M.return @@ "["
+        | Tok_rsbrace -> M.return @@ "]"
+        | Tok_qmark -> M.return @@ "?"
+        | Tok_semicolon -> M.return @@ ";"
+        | Tok_quote -> M.return @@ "'"
+        | Op_plus -> M.return @@ "+"
+        | Op_minus -> M.return @@ "-"
+        | Op_star -> M.return @@ "*"
+        | Op_slash -> M.return @@ "/"
+        | Op_concat -> M.return @@ "||"
+        | Op_amp -> M.return @@ "&"
+        | Op_pipe -> M.return @@ "|"
+        | Op_eq -> M.return @@ "="
+        | Op_eq2 -> M.return @@ "=="
+        | Op_ge -> M.return @@ ">="
+        | Op_gt -> M.return @@ ">"
+        | Op_le -> M.return @@ "<="
+        | Op_lt -> M.return @@ "<"
+        | Op_ne -> M.return @@ "<>"
+        | Op_ne2 -> M.return @@ "!="
+        | Op_extract -> M.return @@ "->"
+        | Op_extract_2 -> M.return @@ "->>"
+        | Op_tilda -> M.return @@ "~"
+        | Op_lshift -> M.return @@ "<<"
+        | Op_rshift -> M.return @@ ">>"
+        | _ -> M.fail "Can not stringify EOF"
+      in
+      let open M.Syntax in
+      M.bump () *> M.pp (fun fmt -> Fmt.string fmt kw)
   end :
-    PRINTER with type t = token)
+    PRINTER_M)
