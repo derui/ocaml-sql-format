@@ -1,5 +1,4 @@
 (* simple combinators for SQL formatting *)
-open Types.Token
 
 (** [newline ?indent ()] insert newline break with indent *)
 let newline fmt _ = Format.pp_force_newline fmt ()
@@ -7,9 +6,7 @@ let newline fmt _ = Format.pp_force_newline fmt ()
 (* insert [size] spaces as string. This function do not insert break, only insert spaces *)
 let indent size fmt _ = Fmt.string fmt (String.make size ' ')
 
-let comma ~option fmt _ =
-  Token.print ~option fmt Tok_comma;
-  Fmt.string fmt " "
+let comma ~option:_ fmt _ = Fmt.string fmt " "
 
 (** [force_vbox fmt ppf v] wraps box with [ppf]. *)
 let force_vbox width ppf fmt v =
@@ -20,24 +17,13 @@ let force_vbox width ppf fmt v =
 let term_box pf fmt v = (Fmt.hovbox ~indent:0 pf) fmt v
 
 (** [parens ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
-let parens ~option pf fmt v =
-  Token.print fmt Tok_lparen ~option;
-  pf fmt v;
-  Token.print fmt Tok_rparen ~option
+let parens ~option:_ pf fmt v = pf fmt v
 
 (** [ ?need_indent ~option fmt pf v] wraps [()] printer pf. *)
-let parens_box ~option pf fmt v =
-  Token.print fmt Tok_lparen ~option;
-  (force_vbox option.indent_size pf) fmt v;
-  Fmt.cut fmt ();
-  Token.print fmt Tok_rparen ~option
+let parens_box ~option:_ pf fmt v =
+  (force_vbox 4 pf) fmt v;
+  Fmt.cut fmt ()
 
-let keyword ~option fmt = function
+let keyword ~option:_ fmt = function
   | [] -> failwith "need least one keyword"
-  | fl :: rest ->
-    Token.print ~option fmt fl;
-    List.iter
-      (fun k ->
-        Fmt.string fmt " ";
-        Token.print ~option fmt k)
-      rest
+  | _ :: rest -> List.iter (fun _ -> Fmt.string fmt " ") rest
