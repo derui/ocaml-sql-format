@@ -1,14 +1,15 @@
-open Types.Ast
-open Types.Literal
+open Types.Token
 open Intf
+module M = Monad
 
-module type S = PRINTER with type t = ext identifier
-
-module Make () : S = struct
-  type t = ext identifier
-
-  let print f t ~option =
-    match t with
-    | Identifier (`keyword v, _) -> Token.print ~option f v
-    | Identifier (`raw v, _) -> Fmt.string f v
+module Make () : PRINTER_M = struct
+  let print () =
+    let open M.Let_syntax in
+    let* () = M.skip_comments () in
+    let* c = M.current () in
+    match c with
+    | Tok_ident _ -> Token.print ()
+    | _ ->
+      let* _ = M.bump () in
+      M.return ()
 end

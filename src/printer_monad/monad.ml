@@ -1,14 +1,23 @@
 module Token = Types.Token
 
+module Parse_error = struct
+  type t =
+    { start_pos : Lexing.position
+    ; end_pos : Lexing.position
+    ; message : string
+    }
+end
+
 (** Type of monad. *)
 type data =
   { mutable current : Token.token option
   ; fmt : Format.formatter
   ; lexer : unit -> Token.token
   ; options : Options.t
+  ; position : unit -> Lexing.position * Lexing.position
   }
 
-type 'a t = data -> ('a * data, string) result
+type 'a t = data -> ('a * data, Parse_error.t) result
 
 (* basic monad/applicable operations *)
 let map : ('a -> 'b) -> 'a t -> 'b t =
@@ -30,8 +39,6 @@ let bind : 'a t -> ('a -> 'b t) -> 'b t =
 
 let return v p = Ok (v, p)
 
-let fail v _ = Error v
-
 module Syntax = struct
   let ( >>= ) = bind
 
@@ -48,6 +55,12 @@ module Let_syntax = struct
 end
 
 let data () data = Ok (data, data)
+
+let fail v =
+  let open Let_syntax in
+  let* data' = data () in
+  let startp, endp = data'.position () in
+  fun _ -> Error { Parse_error.start_pos = startp; end_pos = endp; message = v }
 
 let pp ppf =
   let open Let_syntax in

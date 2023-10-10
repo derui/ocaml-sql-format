@@ -8,5 +8,5 @@ module Make () : PRINTER_M = struct
     let* c = M.current () in
     match c with
     | Tok_numeric _ -> Token.print ()
-    | _ -> M.return ()
+    | _ -> M.fail "Does not numeric literal"
 end

@@ -440,7 +440,9 @@ include (
         | Op_tilda -> M.return @@ "~"
         | Op_lshift -> M.return @@ "<<"
         | Op_rshift -> M.return @@ ">>"
-        | _ -> M.fail "Can not stringify EOF"
+        | _ ->
+          let* _ = M.bump () in
+          M.fail "Can not detect any token"
       in
       let open M.Syntax in
       M.bump () *> M.pp (fun fmt -> Fmt.string fmt kw)

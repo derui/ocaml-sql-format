@@ -17,5 +17,5 @@ module Make : PRINTER_M = struct
     | Kw_current_date
     | Kw_current_time
     | Kw_current_timestamp -> Token.print ()
-    | _ -> M.fail "Can not detect any literal"
+    | _ -> M.fail "Does not literal"
 end
