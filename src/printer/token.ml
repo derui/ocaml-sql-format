@@ -344,6 +344,6 @@ include (
       | Op_tilda -> Fmt.string f "~"
       | Op_lshift -> Fmt.string f "<<"
       | Op_rshift -> Fmt.string f ">>"
-      | Tok_eof -> failwith "Can not stringify EOF"
+      | _ -> failwith "Can not stringify EOF"
   end :
     PRINTER with type t = token)

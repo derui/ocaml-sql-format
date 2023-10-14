@@ -4,15 +4,11 @@ include (
 
     type _ trivia = { tokens : Token.token list }
 
-    type _leading
+    type leading
 
-    type _trailing
+    type trailing
 
-    type leading = _leading trivia
-
-    type trailing = _trailing trivia
-
-    let trailing_trivia tokens =
+    let leading tokens =
       assert (
         List.for_all
           (function
@@ -24,7 +20,7 @@ include (
           tokens);
       { tokens }
 
-    let leading_trivia tokens =
+    let trailing tokens =
       assert (
         List.for_all
           (function
@@ -32,5 +28,21 @@ include (
             | _ -> false)
           tokens);
       { tokens }
+
+    let to_tokens { tokens } = tokens
+
+    let to_string : 'a trivia -> string =
+     fun { tokens } ->
+      let raws =
+        List.map
+          (function
+            | Token.Tok_newline -> "\n"
+            | Tok_space -> " "
+            | Tok_line_comment v -> v
+            | Tok_block_comment v -> v
+            | _ -> failwith "Invalid trivia")
+          tokens
+      in
+      String.concat "" raws
   end :
     Trivia_intf.S)

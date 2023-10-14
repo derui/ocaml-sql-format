@@ -1,19 +1,21 @@
 module Token = Types.Token
 
 module type S = sig
-  type _ trivia = { tokens : Token.token list }
+  type 'a trivia
 
-  type _leading
+  type leading
 
-  type _trailing
+  type trailing
 
-  type leading = private _leading trivia
+  (** [trailing tokens] make [trailing] trivia *)
+  val trailing : Token.token list -> trailing trivia
 
-  type trailing = private _trailing trivia
+  (** [leading tokens] make [leading] trivia *)
+  val leading : Token.token list -> leading trivia
 
-  (** [trailing_trivia tokens] make [trailing] trivia *)
-  val trailing_trivia : Token.token list -> trailing
+  (** [to_tokens trivia] get tokens from [trivia] *)
+  val to_tokens : 'a trivia -> Token.token list
 
-  (** [leading_trivia tokens] make [leading] trivia *)
-  val leading_trivia : Token.token list -> leading
+  (** [to_string trivia] get trivia *)
+  val to_string : 'a trivia -> string
 end

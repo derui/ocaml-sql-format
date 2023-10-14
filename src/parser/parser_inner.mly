@@ -312,10 +312,14 @@ open Types.Literal
 %token Tok_qmark
 %token Tok_semicolon
 %token Tok_quote
+%token Tok_space
+%token Tok_newline
 %token <string> Tok_ident
 %token <string> Tok_string
 %token <string> Tok_blob
 %token <string> Tok_numeric
+%token <string> Tok_line_comment
+%token <string> Tok_block_comment
 
 (* operators *)
 %token Op_plus
