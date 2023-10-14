@@ -2,7 +2,7 @@ include (
   struct
     module Token = Types.Token
 
-    type _ trivia = { tokens : Token.token list }
+    type _ t = { tokens : Token.token list }
 
     type leading
 
@@ -31,7 +31,7 @@ include (
 
     let to_tokens { tokens } = tokens
 
-    let to_string : 'a trivia -> string =
+    let to_string : 'a t -> string =
      fun { tokens } ->
       let raws =
         List.map
