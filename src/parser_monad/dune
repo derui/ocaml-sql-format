@@ -2,4 +2,4 @@
  (name parser_monad)
  (public_name ocaml-sql-format.parser-monad)
  (flags (:standard -safe-string))
- (libraries ocaml-sql-format.types ocaml-sql-format.syntax))
+ (libraries ocaml-sql-format.types ocaml-sql-format.sql-syntax))

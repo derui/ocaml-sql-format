@@ -1,0 +1,5 @@
+(library
+ (name sql_syntax_test)
+ (libraries ocaml-sql-format.sql-syntax)
+ (inline_tests)
+ (preprocess (pps ppx_expect)))

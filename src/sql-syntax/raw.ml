@@ -22,5 +22,23 @@ include (
       Leaf { kind; data = { trailing; leading; token } }
 
     let make_node kind ~layouts = Node { kind; layouts }
+
+    let rec to_string t =
+      let buffer = Buffer.create 10 in
+      match t with
+      | Node { layouts; _ } ->
+        let rec loop layouts =
+          match layouts with
+          | [] -> Buffer.to_bytes buffer |> Bytes.to_string
+          | layout :: rest ->
+            to_string layout |> Buffer.add_string buffer;
+            loop rest
+        in
+        loop layouts
+      | Leaf { data; _ } ->
+        Printf.sprintf "%s%s%s"
+          (Trivia.to_string data.leading)
+          ""
+          (Trivia.to_string data.trailing)
   end :
     Raw_intf.S)

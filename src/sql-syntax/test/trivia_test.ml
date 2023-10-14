@@ -1,5 +1,5 @@
 open Types.Token
-module T = Syntax.Trivia
+module T = Sql_syntax.Trivia
 
 let%test_unit "leading trivia can contains newline and line comment" =
   T.leading

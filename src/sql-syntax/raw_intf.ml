@@ -26,4 +26,7 @@ module type S = sig
 
   (** [make_node kind ~layouts] make a new node *)
   val make_node : 'a -> layouts:'a t list -> 'a t
+
+  (** [to_string t] get string representation of [t] *)
+  val to_string : 'a t -> string
 end
