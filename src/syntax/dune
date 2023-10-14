@@ -1,0 +1,4 @@
+(library
+  (name syntax)
+  (public_name ocaml-sql-format.syntax)
+  (libraries ocaml-sql-format.types))

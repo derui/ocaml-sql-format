@@ -251,7 +251,6 @@ include (
       | Kw_character -> Fmt.string f @@ as_keyword "character" keyword
       | Kw_nchar -> Fmt.string f @@ as_keyword "nchar" keyword
       | Kw_nclob -> Fmt.string f @@ as_keyword "nclob" keyword
-      | Kw_collation -> Fmt.string f @@ as_keyword "collation" keyword
       | Kw_indicator -> Fmt.string f @@ as_keyword "indicator" keyword
       | Kw_current_user -> Fmt.string f @@ as_keyword "current_user" keyword
       | Kw_system_user -> Fmt.string f @@ as_keyword "system_user" keyword

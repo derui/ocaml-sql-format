@@ -244,7 +244,6 @@ open Types.Literal
 %token Kw_character
 %token Kw_nchar
 %token Kw_nclob
-%token Kw_collation
 %token Kw_indicator
 %token Kw_current_user
 %token Kw_system_user
@@ -593,7 +592,6 @@ let keyword ==
   | Kw_character; {Identifier (`keyword Kw_character, ())}
   | Kw_nchar; {Identifier (`keyword Kw_nchar, ())}
   | Kw_nclob; {Identifier (`keyword Kw_nclob, ())}
-  | Kw_collation; {Identifier (`keyword Kw_collation, ())}
   | Kw_indicator; {Identifier (`keyword Kw_indicator, ())}
   | Kw_current_user; {Identifier (`keyword Kw_current_user, ())}
   | Kw_system_user; {Identifier (`keyword Kw_system_user, ())}
@@ -969,7 +967,7 @@ let partition_clause :=
 
 
 let collation_name :=
- | Kw_collation; name = identifier; {Collation_name (name, ())}
+ | Kw_collate; name = identifier; {Collation_name (name, ())}
 
 
 let frame_spec_between :=

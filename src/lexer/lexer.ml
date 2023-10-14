@@ -1698,18 +1698,6 @@ let kw_nchar =
 let kw_nclob =
   [%sedlex.regexp? Chars "nN", Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
 
-let kw_collation =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
-
 let kw_indicator =
   [%sedlex.regexp?
     ( Chars "iI"
@@ -2467,7 +2455,6 @@ let rec token buf =
   | kw_character -> Kw_character
   | kw_nchar -> Kw_nchar
   | kw_nclob -> Kw_nclob
-  | kw_collation -> Kw_collation
   | kw_indicator -> Kw_indicator
   | kw_current_user -> Kw_current_user
   | kw_system_user -> Kw_system_user

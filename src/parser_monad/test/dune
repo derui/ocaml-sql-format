@@ -1,0 +1,5 @@
+(library
+ (name parser_monad_test)
+ (libraries ocaml-sql-format.parser-monad)
+ (inline_tests)
+ (preprocess (pps ppx_expect)))

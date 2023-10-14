@@ -8,13 +8,16 @@ module Parse_error = struct
     }
 end
 
+type raw_data =
+  { start_pos : Lexing.position
+  ; end_pos : Lexing.position
+  ; token : Token.token
+  }
+
 (** Type of monad. *)
 type data =
-  { mutable current : Token.token option
-  ; fmt : Format.formatter
-  ; lexer : unit -> Token.token
-  ; options : Options.t
-  ; position : unit -> Lexing.position * Lexing.position
+  { pointer : int64
+  ; lexer : raw_data array
   }
 
 type 'a t = data -> ('a * data, Parse_error.t) result
@@ -39,17 +42,6 @@ let bind : 'a t -> ('a -> 'b t) -> 'b t =
 
 let return v p = Ok (v, p)
 
-module Syntax = struct
-  let ( >>= ) = bind
-
-  let ( <$> ) = map
-
-  let ( <*> ) = apply
-
-  (** evaluate [x] and [y], then return only result of [y] *)
-  let ( *> ) x y = (fun _ y -> y) <$> x <*> y
-end
-
 module Let_syntax = struct
   let ( let* ) = bind
 end
@@ -61,6 +53,34 @@ let fail v =
   let* data' = data () in
   let startp, endp = data'.position () in
   fun _ -> Error { Parse_error.start_pos = startp; end_pos = endp; message = v }
+
+let protect : pre:(unit -> unit) -> finally:(unit -> unit) -> 'a t -> 'a t =
+ fun ~pre ~finally m data ->
+  pre ();
+  let ret = m data in
+  finally ();
+  ret
+
+module Syntax = struct
+  let ( >>= ) = bind
+
+  let ( <$> ) = map
+
+  let ( <*> ) = apply
+
+  (** evaluate [x] and [y], then return only result of [y] *)
+  let ( *> ) x y = (fun _ y -> y) <$> x <*> y
+
+  let ( <|> ) x y data =
+    let x' = x data in
+    match x' with
+    | Ok v -> Ok (v, data)
+    | Error _ -> (
+      let y' = y data in
+      match y' with
+      | Ok v -> Ok (v, data)
+      | Error _ -> fail "Can not get any result" data)
+end
 
 let pp ppf =
   let open Let_syntax in
@@ -95,20 +115,52 @@ let bump () =
     let token = data'.lexer () in
     return token
 
+(** ignore all fail. This is usefull with [<|>] operator. *)
+let skip : unit t = return ()
+
+let force_space ?(len = 1) () =
+  pp (fun fmt -> Fmt.string fmt (Bytes.make len ' ' |> Bytes.to_string))
+
+let leading_space ?(len = 1) m =
+  let open Let_syntax in
+  let* () = force_space ~len () in
+  m
+
+let trailing_space ?(len = 1) m =
+  let open Let_syntax in
+  let* () = m in
+  force_space ~len ()
+
+let wrap_space ?(len = 1) m =
+  let open Let_syntax in
+  let* () = force_space ~len () in
+  let* () = m in
+  force_space ~len ()
+
 (** indent by size *)
-let indent_by size =
+let indent_by : int -> 'a t -> 'a t =
+ fun size m ->
   let open Let_syntax in
   let* data' = data () in
   let fmt = data'.fmt in
-  Format.pp_print_break fmt 0 size;
-
-  return (fun ppf -> (Fmt.vbox ~indent:0 ppf) fmt ())
+  protect
+    ~pre:(fun () ->
+      Format.pp_print_break fmt 0 size;
+      Format.pp_open_vbox fmt 0)
+    ~finally:(fun () -> Format.pp_close_box fmt ())
+    m
 
 (** indent by size in option *)
-let indent () =
+let indent : 'a t -> 'a t =
+ fun m ->
   let open Let_syntax in
   let* data' = data () in
-  indent_by data'.options.indent_size
+  indent_by data'.options.indent_size m
+
+let cut =
+  let open Let_syntax in
+  let* data' = data () in
+  return @@ Fmt.cut data'.fmt ()
 
 (** skip white spaces *)
 let rec skip_ws () =
@@ -122,7 +174,7 @@ let rec skip_ws () =
 
 (** skip white space and comments. Print comments if remove_comment option is
     false *)
-let skip_comments () =
+let skip_comments =
   let rec comments' () =
     let open Let_syntax in
     let* v = current () in
@@ -152,3 +204,10 @@ let skip_comments () =
     | _ -> return ()
   in
   comments' ()
+
+let match' f =
+  let open Let_syntax in
+  let* c = current () in
+  if f c then return c else fail "Not satisfied"
+
+let is_token tok = match' (fun v -> v = tok)

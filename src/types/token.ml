@@ -239,7 +239,6 @@ type token =
   | Kw_character
   | Kw_nchar
   | Kw_nclob
-  | Kw_collation
   | Kw_indicator
   | Kw_current_user
   | Kw_system_user
@@ -311,7 +310,8 @@ type token =
   | Tok_qmark
   | Tok_semicolon
   | Tok_quote
-  | Tok_space of string
+  | Tok_space
+  | Tok_newline
   | Tok_line_comment of string
   | Tok_block_comment of string
   (* operators *)
