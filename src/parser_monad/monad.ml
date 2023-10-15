@@ -11,7 +11,7 @@ end
 type raw_data =
   { start_pos : Lexing.position
   ; end_pos : Lexing.position
-  ; token : Token.token
+  ; token : Token.t
   }
 
 (** Type of monad. *)

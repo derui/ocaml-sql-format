@@ -21,7 +21,7 @@ module type S = sig
        'a
     -> trailing:Trivia.trailing Trivia.t
     -> leading:Trivia.leading Trivia.t
-    -> token:Token.token
+    -> token:Token.t
     -> 'a t
 
   (** [make_node kind ~layouts] make a new node *)

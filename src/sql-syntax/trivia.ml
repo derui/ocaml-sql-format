@@ -2,7 +2,7 @@ include (
   struct
     module Token = Types.Token
 
-    type _ t = { tokens : Token.token list }
+    type _ t = { tokens : Token.t list }
 
     type leading
 

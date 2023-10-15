@@ -8,13 +8,13 @@ module type S = sig
   type trailing
 
   (** [trailing tokens] make [trailing] trivia *)
-  val trailing : Token.token list -> trailing t
+  val trailing : Token.t list -> trailing t
 
   (** [leading tokens] make [leading] trivia *)
-  val leading : Token.token list -> leading t
+  val leading : Token.t list -> leading t
 
   (** [to_tokens trivia] get tokens from [trivia] *)
-  val to_tokens : 'a t -> Token.token list
+  val to_tokens : 'a t -> Token.t list
 
   (** [to_string trivia] get trivia *)
   val to_string : 'a t -> string

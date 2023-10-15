@@ -2216,298 +2216,303 @@ let bin_string = [%sedlex.regexp? "X", "'", Plus (Rep (hexit, 2)), "'"]
 
 let rec token buf =
   match%sedlex buf with
-  | kw_select -> Kw_select
-  | kw_from -> Kw_from
-  | kw_as -> Kw_as
-  | kw_true -> Kw_true
-  | kw_false -> Kw_false
-  | kw_unknown -> Kw_unknown
-  | kw_null -> Kw_null
-  | kw_date -> Kw_date
-  | kw_time -> Kw_time
-  | kw_timestamp -> Kw_timestamp
-  | kw_into -> Kw_into
-  | kw_or -> Kw_or
-  | kw_not -> Kw_not
-  | kw_union -> Kw_union
-  | kw_except -> Kw_except
-  | kw_intersect -> Kw_intersect
-  | kw_and -> Kw_and
-  | kw_group -> Kw_group
-  | kw_by -> Kw_by
-  | kw_rollup -> Kw_rollup
-  | kw_having -> Kw_having
-  | kw_where -> Kw_where
-  | kw_order -> Kw_order
-  | kw_asc -> Kw_asc
-  | kw_desc -> Kw_desc
-  | kw_first -> Kw_first
-  | kw_last -> Kw_last
-  | kw_limit -> Kw_limit
-  | kw_offset -> Kw_offset
-  | kw_row -> Kw_row
-  | kw_rows -> Kw_rows
-  | kw_fetch -> Kw_fetch
-  | kw_next -> Kw_next
-  | kw_only -> Kw_only
-  | kw_all -> Kw_all
-  | kw_distinct -> Kw_distinct
-  | kw_is -> Kw_is
-  | kw_between -> Kw_between
-  | kw_like_regex -> Kw_like_regex
-  | kw_similar -> Kw_similar
-  | kw_to -> Kw_to
-  | kw_escape -> Kw_escape
-  | kw_like -> Kw_like
-  | kw_any -> Kw_any
-  | kw_some -> Kw_some
-  | kw_in -> Kw_in
-  | kw_exists -> Kw_exists
-  | kw_with -> Kw_with
-  | kw_table -> Kw_table
-  | kw_lateral -> Kw_lateral
-  | kw_left -> Kw_left
-  | kw_right -> Kw_right
-  | kw_full -> Kw_full
-  | kw_outer -> Kw_outer
-  | kw_inner -> Kw_inner
-  | kw_cross -> Kw_cross
-  | kw_join -> Kw_join
-  | kw_on -> Kw_on
-  | kw_case -> Kw_case
-  | kw_when -> Kw_when
-  | kw_then -> Kw_then
-  | kw_end -> Kw_end
-  | kw_else -> Kw_else
-  | kw_textagg -> Kw_textagg
-  | kw_for -> Kw_for
-  | kw_delimiter -> Kw_delimiter
-  | kw_quote -> Kw_quote
-  | kw_no -> Kw_no
-  | kw_header -> Kw_header
-  | kw_encoding -> Kw_encoding
-  | kw_count -> Kw_count
-  | kw_count_big -> Kw_count_big
-  | kw_avg -> Kw_avg
-  | kw_sum -> Kw_sum
-  | kw_min -> Kw_min
-  | kw_max -> Kw_max
-  | kw_every -> Kw_every
-  | kw_stddev_pop -> Kw_stddev_pop
-  | kw_stddev_samp -> Kw_stddev_samp
-  | kw_var_samp -> Kw_var_samp
-  | kw_var_pop -> Kw_var_pop
-  | kw_filter -> Kw_filter
-  | kw_over -> Kw_over
-  | kw_partition -> Kw_partition
-  | kw_range -> Kw_range
-  | kw_unbounded -> Kw_unbounded
-  | kw_following -> Kw_following
-  | kw_preceding -> Kw_preceding
-  | kw_current -> Kw_current
-  | kw_row_number -> Kw_row_number
-  | kw_rank -> Kw_rank
-  | kw_dense_rank -> Kw_dense_rank
-  | kw_percent_rank -> Kw_percent_rank
-  | kw_cume_dist -> Kw_cume_dist
-  | kw_convert -> Kw_convert
-  | kw_cast -> Kw_cast
-  | kw_substring -> Kw_substring
-  | kw_extract -> Kw_extract
-  | kw_year -> Kw_year
-  | kw_month -> Kw_month
-  | kw_day -> Kw_day
-  | kw_hour -> Kw_hour
-  | kw_minute -> Kw_minute
-  | kw_second -> Kw_second
-  | kw_quarter -> Kw_quarter
-  | kw_epoch -> Kw_epoch
-  | kw_trim -> Kw_trim
-  | kw_leading -> Kw_leading
-  | kw_trailing -> Kw_trailing
-  | kw_both -> Kw_both
-  | kw_to_chars -> Kw_to_chars
-  | kw_to_bytes -> Kw_to_bytes
-  | kw_insert -> Kw_insert
-  | kw_translate -> Kw_translate
-  | kw_position -> Kw_position
-  | kw_listagg -> Kw_listagg
-  | kw_within -> Kw_within
-  | kw_current_date -> Kw_current_date
-  | kw_current_timestamp -> Kw_current_timestamp
-  | kw_current_time -> Kw_current_time
-  | kw_exception -> Kw_exception
-  | kw_serial -> Kw_serial
-  | kw_index -> Kw_index
-  | kw_instead -> Kw_instead
-  | kw_view -> Kw_view
-  | kw_enabled -> Kw_enabled
-  | kw_disabled -> Kw_disabled
-  | kw_key -> Kw_key
-  | kw_document -> Kw_document
-  | kw_content -> Kw_content
-  | kw_empty -> Kw_empty
-  | kw_ordinality -> Kw_ordinality
-  | kw_path -> Kw_path
-  | kw_querystring -> Kw_querystring
-  | kw_namespace -> Kw_namespace
-  | kw_result -> Kw_result
-  | kw_accesspattern -> Kw_accesspattern
-  | kw_auto_increment -> Kw_auto_increment
-  | kw_wellformed -> Kw_wellformed
-  | kw_texttable -> Kw_texttable
-  | kw_arraytable -> Kw_arraytable
-  | kw_jsontable -> Kw_jsontable
-  | kw_selector -> Kw_selector
-  | kw_skip -> Kw_skip
-  | kw_width -> Kw_width
-  | kw_passing -> Kw_passing
-  | kw_name -> Kw_name
-  | kw_columns -> Kw_columns
-  | kw_nulls -> Kw_nulls
-  | kw_objecttable -> Kw_objecttable
-  | kw_version -> Kw_version
-  | kw_including -> Kw_including
-  | kw_excluding -> Kw_excluding
-  | kw_variadic -> Kw_variadic
-  | kw_raise -> Kw_raise
-  | kw_chain -> Kw_chain
-  | kw_jsonarray_agg -> Kw_jsonarray_agg
-  | kw_jsonobject -> Kw_jsonobject
-  | kw_preserve -> Kw_preserve
-  | kw_upsert -> Kw_upsert
-  | kw_after -> Kw_after
-  | kw_type -> Kw_type
-  | kw_translator -> Kw_translator
-  | kw_jaas -> Kw_jaas
-  | kw_condition -> Kw_condition
-  | kw_mask -> Kw_mask
-  | kw_access -> Kw_access
-  | kw_control -> Kw_control
-  | kw_none -> Kw_none
-  | kw_data -> Kw_data
-  | kw_database -> Kw_database
-  | kw_privileges -> Kw_privileges
-  | kw_role -> Kw_role
-  | kw_schema -> Kw_schema
-  | kw_use -> Kw_use
-  | kw_repository -> Kw_repository
-  | kw_rename -> Kw_rename
-  | kw_domain -> Kw_domain
-  | kw_usage -> Kw_usage
-  | kw_explain -> Kw_explain
-  | kw_analyze -> Kw_analyze
-  | kw_text -> Kw_text
-  | kw_format -> Kw_format
-  | kw_yaml -> Kw_yaml
-  | kw_policy -> Kw_policy
-  | kw_session_user -> Kw_session_user
-  | kw_interval -> Kw_interval
-  | kw_tablesample -> Kw_tablesample
-  | kw_bernoulli -> Kw_bernoulli
-  | kw_system -> Kw_system
-  | kw_repeatable -> Kw_repeatable
-  | kw_unnest -> Kw_unnest
-  | kw_module -> Kw_module
-  | kw_collate -> Kw_collate
-  | kw_cube -> Kw_cube
-  | kw_grouping -> Kw_grouping
-  | kw_sets -> Kw_sets
-  | kw_ties -> Kw_ties
-  | kw_others -> Kw_others
-  | kw_exclude -> Kw_exclude
-  | kw_window -> Kw_window
-  | kw_using -> Kw_using
-  | kw_natural -> Kw_natural
-  | kw_corresponding -> Kw_corresponding
-  | kw_recursive -> Kw_recursive
-  | kw_cycle -> Kw_cycle
-  | kw_default -> Kw_default
-  | kw_set -> Kw_set
-  | kw_depth -> Kw_depth
-  | kw_breadth -> Kw_breadth
-  | kw_search -> Kw_search
-  | kw_values -> Kw_values
-  | kw_value -> Kw_value
-  | kw_element -> Kw_element
-  | kw_zone -> Kw_zone
-  | kw_local -> Kw_local
-  | kw_at -> Kw_at
-  | kw_abs -> Kw_abs
-  | kw_array -> Kw_array
-  | kw_multiset -> Kw_multiset
-  | kw_localtime -> Kw_localtime
-  | kw_localtimestamp -> Kw_localtimestamp
-  | kw_characters -> Kw_characters
-  | kw_code_units -> Kw_code_units
-  | kw_octets -> Kw_octets
-  | kw_without -> Kw_without
-  | kw_scope -> Kw_scope
-  | kw_ref -> Kw_ref
-  | kw_precision -> Kw_precision
-  | kw_numeric -> Kw_numeric
-  | kw_dec -> Kw_dec
-  | kw_int -> Kw_int
-  | kw_binary -> Kw_binary
-  | kw_large -> Kw_large
-  | kw_national -> Kw_national
-  | kw_varying -> Kw_varying
-  | kw_character -> Kw_character
-  | kw_nchar -> Kw_nchar
-  | kw_nclob -> Kw_nclob
-  | kw_indicator -> Kw_indicator
-  | kw_current_user -> Kw_current_user
-  | kw_system_user -> Kw_system_user
-  | kw_current_default_transform_group -> Kw_current_default_transform_group
-  | kw_current_transform_group_for_type -> Kw_current_transform_group_for_type
-  | kw_current_path -> Kw_current_path
-  | kw_current_role -> Kw_current_role
-  | kw_nullif -> Kw_nullif
-  | kw_coalesce -> Kw_coalesce
-  | kw_groups -> Kw_groups
-  | kw_glob -> Kw_glob
-  | kw_match -> Kw_match
-  | kw_regexp -> Kw_regexp
-  | kw_materialized -> Kw_materialized
-  | kw_abort -> Kw_abort
-  | kw_ignore -> Kw_ignore
-  | kw_replace -> Kw_replace
-  | kw_rollback -> Kw_rollback
-  | kw_fail -> Kw_fail
-  | kw_update -> Kw_update
-  | kw_returning -> Kw_returning
-  | kw_delete -> Kw_delete
-  | kw_savepoint -> Kw_savepoint
-  | kw_transaction -> Kw_transaction
-  | kw_if -> Kw_if
-  | kw_drop -> Kw_drop
-  | kw_begin -> Kw_begin
-  | kw_commit -> Kw_commit
-  | kw_trigger -> Kw_trigger
-  | kw_references -> Kw_references
-  | kw_constraint -> Kw_constraint
-  | kw_primary -> Kw_primary
-  | kw_unique -> Kw_unique
-  | kw_generated -> Kw_generated
-  | kw_always -> Kw_always
-  | kw_check -> Kw_check
-  | kw_cascade -> Kw_cascade
-  | kw_restrict -> Kw_restrict
-  | kw_action -> Kw_action
-  | kw_deferrable -> Kw_deferrable
-  | kw_initially -> Kw_initially
-  | kw_deferred -> Kw_deferred
-  | kw_immediate -> Kw_immediate
-  | kw_create -> Kw_create
-  | kw_temp -> Kw_temp
-  | kw_temporary -> Kw_temporary
-  | kw_foreign -> Kw_foreign
-  | kw_alter -> Kw_alter
-  | kw_add -> Kw_add
-  | kw_column -> Kw_column
-  | kw_before -> Kw_before
-  | kw_each -> Kw_each
-  | kw_of -> Kw_of
+  | kw_select -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_select)
+  | kw_from -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_from)
+  | kw_as -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_as)
+  | kw_true -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_true)
+  | kw_false -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_false)
+  | kw_unknown -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_unknown)
+  | kw_null -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_null)
+  | kw_date -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_date)
+  | kw_time -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_time)
+  | kw_timestamp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_timestamp)
+  | kw_into -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_into)
+  | kw_or -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_or)
+  | kw_not -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_not)
+  | kw_union -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_union)
+  | kw_except -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_except)
+  | kw_intersect -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_intersect)
+  | kw_and -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_and)
+  | kw_group -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_group)
+  | kw_by -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_by)
+  | kw_rollup -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_rollup)
+  | kw_having -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_having)
+  | kw_where -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_where)
+  | kw_order -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_order)
+  | kw_asc -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_asc)
+  | kw_desc -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_desc)
+  | kw_first -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_first)
+  | kw_last -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_last)
+  | kw_limit -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_limit)
+  | kw_offset -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_offset)
+  | kw_row -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_row)
+  | kw_rows -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_rows)
+  | kw_fetch -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_fetch)
+  | kw_next -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_next)
+  | kw_only -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_only)
+  | kw_all -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_all)
+  | kw_distinct -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_distinct)
+  | kw_is -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_is)
+  | kw_between -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_between)
+  | kw_like_regex -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_like_regex)
+  | kw_similar -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_similar)
+  | kw_to -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_to)
+  | kw_escape -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_escape)
+  | kw_like -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_like)
+  | kw_any -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_any)
+  | kw_some -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_some)
+  | kw_in -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_in)
+  | kw_exists -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_exists)
+  | kw_with -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_with)
+  | kw_table -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_table)
+  | kw_lateral -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_lateral)
+  | kw_left -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_left)
+  | kw_right -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_right)
+  | kw_full -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_full)
+  | kw_outer -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_outer)
+  | kw_inner -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_inner)
+  | kw_cross -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cross)
+  | kw_join -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_join)
+  | kw_on -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_on)
+  | kw_case -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_case)
+  | kw_when -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_when)
+  | kw_then -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_then)
+  | kw_end -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_end)
+  | kw_else -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_else)
+  | kw_textagg -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_textagg)
+  | kw_for -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_for)
+  | kw_delimiter -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_delimiter)
+  | kw_quote -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_quote)
+  | kw_no -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_no)
+  | kw_header -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_header)
+  | kw_encoding -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_encoding)
+  | kw_count -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_count)
+  | kw_count_big -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_count_big)
+  | kw_avg -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_avg)
+  | kw_sum -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_sum)
+  | kw_min -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_min)
+  | kw_max -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_max)
+  | kw_every -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_every)
+  | kw_stddev_pop -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_stddev_pop)
+  | kw_stddev_samp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_stddev_samp)
+  | kw_var_samp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_var_samp)
+  | kw_var_pop -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_var_pop)
+  | kw_filter -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_filter)
+  | kw_over -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_over)
+  | kw_partition -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_partition)
+  | kw_range -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_range)
+  | kw_unbounded -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_unbounded)
+  | kw_following -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_following)
+  | kw_preceding -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_preceding)
+  | kw_current -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current)
+  | kw_row_number -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_row_number)
+  | kw_rank -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_rank)
+  | kw_dense_rank -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_dense_rank)
+  | kw_percent_rank -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_percent_rank)
+  | kw_cume_dist -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cume_dist)
+  | kw_convert -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_convert)
+  | kw_cast -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cast)
+  | kw_substring -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_substring)
+  | kw_extract -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_extract)
+  | kw_year -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_year)
+  | kw_month -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_month)
+  | kw_day -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_day)
+  | kw_hour -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_hour)
+  | kw_minute -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_minute)
+  | kw_second -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_second)
+  | kw_quarter -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_quarter)
+  | kw_epoch -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_epoch)
+  | kw_trim -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_trim)
+  | kw_leading -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_leading)
+  | kw_trailing -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_trailing)
+  | kw_both -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_both)
+  | kw_to_chars -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_to_chars)
+  | kw_to_bytes -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_to_bytes)
+  | kw_insert -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_insert)
+  | kw_translate -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_translate)
+  | kw_position -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_position)
+  | kw_listagg -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_listagg)
+  | kw_within -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_within)
+  | kw_current_date -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_date)
+  | kw_current_timestamp ->
+    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_timestamp)
+  | kw_current_time -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_time)
+  | kw_exception -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_exception)
+  | kw_serial -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_serial)
+  | kw_index -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_index)
+  | kw_instead -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_instead)
+  | kw_view -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_view)
+  | kw_enabled -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_enabled)
+  | kw_disabled -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_disabled)
+  | kw_key -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_key)
+  | kw_document -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_document)
+  | kw_content -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_content)
+  | kw_empty -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_empty)
+  | kw_ordinality -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_ordinality)
+  | kw_path -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_path)
+  | kw_querystring -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_querystring)
+  | kw_namespace -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_namespace)
+  | kw_result -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_result)
+  | kw_accesspattern -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_accesspattern)
+  | kw_auto_increment ->
+    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_auto_increment)
+  | kw_wellformed -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_wellformed)
+  | kw_texttable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_texttable)
+  | kw_arraytable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_arraytable)
+  | kw_jsontable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_jsontable)
+  | kw_selector -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_selector)
+  | kw_skip -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_skip)
+  | kw_width -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_width)
+  | kw_passing -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_passing)
+  | kw_name -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_name)
+  | kw_columns -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_columns)
+  | kw_nulls -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_nulls)
+  | kw_objecttable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_objecttable)
+  | kw_version -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_version)
+  | kw_including -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_including)
+  | kw_excluding -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_excluding)
+  | kw_variadic -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_variadic)
+  | kw_raise -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_raise)
+  | kw_chain -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_chain)
+  | kw_jsonarray_agg -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_jsonarray_agg)
+  | kw_jsonobject -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_jsonobject)
+  | kw_preserve -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_preserve)
+  | kw_upsert -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_upsert)
+  | kw_after -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_after)
+  | kw_type -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_type)
+  | kw_translator -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_translator)
+  | kw_jaas -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_jaas)
+  | kw_condition -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_condition)
+  | kw_mask -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_mask)
+  | kw_access -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_access)
+  | kw_control -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_control)
+  | kw_none -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_none)
+  | kw_data -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_data)
+  | kw_database -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_database)
+  | kw_privileges -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_privileges)
+  | kw_role -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_role)
+  | kw_schema -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_schema)
+  | kw_use -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_use)
+  | kw_repository -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_repository)
+  | kw_rename -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_rename)
+  | kw_domain -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_domain)
+  | kw_usage -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_usage)
+  | kw_explain -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_explain)
+  | kw_analyze -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_analyze)
+  | kw_text -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_text)
+  | kw_format -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_format)
+  | kw_yaml -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_yaml)
+  | kw_policy -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_policy)
+  | kw_session_user -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_session_user)
+  | kw_interval -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_interval)
+  | kw_tablesample -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_tablesample)
+  | kw_bernoulli -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_bernoulli)
+  | kw_system -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_system)
+  | kw_repeatable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_repeatable)
+  | kw_unnest -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_unnest)
+  | kw_module -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_module)
+  | kw_collate -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_collate)
+  | kw_cube -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cube)
+  | kw_grouping -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_grouping)
+  | kw_sets -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_sets)
+  | kw_ties -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_ties)
+  | kw_others -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_others)
+  | kw_exclude -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_exclude)
+  | kw_window -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_window)
+  | kw_using -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_using)
+  | kw_natural -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_natural)
+  | kw_corresponding -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_corresponding)
+  | kw_recursive -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_recursive)
+  | kw_cycle -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cycle)
+  | kw_default -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_default)
+  | kw_set -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_set)
+  | kw_depth -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_depth)
+  | kw_breadth -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_breadth)
+  | kw_search -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_search)
+  | kw_values -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_values)
+  | kw_value -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_value)
+  | kw_element -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_element)
+  | kw_zone -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_zone)
+  | kw_local -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_local)
+  | kw_at -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_at)
+  | kw_abs -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_abs)
+  | kw_array -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_array)
+  | kw_multiset -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_multiset)
+  | kw_localtime -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_localtime)
+  | kw_localtimestamp ->
+    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_localtimestamp)
+  | kw_characters -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_characters)
+  | kw_code_units -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_code_units)
+  | kw_octets -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_octets)
+  | kw_without -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_without)
+  | kw_scope -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_scope)
+  | kw_ref -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_ref)
+  | kw_precision -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_precision)
+  | kw_numeric -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_numeric)
+  | kw_dec -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_dec)
+  | kw_int -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_int)
+  | kw_binary -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_binary)
+  | kw_large -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_large)
+  | kw_national -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_national)
+  | kw_varying -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_varying)
+  | kw_character -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_character)
+  | kw_nchar -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_nchar)
+  | kw_nclob -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_nclob)
+  | kw_indicator -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_indicator)
+  | kw_current_user -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_user)
+  | kw_system_user -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_system_user)
+  | kw_current_default_transform_group ->
+    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_default_transform_group)
+  | kw_current_transform_group_for_type ->
+    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_transform_group_for_type)
+  | kw_current_path -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_path)
+  | kw_current_role -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_role)
+  | kw_nullif -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_nullif)
+  | kw_coalesce -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_coalesce)
+  | kw_groups -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_groups)
+  | kw_glob -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_glob)
+  | kw_match -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_match)
+  | kw_regexp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_regexp)
+  | kw_materialized -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_materialized)
+  | kw_abort -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_abort)
+  | kw_ignore -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_ignore)
+  | kw_replace -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_replace)
+  | kw_rollback -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_rollback)
+  | kw_fail -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_fail)
+  | kw_update -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_update)
+  | kw_returning -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_returning)
+  | kw_delete -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_delete)
+  | kw_savepoint -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_savepoint)
+  | kw_transaction -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_transaction)
+  | kw_if -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_if)
+  | kw_drop -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_drop)
+  | kw_begin -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_begin)
+  | kw_commit -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_commit)
+  | kw_trigger -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_trigger)
+  | kw_references -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_references)
+  | kw_constraint -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_constraint)
+  | kw_primary -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_primary)
+  | kw_unique -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_unique)
+  | kw_generated -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_generated)
+  | kw_always -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_always)
+  | kw_check -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_check)
+  | kw_cascade -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_cascade)
+  | kw_restrict -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_restrict)
+  | kw_action -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_action)
+  | kw_deferrable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_deferrable)
+  | kw_initially -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_initially)
+  | kw_deferred -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_deferred)
+  | kw_immediate -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_immediate)
+  | kw_create -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_create)
+  | kw_temp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_temp)
+  | kw_temporary -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_temporary)
+  | kw_foreign -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_foreign)
+  | kw_alter -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_alter)
+  | kw_add -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_add)
+  | kw_column -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_column)
+  | kw_before -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_before)
+  | kw_each -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_each)
+  | kw_of -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_of)
   (* literals *)
   | "--" -> inline_comment buf
   | "/*" -> block_comment buf
