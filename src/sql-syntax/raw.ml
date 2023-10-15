@@ -23,6 +23,10 @@ include (
 
     let make_node kind ~layouts = Node { kind; layouts }
 
+    let match' f = function
+      | Node _ -> false
+      | Leaf { data = { token; _ }; _ } -> f token
+
     let rec to_string t =
       let buffer = Buffer.create 10 in
       match t with

@@ -44,7 +44,7 @@ type t =
   | Op_lshift
   | Op_rshift
   | Tok_eof
-[@@deriving show, eq]
+[@@deriving eq]
 
 let show = function
   (* tokens *)

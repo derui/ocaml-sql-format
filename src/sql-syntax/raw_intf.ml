@@ -27,6 +27,10 @@ module type S = sig
   (** [make_node kind ~layouts] make a new node *)
   val make_node : 'a -> layouts:('a, 'b) t list -> ('a, 'b) t
 
+  (** [match' f t] return the [t] is matched with [f]. If [t] is Node, always
+      return false. *)
+  val match' : (Token.t -> bool) -> ('a, 'b) t -> bool
+
   (** [to_string t] get string representation of [t] *)
   val to_string : ('a, 'b) t -> string
 end

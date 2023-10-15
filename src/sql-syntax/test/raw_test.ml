@@ -7,13 +7,22 @@ type kind =
   | B
 
 let%test_unit "make raw data" =
-  R.make_node B
-    ~layouts:
-      [ R.make_leaf A ~leading:(T.leading []) ~trailing:(T.trailing [])
-          ~token:Tok_colon
-      ]
-  |> ignore;
-  assert true
+  let node =
+    R.make_node B
+      ~layouts:
+        [ R.make_leaf A ~leading:(T.leading []) ~trailing:(T.trailing [])
+            ~token:Tok_colon
+        ]
+  in
+  assert (R.match' (Types.Token.equal Tok_colon) node = false)
+
+let%test_unit "make leaf data" =
+  let node =
+    R.make_leaf A ~leading:(T.leading []) ~trailing:(T.trailing [])
+      ~token:Tok_colon
+  in
+  assert (R.match' (Types.Token.equal Tok_colon) node = true);
+  assert (R.match' (Types.Token.equal Op_eq) node = false)
 
 let%expect_test "raw to string" =
   Printf.printf "%s" @@ R.to_string
