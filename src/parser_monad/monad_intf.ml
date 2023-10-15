@@ -61,5 +61,5 @@ module type S = sig
   val bump : unit t
 
   (** [start_syntax kind_of_syntax inner] start syntax with [inner]. *)
-  val start_syntax : 'kind -> 'a t -> unit t
+  val start_syntax : Kind.node -> 'a t -> unit t
 end
