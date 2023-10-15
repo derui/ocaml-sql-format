@@ -2514,8 +2514,8 @@ let rec token buf =
   | kw_each -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_each)
   | kw_of -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_of)
   (* literals *)
-  | "--" -> inline_comment buf
-  | "/*" -> block_comment buf
+  | "--" -> inline_comment (Buffer.create 10) buf
+  | "/*" -> block_comment (Buffer.create 10) buf
   | string -> Tok_string (Sedlexing.Utf8.lexeme buf)
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
@@ -2562,25 +2562,32 @@ let rec token buf =
     failwith
       (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
 
-and inline_comment buf =
+and inline_comment buffer buf =
   match%sedlex buf with
   | newline ->
     Sedlexing.new_line buf;
-    token buf
+    Tok_line_comment (Buffer.contents buffer)
   | eof -> Tok_eof
-  | any -> inline_comment buf
+  | any ->
+    Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
+    inline_comment buffer buf
   | _ ->
     failwith
       (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
 
-and block_comment buf =
+and block_comment buffer buf =
   match%sedlex buf with
   | newline ->
     Sedlexing.new_line buf;
-    block_comment buf
+    Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
+    block_comment buffer buf
   | eof -> Tok_eof
-  | "*/" -> token buf
-  | any -> block_comment buf
+  | "*/" ->
+    Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
+    Tok_block_comment (Buffer.contents buffer)
+  | any ->
+    Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
+    block_comment buffer buf
   | _ ->
     failwith
       (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
