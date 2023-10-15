@@ -1,6 +1,4 @@
 module type S = sig
-  module Syntax : Syntax_intf.S
-
   (** a type of language. This type is immutable structure. *)
   type 'a t
 
