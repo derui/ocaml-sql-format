@@ -8,25 +8,21 @@ include (
 
     type trailing
 
+    let can_leading = function
+      | Token.Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _
+        -> true
+      | _ -> false
+
+    let can_trailing = function
+      | Token.Tok_space | Tok_block_comment _ -> true
+      | _ -> false
+
     let leading tokens =
-      assert (
-        List.for_all
-          (function
-            | Token.Tok_space
-            | Tok_newline
-            | Tok_line_comment _
-            | Tok_block_comment _ -> true
-            | _ -> false)
-          tokens);
+      assert (List.for_all can_leading tokens);
       { tokens }
 
     let trailing tokens =
-      assert (
-        List.for_all
-          (function
-            | Token.Tok_space | Tok_block_comment _ -> true
-            | _ -> false)
-          tokens);
+      assert (List.for_all can_trailing tokens);
       { tokens }
 
     let to_tokens { tokens } = tokens

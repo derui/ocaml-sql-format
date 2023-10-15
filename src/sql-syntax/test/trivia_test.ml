@@ -11,6 +11,18 @@ let%test_unit "leading trivia can contains newline and line comment" =
   |> ignore;
   assert true
 
+let%test_unit "can leading tokens" =
+  assert (
+    List.for_all T.can_leading
+      [ Tok_space
+      ; Tok_newline
+      ; Tok_line_comment "com"
+      ; Tok_block_comment "block"
+      ])
+
+let%test_unit "can trailing tokens" =
+  assert (List.for_all T.can_leading [ Tok_space; Tok_block_comment "block" ])
+
 let%test_unit "trailing trivia can not contain newline and line comment" =
   try
     T.trailing

@@ -13,6 +13,12 @@ module type S = sig
   (** [leading tokens] make [leading] trivia *)
   val leading : Token.t list -> leading t
 
+  (** [can_trailing token] return a [token] can contains in trailing trivia *)
+  val can_trailing : Token.t -> bool
+
+  (** [can_leading token] return a [token] can contains in leading trivia *)
+  val can_leading : Token.t -> bool
+
   (** [to_tokens trivia] get tokens from [trivia] *)
   val to_tokens : 'a t -> Token.t list
 
