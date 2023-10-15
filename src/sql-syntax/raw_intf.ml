@@ -31,6 +31,10 @@ module type S = sig
       return false. *)
   val match' : (Token.t -> bool) -> ('a, 'b) t -> bool
 
+  (** [push_layout raw t] push [raw] into layout of [t]. Returns new instance of
+      [t]. If [t] is leaf, this function do not anything *)
+  val push_layout : ('a, 'b) t -> ('a, 'b) t -> ('a, 'b) t
+
   (** [to_string t] get string representation of [t] *)
   val to_string : ('a, 'b) t -> string
 end

@@ -27,6 +27,10 @@ include (
       | Node _ -> false
       | Leaf { data = { token; _ }; _ } -> f token
 
+    let push_layout raw = function
+      | Node v -> Node { v with layouts = raw :: v.layouts }
+      | Leaf _ as v -> v
+
     let rec to_string t =
       let buffer = Buffer.create 10 in
       match t with

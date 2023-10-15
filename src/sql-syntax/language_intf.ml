@@ -6,7 +6,7 @@ module type S = sig
   val empty : unit -> ('a, 'b) t
 
   (** [append syntax] append [syntax] to [t]. Returned instance [t] is new one. *)
-  val append : ('a, 'b) Syntax.t -> ('a, 'b) t -> ('a, 'b) t
+  val append : ('a, 'b) Raw.t -> ('a, 'b) t -> ('a, 'b) t
 
   (** [to_string t] get string representation of [t] *)
   val to_string : ('a, 'b) t -> string

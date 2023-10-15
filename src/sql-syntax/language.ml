@@ -1,9 +1,9 @@
 include (
   struct
-    module Syntax = Syntax
+    module Raw = Raw
 
     type ('a, 'b) t =
-      { syntaxes : ('a, 'b) Syntax.t option array
+      { syntaxes : ('a, 'b) Raw.t option array
       ; pointer : int
       }
 
@@ -25,7 +25,7 @@ include (
       let buffer = Buffer.create 10 in
       Array.iter
         (fun v ->
-          Option.map (fun v -> Syntax.to_string v |> Buffer.add_string buffer) v
+          Option.map (fun v -> Raw.to_string v |> Buffer.add_string buffer) v
           |> Option.value ~default:())
         syntaxes;
 
