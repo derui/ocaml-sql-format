@@ -21,10 +21,6 @@ type leaf =
   | L_qmark
   | L_semicolon
   | L_quote
-  | L_space
-  | L_newline
-  | L_line_comment
-  | L_block_comment
   | L_plus
   | L_minus
   | L_star
@@ -66,10 +62,8 @@ let token_to_leaf = function
   | Tok_qmark -> L_qmark
   | Tok_semicolon -> L_semicolon
   | Tok_quote -> L_quote
-  | Tok_space -> L_space
-  | Tok_newline -> L_newline
-  | Tok_line_comment _ -> L_line_comment
-  | Tok_block_comment _ -> L_block_comment
+  | Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ ->
+    failwith "Invalid leaf"
   | Op_plus -> L_plus
   | Op_minus -> L_minus
   | Op_star -> L_star

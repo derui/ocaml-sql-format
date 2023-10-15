@@ -3,29 +3,13 @@ include (
     module Token = Types.Token
     module S = Sql_syntax
 
-    type language = (Kind.node, Kind.leaf) S.Language.t
-
     type raw = (Kind.node, Kind.leaf) S.Raw.t
-
-    module Parse_error = struct
-      type t =
-        { start_pos : Lexing.position
-        ; end_pos : Lexing.position
-        ; message : string
-        }
-    end
-
-    type raw_data =
-      { start_pos : Lexing.position
-      ; end_pos : Lexing.position
-      ; token : Token.t
-      }
 
     (** Type of monad. *)
     type data =
       { pointer : int
-      ; token_stream : raw_data array
-      ; language : language
+      ; token_stream : Tokenizer.t array
+      ; language : Monad_intf.language
       ; current : raw option
       ; syntax_stack : raw list
       }
@@ -63,7 +47,7 @@ include (
     let fail v =
       let open Let_syntax in
       let* data' = data () in
-      let { start_pos; end_pos; token = _ } =
+      let { start_pos; end_pos; token = _ } : Tokenizer.t =
         data'.token_stream.(data'.pointer)
       in
       fun _ -> Error { Parse_error.start_pos; end_pos; message = v }
@@ -149,7 +133,9 @@ include (
             ( ()
             , { data with syntax_stack = S.Raw.push_layout raw syntax :: rest }
             )
-      | [] -> fail "Invalid node-nesting"
+      | [] ->
+        fun data ->
+          Ok ((), { data with language = S.Language.append raw data.language })
 
     let bump : unit t =
       let open Let_syntax in
@@ -194,5 +180,18 @@ include (
             ; syntax_stack = rest
             }
           | [] -> failwith "Invalid syntax stack")
+
+    let parse tokens monad =
+      let data =
+        { pointer = 0
+        ; token_stream = tokens
+        ; language = S.Language.empty ()
+        ; current = None
+        ; syntax_stack = []
+        }
+      in
+      match monad data with
+      | Ok (v, data) -> Ok (v, data.language)
+      | Error e -> Error e
   end :
     Monad_intf.S)
