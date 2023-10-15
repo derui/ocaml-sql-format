@@ -8,13 +8,13 @@ include (
       ; token : Token.t
       }
 
-    type 'a t =
+    type ('a, 'b) t =
       | Node of
           { kind : 'a
-          ; layouts : 'a t list
+          ; layouts : ('a, 'b) t list
           }
       | Leaf of
-          { kind : 'a
+          { kind : 'b
           ; data : leaf_data
           }
 

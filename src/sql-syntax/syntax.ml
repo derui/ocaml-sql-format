@@ -1,6 +1,6 @@
 include (
   struct
-    type 'a t = { root : 'a Raw.t }
+    type ('a, 'b) t = { root : ('a, 'b) Raw.t }
 
     let make root = { root }
 
