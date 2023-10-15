@@ -25,6 +25,8 @@ include (
       assert (List.for_all can_trailing tokens);
       { tokens }
 
+    let length { tokens } = List.length tokens
+
     let to_tokens { tokens } = tokens
 
     let to_string : 'a t -> string =

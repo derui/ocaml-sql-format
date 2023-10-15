@@ -24,4 +24,7 @@ module type S = sig
 
   (** [to_string trivia] get trivia *)
   val to_string : 'a t -> string
+
+  (** [length trivia] get length of token in trivia *)
+  val length : 'a t -> int
 end
