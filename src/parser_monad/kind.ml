@@ -1,5 +1,5 @@
 (** kind of node *)
-type node
+type node = N_expr [@@deriving ord]
 
 (** kind of leaf *)
 type leaf =

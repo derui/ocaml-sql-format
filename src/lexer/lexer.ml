@@ -2520,10 +2520,10 @@ let rec token buf =
   | blob -> Tok_blob (Sedlexing.Utf8.lexeme buf)
   | identifier -> Tok_ident (Sedlexing.Utf8.lexeme buf)
   | numeric -> Tok_numeric (Sedlexing.Utf8.lexeme buf)
-  | space -> token buf
+  | space -> Tok_space
   | newline ->
     Sedlexing.new_line buf;
-    token buf
+    Tok_newline
   | '(' -> Tok_lparen
   | ')' -> Tok_rparen
   | '.' -> Tok_period

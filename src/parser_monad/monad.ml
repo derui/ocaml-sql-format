@@ -191,7 +191,7 @@ include (
         }
       in
       match monad data with
-      | Ok (v, data) -> Ok (v, data.language)
+      | Ok (_, data) -> Ok data.language
       | Error e -> Error e
   end :
     Monad_intf.S)

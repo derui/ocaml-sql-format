@@ -4,3 +4,5 @@ type t =
   ; end_pos : Lexing.position
   ; message : string
   }
+
+let to_string t = t.message

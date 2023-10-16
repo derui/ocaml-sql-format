@@ -68,5 +68,5 @@ module type S = sig
   val start_syntax : Kind.node -> 'a t -> unit t
 
   (** [parse monad] evaluate parser *)
-  val parse : Tokenizer.t array -> 'a t -> ('a * language, Parse_error.t) result
+  val parse : Tokenizer.t array -> 'a t -> (language, Parse_error.t) result
 end

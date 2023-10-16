@@ -1,0 +1,5 @@
+(library
+ (name parser_new)
+ (public_name ocaml-sql-format.parser-new)
+ (flags (:standard -safe-string))
+ (libraries ocaml-sql-format.types ocaml-sql-format.sql-syntax ocaml-sql-format.lexer ocaml-sql-format.parser-monad))
