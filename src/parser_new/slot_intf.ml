@@ -1,4 +1,6 @@
+type parser_taker = Parser_monad.Kind.node -> Type.parser
+
 module type S = sig
-  (** [take t ~kind] get parser slotted in with [kind] *)
-  val take : Parser_monad.Kind.node -> Type.parser
+  (** [get_taker ()] get parser taker *)
+  val get_taker : unit -> parser_taker
 end

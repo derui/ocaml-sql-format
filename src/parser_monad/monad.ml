@@ -73,10 +73,17 @@ include (
       let ( <*> ) = apply
 
       let ( <|> ) = choice
+
+      let ( *> ) x y = (fun _ y -> y) <$> x <*> y
     end
 
-    let put_current c size data =
-      Ok ((), { data with current = Some c; pointer = data.pointer + size })
+    let put_current c size =
+      edit_data (fun data ->
+          { data with
+            current = Some c
+          ; pointer =
+              min (data.pointer + size) (pred @@ Array.length data.token_stream)
+          })
 
     let array_get_opt ary idx =
       if Array.length ary <= idx then None else Some ary.(idx)
@@ -110,7 +117,8 @@ include (
                 trailing' (succ pointer) (c.token :: buf)
               | _ -> List.rev buf
             in
-            trailing' d.pointer [] |> S.Trivia.trailing
+            trailing' (d.pointer + S.Trivia.length leading) []
+            |> S.Trivia.trailing
           in
           let leaf =
             S.Raw.make_leaf
@@ -131,17 +139,24 @@ include (
         fun data ->
           Ok
             ( ()
-            , { data with syntax_stack = S.Raw.push_layout raw syntax :: rest }
-            )
+            , { data with
+                syntax_stack = S.Raw.push_layout raw syntax :: rest
+              ; current = None
+              } )
       | [] ->
         fun data ->
-          Ok ((), { data with language = S.Language.append raw data.language })
+          Ok
+            ( ()
+            , { data with
+                language = S.Language.append raw data.language
+              ; current = None
+              } )
 
     let bump : unit t =
       let open Let_syntax in
       let* c = current in
       let* () = put_syntax c in
-      fun data -> Ok ((), { data with current = None })
+      edit_data (fun data -> { data with current = None })
 
     let bump_when tok =
       let open Let_syntax in

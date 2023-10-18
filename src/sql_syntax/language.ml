@@ -12,12 +12,12 @@ include (
     let append syntax t =
       let ary = ref [||] in
       let len = Array.length t.syntaxes in
-      if succ t.pointer >= len then (
+      if t.pointer >= len then (
         ary := Array.make (len * 2) None;
         Array.blit !ary 0 t.syntaxes 0 len)
       else ary := Array.copy t.syntaxes;
 
-      !ary.(succ t.pointer) <- Some syntax;
+      !ary.(t.pointer) <- Some syntax;
 
       { syntaxes = !ary; pointer = succ t.pointer }
 

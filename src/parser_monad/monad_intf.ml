@@ -45,6 +45,9 @@ module type S = sig
 
     (** A operator for choice *)
     val ( <|> ) : 'a t -> 'a t -> 'a t
+
+    (** A operator to get right result of parser *)
+    val ( *> ) : 'a t -> 'b t -> 'b t
   end
 
   (** functions *)

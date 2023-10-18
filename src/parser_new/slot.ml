@@ -8,10 +8,17 @@ include (
       let compare = K.compare_node
     end)
 
-    type t = Type.parser Kind_map.t
+    type t = (module Intf.GEN) Kind_map.t
 
-    let t : t = Kind_map.empty
+    let t : t =
+      Kind_map.empty |> Kind_map.add K.N_expr (module Parser_expr : Intf.GEN)
 
-    let take kind = Kind_map.find kind t
+    let get_taker () =
+      let rec f kind =
+        let gen = Kind_map.find kind t in
+        let module G = (val gen : Intf.GEN) in
+        G.generate f
+      in
+      f
   end :
     Slot_intf.S)
