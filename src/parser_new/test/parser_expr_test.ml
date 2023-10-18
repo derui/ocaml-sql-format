@@ -62,4 +62,52 @@ let%expect_test "unary operator" =
   Util.run {| -ident |} p |> print_endline;
   Util.run {| ~ident |} p |> print_endline;
   Util.run {| not ident |} p |> print_endline;
-  [%expect {||}]
+  [%expect {|
+    +"name"
+    -ident
+    ~ident
+    not ident |}]
+
+let%expect_test "binary operator" =
+  Util.run {| 1 + 2 |} p |> print_endline;
+  Util.run {| 2 - 3 |} p |> print_endline;
+  Util.run {| 3 * id|} p |> print_endline;
+  Util.run {| id / f |} p |> print_endline;
+  Util.run {| eq = eq |} p |> print_endline;
+  Util.run {| 1 == 2 |} p |> print_endline;
+  Util.run {| 3 <> 4 |} p |> print_endline;
+  Util.run "4 != 4" p |> print_endline;
+  Util.run "5 < 4" p |> print_endline;
+  Util.run "6 <= 5" p |> print_endline;
+  Util.run "7 > 3" p |> print_endline;
+  Util.run "7 >= 4" p |> print_endline;
+  Util.run "8 & 7" p |> print_endline;
+  Util.run "9 | 7" p |> print_endline;
+  Util.run "'foo' || 'bar'  " p |> print_endline;
+  Util.run "1 >> 2" p |> print_endline;
+  Util.run "rshift <<2" p |> print_endline;
+  Util.run "ex->3" p |> print_endline;
+  Util.run "ex->>4" p |> print_endline;
+  Util.run "3 + 4 - 5" p |> print_endline;
+  [%expect
+    {|
+     1 + 2
+     2 - 3
+     3 * id
+     id / f
+     eq = eq
+     1 == 2
+     3 <> 4
+    4 != 4
+    5 < 4
+    6 <= 5
+    7 > 3
+    7 >= 4
+    8 & 7
+    9 | 7
+    'foo'
+    1 >> 2
+    rshift <<2
+    ex->3
+    ex->>4
+    3 + 4 - 5 |}]

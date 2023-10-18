@@ -6,26 +6,52 @@ include (
     module T = Types.Token
     module Kw = Types.Keyword
 
-    let ident =
-      M.bump_match (function
-        | T.Tok_ident _ -> true
-        | _ -> false)
+    module type Param = sig
+      val literal_value : unit M.t
+    end
 
-    let name =
-      let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
-      let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
-      ident
+    module V (S : Param) = struct
+      let literal_value = S.literal_value
 
-    let rec unary =
-      M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
-      <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
+      let ident =
+        M.bump_match (function
+          | T.Tok_ident _ -> true
+          | _ -> false)
 
-    and parse literal_value () =
-      literal_value <|> M.bump_when T.Tok_qmark <|> name
-      <|> (unary >>= parse literal_value)
+      let name =
+        let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
+        let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
+        ident
+
+      let bind_parameter = M.bump_when T.Tok_qmark
+
+      let unary =
+        M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
+        <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
+
+      let binary_operator =
+        M.bump_when T.Op_amp <|> M.bump_when T.Op_eq <|> M.bump_when T.Op_eq2
+        <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus
+        <|> M.bump_when T.Op_star <|> M.bump_when T.Op_slash
+        <|> M.bump_when T.Op_pipe <|> M.bump_when T.Op_lshift
+        <|> M.bump_when T.Op_rshift <|> M.bump_when T.Op_ge
+        <|> M.bump_when T.Op_gt <|> M.bump_when T.Op_le <|> M.bump_when T.Op_lt
+        <|> M.bump_when T.Op_ne <|> M.bump_when T.Op_ne2
+        <|> M.bump_when T.Op_extract <|> M.bump_when T.Op_extract_2
+
+      let rec expr () =
+        let* () =
+          literal_value <|> bind_parameter <|> name <|> (unary >>= expr)
+        in
+        let* () = binary_operator *> expr () <|> M.skip in
+        M.skip
+    end
 
     let generate v =
       let literal_value = Parser_literal_value.generate v in
-      parse literal_value ()
+      let module V = V (struct
+        let literal_value = literal_value
+      end) in
+      V.expr ()
   end :
     Intf.GEN)
