@@ -111,3 +111,7 @@ let%expect_test "binary operator" =
     ex->3
     ex->>4
     3 + 4 - 5 |}]
+
+let%expect_test "function" =
+  Util.run "func(1)" p |> print_endline;
+  [%expect {| func(1) |}]
