@@ -65,6 +65,23 @@ include (
         | Ok v -> Ok v
         | Error _ -> fail "Can not get any result" data)
 
+    let many m =
+      let open Let_syntax in
+      let p = map (fun v -> [ v ]) m in
+      let rec many' accum =
+        let* v = choice p (return []) in
+        match v with
+        | [] -> List.rev accum |> return
+        | v :: _ -> many' (v :: accum)
+      in
+      choice (many' []) (return [])
+
+    let many1 m =
+      let open Let_syntax in
+      let* v = m in
+      let* vs = many m in
+      return (v :: vs)
+
     module Syntax = struct
       let ( >>= ) = bind
 

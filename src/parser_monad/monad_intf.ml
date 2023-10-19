@@ -28,6 +28,10 @@ module type S = sig
       [b]. Fail if [a] and [b] are failed. *)
   val choice : 'a t -> 'a t -> 'a t
 
+  (** [many1 m] get list of result of [m]. If [m] does not exist least 1
+      component, this function will fail *)
+  val many1 : 'a t -> 'a list t
+
   module Let_syntax : sig
     (** A operator for bind *)
     val ( let* ) : 'a t -> ('a -> 'b t) -> 'b t
