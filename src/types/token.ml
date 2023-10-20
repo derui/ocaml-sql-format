@@ -56,7 +56,7 @@ let show = function
   | Tok_lparen -> "("
   | Tok_rparen -> ")"
   | Tok_period -> "."
-  | Tok_comma -> "."
+  | Tok_comma -> ","
   | Tok_colon -> ":"
   | Tok_dollar -> "$"
   | Tok_lbrace -> "{"

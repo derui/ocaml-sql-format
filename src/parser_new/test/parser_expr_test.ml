@@ -114,4 +114,14 @@ let%expect_test "binary operator" =
 
 let%expect_test "function" =
   Util.run "func(1)" p |> print_endline;
-  [%expect {| func(1) |}]
+  Util.run "func(1, f2(*))" p |> print_endline;
+  Util.run "func()" p |> print_endline;
+  Util.run "func(  *   )" p |> print_endline;
+  Util.run "func(  distinct 1,3,'a'   )" p |> print_endline;
+  [%expect
+    {|
+    func(1)
+    func(1, f2(*))
+    func()
+    func( * )
+    func( distinct 1,3,'a' ) |}]

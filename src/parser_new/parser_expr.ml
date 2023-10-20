@@ -42,15 +42,19 @@ include (
       let rec expr () =
         let function_ =
           let* () = ident *> M.bump_when T.Tok_lparen in
-          let* () = expr () in
-          M.many (M.bump_when T.Tok_comma *> expr ()) *> M.bump_when Tok_rparen
+          let exprs =
+            let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
+            let* () = expr () in
+            M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
+          in
+          let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
+          M.bump_when Tok_rparen
         in
         let* () =
           function_ <|> literal_value <|> bind_parameter <|> name
           <|> (unary >>= expr)
         in
-        let* () = binary_operator *> expr () <|> M.skip in
-        M.skip
+        binary_operator *> expr () <|> M.skip
     end
 
     let generate v =
