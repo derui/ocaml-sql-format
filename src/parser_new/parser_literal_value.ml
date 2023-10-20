@@ -22,6 +22,6 @@ include (
       <|> M.bump_kw Kw.Kw_current_date
       <|> M.bump_kw Kw.Kw_current_timestamp
 
-    let generate _ = parse ()
+    let generate _ = parse
   end :
     Intf.GEN)

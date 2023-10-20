@@ -7,7 +7,9 @@ include (
     module Kw = Types.Keyword
 
     module type Param = sig
-      val literal_value : unit M.t
+      val literal_value : Type.parser
+
+      val filter_clause : Type.parser
     end
 
     module V (S : Param) = struct
@@ -48,19 +50,23 @@ include (
             M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
           in
           let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
-          M.bump_when Tok_rparen
+          let* () = M.bump_when Tok_rparen in
+          S.filter_clause () <|> M.skip
         in
         let* () =
-          function_ <|> literal_value <|> bind_parameter <|> name
+          function_ <|> literal_value () <|> bind_parameter <|> name
           <|> (unary >>= expr)
         in
         binary_operator *> expr () <|> M.skip
     end
 
-    let generate v =
+    let generate v () =
       let literal_value = Parser_literal_value.generate v in
+      let filter_clause = v Parser_monad.Kind.N_filter_clause in
       let module V = V (struct
         let literal_value = literal_value
+
+        let filter_clause = filter_clause
       end) in
       V.expr ()
   end :

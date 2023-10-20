@@ -1,3 +1,3 @@
 module M = Parser_monad.Monad
 
-type parser = unit M.t
+type parser = unit -> unit M.t

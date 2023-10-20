@@ -118,10 +118,12 @@ let%expect_test "function" =
   Util.run "func()" p |> print_endline;
   Util.run "func(  *   )" p |> print_endline;
   Util.run "func(  distinct 1,3,'a'   )" p |> print_endline;
+  Util.run "func() filter (where 'data')" p |> print_endline;
   [%expect
     {|
     func(1)
     func(1, f2(*))
     func()
     func( * )
-    func( distinct 1,3,'a' ) |}]
+    func( distinct 1,3,'a' )
+    func() filter (where 'data') |}]

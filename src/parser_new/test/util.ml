@@ -5,4 +5,5 @@ let run source p =
   let token =
     Sedlexing.Utf8.from_string source |> Parser_monad.Tokenizer.tokenize
   in
-  M.parse token p |> Result.fold ~ok:S.Language.to_string ~error:PE.to_string
+  M.parse token (p ())
+  |> Result.fold ~ok:S.Language.to_string ~error:PE.to_string
