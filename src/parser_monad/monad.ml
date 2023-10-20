@@ -179,7 +179,8 @@ include (
       let open Let_syntax in
       let* raw = current in
       if S.Raw.match' (Token.equal tok) raw then bump
-      else fail "Does not match token"
+      else
+        fail @@ Printf.sprintf "Does not match token for %s" @@ Token.show tok
 
     let bump_match f =
       let open Let_syntax in
