@@ -141,3 +141,14 @@ let%expect_test "cast" =
   Util.run "cast( data_column as integer (3) )" p |> print_endline;
   [%expect {|
     cast( data_column as integer (3) ) |}]
+
+let%expect_test "collate" =
+  Util.run "3 collate foo" p |> print_endline;
+  Util.run "func(3) collate foo" p |> print_endline;
+  Util.run "(func(3), 5)\n            collate foo" p |> print_endline;
+  [%expect
+    {|
+    3 collate foo
+    func(3) collate foo
+    (func(3), 5)
+     collate foo |}]

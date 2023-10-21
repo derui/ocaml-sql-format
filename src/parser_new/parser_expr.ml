@@ -60,7 +60,7 @@ include (
             wrap_parens () <|> cast () <|> function_ <|> literal_value ()
             <|> bind_parameter <|> name <|> (unary >>= expr)
           in
-          binary_operator *> expr () <|> M.skip
+          binary_operator *> expr () <|> collate () <|> M.skip
         in
         M.start_syntax Parser_monad.Kind.N_expr p
 
@@ -78,6 +78,8 @@ include (
           S.type_name ()
         in
         Wrapping.parens p
+
+      and collate () = M.bump_kw Kw.Kw_collate *> ident
     end
 
     let generate v () =
