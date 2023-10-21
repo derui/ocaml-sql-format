@@ -2,6 +2,7 @@
 type node =
   | N_expr
   | N_filter_clause
+  | N_type_name
 [@@deriving ord]
 
 (** kind of leaf *)
