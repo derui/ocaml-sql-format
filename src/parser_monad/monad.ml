@@ -148,8 +148,9 @@ include (
           in
           return leaf)
 
-    let put_syntax raw =
+    let put_current () =
       let open Let_syntax in
+      let* raw = current in
       let* data = data () in
       match data.syntax_stack with
       | syntax :: rest ->
@@ -169,10 +170,21 @@ include (
               ; current = None
               } )
 
+    let push_syntax raw =
+      edit_data (fun data ->
+          { data with syntax_stack = raw :: data.syntax_stack })
+
+    let pop_syntax () =
+      let open Let_syntax in
+      let* data = data () in
+      match data.syntax_stack with
+      | syntax :: rest ->
+        fun data -> Ok (syntax, { data with syntax_stack = rest })
+      | [] -> fail "Invalid stack management"
+
     let bump : unit t =
       let open Let_syntax in
-      let* c = current in
-      let* () = put_syntax c in
+      let* () = put_current () in
       edit_data (fun data -> { data with current = None })
 
     let bump_when tok =
@@ -200,19 +212,18 @@ include (
      fun kind m ->
       let open Let_syntax in
       let syntax = S.Raw.make_node kind ~layouts:[] in
-      let* () =
-       fun data ->
-        Ok ((), { data with syntax_stack = syntax :: data.syntax_stack })
-      in
+      let* () = push_syntax syntax in
       let* _ = m in
+      let* syntax = pop_syntax () in
       edit_data (fun data ->
           match data.syntax_stack with
           | s :: rest ->
+            { data with syntax_stack = S.Raw.push_layout syntax s :: rest }
+          | [] ->
             { data with
-              language = S.Language.append s data.language
-            ; syntax_stack = rest
-            }
-          | [] -> failwith "Invalid syntax stack")
+              language = S.Language.append syntax data.language
+            ; syntax_stack = []
+            })
 
     let parse tokens monad =
       let data =

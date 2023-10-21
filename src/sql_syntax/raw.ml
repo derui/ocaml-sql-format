@@ -21,7 +21,7 @@ include (
     let make_leaf kind ~trailing ~leading ~token =
       Leaf { kind; data = { trailing; leading; token } }
 
-    let make_node kind ~layouts = Node { kind; layouts }
+    let make_node kind ~layouts = Node { kind; layouts = List.rev layouts }
 
     let match' f = function
       | Node _ -> false
@@ -42,7 +42,7 @@ include (
             to_string layout |> Buffer.add_string buffer;
             loop rest
         in
-        loop layouts
+        loop @@ List.rev layouts
       | Leaf { data; _ } ->
         Printf.sprintf "%s%s%s"
           (Trivia.to_string data.leading)

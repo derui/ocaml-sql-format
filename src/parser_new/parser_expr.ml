@@ -42,22 +42,31 @@ include (
         <|> M.bump_when T.Op_extract <|> M.bump_when T.Op_extract_2
 
       let rec expr () =
-        let function_ =
-          let* () = ident *> M.bump_when T.Tok_lparen in
-          let exprs =
-            let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
-            let* () = expr () in
-            M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
+        let p =
+          let function_ =
+            let* () = ident *> M.bump_when T.Tok_lparen in
+            let exprs =
+              let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
+              let* () = expr () in
+              M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
+            in
+            let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
+            let* () = M.bump_when Tok_rparen in
+            S.filter_clause () <|> M.skip
           in
-          let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
-          let* () = M.bump_when Tok_rparen in
-          S.filter_clause () <|> M.skip
+          let* () =
+            wrap_parens () <|> function_ <|> literal_value () <|> bind_parameter
+            <|> name <|> (unary >>= expr)
+          in
+          binary_operator *> expr () <|> M.skip
         in
-        let* () =
-          function_ <|> literal_value () <|> bind_parameter <|> name
-          <|> (unary >>= expr)
-        in
-        binary_operator *> expr () <|> M.skip
+        M.start_syntax Parser_monad.Kind.N_expr p
+
+      and wrap_parens () =
+        let* () = M.bump_when T.Tok_lparen in
+        let* () = expr () in
+        let* () = M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip in
+        M.bump_when T.Tok_rparen
     end
 
     let generate v () =
