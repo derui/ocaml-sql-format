@@ -136,3 +136,8 @@ let%expect_test "wrap parens" =
     ( 1 )
     ( 1, 3 , 'a' , "b")
     (1, (3), (4)) |}]
+
+let%expect_test "cast" =
+  Util.run "cast( data_column as integer (3) )" p |> print_endline;
+  [%expect {|
+    cast( data_column as integer (3) ) |}]

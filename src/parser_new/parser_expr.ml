@@ -10,6 +10,8 @@ include (
       val literal_value : Type.parser
 
       val filter_clause : Type.parser
+
+      val type_name : Type.parser
     end
 
     module V (S : Param) = struct
@@ -55,8 +57,8 @@ include (
             S.filter_clause () <|> M.skip
           in
           let* () =
-            wrap_parens () <|> function_ <|> literal_value () <|> bind_parameter
-            <|> name <|> (unary >>= expr)
+            wrap_parens () <|> cast () <|> function_ <|> literal_value ()
+            <|> bind_parameter <|> name <|> (unary >>= expr)
           in
           binary_operator *> expr () <|> M.skip
         in
@@ -67,15 +69,27 @@ include (
         let* () = expr () in
         let* () = M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip in
         M.bump_when T.Tok_rparen
+
+      and cast () =
+        let* () = M.bump_kw Kw.Kw_cast in
+        let p =
+          let* () = expr () in
+          let* () = M.bump_kw Kw.Kw_as in
+          S.type_name ()
+        in
+        Wrapping.parens p
     end
 
     let generate v () =
       let literal_value = Parser_literal_value.generate v in
       let filter_clause = v Parser_monad.Kind.N_filter_clause in
+      let type_name = v Parser_monad.Kind.N_type_name in
       let module V = V (struct
         let literal_value = literal_value
 
         let filter_clause = filter_clause
+
+        let type_name = type_name
       end) in
       V.expr ()
   end :
