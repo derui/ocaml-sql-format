@@ -180,3 +180,15 @@ let%expect_test "glob/regexp/match" =
     list not regexp 'abc%'
     list match 'abc%'
     list not match 'abc%' |}]
+
+let%expect_test "is" =
+  Util.run "list is null" p |> print_endline;
+  Util.run "list is not NULL" p |> print_endline;
+  Util.run "list is distinct from 'abc%'" p |> print_endline;
+  Util.run "list is not distinct from 'abc%'" p |> print_endline;
+  [%expect
+    {|
+    list is null
+    list is not NULL
+    list is distinct from 'abc%'
+    list is not distinct from 'abc%' |}]

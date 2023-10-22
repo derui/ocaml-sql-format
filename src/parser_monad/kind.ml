@@ -11,6 +11,7 @@ type node =
   | N_expr_regexp
   | N_expr_match
   | N_expr_literal
+  | N_expr_is
 [@@deriving ord, show]
 
 (** kind of leaf *)

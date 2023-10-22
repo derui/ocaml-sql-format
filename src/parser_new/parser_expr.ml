@@ -55,7 +55,7 @@ include (
         in
         let* () =
           unary () <|> collate () <|> wrap_parens () <|> cast () <|> function_
-          <|> like () <|> glob () <|> regexp () <|> match_ ()
+          <|> like () <|> glob () <|> regexp () <|> match_ () <|> is ()
           <|> literal_value () <|> bind_parameter <|> name
         in
         binary_operator >>= expr <|> M.skip
@@ -120,6 +120,18 @@ include (
           M.bump_kw Kw.Kw_match >>= expr
         in
         M.start_syntax K.N_expr_match p
+
+      and is () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_is in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          let* () =
+            M.bump_kw Kw.Kw_distinct *> M.bump_kw Kw.Kw_from <|> M.skip
+          in
+          expr ()
+        in
+        M.start_syntax K.N_expr_is p
     end
 
     let generate v () =
