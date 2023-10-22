@@ -7,6 +7,10 @@ type node =
   | N_expr_unary
   | N_expr_wrap
   | N_expr_like
+  | N_expr_glob
+  | N_expr_regexp
+  | N_expr_match
+  | N_expr_literal
 [@@deriving ord, show]
 
 (** kind of leaf *)

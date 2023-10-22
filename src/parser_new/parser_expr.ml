@@ -16,7 +16,8 @@ include (
     end
 
     module V (S : Param) = struct
-      let literal_value = S.literal_value
+      let literal_value () =
+        M.start_syntax K.N_expr_literal @@ (M.skip >>= S.literal_value)
 
       let ident =
         M.bump_match (function
@@ -54,7 +55,8 @@ include (
         in
         let* () =
           unary () <|> collate () <|> wrap_parens () <|> cast () <|> function_
-          <|> like () <|> literal_value () <|> bind_parameter <|> name
+          <|> like () <|> glob () <|> regexp () <|> match_ ()
+          <|> literal_value () <|> bind_parameter <|> name
         in
         binary_operator >>= expr <|> M.skip
 
@@ -94,6 +96,30 @@ include (
           M.bump_kw Kw.Kw_escape >>= expr <|> M.skip
         in
         M.start_syntax K.N_expr_like p
+
+      and glob () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          M.bump_kw Kw.Kw_glob >>= expr
+        in
+        M.start_syntax K.N_expr_glob p
+
+      and regexp () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          M.bump_kw Kw.Kw_regexp >>= expr
+        in
+        M.start_syntax K.N_expr_regexp p
+
+      and match_ () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          M.bump_kw Kw.Kw_match >>= expr
+        in
+        M.start_syntax K.N_expr_match p
     end
 
     let generate v () =

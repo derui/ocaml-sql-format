@@ -164,3 +164,19 @@ let%expect_test "like" =
     list like 'abc%'
     list not like 'abc%'
     list like 35 escape 'a' |}]
+
+let%expect_test "glob/regexp/match" =
+  Util.run "list GLOB 'abc%'" p |> print_endline;
+  Util.run "list not GLOB 'abc%'" p |> print_endline;
+  Util.run "list regexp 'abc%'" p |> print_endline;
+  Util.run "list not regexp 'abc%'" p |> print_endline;
+  Util.run "list match 'abc%'" p |> print_endline;
+  Util.run "list not match 'abc%'" p |> print_endline;
+  [%expect
+    {|
+    list GLOB 'abc%'
+    list not GLOB 'abc%'
+    list regexp 'abc%'
+    list not regexp 'abc%'
+    list match 'abc%'
+    list not match 'abc%' |}]
