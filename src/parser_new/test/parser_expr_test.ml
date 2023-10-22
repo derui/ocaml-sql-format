@@ -199,3 +199,23 @@ let%expect_test "between" =
   [%expect {|
     list between t and f
     list not between 3 and 300 |}]
+
+let%expect_test "in" =
+  Util.run "list in (1)" p |> print_endline;
+  Util.run "list in (1,'3', 4)" p |> print_endline;
+  Util.run "list not in (1,'3', 4)" p |> print_endline;
+  Util.run "list  in tbl" p |> print_endline;
+  Util.run "list  in public.tbl" p |> print_endline;
+  Util.run "list  in func()" p |> print_endline;
+  Util.run "list  in func(1)" p |> print_endline;
+  Util.run "list  in func(1,3)" p |> print_endline;
+  [%expect
+    {|
+    list in (1)
+    list in (1,'3', 4)
+    list not in (1,'3', 4)
+    list in tbl
+    list in public.tbl
+    list in func()
+    list in func(1)
+    list in func(1,3) |}]

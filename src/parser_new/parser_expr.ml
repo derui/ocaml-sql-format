@@ -42,23 +42,24 @@ include (
         <|> M.bump_when T.Op_extract <|> M.bump_when T.Op_extract_2
 
       let rec expr () =
-        let function_ =
-          let* () = ident *> M.bump_when T.Tok_lparen in
-          let exprs =
-            let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
-            let* () = expr () in
-            M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
-          in
-          let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
-          let* () = M.bump_when Tok_rparen in
-          S.filter_clause () <|> M.skip
-        in
         let* () =
-          unary () <|> collate () <|> wrap_parens () <|> cast () <|> function_
-          <|> like () <|> glob () <|> regexp () <|> match_ () <|> is ()
-          <|> between () <|> literal_value () <|> bind_parameter <|> name
+          unary () <|> collate () <|> wrap_parens () <|> cast ()
+          <|> function_ () <|> like () <|> glob () <|> regexp () <|> match_ ()
+          <|> is () <|> between () <|> in_ () <|> literal_value ()
+          <|> bind_parameter <|> name
         in
         binary_operator >>= expr <|> M.skip
+
+      and function_ () =
+        let* () = ident *> M.bump_when T.Tok_lparen in
+        let exprs =
+          let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
+          let* () = expr () in
+          M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
+        in
+        let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
+        let* () = M.bump_when Tok_rparen in
+        S.filter_clause () <|> M.skip
 
       and wrap_parens () =
         let p =
@@ -141,6 +142,26 @@ include (
           expr () *> M.bump_kw Kw.Kw_and >>= expr
         in
         M.start_syntax K.N_expr_between p
+
+      and in_ () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          let schema = ident *> M.bump_when T.Tok_period <|> M.skip in
+          let list =
+            let* () = M.skip >>= expr in
+            M.many (M.bump_when T.Tok_comma >>= expr)
+          in
+          let name = schema *> ident
+          and table_function_ =
+            schema *> name
+            *> (M.bump_when Tok_lparen *> M.bump_when Tok_rparen
+               <|> Wrapping.parens list)
+          in
+          let* () = M.bump_kw Kw.Kw_in in
+          table_function_ <|> name <|> Wrapping.parens list
+        in
+        M.start_syntax K.N_expr_in p
     end
 
     let generate v () =
