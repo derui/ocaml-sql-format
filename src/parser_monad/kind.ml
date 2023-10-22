@@ -12,6 +12,7 @@ type node =
   | N_expr_match
   | N_expr_literal
   | N_expr_is
+  | N_expr_between
 [@@deriving ord, show]
 
 (** kind of leaf *)

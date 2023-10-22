@@ -192,3 +192,10 @@ let%expect_test "is" =
     list is not NULL
     list is distinct from 'abc%'
     list is not distinct from 'abc%' |}]
+
+let%expect_test "between" =
+  Util.run "list between t and f" p |> print_endline;
+  Util.run "list not between 3 and 300" p |> print_endline;
+  [%expect {|
+    list between t and f
+    list not between 3 and 300 |}]

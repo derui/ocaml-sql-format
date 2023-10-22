@@ -56,7 +56,7 @@ include (
         let* () =
           unary () <|> collate () <|> wrap_parens () <|> cast () <|> function_
           <|> like () <|> glob () <|> regexp () <|> match_ () <|> is ()
-          <|> literal_value () <|> bind_parameter <|> name
+          <|> between () <|> literal_value () <|> bind_parameter <|> name
         in
         binary_operator >>= expr <|> M.skip
 
@@ -132,6 +132,15 @@ include (
           expr ()
         in
         M.start_syntax K.N_expr_is p
+
+      and between () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          let* () = M.bump_kw Kw.Kw_between in
+          expr () *> M.bump_kw Kw.Kw_and >>= expr
+        in
+        M.start_syntax K.N_expr_between p
     end
 
     let generate v () =
