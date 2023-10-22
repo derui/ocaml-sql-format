@@ -3,7 +3,11 @@ type node =
   | N_expr
   | N_filter_clause
   | N_type_name
-[@@deriving ord]
+  | N_expr_collate
+  | N_expr_unary
+  | N_expr_wrap
+  | N_expr_like
+[@@deriving ord, show]
 
 (** kind of leaf *)
 type leaf =

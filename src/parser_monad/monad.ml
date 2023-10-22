@@ -5,13 +5,26 @@ include (
 
     type raw = (Kind.node, Kind.leaf) S.Raw.t
 
+    type pointer = int
+
+    type syntax_stack_element = Kind.node * pointer
+
+    module Syntax_memo = Map.Make (struct
+      type t = Kind.node * pointer
+
+      let compare (k, p) (k', p') =
+        let k = Kind.compare_node k k' in
+        if k = 0 then Stdlib.compare p p' else k
+    end)
+
     (** Type of monad. *)
     type data =
-      { pointer : int
+      { pointer : pointer
       ; token_stream : Tokenizer.t array
       ; language : Monad_intf.language
       ; current : raw option
-      ; syntax_stack : raw list
+      ; syntax_stack : syntax_stack_element list
+      ; syntax_memo : raw Syntax_memo.t
       }
 
     type 'a t = data -> ('a * data, Parse_error.t) result
@@ -153,13 +166,17 @@ include (
       let* raw = current in
       let* data = data () in
       match data.syntax_stack with
-      | syntax :: rest ->
+      | (k, p) :: _ ->
         fun data ->
           Ok
             ( ()
             , { data with
-                syntax_stack = S.Raw.push_layout raw syntax :: rest
-              ; current = None
+                current = None
+              ; syntax_memo =
+                  Syntax_memo.update (k, p)
+                    (fun v ->
+                      Option.get v |> S.Raw.push_layout raw |> Option.some)
+                    data.syntax_memo
               } )
       | [] ->
         fun data ->
@@ -170,16 +187,33 @@ include (
               ; current = None
               } )
 
-    let push_syntax raw =
-      edit_data (fun data ->
-          { data with syntax_stack = raw :: data.syntax_stack })
+    let push_syntax (kind : Kind.node) (raw : raw) =
+      let open Let_syntax in
+      let* data = data () in
+
+      if Syntax_memo.mem (kind, data.pointer) data.syntax_memo then
+        fail "Detect infinite recursion"
+      else
+        let key = (kind, data.pointer) in
+        edit_data (fun data ->
+            { data with
+              syntax_stack = key :: data.syntax_stack
+            ; syntax_memo = Syntax_memo.add key raw data.syntax_memo
+            })
 
     let pop_syntax () =
       let open Let_syntax in
       let* data = data () in
       match data.syntax_stack with
-      | syntax :: rest ->
-        fun data -> Ok (syntax, { data with syntax_stack = rest })
+      | key :: rest ->
+        let syntax = Syntax_memo.find key data.syntax_memo in
+        fun data ->
+          Ok
+            ( syntax
+            , { data with
+                syntax_stack = rest
+              ; syntax_memo = Syntax_memo.remove key data.syntax_memo
+              } )
       | [] -> fail "Invalid stack management"
 
     let bump : unit t =
@@ -212,17 +246,24 @@ include (
      fun kind m ->
       let open Let_syntax in
       let syntax = S.Raw.make_node kind ~layouts:[] in
-      let* () = push_syntax syntax in
+      let* () = push_syntax kind syntax in
       let* _ = m in
       let* syntax = pop_syntax () in
       edit_data (fun data ->
           match data.syntax_stack with
-          | s :: rest ->
-            { data with syntax_stack = S.Raw.push_layout syntax s :: rest }
+          | key :: _ ->
+            { data with
+              syntax_memo =
+                Syntax_memo.update key
+                  (fun v ->
+                    Option.get v |> S.Raw.push_layout syntax |> Option.some)
+                  data.syntax_memo
+            }
           | [] ->
             { data with
               language = S.Language.append syntax data.language
             ; syntax_stack = []
+            ; syntax_memo = Syntax_memo.empty
             })
 
     let parse tokens monad =
@@ -232,6 +273,7 @@ include (
         ; language = S.Language.empty ()
         ; current = None
         ; syntax_stack = []
+        ; syntax_memo = Syntax_memo.empty
         }
       in
       match monad data with

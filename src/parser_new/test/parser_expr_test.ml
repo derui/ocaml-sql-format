@@ -89,6 +89,7 @@ let%expect_test "binary operator" =
   Util.run "ex->3" p |> print_endline;
   Util.run "ex->>4" p |> print_endline;
   Util.run "3 + 4 - 5" p |> print_endline;
+  Util.run "(3 + 4) - 5" p |> print_endline;
   [%expect
     {|
      1 + 2
@@ -110,7 +111,8 @@ let%expect_test "binary operator" =
     rshift <<2
     ex->3
     ex->>4
-    3 + 4 - 5 |}]
+    3 + 4 - 5
+    (3 + 4) - 5 |}]
 
 let%expect_test "function" =
   Util.run "func(1)" p |> print_endline;
@@ -152,3 +154,13 @@ let%expect_test "collate" =
     func(3) collate foo
     (func(3), 5)
      collate foo |}]
+
+let%expect_test "like" =
+  Util.run "list like 'abc%'" p |> print_endline;
+  Util.run "list not like 'abc%'" p |> print_endline;
+  Util.run "list like 35 escape 'a'" p |> print_endline;
+  [%expect
+    {|
+    list like 'abc%'
+    list not like 'abc%'
+    list like 35 escape 'a' |}]

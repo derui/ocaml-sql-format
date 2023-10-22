@@ -5,6 +5,7 @@ include (
     open M.Let_syntax
     module T = Types.Token
     module Kw = Types.Keyword
+    module K = Parser_monad.Kind
 
     module type Param = sig
       val literal_value : Type.parser
@@ -29,10 +30,6 @@ include (
 
       let bind_parameter = M.bump_when T.Tok_qmark
 
-      let unary =
-        M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
-        <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
-
       let binary_operator =
         M.bump_when T.Op_amp <|> M.bump_when T.Op_eq <|> M.bump_when T.Op_eq2
         <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus
@@ -44,42 +41,59 @@ include (
         <|> M.bump_when T.Op_extract <|> M.bump_when T.Op_extract_2
 
       let rec expr () =
-        let p =
-          let function_ =
-            let* () = ident *> M.bump_when T.Tok_lparen in
-            let exprs =
-              let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
-              let* () = expr () in
-              M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
-            in
-            let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
-            let* () = M.bump_when Tok_rparen in
-            S.filter_clause () <|> M.skip
+        let function_ =
+          let* () = ident *> M.bump_when T.Tok_lparen in
+          let exprs =
+            let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
+            let* () = expr () in
+            M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
           in
-          let* () =
-            wrap_parens () <|> cast () <|> function_ <|> literal_value ()
-            <|> bind_parameter <|> name <|> (unary >>= expr)
-          in
-          binary_operator *> expr () <|> collate () <|> M.skip
+          let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
+          let* () = M.bump_when Tok_rparen in
+          S.filter_clause () <|> M.skip
         in
-        M.start_syntax Parser_monad.Kind.N_expr p
+        let* () =
+          unary () <|> collate () <|> wrap_parens () <|> cast () <|> function_
+          <|> like () <|> literal_value () <|> bind_parameter <|> name
+        in
+        binary_operator >>= expr <|> M.skip
 
       and wrap_parens () =
-        let* () = M.bump_when T.Tok_lparen in
-        let* () = expr () in
-        let* () = M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip in
-        M.bump_when T.Tok_rparen
+        let p =
+          let* () = M.bump_when T.Tok_lparen in
+          let* () = expr () in
+          let* () = M.many (M.bump_when T.Tok_comma >>= expr) *> M.skip in
+          M.bump_when T.Tok_rparen
+        in
+        M.start_syntax K.N_expr_wrap p
+
+      and unary () =
+        let op =
+          M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
+          <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
+        in
+        M.start_syntax K.N_expr_unary @@ (op *> (M.skip >>= expr))
 
       and cast () =
         let* () = M.bump_kw Kw.Kw_cast in
         let p =
           let* () = expr () in
-          let* () = M.bump_kw Kw.Kw_as in
-          S.type_name ()
+          M.bump_kw Kw.Kw_as >>= S.type_name
         in
         Wrapping.parens p
 
-      and collate () = M.bump_kw Kw.Kw_collate *> ident
+      and collate () =
+        M.start_syntax K.N_expr_collate
+        @@ ((M.skip >>= expr) *> M.bump_kw Kw.Kw_collate *> ident)
+
+      and like () =
+        let p =
+          let* () = M.skip >>= expr in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          let* () = M.bump_kw Kw.Kw_like >>= expr in
+          M.bump_kw Kw.Kw_escape >>= expr <|> M.skip
+        in
+        M.start_syntax K.N_expr_like p
     end
 
     let generate v () =
