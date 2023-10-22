@@ -219,3 +219,35 @@ let%expect_test "in" =
     list in func()
     list in func(1)
     list in func(1,3) |}]
+
+let%expect_test "case" =
+  Util.run "case when 'a' then 3 end" p |> print_endline;
+  Util.run
+    {|CASE
+            when 'f' then 3
+            when 'e' then 4
+            else 5
+            END|}
+    p
+  |> print_endline;
+  Util.run
+    {|CASE foobar
+            when 'f' then 3
+            when 'e' then 4
+            else 5
+            END|}
+    p
+  |> print_endline;
+  [%expect
+    {|
+    case when 'a' then 3 end
+    CASE
+     when 'f' then 3
+     when 'e' then 4
+     else 5
+     END
+    CASE foobar
+     when 'f' then 3
+     when 'e' then 4
+     else 5
+     END |}]

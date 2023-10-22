@@ -45,7 +45,7 @@ include (
         let* () =
           unary () <|> collate () <|> wrap_parens () <|> cast ()
           <|> function_ () <|> like () <|> glob () <|> regexp () <|> match_ ()
-          <|> is () <|> between () <|> in_ () <|> literal_value ()
+          <|> is () <|> between () <|> in_ () <|> case () <|> literal_value ()
           <|> bind_parameter <|> name
         in
         binary_operator >>= expr <|> M.skip
@@ -162,6 +162,29 @@ include (
           table_function_ <|> name <|> Wrapping.parens list
         in
         M.start_syntax K.N_expr_in p
+
+      (* TODO implement after select_stmt implemented *)
+      (* and exists () = *)
+      (*   let p = *)
+      (*     let* () = M.bump_kw Kw.Kw_not <|> M.skip in *)
+      (*     let* () = M.bump_kw Kw.Kw_exists in *)
+
+      and case () =
+        let p =
+          let when_ =
+            let p =
+              let* () = M.bump_kw Kw.Kw_when >>= expr in
+              M.bump_kw Kw.Kw_then >>= expr
+            in
+            M.start_syntax K.N_expr_when p
+          in
+          let* () = M.bump_kw Kw.Kw_case in
+          let* () = M.skip >>= expr <|> M.skip in
+          let* _ = M.many1 when_ in
+          let* () = M.bump_kw Kw.Kw_else >>= expr <|> M.skip in
+          M.bump_kw Kw.Kw_end
+        in
+        M.start_syntax K.N_expr_case p
     end
 
     let generate v () =
