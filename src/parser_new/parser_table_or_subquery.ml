@@ -26,7 +26,8 @@ include (
         in
         fname <|> name
       in
-      name_base <|> (M.skip >>= fun _ -> Wrapping.parens (parse expr ()))
+      M.start_syntax K.N_table_or_subquery @@ name_base
+      <|> (M.skip >>= fun _ -> Wrapping.parens (parse expr ()))
 
     let generate taker () =
       let expr = taker Parser_monad.Kind.N_expr in

@@ -19,6 +19,7 @@ include (
       |> Kind_map.add K.N_from_clause (module Parser_from_clause : Intf.GEN)
       |> Kind_map.add K.N_table_or_subquery
            (module Parser_table_or_subquery : Intf.GEN)
+      |> Kind_map.add K.N_join_clause (module Parser_join_clause : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
