@@ -16,6 +16,8 @@ type node =
   | N_expr_in
   | N_expr_case
   | N_expr_when
+  | N_select_core
+  | N_from_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)

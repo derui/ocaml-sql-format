@@ -15,6 +15,8 @@ include (
       |> Kind_map.add K.N_expr (module Parser_expr : Intf.GEN)
       |> Kind_map.add K.N_filter_clause (module Parser_filter_clause : Intf.GEN)
       |> Kind_map.add K.N_type_name (module Parser_type_name : Intf.GEN)
+      |> Kind_map.add K.N_select_core (module Parser_select_core : Intf.GEN)
+      |> Kind_map.add K.N_from_clause (module Parser_from_clause : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
