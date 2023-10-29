@@ -14,6 +14,7 @@ let%expect_test "parse " =
   Util.run {| f('fo') |} p |> print_endline;
   Util.run {| f('fo') as other_name |} p |> print_endline;
   Util.run {| f('fo') other_name |} p |> print_endline;
+  Util.run {| (f('fo') other_name) |} p |> print_endline;
 
   [%expect
     {|
@@ -24,4 +25,5 @@ let%expect_test "parse " =
      f(1,3)
      f('fo')
      f('fo') as other_name
-     f('fo') other_name |}]
+     f('fo') other_name
+     (f('fo') other_name) |}]

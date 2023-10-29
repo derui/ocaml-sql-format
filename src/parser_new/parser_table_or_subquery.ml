@@ -12,9 +12,9 @@ include (
         | T.Tok_ident _ -> true
         | _ -> false)
 
-    let parse expr () =
-      let alias = (M.bump_kw Kw.Kw_as <|> M.skip) *> ident <|> M.skip in
+    let rec parse expr () =
       let name_base =
+        let alias = (M.bump_kw Kw.Kw_as <|> M.skip) *> ident <|> M.skip in
         let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
         let name = ident *> alias in
 
@@ -26,7 +26,7 @@ include (
         in
         fname <|> name
       in
-      name_base
+      name_base <|> (M.skip >>= fun _ -> Wrapping.parens (parse expr ()))
 
     let generate taker () =
       let expr = taker Parser_monad.Kind.N_expr in
