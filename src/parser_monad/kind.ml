@@ -18,6 +18,7 @@ type node =
   | N_expr_when
   | N_select_core
   | N_from_clause
+  | N_table_or_subquery
 [@@deriving ord, show]
 
 (** kind of leaf *)
