@@ -14,6 +14,9 @@ let%expect_test "parse " =
   Util.run {| from f('fo') |} p |> print_endline;
   Util.run {| from f('fo') as other_name |} p |> print_endline;
   Util.run {| from f('fo') other_name |} p |> print_endline;
+  Util.run {| from f('fo') other_name, other_table, foo |} p |> print_endline;
+  Util.run {| from f('fo') inner join other_name using (id) |} p
+  |> print_endline;
 
   [%expect
     {|
@@ -24,4 +27,6 @@ let%expect_test "parse " =
     from f(1,3)
     from f('fo')
     from f('fo') as other_name
-    from f('fo') other_name |}]
+    from f('fo') other_name
+    from f('fo') other_name, other_table, foo
+    from f('fo') inner join other_name using (id) |}]
