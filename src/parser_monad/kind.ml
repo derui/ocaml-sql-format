@@ -21,6 +21,7 @@ type node =
   | N_table_or_subquery
   | N_join_clause
   | N_where_clause
+  | N_group_by_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)
