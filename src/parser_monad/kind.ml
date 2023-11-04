@@ -22,6 +22,7 @@ type node =
   | N_join_clause
   | N_where_clause
   | N_group_by_clause
+  | N_having_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)

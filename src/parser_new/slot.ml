@@ -23,6 +23,7 @@ include (
       |> Kind_map.add K.N_where_clause (module Parser_where_clause : Intf.GEN)
       |> Kind_map.add K.N_group_by_clause
            (module Parser_group_by_clause : Intf.GEN)
+      |> Kind_map.add K.N_having_clause (module Parser_having_clause : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
