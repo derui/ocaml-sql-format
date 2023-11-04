@@ -23,6 +23,9 @@ type node =
   | N_where_clause
   | N_group_by_clause
   | N_having_clause
+  | N_window_defn
+  | N_order_by_clause
+  | N_ordering_term
 [@@deriving ord, show]
 
 (** kind of leaf *)
