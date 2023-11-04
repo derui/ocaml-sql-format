@@ -20,6 +20,7 @@ type node =
   | N_from_clause
   | N_table_or_subquery
   | N_join_clause
+  | N_where_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)
