@@ -33,6 +33,7 @@ include (
       |> Kind_map.add K.N_result_column (module Parser_result_column : Intf.GEN)
       |> Kind_map.add K.N_select_core (module Parser_select_core : Intf.GEN)
       |> Kind_map.add K.N_over_clause (module Parser_over_clause : Intf.GEN)
+      |> Kind_map.add K.N_limit_clause (module Parser_limit_clause : Intf.GEN)
 
     let get_taker () =
       let rec f kind =

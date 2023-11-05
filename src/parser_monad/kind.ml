@@ -30,6 +30,7 @@ type node =
   | N_window_clause
   | N_result_column
   | N_over_clause
+  | N_limit_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)
