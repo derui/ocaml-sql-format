@@ -27,6 +27,7 @@ type node =
   | N_order_by_clause
   | N_ordering_term
   | N_frame_spec
+  | N_window_clause
 [@@deriving ord, show]
 
 (** kind of leaf *)
