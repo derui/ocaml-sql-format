@@ -30,6 +30,7 @@ include (
       |> Kind_map.add K.N_frame_spec (module Parser_frame_spec : Intf.GEN)
       |> Kind_map.add K.N_window_defn (module Parser_window_defn : Intf.GEN)
       |> Kind_map.add K.N_window_clause (module Parser_window_clause : Intf.GEN)
+      |> Kind_map.add K.N_result_column (module Parser_result_column : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
