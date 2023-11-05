@@ -121,6 +121,9 @@ let%expect_test "function" =
   Util.run "func(  *   )" p |> print_endline;
   Util.run "func(  distinct 1, 3 , 'a'   )" p |> print_endline;
   Util.run "func() filter (where 'data')" p |> print_endline;
+  Util.run "func() over (partition by c)" p |> print_endline;
+  Util.run "func() filter (where 'foo') over (partition by c)" p
+  |> print_endline;
   [%expect
     {|
     func(1)
@@ -128,7 +131,9 @@ let%expect_test "function" =
     func()
     func( * )
     func( distinct 1, 3 , 'a' )
-    func() filter (where 'data') |}]
+    func() filter (where 'data')
+    func() over (partition by c)
+    func() filter (where 'foo') over (partition by c) |}]
 
 let%expect_test "wrap parens" =
   Util.run "( 1 )" p |> print_endline;

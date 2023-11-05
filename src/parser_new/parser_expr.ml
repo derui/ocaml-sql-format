@@ -13,6 +13,8 @@ include (
       val filter_clause : Type.parser
 
       val type_name : Type.parser
+
+      val over_clause : Type.parser
     end
 
     module V (S : Param) = struct
@@ -59,7 +61,8 @@ include (
         in
         let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
         let* () = M.bump_when Tok_rparen in
-        S.filter_clause () <|> M.skip
+        let* () = S.filter_clause () <|> M.skip in
+        S.over_clause () <|> M.skip
 
       and wrap_parens () =
         let p =
@@ -190,13 +193,14 @@ include (
     let generate v () =
       let literal_value = Parser_literal_value.generate v in
       let filter_clause = v Parser_monad.Kind.N_filter_clause in
-      let type_name = v Parser_monad.Kind.N_type_name in
       let module V = V (struct
         let literal_value = literal_value
 
         let filter_clause = filter_clause
 
-        let type_name = type_name
+        let type_name = v Parser_monad.Kind.N_type_name
+
+        let over_clause = v Parser_monad.Kind.N_over_clause
       end) in
       V.expr ()
   end :
