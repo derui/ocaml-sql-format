@@ -15,6 +15,8 @@ include (
       val type_name : Type.parser
 
       val over_clause : Type.parser
+
+      val select_stmt : Type.parser
     end
 
     module V (S : Param) = struct
@@ -45,7 +47,7 @@ include (
 
       let rec expr () =
         let* () =
-          unary () <|> collate () <|> wrap_parens () <|> cast ()
+          unary () <|> collate () <|> wrap_parens () <|> cast () <|> exists ()
           <|> function_ () <|> like () <|> glob () <|> regexp () <|> match_ ()
           <|> is () <|> between () <|> in_ () <|> case () <|> literal_value ()
           <|> bind_parameter <|> name
@@ -166,11 +168,13 @@ include (
         in
         M.start_syntax K.N_expr_in p
 
-      (* TODO implement after select_stmt implemented *)
-      (* and exists () = *)
-      (*   let p = *)
-      (*     let* () = M.bump_kw Kw.Kw_not <|> M.skip in *)
-      (*     let* () = M.bump_kw Kw.Kw_exists in *)
+      and exists () =
+        let p =
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
+          let* () = M.bump_kw Kw.Kw_exists in
+          Wrapping.parens (S.select_stmt ())
+        in
+        M.start_syntax K.N_expr_exists p
 
       and case () =
         let p =
@@ -201,6 +205,8 @@ include (
         let type_name = v Parser_monad.Kind.N_type_name
 
         let over_clause = v Parser_monad.Kind.N_over_clause
+
+        let select_stmt = v Parser_monad.Kind.N_select_stmt
       end) in
       V.expr ()
   end :

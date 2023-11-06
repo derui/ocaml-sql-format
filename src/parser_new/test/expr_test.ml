@@ -256,3 +256,11 @@ let%expect_test "case" =
      when 'e' then 4
      else 5
      END |}]
+
+let%expect_test "exists" =
+  Util.run "exists (select 3)" p |> print_endline;
+  Util.run "not exists (select 3)" p |> print_endline;
+
+  [%expect {|
+    exists (select 3)
+    not exists (select 3) |}]

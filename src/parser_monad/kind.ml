@@ -16,6 +16,7 @@ type node =
   | N_expr_in
   | N_expr_case
   | N_expr_when
+  | N_expr_exists
   | N_select_core
   | N_from_clause
   | N_table_or_subquery
