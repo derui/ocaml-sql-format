@@ -39,6 +39,7 @@ type node =
   | N_select_stmt
   | N_begin_stmt
   | N_rollback_stmt
+  | N_commit_stmt
 [@@deriving ord, show]
 
 (** kind of leaf *)

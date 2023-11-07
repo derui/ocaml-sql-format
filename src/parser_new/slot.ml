@@ -40,6 +40,7 @@ include (
       |> Kind_map.add K.N_select_stmt (module Parser_select_stmt : Intf.GEN)
       |> Kind_map.add K.N_begin_stmt (module Parser_begin_stmt : Intf.GEN)
       |> Kind_map.add K.N_rollback_stmt (module Parser_rollback_stmt : Intf.GEN)
+      |> Kind_map.add K.N_commit_stmt (module Parser_commit_stmt : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
