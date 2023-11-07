@@ -35,24 +35,42 @@ include (
 
       let bind_parameter = M.bump_when T.Tok_qmark
 
-      let binary_operator =
-        M.bump_when T.Op_amp <|> M.bump_when T.Op_eq <|> M.bump_when T.Op_eq2
-        <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus
-        <|> M.bump_when T.Op_star <|> M.bump_when T.Op_slash
-        <|> M.bump_when T.Op_pipe <|> M.bump_when T.Op_lshift
-        <|> M.bump_when T.Op_rshift <|> M.bump_when T.Op_ge
-        <|> M.bump_when T.Op_gt <|> M.bump_when T.Op_le <|> M.bump_when T.Op_lt
-        <|> M.bump_when T.Op_ne <|> M.bump_when T.Op_ne2
-        <|> M.bump_when T.Op_extract <|> M.bump_when T.Op_extract_2
-
       let rec expr () =
-        let* () =
-          unary () <|> collate () <|> wrap_parens () <|> cast () <|> exists ()
-          <|> function_ () <|> like () <|> glob () <|> regexp () <|> match_ ()
-          <|> is () <|> between () <|> in_ () <|> case () <|> literal_value ()
-          <|> bind_parameter <|> name
+        let* () = non_binary_expr () in
+        binary_operator () <|> M.skip
+
+      and non_binary_expr () =
+        unary () <|> collate () <|> wrap_parens () <|> cast () <|> exists ()
+        <|> function_ () <|> case () <|> literal_value () <|> bind_parameter
+        <|> name
+
+      and binary_operator () =
+        let as_op op =
+          M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr)
         in
-        binary_operator >>= expr <|> M.skip
+        let kw_as_op kw =
+          M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr)
+        in
+        let tier_1 =
+          as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat
+        in
+        let tier_2 = as_op Op_star <|> as_op Op_slash <|> as_op Op_modulo in
+        let tier_3 = as_op Op_plus <|> as_op Op_minus in
+        let tier_4 =
+          as_op Op_amp <|> as_op Op_pipe <|> as_op Op_rshift <|> as_op Op_lshift
+        in
+        let tier_5 =
+          as_op Op_gt <|> as_op Op_ge <|> as_op Op_le <|> as_op Op_lt
+        in
+        let tier_6 =
+          as_op Op_eq <|> as_op Op_eq2 <|> as_op Op_ne <|> as_op Op_ne2
+          <|> is () <|> in_ () <|> between () <|> glob () <|> like ()
+          <|> regexp () <|> match_ ()
+        in
+        let tier_7 = kw_as_op Kw_and in
+        let tier_8 = kw_as_op Kw_or in
+        tier_1 <|> tier_2 <|> tier_3 <|> tier_4 <|> tier_5 <|> tier_6 <|> tier_7
+        <|> tier_8
 
       and function_ () =
         let* () = ident *> M.bump_when T.Tok_lparen in
@@ -68,10 +86,11 @@ include (
 
       and wrap_parens () =
         let p =
-          let* () = M.bump_when T.Tok_lparen in
-          let* () = expr () in
-          let* () = M.many (M.bump_when T.Tok_comma >>= expr) *> M.skip in
-          M.bump_when T.Tok_rparen
+          let e =
+            let* () = M.skip >>= expr in
+            M.many (M.bump_when T.Tok_comma >>= expr) *> M.skip
+          in
+          Wrapping.parens e
         in
         M.start_syntax K.N_expr_wrap p
 
@@ -80,7 +99,7 @@ include (
           M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
           <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
         in
-        M.start_syntax K.N_expr_unary @@ (op *> (M.skip >>= expr))
+        M.start_syntax K.N_expr_unary @@ (op >>= expr)
 
       and cast () =
         let* () = M.bump_kw Kw.Kw_cast in
@@ -96,7 +115,6 @@ include (
 
       and like () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let* () = M.bump_kw Kw.Kw_like >>= expr in
           M.bump_kw Kw.Kw_escape >>= expr <|> M.skip
@@ -105,7 +123,6 @@ include (
 
       and glob () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           M.bump_kw Kw.Kw_glob >>= expr
         in
@@ -113,7 +130,6 @@ include (
 
       and regexp () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           M.bump_kw Kw.Kw_regexp >>= expr
         in
@@ -121,7 +137,6 @@ include (
 
       and match_ () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           M.bump_kw Kw.Kw_match >>= expr
         in
@@ -129,7 +144,6 @@ include (
 
       and is () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_is in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let* () =
@@ -141,16 +155,14 @@ include (
 
       and between () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          let* () = M.bump_kw Kw.Kw_between in
-          expr () *> M.bump_kw Kw.Kw_and >>= expr
+          M.bump_kw Kw.Kw_between >>= non_binary_expr >>= fun () ->
+          M.bump_kw Kw.Kw_and >>= non_binary_expr
         in
         M.start_syntax K.N_expr_between p
 
       and in_ () =
         let p =
-          let* () = M.skip >>= expr in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let schema = ident *> M.bump_when T.Tok_period <|> M.skip in
           let list =

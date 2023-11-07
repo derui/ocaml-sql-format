@@ -17,6 +17,7 @@ type node =
   | N_expr_case
   | N_expr_when
   | N_expr_exists
+  | N_expr_binary_op of [ `op of Types.Token.t | `kw of Types.Keyword.t ]
   | N_select_core
   | N_from_clause
   | N_table_or_subquery
@@ -61,6 +62,7 @@ type leaf =
   | L_minus
   | L_star
   | L_slash
+  | L_modulo
   | L_amp
   | L_pipe
   | L_concat
@@ -104,6 +106,7 @@ let token_to_leaf = function
   | Op_minus -> L_minus
   | Op_star -> L_star
   | Op_slash -> L_slash
+  | Op_modulo -> L_modulo
   | Op_amp -> L_amp
   | Op_pipe -> L_pipe
   | Op_concat -> L_concat

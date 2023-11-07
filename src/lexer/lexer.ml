@@ -2543,6 +2543,7 @@ let rec token buf =
   | '-' -> Op_minus
   | '*' -> Op_star
   | '/' -> Op_slash
+  | '%' -> Op_modulo
   | "||" -> Op_concat
   | "&" -> Op_amp
   | "|" -> Op_pipe

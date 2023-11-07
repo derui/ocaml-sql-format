@@ -27,6 +27,7 @@ type t =
   | Op_minus
   | Op_star
   | Op_slash
+  | Op_modulo
   | Op_amp
   | Op_pipe
   | Op_concat
@@ -44,7 +45,7 @@ type t =
   | Op_lshift
   | Op_rshift
   | Tok_eof
-[@@deriving eq]
+[@@deriving ord, eq]
 
 let show = function
   (* tokens *)
@@ -75,6 +76,7 @@ let show = function
   | Op_star -> "*"
   | Op_slash -> "/"
   | Op_amp -> "&"
+  | Op_modulo -> "%"
   | Op_pipe -> "|"
   | Op_concat -> "||"
   | Op_eq -> "="

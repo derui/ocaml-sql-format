@@ -292,4 +292,4 @@ type t =
   | Kw_before
   | Kw_each
   | Kw_of
-[@@deriving show, eq]
+[@@deriving show, eq, ord]

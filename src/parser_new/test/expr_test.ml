@@ -106,7 +106,7 @@ let%expect_test "binary operator" =
     7 >= 4
     8 & 7
     9 | 7
-    'foo'
+    'foo' || 'bar'
     1 >> 2
     rshift <<2
     ex->3
