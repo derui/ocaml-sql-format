@@ -23,6 +23,27 @@ let%expect_test "parse " =
   Util.run {| select a,b,c from some_table
             where a > 3 |} p
   |> print_endline;
+  Util.run
+    {| select a,b,c from some_table
+            where a > 3 union select c,d,e from other_table |}
+    p
+  |> print_endline;
+  Util.run
+    {| select a,b,c from some_table
+            where a > 3 union all select c,d,e from other_table |}
+    p
+  |> print_endline;
+  Util.run
+    {| select a,b,c from some_table
+            where a > 3 intersect select c,d,e from other_table |}
+    p
+  |> print_endline;
+  Util.run
+    {| select a,b,c from some_table
+            where a > 3 except select c,d,e from other_table
+     order by d |}
+    p
+  |> print_endline;
 
   [%expect
     {|
@@ -35,4 +56,13 @@ let%expect_test "parse " =
     select a,b,c from some_table
     limit 5 offset 2
     select a,b,c from some_table
-    where a > 3 |}]
+    where a > 3
+    select a,b,c from some_table
+    where a > 3 union select c,d,e from other_table
+    select a,b,c from some_table
+    where a > 3 union all select c,d,e from other_table
+    select a,b,c from some_table
+    where a > 3 intersect select c,d,e from other_table
+    select a,b,c from some_table
+    where a > 3 except select c,d,e from other_table
+    order by d |}]
