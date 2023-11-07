@@ -34,8 +34,10 @@ type node =
   | N_over_clause
   | N_limit_clause
   | N_common_table_expression
-  | N_select_stmt
   | N_with_clause
+  (* statements *)
+  | N_select_stmt
+  | N_begin_stmt
 [@@deriving ord, show]
 
 (** kind of leaf *)
