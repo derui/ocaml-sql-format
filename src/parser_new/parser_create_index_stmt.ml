@@ -25,7 +25,7 @@ include (
 
       let parse () =
         let p =
-          let* () = M.bump_kw Kw_create *> (M.bump_kw Kw_unique <|> M.skip) in
+          let* () = M.bump_kw Kw_create *> (M.bump_kw Kw_unique <|> M.skip) *> M.bump_kw Kw_index in
           let* () = M.bump_kw Kw_if *> M.bump_kw Kw_not *> M.bump_kw Kw_exists <|> M.skip in
           let* () = index_name *> M.bump_kw Kw_on *> ident in
           let* _ = Wrapping.parens @@ Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) @@ D.indexed_column () in
