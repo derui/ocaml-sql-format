@@ -41,6 +41,7 @@ include (
       |> Kind_map.add K.N_create_index_stmt (module Parser_create_index_stmt : Intf.GEN)
       |> Kind_map.add K.N_qualified_table_name (module Parser_qualified_table_name : Intf.GEN)
       |> Kind_map.add K.N_returning_clause (module Parser_returning_clause : Intf.GEN)
+      |> Kind_map.add K.N_delete_stmt (module Parser_delete_stmt : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
