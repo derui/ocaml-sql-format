@@ -1,8 +1,6 @@
 open Types.Token
 
-let kw_select =
-  [%sedlex.regexp?
-    Chars "sS", Chars "eE", Chars "lL", Chars "eE", Chars "cC", Chars "tT"]
+let kw_select = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "lL", Chars "eE", Chars "cC", Chars "tT"]
 
 let kw_from = [%sedlex.regexp? Chars "fF", Chars "rR", Chars "oO", Chars "mM"]
 
@@ -10,18 +8,9 @@ let kw_as = [%sedlex.regexp? Chars "aA", Chars "sS"]
 
 let kw_true = [%sedlex.regexp? Chars "tT", Chars "rR", Chars "uU", Chars "eE"]
 
-let kw_false =
-  [%sedlex.regexp? Chars "fF", Chars "aA", Chars "lL", Chars "sS", Chars "eE"]
+let kw_false = [%sedlex.regexp? Chars "fF", Chars "aA", Chars "lL", Chars "sS", Chars "eE"]
 
-let kw_unknown =
-  [%sedlex.regexp?
-    ( Chars "uU"
-    , Chars "nN"
-    , Chars "kK"
-    , Chars "nN"
-    , Chars "oO"
-    , Chars "wW"
-    , Chars "nN" )]
+let kw_unknown = [%sedlex.regexp? Chars "uU", Chars "nN", Chars "kK", Chars "nN", Chars "oO", Chars "wW", Chars "nN"]
 
 let kw_null = [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL"]
 
@@ -31,15 +20,7 @@ let kw_time = [%sedlex.regexp? Chars "tT", Chars "iI", Chars "mM", Chars "eE"]
 
 let kw_timestamp =
   [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "mM"
-    , Chars "pP" )]
+    Chars "tT", Chars "iI", Chars "mM", Chars "eE", Chars "sS", Chars "tT", Chars "aA", Chars "mM", Chars "pP"]
 
 let kw_into = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "oO"]
 
@@ -49,70 +30,47 @@ let kw_and = [%sedlex.regexp? Chars "aA", Chars "nN", Chars "dD"]
 
 let kw_not = [%sedlex.regexp? Chars "nN", Chars "oO", Chars "tT"]
 
-let kw_union =
-  [%sedlex.regexp? Chars "uU", Chars "nN", Chars "iI", Chars "oO", Chars "nN"]
+let kw_union = [%sedlex.regexp? Chars "uU", Chars "nN", Chars "iI", Chars "oO", Chars "nN"]
 
-let kw_except =
-  [%sedlex.regexp?
-    Chars "eE", Chars "xX", Chars "cC", Chars "eE", Chars "pP", Chars "tT"]
+let kw_except = [%sedlex.regexp? Chars "eE", Chars "xX", Chars "cC", Chars "eE", Chars "pP", Chars "tT"]
 
 let kw_intersect =
   [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "sS"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "tT" )]
+    Chars "iI", Chars "nN", Chars "tT", Chars "eE", Chars "rR", Chars "sS", Chars "eE", Chars "cC", Chars "tT"]
 
 let kw_into = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "oO"]
 
 let kw_or = [%sedlex.regexp? Chars "oO", Chars "rR"]
 
-let kw_group =
-  [%sedlex.regexp? Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP"]
+let kw_group = [%sedlex.regexp? Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP"]
 
-let kw_rollup =
-  [%sedlex.regexp?
-    Chars "rR", Chars "oO", Chars "lL", Chars "lL", Chars "uU", Chars "pP"]
+let kw_rollup = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "lL", Chars "lL", Chars "uU", Chars "pP"]
 
-let kw_having =
-  [%sedlex.regexp?
-    Chars "hH", Chars "aA", Chars "vV", Chars "iI", Chars "nN", Chars "gG"]
+let kw_having = [%sedlex.regexp? Chars "hH", Chars "aA", Chars "vV", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_where =
-  [%sedlex.regexp? Chars "wW", Chars "hH", Chars "eE", Chars "rR", Chars "eE"]
+let kw_where = [%sedlex.regexp? Chars "wW", Chars "hH", Chars "eE", Chars "rR", Chars "eE"]
 
 let kw_by = [%sedlex.regexp? Chars "bB", Chars "yY"]
 
-let kw_order =
-  [%sedlex.regexp? Chars "oO", Chars "rR", Chars "dD", Chars "eE", Chars "rR"]
+let kw_order = [%sedlex.regexp? Chars "oO", Chars "rR", Chars "dD", Chars "eE", Chars "rR"]
 
 let kw_asc = [%sedlex.regexp? Chars "aA", Chars "sS", Chars "cC"]
 
 let kw_desc = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "sS", Chars "cC"]
 
-let kw_first =
-  [%sedlex.regexp? Chars "fF", Chars "iI", Chars "rR", Chars "sS", Chars "tT"]
+let kw_first = [%sedlex.regexp? Chars "fF", Chars "iI", Chars "rR", Chars "sS", Chars "tT"]
 
 let kw_last = [%sedlex.regexp? Chars "lL", Chars "aA", Chars "sS", Chars "tT"]
 
-let kw_limit =
-  [%sedlex.regexp? Chars "lL", Chars "iI", Chars "mM", Chars "iI", Chars "tT"]
+let kw_limit = [%sedlex.regexp? Chars "lL", Chars "iI", Chars "mM", Chars "iI", Chars "tT"]
 
-let kw_offset =
-  [%sedlex.regexp?
-    Chars "oO", Chars "fF", Chars "fF", Chars "sS", Chars "eE", Chars "tT"]
+let kw_offset = [%sedlex.regexp? Chars "oO", Chars "fF", Chars "fF", Chars "sS", Chars "eE", Chars "tT"]
 
 let kw_row = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "wW"]
 
 let kw_rows = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "wW", Chars "sS"]
 
-let kw_fetch =
-  [%sedlex.regexp? Chars "fF", Chars "eE", Chars "tT", Chars "cC", Chars "hH"]
+let kw_fetch = [%sedlex.regexp? Chars "fF", Chars "eE", Chars "tT", Chars "cC", Chars "hH"]
 
 let kw_next = [%sedlex.regexp? Chars "nN", Chars "eE", Chars "xX", Chars "tT"]
 
@@ -121,56 +79,21 @@ let kw_only = [%sedlex.regexp? Chars "oO", Chars "nN", Chars "lL", Chars "yY"]
 let kw_all = [%sedlex.regexp? Chars "aA", Chars "lL", Chars "lL"]
 
 let kw_distinct =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "cC"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "dD", Chars "iI", Chars "sS", Chars "tT", Chars "iI", Chars "nN", Chars "cC", Chars "tT"]
 
 let kw_is = [%sedlex.regexp? Chars "iI", Chars "sS"]
 
-let kw_between =
-  [%sedlex.regexp?
-    ( Chars "bB"
-    , Chars "eE"
-    , Chars "tT"
-    , Chars "wW"
-    , Chars "eE"
-    , Chars "eE"
-    , Chars "nN" )]
+let kw_between = [%sedlex.regexp? Chars "bB", Chars "eE", Chars "tT", Chars "wW", Chars "eE", Chars "eE", Chars "nN"]
 
 let kw_like_regex =
   [%sedlex.regexp?
-    ( Chars "lL"
-    , Chars "iI"
-    , Chars "kK"
-    , Chars "eE"
-    , '_'
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "gG"
-    , Chars "eE"
-    , Chars "xX" )]
+    Chars "lL", Chars "iI", Chars "kK", Chars "eE", '_', Chars "rR", Chars "eE", Chars "gG", Chars "eE", Chars "xX"]
 
-let kw_similar =
-  [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "iI"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "rR" )]
+let kw_similar = [%sedlex.regexp? Chars "sS", Chars "iI", Chars "mM", Chars "iI", Chars "lL", Chars "aA", Chars "rR"]
 
 let kw_to = [%sedlex.regexp? Chars "tT", Chars "oO"]
 
-let kw_escape =
-  [%sedlex.regexp?
-    Chars "eE", Chars "sS", Chars "cC", Chars "aA", Chars "pP", Chars "eE"]
+let kw_escape = [%sedlex.regexp? Chars "eE", Chars "sS", Chars "cC", Chars "aA", Chars "pP", Chars "eE"]
 
 let kw_like = [%sedlex.regexp? Chars "lL", Chars "iI", Chars "kK", Chars "eE"]
 
@@ -180,40 +103,25 @@ let kw_some = [%sedlex.regexp? Chars "sS", Chars "oO", Chars "mM", Chars "eE"]
 
 let kw_in = [%sedlex.regexp? Chars "iI", Chars "nN"]
 
-let kw_exists =
-  [%sedlex.regexp?
-    Chars "eE", Chars "xX", Chars "iI", Chars "sS", Chars "tT", Chars "sS"]
+let kw_exists = [%sedlex.regexp? Chars "eE", Chars "xX", Chars "iI", Chars "sS", Chars "tT", Chars "sS"]
 
 let kw_with = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "tT", Chars "hH"]
 
-let kw_table =
-  [%sedlex.regexp? Chars "tT", Chars "aA", Chars "bB", Chars "lL", Chars "eE"]
+let kw_table = [%sedlex.regexp? Chars "tT", Chars "aA", Chars "bB", Chars "lL", Chars "eE"]
 
-let kw_lateral =
-  [%sedlex.regexp?
-    ( Chars "lL"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "lL" )]
+let kw_lateral = [%sedlex.regexp? Chars "lL", Chars "aA", Chars "tT", Chars "eE", Chars "rR", Chars "aA", Chars "lL"]
 
 let kw_left = [%sedlex.regexp? Chars "lL", Chars "eE", Chars "fF", Chars "tT"]
 
-let kw_right =
-  [%sedlex.regexp? Chars "rR", Chars "iI", Chars "gG", Chars "hH", Chars "tT"]
+let kw_right = [%sedlex.regexp? Chars "rR", Chars "iI", Chars "gG", Chars "hH", Chars "tT"]
 
 let kw_full = [%sedlex.regexp? Chars "fF", Chars "uU", Chars "lL", Chars "lL"]
 
-let kw_outer =
-  [%sedlex.regexp? Chars "oO", Chars "uU", Chars "tT", Chars "eE", Chars "rR"]
+let kw_outer = [%sedlex.regexp? Chars "oO", Chars "uU", Chars "tT", Chars "eE", Chars "rR"]
 
-let kw_inner =
-  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "nN", Chars "eE", Chars "rR"]
+let kw_inner = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "nN", Chars "eE", Chars "rR"]
 
-let kw_cross =
-  [%sedlex.regexp? Chars "cC", Chars "rR", Chars "oO", Chars "sS", Chars "sS"]
+let kw_cross = [%sedlex.regexp? Chars "cC", Chars "rR", Chars "oO", Chars "sS", Chars "sS"]
 
 let kw_join = [%sedlex.regexp? Chars "jJ", Chars "oO", Chars "iI", Chars "nN"]
 
@@ -229,64 +137,27 @@ let kw_end = [%sedlex.regexp? Chars "eE", Chars "nN", Chars "dD"]
 
 let kw_else = [%sedlex.regexp? Chars "eE", Chars "lL", Chars "sS", Chars "eE"]
 
-let kw_textagg =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "eE"
-    , Chars "xX"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "gG"
-    , Chars "gG" )]
+let kw_textagg = [%sedlex.regexp? Chars "tT", Chars "eE", Chars "xX", Chars "tT", Chars "aA", Chars "gG", Chars "gG"]
 
 let kw_for = [%sedlex.regexp? Chars "fF", Chars "oO", Chars "rR"]
 
 let kw_delimiter =
   [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "eE"
-    , Chars "lL"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR" )]
+    Chars "dD", Chars "eE", Chars "lL", Chars "iI", Chars "mM", Chars "iI", Chars "tT", Chars "eE", Chars "rR"]
 
-let kw_quote =
-  [%sedlex.regexp? Chars "qQ", Chars "uU", Chars "oO", Chars "tT", Chars "eE"]
+let kw_quote = [%sedlex.regexp? Chars "qQ", Chars "uU", Chars "oO", Chars "tT", Chars "eE"]
 
 let kw_no = [%sedlex.regexp? Chars "nN", Chars "oO"]
 
-let kw_header =
-  [%sedlex.regexp?
-    Chars "hH", Chars "eE", Chars "aA", Chars "dD", Chars "eE", Chars "rR"]
+let kw_header = [%sedlex.regexp? Chars "hH", Chars "eE", Chars "aA", Chars "dD", Chars "eE", Chars "rR"]
 
 let kw_encoding =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "nN"
-    , Chars "cC"
-    , Chars "oO"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+  [%sedlex.regexp? Chars "eE", Chars "nN", Chars "cC", Chars "oO", Chars "dD", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_count =
-  [%sedlex.regexp? Chars "cC", Chars "oO", Chars "uU", Chars "nN", Chars "tT"]
+let kw_count = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "uU", Chars "nN", Chars "tT"]
 
 let kw_count_big =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "uU"
-    , Chars "nN"
-    , Chars "tT"
-    , '_'
-    , Chars "bB"
-    , Chars "iI"
-    , Chars "gG" )]
+  [%sedlex.regexp? Chars "cC", Chars "oO", Chars "uU", Chars "nN", Chars "tT", '_', Chars "bB", Chars "iI", Chars "gG"]
 
 let kw_sum = [%sedlex.regexp? Chars "sS", Chars "uU", Chars "mM"]
 
@@ -296,21 +167,11 @@ let kw_min = [%sedlex.regexp? Chars "mM", Chars "iI", Chars "nN"]
 
 let kw_max = [%sedlex.regexp? Chars "mM", Chars "aA", Chars "xX"]
 
-let kw_every =
-  [%sedlex.regexp? Chars "eE", Chars "vV", Chars "eE", Chars "rR", Chars "yY"]
+let kw_every = [%sedlex.regexp? Chars "eE", Chars "vV", Chars "eE", Chars "rR", Chars "yY"]
 
 let kw_stddev_pop =
   [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "tT"
-    , Chars "dD"
-    , Chars "dD"
-    , Chars "eE"
-    , Chars "vV"
-    , '_'
-    , Chars "pP"
-    , Chars "oO"
-    , Chars "pP" )]
+    Chars "sS", Chars "tT", Chars "dD", Chars "dD", Chars "eE", Chars "vV", '_', Chars "pP", Chars "oO", Chars "pP"]
 
 let kw_stddev_samp =
   [%sedlex.regexp?
@@ -327,99 +188,37 @@ let kw_stddev_samp =
     , Chars "pP" )]
 
 let kw_var_samp =
-  [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "aA"
-    , Chars "rR"
-    , '_'
-    , Chars "sS"
-    , Chars "aA"
-    , Chars "mM"
-    , Chars "pP" )]
+  [%sedlex.regexp? Chars "vV", Chars "aA", Chars "rR", '_', Chars "sS", Chars "aA", Chars "mM", Chars "pP"]
 
-let kw_var_pop =
-  [%sedlex.regexp?
-    Chars "vV", Chars "aA", Chars "rR", '_', Chars "pP", Chars "oO", Chars "pP"]
+let kw_var_pop = [%sedlex.regexp? Chars "vV", Chars "aA", Chars "rR", '_', Chars "pP", Chars "oO", Chars "pP"]
 
-let kw_filter =
-  [%sedlex.regexp?
-    Chars "fF", Chars "iI", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
+let kw_filter = [%sedlex.regexp? Chars "fF", Chars "iI", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
 
 let kw_over = [%sedlex.regexp? Chars "oO", Chars "vV", Chars "eE", Chars "rR"]
 
 let kw_partition =
   [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+    Chars "pP", Chars "aA", Chars "rR", Chars "tT", Chars "iI", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
 
-let kw_range =
-  [%sedlex.regexp? Chars "rR", Chars "aA", Chars "nN", Chars "gG", Chars "eE"]
+let kw_range = [%sedlex.regexp? Chars "rR", Chars "aA", Chars "nN", Chars "gG", Chars "eE"]
 
 let kw_unbounded =
   [%sedlex.regexp?
-    ( Chars "uU"
-    , Chars "nN"
-    , Chars "bB"
-    , Chars "oO"
-    , Chars "uU"
-    , Chars "nN"
-    , Chars "dD"
-    , Chars "eE"
-    , Chars "dD" )]
+    Chars "uU", Chars "nN", Chars "bB", Chars "oO", Chars "uU", Chars "nN", Chars "dD", Chars "eE", Chars "dD"]
 
 let kw_following =
   [%sedlex.regexp?
-    ( Chars "fF"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "oO"
-    , Chars "wW"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "fF", Chars "oO", Chars "lL", Chars "lL", Chars "oO", Chars "wW", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_preceding =
   [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "eE"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "pP", Chars "rR", Chars "eE", Chars "cC", Chars "eE", Chars "dD", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_current =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "uU"
-    , Chars "rR"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "nN"
-    , Chars "tT" )]
+let kw_current = [%sedlex.regexp? Chars "cC", Chars "uU", Chars "rR", Chars "rR", Chars "eE", Chars "nN", Chars "tT"]
 
 let kw_row_number =
   [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "oO"
-    , Chars "wW"
-    , '_'
-    , Chars "nN"
-    , Chars "uU"
-    , Chars "mM"
-    , Chars "bB"
-    , Chars "eE"
-    , Chars "rR" )]
+    Chars "rR", Chars "oO", Chars "wW", '_', Chars "nN", Chars "uU", Chars "mM", Chars "bB", Chars "eE", Chars "rR"]
 
 let kw_rank = [%sedlex.regexp? Chars "rR", Chars "aA", Chars "nN", Chars "kK"]
 
@@ -452,80 +251,28 @@ let kw_percent_rank =
     , Chars "kK" )]
 
 let kw_cume_dist =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "uU"
-    , Chars "mM"
-    , Chars "eE"
-    , '_'
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "cC", Chars "uU", Chars "mM", Chars "eE", '_', Chars "dD", Chars "iI", Chars "sS", Chars "tT"]
 
-let kw_varchar =
-  [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "cC"
-    , Chars "hH"
-    , Chars "aA"
-    , Chars "rR" )]
+let kw_varchar = [%sedlex.regexp? Chars "vV", Chars "aA", Chars "rR", Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
 
-let kw_boolean =
-  [%sedlex.regexp?
-    ( Chars "bB"
-    , Chars "oO"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "aA"
-    , Chars "nN" )]
+let kw_boolean = [%sedlex.regexp? Chars "bB", Chars "oO", Chars "oO", Chars "lL", Chars "eE", Chars "aA", Chars "nN"]
 
 let kw_byte = [%sedlex.regexp? Chars "bB", Chars "yY", Chars "tT", Chars "eE"]
 
-let kw_tinyint =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "yY"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "tT" )]
+let kw_tinyint = [%sedlex.regexp? Chars "tT", Chars "iI", Chars "nN", Chars "yY", Chars "iI", Chars "nN", Chars "tT"]
 
-let kw_short =
-  [%sedlex.regexp? Chars "sS", Chars "hH", Chars "oO", Chars "rR", Chars "tT"]
+let kw_short = [%sedlex.regexp? Chars "sS", Chars "hH", Chars "oO", Chars "rR", Chars "tT"]
 
 let kw_smallint =
-  [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "mM"
-    , Chars "aA"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "sS", Chars "mM", Chars "aA", Chars "lL", Chars "lL", Chars "iI", Chars "nN", Chars "tT"]
 
 let kw_char = [%sedlex.regexp? Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
 
-let kw_integer =
-  [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "gG"
-    , Chars "eE"
-    , Chars "rR" )]
+let kw_integer = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "eE", Chars "gG", Chars "eE", Chars "rR"]
 
 let kw_long = [%sedlex.regexp? Chars "lL", Chars "oO", Chars "nN", Chars "gG"]
 
-let kw_bigint =
-  [%sedlex.regexp?
-    Chars "bB", Chars "iI", Chars "gG", Chars "iI", Chars "nN", Chars "tT"]
+let kw_bigint = [%sedlex.regexp? Chars "bB", Chars "iI", Chars "gG", Chars "iI", Chars "nN", Chars "tT"]
 
 let kw_biginteger =
   [%sedlex.regexp?
@@ -540,14 +287,11 @@ let kw_biginteger =
     , Chars "eE"
     , Chars "rR" )]
 
-let kw_float =
-  [%sedlex.regexp? Chars "fF", Chars "lL", Chars "oO", Chars "aA", Chars "tT"]
+let kw_float = [%sedlex.regexp? Chars "fF", Chars "lL", Chars "oO", Chars "aA", Chars "tT"]
 
 let kw_real = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "aA", Chars "lL"]
 
-let kw_double =
-  [%sedlex.regexp?
-    Chars "dD", Chars "oO", Chars "uU", Chars "bB", Chars "lL", Chars "eE"]
+let kw_double = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "uU", Chars "bB", Chars "lL", Chars "eE"]
 
 let kw_bigdecimal =
   [%sedlex.regexp?
@@ -562,19 +306,9 @@ let kw_bigdecimal =
     , Chars "aA"
     , Chars "lL" )]
 
-let kw_decimal =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "aA"
-    , Chars "lL" )]
+let kw_decimal = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "cC", Chars "iI", Chars "mM", Chars "aA", Chars "lL"]
 
-let kw_object =
-  [%sedlex.regexp?
-    Chars "oO", Chars "bB", Chars "jJ", Chars "eE", Chars "cC", Chars "tT"]
+let kw_object = [%sedlex.regexp? Chars "oO", Chars "bB", Chars "jJ", Chars "eE", Chars "cC", Chars "tT"]
 
 let kw_blob = [%sedlex.regexp? Chars "bB", Chars "lL", Chars "oO", Chars "bB"]
 
@@ -584,192 +318,70 @@ let kw_json = [%sedlex.regexp? Chars "jJ", Chars "sS", Chars "oO", Chars "nN"]
 
 let kw_varbinary =
   [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "bB"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "yY" )]
+    Chars "vV", Chars "aA", Chars "rR", Chars "bB", Chars "iI", Chars "nN", Chars "aA", Chars "rR", Chars "yY"]
 
 let kw_geometry =
-  [%sedlex.regexp?
-    ( Chars "gG"
-    , Chars "eE"
-    , Chars "oO"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "tT"
-    , Chars "rR"
-    , Chars "yY" )]
+  [%sedlex.regexp? Chars "gG", Chars "eE", Chars "oO", Chars "mM", Chars "eE", Chars "tT", Chars "rR", Chars "yY"]
 
 let kw_geography =
   [%sedlex.regexp?
-    ( Chars "gG"
-    , Chars "eE"
-    , Chars "oO"
-    , Chars "gG"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "pP"
-    , Chars "hH"
-    , Chars "yY" )]
+    Chars "gG", Chars "eE", Chars "oO", Chars "gG", Chars "rR", Chars "aA", Chars "pP", Chars "hH", Chars "yY"]
 
 let kw_xml = [%sedlex.regexp? Chars "xX", Chars "mM", Chars "lL"]
 
-let kw_convert =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "vV"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "tT" )]
+let kw_convert = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "nN", Chars "vV", Chars "eE", Chars "rR", Chars "tT"]
 
 let kw_cast = [%sedlex.regexp? Chars "cC", Chars "aA", Chars "sS", Chars "tT"]
 
 let kw_substring =
   [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "uU"
-    , Chars "bB"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "sS", Chars "uU", Chars "bB", Chars "sS", Chars "tT", Chars "rR", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_extract =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "xX"
-    , Chars "tT"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "cC"
-    , Chars "tT" )]
+let kw_extract = [%sedlex.regexp? Chars "eE", Chars "xX", Chars "tT", Chars "rR", Chars "aA", Chars "cC", Chars "tT"]
 
 let kw_year = [%sedlex.regexp? Chars "yY", Chars "eE", Chars "aA", Chars "rR"]
 
-let kw_month =
-  [%sedlex.regexp? Chars "mM", Chars "oO", Chars "nN", Chars "tT", Chars "hH"]
+let kw_month = [%sedlex.regexp? Chars "mM", Chars "oO", Chars "nN", Chars "tT", Chars "hH"]
 
 let kw_day = [%sedlex.regexp? Chars "dD", Chars "aA", Chars "yY"]
 
 let kw_hour = [%sedlex.regexp? Chars "hH", Chars "oO", Chars "uU", Chars "rR"]
 
-let kw_minute =
-  [%sedlex.regexp?
-    Chars "mM", Chars "iI", Chars "nN", Chars "uU", Chars "tT", Chars "eE"]
+let kw_minute = [%sedlex.regexp? Chars "mM", Chars "iI", Chars "nN", Chars "uU", Chars "tT", Chars "eE"]
 
-let kw_second =
-  [%sedlex.regexp?
-    Chars "sS", Chars "eE", Chars "cC", Chars "oO", Chars "nN", Chars "dD"]
+let kw_second = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "cC", Chars "oO", Chars "nN", Chars "dD"]
 
-let kw_quarter =
-  [%sedlex.regexp?
-    ( Chars "qQ"
-    , Chars "uU"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR" )]
+let kw_quarter = [%sedlex.regexp? Chars "qQ", Chars "uU", Chars "aA", Chars "rR", Chars "tT", Chars "eE", Chars "rR"]
 
-let kw_epoch =
-  [%sedlex.regexp? Chars "eE", Chars "pP", Chars "oO", Chars "cC", Chars "hH"]
+let kw_epoch = [%sedlex.regexp? Chars "eE", Chars "pP", Chars "oO", Chars "cC", Chars "hH"]
 
 let kw_trim = [%sedlex.regexp? Chars "tT", Chars "rR", Chars "iI", Chars "mM"]
 
-let kw_leading =
-  [%sedlex.regexp?
-    ( Chars "lL"
-    , Chars "eE"
-    , Chars "aA"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+let kw_leading = [%sedlex.regexp? Chars "lL", Chars "eE", Chars "aA", Chars "dD", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_trailing =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "iI"
-    , Chars "lL"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+  [%sedlex.regexp? Chars "tT", Chars "rR", Chars "aA", Chars "iI", Chars "lL", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_both = [%sedlex.regexp? Chars "bB", Chars "oO", Chars "tT", Chars "hH"]
 
 let kw_to_chars =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "oO"
-    , '_'
-    , Chars "cC"
-    , Chars "hH"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "sS" )]
+  [%sedlex.regexp? Chars "tT", Chars "oO", '_', Chars "cC", Chars "hH", Chars "aA", Chars "rR", Chars "sS"]
 
 let kw_to_bytes =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "oO"
-    , '_'
-    , Chars "bB"
-    , Chars "yY"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "sS" )]
+  [%sedlex.regexp? Chars "tT", Chars "oO", '_', Chars "bB", Chars "yY", Chars "tT", Chars "eE", Chars "sS"]
 
-let kw_insert =
-  [%sedlex.regexp?
-    Chars "iI", Chars "nN", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
+let kw_insert = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
 
 let kw_translate =
   [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "nN"
-    , Chars "sS"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "eE" )]
+    Chars "tT", Chars "rR", Chars "aA", Chars "nN", Chars "sS", Chars "lL", Chars "aA", Chars "tT", Chars "eE"]
 
 let kw_position =
-  [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "oO"
-    , Chars "sS"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+  [%sedlex.regexp? Chars "pP", Chars "oO", Chars "sS", Chars "iI", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
 
-let kw_listagg =
-  [%sedlex.regexp?
-    ( Chars "lL"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "gG"
-    , Chars "gG" )]
+let kw_listagg = [%sedlex.regexp? Chars "lL", Chars "iI", Chars "sS", Chars "tT", Chars "aA", Chars "gG", Chars "gG"]
 
-let kw_within =
-  [%sedlex.regexp?
-    Chars "wW", Chars "iI", Chars "tT", Chars "hH", Chars "iI", Chars "nN"]
+let kw_within = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "tT", Chars "hH", Chars "iI", Chars "nN"]
 
 let kw_current_date =
   [%sedlex.regexp?
@@ -788,81 +400,29 @@ let kw_current_date =
 
 let kw_exception =
   [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "xX"
-    , Chars "cC"
-    , Chars "eE"
-    , Chars "pP"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+    Chars "eE", Chars "xX", Chars "cC", Chars "eE", Chars "pP", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
 
-let kw_serial =
-  [%sedlex.regexp?
-    Chars "sS", Chars "eE", Chars "rR", Chars "iI", Chars "aA", Chars "lL"]
+let kw_serial = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "rR", Chars "iI", Chars "aA", Chars "lL"]
 
-let kw_index =
-  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "dD", Chars "eE", Chars "xX"]
+let kw_index = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "dD", Chars "eE", Chars "xX"]
 
-let kw_instead =
-  [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "aA"
-    , Chars "dD" )]
+let kw_instead = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "sS", Chars "tT", Chars "eE", Chars "aA", Chars "dD"]
 
 let kw_view = [%sedlex.regexp? Chars "vV", Chars "iI", Chars "eE", Chars "wW"]
 
-let kw_enabled =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "nN"
-    , Chars "aA"
-    , Chars "bB"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "dD" )]
+let kw_enabled = [%sedlex.regexp? Chars "eE", Chars "nN", Chars "aA", Chars "bB", Chars "lL", Chars "eE", Chars "dD"]
 
 let kw_disabled =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "aA"
-    , Chars "bB"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "dD" )]
+  [%sedlex.regexp? Chars "dD", Chars "iI", Chars "sS", Chars "aA", Chars "bB", Chars "lL", Chars "eE", Chars "dD"]
 
 let kw_key = [%sedlex.regexp? Chars "kK", Chars "eE", Chars "yY"]
 
 let kw_document =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "oO"
-    , Chars "cC"
-    , Chars "uU"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "nN"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "dD", Chars "oO", Chars "cC", Chars "uU", Chars "mM", Chars "eE", Chars "nN", Chars "tT"]
 
-let kw_content =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "nN"
-    , Chars "tT" )]
+let kw_content = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "nN", Chars "tT", Chars "eE", Chars "nN", Chars "tT"]
 
-let kw_empty =
-  [%sedlex.regexp? Chars "eE", Chars "mM", Chars "pP", Chars "tT", Chars "yY"]
+let kw_empty = [%sedlex.regexp? Chars "eE", Chars "mM", Chars "pP", Chars "tT", Chars "yY"]
 
 let kw_ordinality =
   [%sedlex.regexp?
@@ -895,19 +455,9 @@ let kw_querystring =
 
 let kw_namespace =
   [%sedlex.regexp?
-    ( Chars "nN"
-    , Chars "aA"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "sS"
-    , Chars "pP"
-    , Chars "aA"
-    , Chars "cC"
-    , Chars "eE" )]
+    Chars "nN", Chars "aA", Chars "mM", Chars "eE", Chars "sS", Chars "pP", Chars "aA", Chars "cC", Chars "eE"]
 
-let kw_result =
-  [%sedlex.regexp?
-    Chars "rR", Chars "eE", Chars "sS", Chars "uU", Chars "lL", Chars "tT"]
+let kw_result = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "sS", Chars "uU", Chars "lL", Chars "tT"]
 
 let kw_accesspattern =
   [%sedlex.regexp?
@@ -957,15 +507,7 @@ let kw_wellformed =
 
 let kw_texttable =
   [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "eE"
-    , Chars "xX"
-    , Chars "tT"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "bB"
-    , Chars "lL"
-    , Chars "eE" )]
+    Chars "tT", Chars "eE", Chars "xX", Chars "tT", Chars "tT", Chars "aA", Chars "bB", Chars "lL", Chars "eE"]
 
 let kw_arraytable =
   [%sedlex.regexp?
@@ -982,56 +524,22 @@ let kw_arraytable =
 
 let kw_jsontable =
   [%sedlex.regexp?
-    ( Chars "jJ"
-    , Chars "sS"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "bB"
-    , Chars "lL"
-    , Chars "eE" )]
+    Chars "jJ", Chars "sS", Chars "oO", Chars "nN", Chars "tT", Chars "aA", Chars "bB", Chars "lL", Chars "eE"]
 
 let kw_selector =
-  [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "eE"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "tT"
-    , Chars "oO"
-    , Chars "rR" )]
+  [%sedlex.regexp? Chars "sS", Chars "eE", Chars "lL", Chars "eE", Chars "cC", Chars "tT", Chars "oO", Chars "rR"]
 
 let kw_skip = [%sedlex.regexp? Chars "sS", Chars "kK", Chars "iI", Chars "pP"]
 
-let kw_width =
-  [%sedlex.regexp? Chars "wW", Chars "iI", Chars "dD", Chars "tT", Chars "hH"]
+let kw_width = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "dD", Chars "tT", Chars "hH"]
 
-let kw_passing =
-  [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "aA"
-    , Chars "sS"
-    , Chars "sS"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+let kw_passing = [%sedlex.regexp? Chars "pP", Chars "aA", Chars "sS", Chars "sS", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_name = [%sedlex.regexp? Chars "nN", Chars "aA", Chars "mM", Chars "eE"]
 
-let kw_columns =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "uU"
-    , Chars "mM"
-    , Chars "nN"
-    , Chars "sS" )]
+let kw_columns = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "lL", Chars "uU", Chars "mM", Chars "nN", Chars "sS"]
 
-let kw_nulls =
-  [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "sS"]
+let kw_nulls = [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "sS"]
 
 let kw_objecttable =
   [%sedlex.regexp?
@@ -1047,56 +555,22 @@ let kw_objecttable =
     , Chars "lL"
     , Chars "eE" )]
 
-let kw_version =
-  [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "sS"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+let kw_version = [%sedlex.regexp? Chars "vV", Chars "eE", Chars "rR", Chars "sS", Chars "iI", Chars "oO", Chars "nN"]
 
 let kw_including =
   [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "cC"
-    , Chars "lL"
-    , Chars "uU"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "iI", Chars "nN", Chars "cC", Chars "lL", Chars "uU", Chars "dD", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_excluding =
   [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "xX"
-    , Chars "cC"
-    , Chars "lL"
-    , Chars "uU"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "eE", Chars "xX", Chars "cC", Chars "lL", Chars "uU", Chars "dD", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_variadic =
-  [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "aA"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "cC" )]
+  [%sedlex.regexp? Chars "vV", Chars "aA", Chars "rR", Chars "iI", Chars "aA", Chars "dD", Chars "iI", Chars "cC"]
 
-let kw_raise =
-  [%sedlex.regexp? Chars "rR", Chars "aA", Chars "iI", Chars "sS", Chars "eE"]
+let kw_raise = [%sedlex.regexp? Chars "rR", Chars "aA", Chars "iI", Chars "sS", Chars "eE"]
 
-let kw_chain =
-  [%sedlex.regexp? Chars "cC", Chars "hH", Chars "aA", Chars "iI", Chars "nN"]
+let kw_chain = [%sedlex.regexp? Chars "cC", Chars "hH", Chars "aA", Chars "iI", Chars "nN"]
 
 let kw_jsonarray_agg =
   [%sedlex.regexp?
@@ -1128,22 +602,11 @@ let kw_jsonobject =
     , Chars "tT" )]
 
 let kw_preserve =
-  [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "sS"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "vV"
-    , Chars "eE" )]
+  [%sedlex.regexp? Chars "pP", Chars "rR", Chars "eE", Chars "sS", Chars "eE", Chars "rR", Chars "vV", Chars "eE"]
 
-let kw_upsert =
-  [%sedlex.regexp?
-    Chars "uU", Chars "pP", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
+let kw_upsert = [%sedlex.regexp? Chars "uU", Chars "pP", Chars "sS", Chars "eE", Chars "rR", Chars "tT"]
 
-let kw_after =
-  [%sedlex.regexp? Chars "aA", Chars "fF", Chars "tT", Chars "eE", Chars "rR"]
+let kw_after = [%sedlex.regexp? Chars "aA", Chars "fF", Chars "tT", Chars "eE", Chars "rR"]
 
 let kw_type = [%sedlex.regexp? Chars "tT", Chars "yY", Chars "pP", Chars "eE"]
 
@@ -1164,46 +627,20 @@ let kw_jaas = [%sedlex.regexp? Chars "jJ", Chars "aA", Chars "aA", Chars "sS"]
 
 let kw_condition =
   [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+    Chars "cC", Chars "oO", Chars "nN", Chars "dD", Chars "iI", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
 
 let kw_mask = [%sedlex.regexp? Chars "mM", Chars "aA", Chars "sS", Chars "kK"]
 
-let kw_access =
-  [%sedlex.regexp?
-    Chars "aA", Chars "cC", Chars "cC", Chars "eE", Chars "sS", Chars "sS"]
+let kw_access = [%sedlex.regexp? Chars "aA", Chars "cC", Chars "cC", Chars "eE", Chars "sS", Chars "sS"]
 
-let kw_control =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "rR"
-    , Chars "oO"
-    , Chars "lL" )]
+let kw_control = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "nN", Chars "tT", Chars "rR", Chars "oO", Chars "lL"]
 
 let kw_none = [%sedlex.regexp? Chars "nN", Chars "oO", Chars "nN", Chars "eE"]
 
 let kw_data = [%sedlex.regexp? Chars "dD", Chars "aA", Chars "tT", Chars "aA"]
 
 let kw_database =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "aA"
-    , Chars "bB"
-    , Chars "aA"
-    , Chars "sS"
-    , Chars "eE" )]
+  [%sedlex.regexp? Chars "dD", Chars "aA", Chars "tT", Chars "aA", Chars "bB", Chars "aA", Chars "sS", Chars "eE"]
 
 let kw_privileges =
   [%sedlex.regexp?
@@ -1220,9 +657,7 @@ let kw_privileges =
 
 let kw_role = [%sedlex.regexp? Chars "rR", Chars "oO", Chars "lL", Chars "eE"]
 
-let kw_schema =
-  [%sedlex.regexp?
-    Chars "sS", Chars "cC", Chars "hH", Chars "eE", Chars "mM", Chars "aA"]
+let kw_schema = [%sedlex.regexp? Chars "sS", Chars "cC", Chars "hH", Chars "eE", Chars "mM", Chars "aA"]
 
 let kw_use = [%sedlex.regexp? Chars "uU", Chars "sS", Chars "eE"]
 
@@ -1239,48 +674,23 @@ let kw_repository =
     , Chars "rR"
     , Chars "yY" )]
 
-let kw_rename =
-  [%sedlex.regexp?
-    Chars "rR", Chars "eE", Chars "nN", Chars "aA", Chars "mM", Chars "eE"]
+let kw_rename = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "nN", Chars "aA", Chars "mM", Chars "eE"]
 
-let kw_domain =
-  [%sedlex.regexp?
-    Chars "dD", Chars "oO", Chars "mM", Chars "aA", Chars "iI", Chars "nN"]
+let kw_domain = [%sedlex.regexp? Chars "dD", Chars "oO", Chars "mM", Chars "aA", Chars "iI", Chars "nN"]
 
-let kw_usage =
-  [%sedlex.regexp? Chars "uU", Chars "sS", Chars "aA", Chars "gG", Chars "eE"]
+let kw_usage = [%sedlex.regexp? Chars "uU", Chars "sS", Chars "aA", Chars "gG", Chars "eE"]
 
-let kw_explain =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "xX"
-    , Chars "pP"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "iI"
-    , Chars "nN" )]
+let kw_explain = [%sedlex.regexp? Chars "eE", Chars "xX", Chars "pP", Chars "lL", Chars "aA", Chars "iI", Chars "nN"]
 
-let kw_analyze =
-  [%sedlex.regexp?
-    ( Chars "aA"
-    , Chars "nN"
-    , Chars "aA"
-    , Chars "lL"
-    , Chars "yY"
-    , Chars "zZ"
-    , Chars "eE" )]
+let kw_analyze = [%sedlex.regexp? Chars "aA", Chars "nN", Chars "aA", Chars "lL", Chars "yY", Chars "zZ", Chars "eE"]
 
 let kw_text = [%sedlex.regexp? Chars "tT", Chars "eE", Chars "xX", Chars "tT"]
 
-let kw_format =
-  [%sedlex.regexp?
-    Chars "fF", Chars "oO", Chars "rR", Chars "mM", Chars "aA", Chars "tT"]
+let kw_format = [%sedlex.regexp? Chars "fF", Chars "oO", Chars "rR", Chars "mM", Chars "aA", Chars "tT"]
 
 let kw_yaml = [%sedlex.regexp? Chars "yY", Chars "aA", Chars "mM", Chars "lL"]
 
-let kw_policy =
-  [%sedlex.regexp?
-    Chars "pP", Chars "oO", Chars "lL", Chars "iI", Chars "cC", Chars "yY"]
+let kw_policy = [%sedlex.regexp? Chars "pP", Chars "oO", Chars "lL", Chars "iI", Chars "cC", Chars "yY"]
 
 let kw_current_timestamp =
   [%sedlex.regexp?
@@ -1333,15 +743,7 @@ let kw_session_user =
     , Chars "rR" )]
 
 let kw_interval =
-  [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "vV"
-    , Chars "aA"
-    , Chars "lL" )]
+  [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT", Chars "eE", Chars "rR", Chars "vV", Chars "aA", Chars "lL"]
 
 let kw_tablesample =
   [%sedlex.regexp?
@@ -1359,15 +761,7 @@ let kw_tablesample =
 
 let kw_bernoulli =
   [%sedlex.regexp?
-    ( Chars "bB"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "nN"
-    , Chars "oO"
-    , Chars "uU"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "iI" )]
+    Chars "bB", Chars "eE", Chars "rR", Chars "nN", Chars "oO", Chars "uU", Chars "lL", Chars "lL", Chars "iI"]
 
 let kw_repeatable =
   [%sedlex.regexp?
@@ -1382,75 +776,32 @@ let kw_repeatable =
     , Chars "lL"
     , Chars "eE" )]
 
-let kw_system =
-  [%sedlex.regexp?
-    Chars "sS", Chars "yY", Chars "sS", Chars "tT", Chars "eE", Chars "mM"]
+let kw_system = [%sedlex.regexp? Chars "sS", Chars "yY", Chars "sS", Chars "tT", Chars "eE", Chars "mM"]
 
-let kw_unnest =
-  [%sedlex.regexp?
-    Chars "uU", Chars "nN", Chars "nN", Chars "eE", Chars "sS", Chars "tT"]
+let kw_unnest = [%sedlex.regexp? Chars "uU", Chars "nN", Chars "nN", Chars "eE", Chars "sS", Chars "tT"]
 
-let kw_module =
-  [%sedlex.regexp?
-    Chars "mM", Chars "oO", Chars "dD", Chars "uU", Chars "lL", Chars "eE"]
+let kw_module = [%sedlex.regexp? Chars "mM", Chars "oO", Chars "dD", Chars "uU", Chars "lL", Chars "eE"]
 
-let kw_collate =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "eE" )]
+let kw_collate = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "lL", Chars "lL", Chars "aA", Chars "tT", Chars "eE"]
 
 let kw_cube = [%sedlex.regexp? Chars "cC", Chars "uU", Chars "bB", Chars "eE"]
 
 let kw_grouping =
-  [%sedlex.regexp?
-    ( Chars "gG"
-    , Chars "rR"
-    , Chars "oO"
-    , Chars "uU"
-    , Chars "pP"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+  [%sedlex.regexp? Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_sets = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT", Chars "sS"]
 
 let kw_ties = [%sedlex.regexp? Chars "tT", Chars "iI", Chars "eE", Chars "sS"]
 
-let kw_others =
-  [%sedlex.regexp?
-    Chars "oO", Chars "tT", Chars "hH", Chars "eE", Chars "rR", Chars "sS"]
+let kw_others = [%sedlex.regexp? Chars "oO", Chars "tT", Chars "hH", Chars "eE", Chars "rR", Chars "sS"]
 
-let kw_exclude =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "xX"
-    , Chars "cC"
-    , Chars "lL"
-    , Chars "uU"
-    , Chars "dD"
-    , Chars "eE" )]
+let kw_exclude = [%sedlex.regexp? Chars "eE", Chars "xX", Chars "cC", Chars "lL", Chars "uU", Chars "dD", Chars "eE"]
 
-let kw_window =
-  [%sedlex.regexp?
-    Chars "wW", Chars "iI", Chars "nN", Chars "dD", Chars "oO", Chars "wW"]
+let kw_window = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "nN", Chars "dD", Chars "oO", Chars "wW"]
 
-let kw_using =
-  [%sedlex.regexp? Chars "uU", Chars "sS", Chars "iI", Chars "nN", Chars "gG"]
+let kw_using = [%sedlex.regexp? Chars "uU", Chars "sS", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_natural =
-  [%sedlex.regexp?
-    ( Chars "nN"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "uU"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "lL" )]
+let kw_natural = [%sedlex.regexp? Chars "nN", Chars "aA", Chars "tT", Chars "uU", Chars "rR", Chars "aA", Chars "lL"]
 
 let kw_corresponding =
   [%sedlex.regexp?
@@ -1470,99 +821,42 @@ let kw_corresponding =
 
 let kw_recursive =
   [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "uU"
-    , Chars "rR"
-    , Chars "sS"
-    , Chars "iI"
-    , Chars "vV"
-    , Chars "eE" )]
+    Chars "rR", Chars "eE", Chars "cC", Chars "uU", Chars "rR", Chars "sS", Chars "iI", Chars "vV", Chars "eE"]
 
-let kw_cycle =
-  [%sedlex.regexp? Chars "cC", Chars "yY", Chars "cC", Chars "lL", Chars "eE"]
+let kw_cycle = [%sedlex.regexp? Chars "cC", Chars "yY", Chars "cC", Chars "lL", Chars "eE"]
 
-let kw_default =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "eE"
-    , Chars "fF"
-    , Chars "aA"
-    , Chars "uU"
-    , Chars "lL"
-    , Chars "tT" )]
+let kw_default = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "fF", Chars "aA", Chars "uU", Chars "lL", Chars "tT"]
 
 let kw_set = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "tT"]
 
-let kw_depth =
-  [%sedlex.regexp? Chars "dD", Chars "eE", Chars "pP", Chars "tT", Chars "hH"]
+let kw_depth = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "pP", Chars "tT", Chars "hH"]
 
-let kw_breadth =
-  [%sedlex.regexp?
-    ( Chars "bB"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "aA"
-    , Chars "dD"
-    , Chars "tT"
-    , Chars "hH" )]
+let kw_breadth = [%sedlex.regexp? Chars "bB", Chars "rR", Chars "eE", Chars "aA", Chars "dD", Chars "tT", Chars "hH"]
 
-let kw_search =
-  [%sedlex.regexp?
-    Chars "sS", Chars "eE", Chars "aA", Chars "rR", Chars "cC", Chars "hH"]
+let kw_search = [%sedlex.regexp? Chars "sS", Chars "eE", Chars "aA", Chars "rR", Chars "cC", Chars "hH"]
 
-let kw_values =
-  [%sedlex.regexp?
-    Chars "vV", Chars "aA", Chars "lL", Chars "uU", Chars "eE", Chars "sS"]
+let kw_values = [%sedlex.regexp? Chars "vV", Chars "aA", Chars "lL", Chars "uU", Chars "eE", Chars "sS"]
 
-let kw_value =
-  [%sedlex.regexp? Chars "vV", Chars "aA", Chars "lL", Chars "uU", Chars "eE"]
+let kw_value = [%sedlex.regexp? Chars "vV", Chars "aA", Chars "lL", Chars "uU", Chars "eE"]
 
-let kw_element =
-  [%sedlex.regexp?
-    ( Chars "eE"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "nN"
-    , Chars "tT" )]
+let kw_element = [%sedlex.regexp? Chars "eE", Chars "lL", Chars "eE", Chars "mM", Chars "eE", Chars "nN", Chars "tT"]
 
 let kw_zone = [%sedlex.regexp? Chars "zZ", Chars "oO", Chars "nN", Chars "eE"]
 
-let kw_local =
-  [%sedlex.regexp? Chars "lL", Chars "oO", Chars "cC", Chars "aA", Chars "lL"]
+let kw_local = [%sedlex.regexp? Chars "lL", Chars "oO", Chars "cC", Chars "aA", Chars "lL"]
 
 let kw_at = [%sedlex.regexp? Chars "aA", Chars "tT"]
 
 let kw_abs = [%sedlex.regexp? Chars "aA", Chars "bB", Chars "sS"]
 
-let kw_array =
-  [%sedlex.regexp? Chars "aA", Chars "rR", Chars "rR", Chars "aA", Chars "yY"]
+let kw_array = [%sedlex.regexp? Chars "aA", Chars "rR", Chars "rR", Chars "aA", Chars "yY"]
 
 let kw_multiset =
-  [%sedlex.regexp?
-    ( Chars "mM"
-    , Chars "uU"
-    , Chars "lL"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "eE"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "mM", Chars "uU", Chars "lL", Chars "tT", Chars "iI", Chars "sS", Chars "eE", Chars "tT"]
 
 let kw_localtime =
   [%sedlex.regexp?
-    ( Chars "lL"
-    , Chars "oO"
-    , Chars "cC"
-    , Chars "aA"
-    , Chars "lL"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "eE" )]
+    Chars "lL", Chars "oO", Chars "cC", Chars "aA", Chars "lL", Chars "tT", Chars "iI", Chars "mM", Chars "eE"]
 
 let kw_localtimestamp =
   [%sedlex.regexp?
@@ -1596,119 +890,46 @@ let kw_characters =
 
 let kw_code_units =
   [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "dD"
-    , Chars "eE"
-    , '_'
-    , Chars "uU"
-    , Chars "nN"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "sS" )]
+    Chars "cC", Chars "oO", Chars "dD", Chars "eE", '_', Chars "uU", Chars "nN", Chars "iI", Chars "tT", Chars "sS"]
 
-let kw_octets =
-  [%sedlex.regexp?
-    Chars "oO", Chars "cC", Chars "tT", Chars "eE", Chars "tT", Chars "sS"]
+let kw_octets = [%sedlex.regexp? Chars "oO", Chars "cC", Chars "tT", Chars "eE", Chars "tT", Chars "sS"]
 
-let kw_without =
-  [%sedlex.regexp?
-    ( Chars "wW"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "hH"
-    , Chars "oO"
-    , Chars "uU"
-    , Chars "tT" )]
+let kw_without = [%sedlex.regexp? Chars "wW", Chars "iI", Chars "tT", Chars "hH", Chars "oO", Chars "uU", Chars "tT"]
 
-let kw_scope =
-  [%sedlex.regexp? Chars "sS", Chars "cC", Chars "oO", Chars "pP", Chars "eE"]
+let kw_scope = [%sedlex.regexp? Chars "sS", Chars "cC", Chars "oO", Chars "pP", Chars "eE"]
 
 let kw_ref = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "fF"]
 
 let kw_precision =
   [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "cC"
-    , Chars "iI"
-    , Chars "sS"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN" )]
+    Chars "pP", Chars "rR", Chars "eE", Chars "cC", Chars "iI", Chars "sS", Chars "iI", Chars "oO", Chars "nN"]
 
-let kw_numeric =
-  [%sedlex.regexp?
-    ( Chars "nN"
-    , Chars "uU"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "cC" )]
+let kw_numeric = [%sedlex.regexp? Chars "nN", Chars "uU", Chars "mM", Chars "eE", Chars "rR", Chars "iI", Chars "cC"]
 
 let kw_int = [%sedlex.regexp? Chars "iI", Chars "nN", Chars "tT"]
 
 let kw_dec = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "cC"]
 
-let kw_binary =
-  [%sedlex.regexp?
-    Chars "bB", Chars "iI", Chars "nN", Chars "aA", Chars "rR", Chars "yY"]
+let kw_binary = [%sedlex.regexp? Chars "bB", Chars "iI", Chars "nN", Chars "aA", Chars "rR", Chars "yY"]
 
-let kw_large =
-  [%sedlex.regexp? Chars "lL", Chars "aA", Chars "rR", Chars "gG", Chars "eE"]
+let kw_large = [%sedlex.regexp? Chars "lL", Chars "aA", Chars "rR", Chars "gG", Chars "eE"]
 
 let kw_national =
-  [%sedlex.regexp?
-    ( Chars "nN"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "oO"
-    , Chars "nN"
-    , Chars "aA"
-    , Chars "lL" )]
+  [%sedlex.regexp? Chars "nN", Chars "aA", Chars "tT", Chars "iI", Chars "oO", Chars "nN", Chars "aA", Chars "lL"]
 
-let kw_varying =
-  [%sedlex.regexp?
-    ( Chars "vV"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "yY"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+let kw_varying = [%sedlex.regexp? Chars "vV", Chars "aA", Chars "rR", Chars "yY", Chars "iI", Chars "nN", Chars "gG"]
 
 let kw_character =
   [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "hH"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "cC"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "rR" )]
+    Chars "cC", Chars "hH", Chars "aA", Chars "rR", Chars "aA", Chars "cC", Chars "tT", Chars "eE", Chars "rR"]
 
-let kw_nchar =
-  [%sedlex.regexp? Chars "nN", Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
+let kw_nchar = [%sedlex.regexp? Chars "nN", Chars "cC", Chars "hH", Chars "aA", Chars "rR"]
 
-let kw_nclob =
-  [%sedlex.regexp? Chars "nN", Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
+let kw_nclob = [%sedlex.regexp? Chars "nN", Chars "cC", Chars "lL", Chars "oO", Chars "bB"]
 
 let kw_indicator =
   [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "cC"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "oO"
-    , Chars "rR" )]
+    Chars "iI", Chars "nN", Chars "dD", Chars "iI", Chars "cC", Chars "aA", Chars "tT", Chars "oO", Chars "rR"]
 
 let kw_current_default_transform_group =
   [%sedlex.regexp?
@@ -1838,33 +1059,18 @@ let kw_current_user =
     , Chars "eE"
     , Chars "rR" )]
 
-let kw_nullif =
-  [%sedlex.regexp?
-    Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "iI", Chars "fF"]
+let kw_nullif = [%sedlex.regexp? Chars "nN", Chars "uU", Chars "lL", Chars "lL", Chars "iI", Chars "fF"]
 
 let kw_coalesce =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "oO"
-    , Chars "aA"
-    , Chars "lL"
-    , Chars "eE"
-    , Chars "sS"
-    , Chars "cC"
-    , Chars "eE" )]
+  [%sedlex.regexp? Chars "cC", Chars "oO", Chars "aA", Chars "lL", Chars "eE", Chars "sS", Chars "cC", Chars "eE"]
 
-let kw_groups =
-  [%sedlex.regexp?
-    Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP", Chars "sS"]
+let kw_groups = [%sedlex.regexp? Chars "gG", Chars "rR", Chars "oO", Chars "uU", Chars "pP", Chars "sS"]
 
 let kw_glob = [%sedlex.regexp? Chars "gG", Chars "lL", Chars "oO", Chars "bB"]
 
-let kw_regexp =
-  [%sedlex.regexp?
-    Chars "rR", Chars "eE", Chars "gG", Chars "eE", Chars "xX", Chars "pP"]
+let kw_regexp = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "gG", Chars "eE", Chars "xX", Chars "pP"]
 
-let kw_match =
-  [%sedlex.regexp? Chars "mM", Chars "aA", Chars "tT", Chars "cC", Chars "hH"]
+let kw_match = [%sedlex.regexp? Chars "mM", Chars "aA", Chars "tT", Chars "cC", Chars "hH"]
 
 let kw_materialized =
   [%sedlex.regexp?
@@ -1881,67 +1087,28 @@ let kw_materialized =
     , Chars "eE"
     , Chars "dD" )]
 
-let kw_abort =
-  [%sedlex.regexp? Chars "aA", Chars "bB", Chars "oO", Chars "rR", Chars "tT"]
+let kw_abort = [%sedlex.regexp? Chars "aA", Chars "bB", Chars "oO", Chars "rR", Chars "tT"]
 
-let kw_ignore =
-  [%sedlex.regexp?
-    Chars "iI", Chars "gG", Chars "nN", Chars "oO", Chars "rR", Chars "eE"]
+let kw_ignore = [%sedlex.regexp? Chars "iI", Chars "gG", Chars "nN", Chars "oO", Chars "rR", Chars "eE"]
 
-let kw_replace =
-  [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "eE"
-    , Chars "pP"
-    , Chars "lL"
-    , Chars "aA"
-    , Chars "cC"
-    , Chars "eE" )]
+let kw_replace = [%sedlex.regexp? Chars "rR", Chars "eE", Chars "pP", Chars "lL", Chars "aA", Chars "cC", Chars "eE"]
 
 let kw_rollback =
-  [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "oO"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "bB"
-    , Chars "aA"
-    , Chars "cC"
-    , Chars "kK" )]
+  [%sedlex.regexp? Chars "rR", Chars "oO", Chars "lL", Chars "lL", Chars "bB", Chars "aA", Chars "cC", Chars "kK"]
 
 let kw_fail = [%sedlex.regexp? Chars "fF", Chars "aA", Chars "iI", Chars "lL"]
 
-let kw_update =
-  [%sedlex.regexp?
-    Chars "uU", Chars "pP", Chars "dD", Chars "aA", Chars "tT", Chars "eE"]
+let kw_update = [%sedlex.regexp? Chars "uU", Chars "pP", Chars "dD", Chars "aA", Chars "tT", Chars "eE"]
 
 let kw_returning =
   [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "eE"
-    , Chars "tT"
-    , Chars "uU"
-    , Chars "rR"
-    , Chars "nN"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "gG" )]
+    Chars "rR", Chars "eE", Chars "tT", Chars "uU", Chars "rR", Chars "nN", Chars "iI", Chars "nN", Chars "gG"]
 
-let kw_delete =
-  [%sedlex.regexp?
-    Chars "dD", Chars "eE", Chars "lL", Chars "eE", Chars "tT", Chars "eE"]
+let kw_delete = [%sedlex.regexp? Chars "dD", Chars "eE", Chars "lL", Chars "eE", Chars "tT", Chars "eE"]
 
 let kw_savepoint =
   [%sedlex.regexp?
-    ( Chars "sS"
-    , Chars "aA"
-    , Chars "vV"
-    , Chars "eE"
-    , Chars "pP"
-    , Chars "oO"
-    , Chars "iI"
-    , Chars "nN"
-    , Chars "tT" )]
+    Chars "sS", Chars "aA", Chars "vV", Chars "eE", Chars "pP", Chars "oO", Chars "iI", Chars "nN", Chars "tT"]
 
 let kw_transaction =
   [%sedlex.regexp?
@@ -1961,22 +1128,11 @@ let kw_if = [%sedlex.regexp? Chars "iI", Chars "fF"]
 
 let kw_drop = [%sedlex.regexp? Chars "dD", Chars "rR", Chars "oO", Chars "pP"]
 
-let kw_begin =
-  [%sedlex.regexp? Chars "bB", Chars "eE", Chars "gG", Chars "iI", Chars "nN"]
+let kw_begin = [%sedlex.regexp? Chars "bB", Chars "eE", Chars "gG", Chars "iI", Chars "nN"]
 
-let kw_commit =
-  [%sedlex.regexp?
-    Chars "cC", Chars "oO", Chars "mM", Chars "mM", Chars "iI", Chars "tT"]
+let kw_commit = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "mM", Chars "mM", Chars "iI", Chars "tT"]
 
-let kw_trigger =
-  [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "gG"
-    , Chars "gG"
-    , Chars "eE"
-    , Chars "rR" )]
+let kw_trigger = [%sedlex.regexp? Chars "tT", Chars "rR", Chars "iI", Chars "gG", Chars "gG", Chars "eE", Chars "rR"]
 
 let kw_references =
   [%sedlex.regexp?
@@ -2004,63 +1160,24 @@ let kw_constraint =
     , Chars "nN"
     , Chars "tT" )]
 
-let kw_primary =
-  [%sedlex.regexp?
-    ( Chars "pP"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "mM"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "yY" )]
+let kw_primary = [%sedlex.regexp? Chars "pP", Chars "rR", Chars "iI", Chars "mM", Chars "aA", Chars "rR", Chars "yY"]
 
-let kw_unique =
-  [%sedlex.regexp?
-    Chars "uU", Chars "nN", Chars "iI", Chars "qQ", Chars "uU", Chars "eE"]
+let kw_unique = [%sedlex.regexp? Chars "uU", Chars "nN", Chars "iI", Chars "qQ", Chars "uU", Chars "eE"]
 
 let kw_generated =
   [%sedlex.regexp?
-    ( Chars "gG"
-    , Chars "eE"
-    , Chars "nN"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "eE"
-    , Chars "dD" )]
+    Chars "gG", Chars "eE", Chars "nN", Chars "eE", Chars "rR", Chars "aA", Chars "tT", Chars "eE", Chars "dD"]
 
-let kw_always =
-  [%sedlex.regexp?
-    Chars "aA", Chars "lL", Chars "wW", Chars "aA", Chars "yY", Chars "sS"]
+let kw_always = [%sedlex.regexp? Chars "aA", Chars "lL", Chars "wW", Chars "aA", Chars "yY", Chars "sS"]
 
-let kw_check =
-  [%sedlex.regexp? Chars "cC", Chars "hH", Chars "eE", Chars "cC", Chars "kK"]
+let kw_check = [%sedlex.regexp? Chars "cC", Chars "hH", Chars "eE", Chars "cC", Chars "kK"]
 
 let kw_restrict =
-  [%sedlex.regexp?
-    ( Chars "rR"
-    , Chars "eE"
-    , Chars "sS"
-    , Chars "tT"
-    , Chars "rR"
-    , Chars "iI"
-    , Chars "cC"
-    , Chars "tT" )]
+  [%sedlex.regexp? Chars "rR", Chars "eE", Chars "sS", Chars "tT", Chars "rR", Chars "iI", Chars "cC", Chars "tT"]
 
-let kw_cascade =
-  [%sedlex.regexp?
-    ( Chars "cC"
-    , Chars "aA"
-    , Chars "sS"
-    , Chars "cC"
-    , Chars "aA"
-    , Chars "dD"
-    , Chars "eE" )]
+let kw_cascade = [%sedlex.regexp? Chars "cC", Chars "aA", Chars "sS", Chars "cC", Chars "aA", Chars "dD", Chars "eE"]
 
-let kw_action =
-  [%sedlex.regexp?
-    Chars "aA", Chars "cC", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
+let kw_action = [%sedlex.regexp? Chars "aA", Chars "cC", Chars "tT", Chars "iI", Chars "oO", Chars "nN"]
 
 let kw_deferrable =
   [%sedlex.regexp?
@@ -2077,79 +1194,32 @@ let kw_deferrable =
 
 let kw_initially =
   [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "nN"
-    , Chars "iI"
-    , Chars "tT"
-    , Chars "iI"
-    , Chars "aA"
-    , Chars "lL"
-    , Chars "lL"
-    , Chars "yY" )]
+    Chars "iI", Chars "nN", Chars "iI", Chars "tT", Chars "iI", Chars "aA", Chars "lL", Chars "lL", Chars "yY"]
 
 let kw_deferred =
-  [%sedlex.regexp?
-    ( Chars "dD"
-    , Chars "eE"
-    , Chars "fF"
-    , Chars "eE"
-    , Chars "rR"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "dD" )]
+  [%sedlex.regexp? Chars "dD", Chars "eE", Chars "fF", Chars "eE", Chars "rR", Chars "rR", Chars "eE", Chars "dD"]
 
 let kw_immediate =
   [%sedlex.regexp?
-    ( Chars "iI"
-    , Chars "mM"
-    , Chars "mM"
-    , Chars "eE"
-    , Chars "dD"
-    , Chars "iI"
-    , Chars "aA"
-    , Chars "tT"
-    , Chars "eE" )]
+    Chars "iI", Chars "mM", Chars "mM", Chars "eE", Chars "dD", Chars "iI", Chars "aA", Chars "tT", Chars "eE"]
 
-let kw_create =
-  [%sedlex.regexp?
-    Chars "cC", Chars "rR", Chars "eE", Chars "aA", Chars "tT", Chars "eE"]
+let kw_create = [%sedlex.regexp? Chars "cC", Chars "rR", Chars "eE", Chars "aA", Chars "tT", Chars "eE"]
 
 let kw_temp = [%sedlex.regexp? Chars "tT", Chars "eE", Chars "mM", Chars "pP"]
 
 let kw_temporary =
   [%sedlex.regexp?
-    ( Chars "tT"
-    , Chars "eE"
-    , Chars "mM"
-    , Chars "pP"
-    , Chars "oO"
-    , Chars "rR"
-    , Chars "aA"
-    , Chars "rR"
-    , Chars "yY" )]
+    Chars "tT", Chars "eE", Chars "mM", Chars "pP", Chars "oO", Chars "rR", Chars "aA", Chars "rR", Chars "yY"]
 
-let kw_foreign =
-  [%sedlex.regexp?
-    ( Chars "fF"
-    , Chars "oO"
-    , Chars "rR"
-    , Chars "eE"
-    , Chars "iI"
-    , Chars "gG"
-    , Chars "nN" )]
+let kw_foreign = [%sedlex.regexp? Chars "fF", Chars "oO", Chars "rR", Chars "eE", Chars "iI", Chars "gG", Chars "nN"]
 
-let kw_alter =
-  [%sedlex.regexp? Chars "aA", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
+let kw_alter = [%sedlex.regexp? Chars "aA", Chars "lL", Chars "tT", Chars "eE", Chars "rR"]
 
 let kw_add = [%sedlex.regexp? Chars "aA", Chars "dD", Chars "dD"]
 
-let kw_column =
-  [%sedlex.regexp?
-    Chars "cC", Chars "oO", Chars "lL", Chars "uU", Chars "mM", Chars "nN"]
+let kw_column = [%sedlex.regexp? Chars "cC", Chars "oO", Chars "lL", Chars "uU", Chars "mM", Chars "nN"]
 
-let kw_before =
-  [%sedlex.regexp?
-    Chars "bB", Chars "eE", Chars "fF", Chars "oO", Chars "rR", Chars "eE"]
+let kw_before = [%sedlex.regexp? Chars "bB", Chars "eE", Chars "fF", Chars "oO", Chars "rR", Chars "eE"]
 
 let kw_each = [%sedlex.regexp? Chars "eE", Chars "aA", Chars "cC", Chars "hH"]
 
@@ -2168,11 +1238,7 @@ let hexit = [%sedlex.regexp? 'a' .. 'f' | 'A' .. 'F' | '0' .. '9']
 
 let unsigned_integer = [%sedlex.regexp? Plus digit]
 
-let decimal =
-  [%sedlex.regexp?
-    ( unsigned_integer
-    | unsigned_integer, '.', unsigned_integer
-    | '.', unsigned_integer )]
+let decimal = [%sedlex.regexp? unsigned_integer | unsigned_integer, '.', unsigned_integer | '.', unsigned_integer]
 
 let exponent = [%sedlex.regexp? Chars "eE", Opt (Chars "+-"), unsigned_integer]
 
@@ -2186,11 +1252,9 @@ let identifier_extend = [%sedlex.regexp? mn | mc | nd | pc | cf]
 
 let identifier_part = [%sedlex.regexp? identifier_start | identifier_extend]
 
-let regular_identifier =
-  [%sedlex.regexp? identifier_start, Star identifier_part]
+let regular_identifier = [%sedlex.regexp? identifier_start, Star identifier_part]
 
-let delimited_identifier =
-  [%sedlex.regexp? '"', Star ("\"\"" | Sub (any, '"')), '"']
+let delimited_identifier = [%sedlex.regexp? '"', Star ("\"\"" | Sub (any, '"')), '"']
 
 let identifier = [%sedlex.regexp? regular_identifier | delimited_identifier]
 
@@ -2200,13 +1264,7 @@ let blob = [%sedlex.regexp? Chars "xX", string]
 
 let unicode_representation = [%sedlex.regexp? Rep (hexit, 4) | Rep (hexit, 6)]
 
-let unicode_string =
-  [%sedlex.regexp?
-    ( Chars "uU"
-    , "&"
-    , "'"
-    , Star ("''" | Sub (any, "'") | unicode_representation)
-    , "'" )]
+let unicode_string = [%sedlex.regexp? Chars "uU", "&", "'", Star ("''" | Sub (any, "'") | unicode_representation), "'"]
 
 let escaped_type = [%sedlex.regexp? '{', "d" | "t" | "ts" | "b"]
 
@@ -2334,8 +1392,7 @@ let rec token buf =
   | kw_listagg -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_listagg)
   | kw_within -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_within)
   | kw_current_date -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_date)
-  | kw_current_timestamp ->
-    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_timestamp)
+  | kw_current_timestamp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_timestamp)
   | kw_current_time -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_time)
   | kw_exception -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_exception)
   | kw_serial -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_serial)
@@ -2354,8 +1411,7 @@ let rec token buf =
   | kw_namespace -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_namespace)
   | kw_result -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_result)
   | kw_accesspattern -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_accesspattern)
-  | kw_auto_increment ->
-    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_auto_increment)
+  | kw_auto_increment -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_auto_increment)
   | kw_wellformed -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_wellformed)
   | kw_texttable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_texttable)
   | kw_arraytable -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_arraytable)
@@ -2439,8 +1495,7 @@ let rec token buf =
   | kw_array -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_array)
   | kw_multiset -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_multiset)
   | kw_localtime -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_localtime)
-  | kw_localtimestamp ->
-    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_localtimestamp)
+  | kw_localtimestamp -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_localtimestamp)
   | kw_characters -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_characters)
   | kw_code_units -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_code_units)
   | kw_octets -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_octets)
@@ -2461,10 +1516,8 @@ let rec token buf =
   | kw_indicator -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_indicator)
   | kw_current_user -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_user)
   | kw_system_user -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_system_user)
-  | kw_current_default_transform_group ->
-    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_default_transform_group)
-  | kw_current_transform_group_for_type ->
-    Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_transform_group_for_type)
+  | kw_current_default_transform_group -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_default_transform_group)
+  | kw_current_transform_group_for_type -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_transform_group_for_type)
   | kw_current_path -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_path)
   | kw_current_role -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_current_role)
   | kw_nullif -> Tok_keyword (Sedlexing.Utf8.lexeme buf, Kw_nullif)
@@ -2559,9 +1612,7 @@ let rec token buf =
   | "<<" -> Op_lshift
   | ">>" -> Op_rshift
   | eof -> Tok_eof
-  | _ ->
-    failwith
-      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
+  | _ -> failwith (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
 
 and inline_comment buffer buf =
   match%sedlex buf with
@@ -2572,9 +1623,7 @@ and inline_comment buffer buf =
   | any ->
     Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
     inline_comment buffer buf
-  | _ ->
-    failwith
-      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
+  | _ -> failwith (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
 
 and block_comment buffer buf =
   match%sedlex buf with
@@ -2589,6 +1638,4 @@ and block_comment buffer buf =
   | any ->
     Buffer.add_string buffer (Sedlexing.Utf8.lexeme buf);
     block_comment buffer buf
-  | _ ->
-    failwith
-      (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)
+  | _ -> failwith (Printf.sprintf "Malformed source: `%s'" @@ Sedlexing.Utf8.lexeme buf)

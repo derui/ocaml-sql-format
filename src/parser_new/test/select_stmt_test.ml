@@ -7,36 +7,23 @@ let p = P.Parser_select_stmt.generate (P.Slot.get_taker ())
 
 let%expect_test "parse " =
   Util.run {| select 1 |} p |> print_endline;
-  Util.run {| with some_table as (select 1) select a,b,c from some_table |} p
-  |> print_endline;
-  Util.run {| select a,b,c from some_table order by a desc nulls first |} p
-  |> print_endline;
-  Util.run
-    {| select a,b,c from some_table
+  Util.run {| with some_table as (select 1) select a,b,c from some_table |} p |> print_endline;
+  Util.run {| select a,b,c from some_table order by a desc nulls first |} p |> print_endline;
+  Util.run {| select a,b,c from some_table
             order by a
-            limit 5 offset 2|}
-    p
+            limit 5 offset 2|} p |> print_endline;
+  Util.run {| select a,b,c from some_table
+            limit 5 offset 2|} p |> print_endline;
+  Util.run {| select a,b,c from some_table
+            where a > 3 |} p |> print_endline;
+  Util.run {| select a,b,c from some_table
+            where a > 3 union select c,d,e from other_table |} p
   |> print_endline;
   Util.run {| select a,b,c from some_table
-            limit 5 offset 2|} p
+            where a > 3 union all select c,d,e from other_table |} p
   |> print_endline;
   Util.run {| select a,b,c from some_table
-            where a > 3 |} p
-  |> print_endline;
-  Util.run
-    {| select a,b,c from some_table
-            where a > 3 union select c,d,e from other_table |}
-    p
-  |> print_endline;
-  Util.run
-    {| select a,b,c from some_table
-            where a > 3 union all select c,d,e from other_table |}
-    p
-  |> print_endline;
-  Util.run
-    {| select a,b,c from some_table
-            where a > 3 intersect select c,d,e from other_table |}
-    p
+            where a > 3 intersect select c,d,e from other_table |} p
   |> print_endline;
   Util.run
     {| select a,b,c from some_table

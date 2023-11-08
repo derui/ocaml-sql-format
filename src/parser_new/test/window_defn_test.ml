@@ -9,8 +9,7 @@ let%expect_test "parse " =
   Util.run {| () |} p |> print_endline;
   Util.run {| (partition by a,c) |} p |> print_endline;
   Util.run {| (partition by a,c order by a desc) |} p |> print_endline;
-  Util.run {| (partition by a,c order by a desc range current row) |} p
-  |> print_endline;
+  Util.run {| (partition by a,c order by a desc range current row) |} p |> print_endline;
   Util.run {| (partition by a,c range current row) |} p |> print_endline;
   Util.run {| (range current row) |} p |> print_endline;
   Util.run {| (order by a desc range current row) |} p |> print_endline;

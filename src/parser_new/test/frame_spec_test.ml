@@ -7,8 +7,7 @@ let p = P.Parser_frame_spec.generate (P.Slot.get_taker ())
 
 let%expect_test "parse " =
   Util.run {| RANGE between 3 preceding and 5 following |} p |> print_endline;
-  Util.run {| RANGE between unbounded preceding and unbounded following |} p
-  |> print_endline;
+  Util.run {| RANGE between unbounded preceding and unbounded following |} p |> print_endline;
   Util.run {| RANGE between current row and current row |} p |> print_endline;
   Util.run {| rows unbounded preceding |} p |> print_endline;
   Util.run {| Groups 5 preceding |} p |> print_endline;

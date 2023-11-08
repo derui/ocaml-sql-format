@@ -26,10 +26,7 @@ include (
         let* () =
           let partition =
             let* () = M.bump_kw Kw.Kw_partition *> M.bump_kw Kw.Kw_by in
-            let* _ =
-              Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma)
-                (M.skip >>= D.expr)
-            in
+            let* _ = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.expr) in
             M.return ()
           in
           partition <|> M.skip

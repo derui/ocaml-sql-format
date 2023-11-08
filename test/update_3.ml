@@ -14,8 +14,7 @@ let%test_unit "update_3 for AST" =
 
 let%expect_test "update_3 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     UPDATE sche.tbl AS c
     SET
         a = 3,

@@ -122,8 +122,7 @@ let%expect_test "function" =
   Util.run "func(  distinct 1, 3 , 'a'   )" p |> print_endline;
   Util.run "func() filter (where 'data')" p |> print_endline;
   Util.run "func() over (partition by c)" p |> print_endline;
-  Util.run "func() filter (where 'foo') over (partition by c)" p
-  |> print_endline;
+  Util.run "func() filter (where 'foo') over (partition by c)" p |> print_endline;
   [%expect
     {|
     func(1)
@@ -153,8 +152,7 @@ let%expect_test "collate" =
   Util.run "3 collate foo" p |> print_endline;
   Util.run "func(3) collate foo" p |> print_endline;
   Util.run "(func(3), 5)\n            collate foo" p |> print_endline;
-  [%expect
-    {|
+  [%expect {|
     3 collate foo
     func(3) collate foo
     (func(3), 5)
@@ -164,8 +162,7 @@ let%expect_test "like" =
   Util.run "list like 'abc%'" p |> print_endline;
   Util.run "list not like 'abc%'" p |> print_endline;
   Util.run "list like 35 escape 'a'" p |> print_endline;
-  [%expect
-    {|
+  [%expect {|
     list like 'abc%'
     list not like 'abc%'
     list like 35 escape 'a' |}]
@@ -227,21 +224,17 @@ let%expect_test "in" =
 
 let%expect_test "case" =
   Util.run "case when 'a' then 3 end" p |> print_endline;
-  Util.run
-    {|CASE
+  Util.run {|CASE
             when 'f' then 3
             when 'e' then 4
             else 5
-            END|}
-    p
+            END|} p
   |> print_endline;
-  Util.run
-    {|CASE foobar
+  Util.run {|CASE foobar
             when 'f' then 3
             when 'e' then 4
             else 5
-            END|}
-    p
+            END|} p
   |> print_endline;
   [%expect
     {|

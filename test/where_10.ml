@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   SELECT * from "table" b
 where
     b exists (select 1 from a)

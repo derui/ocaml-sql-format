@@ -106,8 +106,7 @@ let token_to_leaf = function
   | Tok_qmark -> L_qmark
   | Tok_semicolon -> L_semicolon
   | Tok_quote -> L_quote
-  | Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ ->
-    failwith "Invalid leaf"
+  | Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ -> failwith "Invalid leaf"
   | Op_plus -> L_plus
   | Op_minus -> L_minus
   | Op_star -> L_star

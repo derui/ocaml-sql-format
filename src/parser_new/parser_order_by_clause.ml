@@ -15,10 +15,7 @@ include (
       let parse () =
         let p =
           let* () = M.bump_kw Kw.Kw_order *> M.bump_kw Kw.Kw_by in
-          let* _ =
-            Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma)
-              (M.skip >>= D.ordering_term)
-          in
+          let* _ = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.ordering_term) in
           M.return ()
         in
         M.start_syntax K.N_order_by_clause p

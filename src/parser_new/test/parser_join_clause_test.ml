@@ -15,23 +15,17 @@ let%expect_test "parse " =
   Util.run {| "name" left join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" left  outer join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" natural left join other on a.b = c.d |} p |> print_endline;
-  Util.run {| "name" natural left  outer join other on a.b = c.d |} p
-  |> print_endline;
+  Util.run {| "name" natural left  outer join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" right  join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" right outer join other on a.b = c.d |} p |> print_endline;
-  Util.run {| "name" natural right  join other on a.b = c.d |} p
-  |> print_endline;
-  Util.run {| "name" natural right outer join other on a.b = c.d |} p
-  |> print_endline;
+  Util.run {| "name" natural right  join other on a.b = c.d |} p |> print_endline;
+  Util.run {| "name" natural right outer join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" full  join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" full outer join other on a.b = c.d |} p |> print_endline;
   Util.run {| "name" natural full  join other on a.b = c.d |} p |> print_endline;
-  Util.run {| "name" natural full outer join other on a.b = c.d |} p
-  |> print_endline;
-  Util.run {| "name" natural full outer join other using (b) |} p
-  |> print_endline;
-  Util.run {| "name" natural inner join other using (b, d, e) |} p
-  |> print_endline;
+  Util.run {| "name" natural full outer join other on a.b = c.d |} p |> print_endline;
+  Util.run {| "name" natural full outer join other using (b) |} p |> print_endline;
+  Util.run {| "name" natural inner join other using (b, d, e) |} p |> print_endline;
 
   [%expect
     {|

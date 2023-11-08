@@ -15,9 +15,7 @@ include (
       let parse () =
         let p =
           let* () = M.bump_kw Kw.Kw_group *> M.bump_kw Kw.Kw_by in
-          Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma)
-            (M.skip >>= D.expr)
-          *> M.skip
+          Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.expr) *> M.skip
         in
         M.start_syntax K.N_group_by_clause p
     end

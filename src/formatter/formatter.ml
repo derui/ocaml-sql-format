@@ -24,20 +24,13 @@ let rec parse lexbuf (checkpoint : Types.Statement.t list I.checkpoint) =
     let line, pos = Exception.get_lexing_position lexbuf in
     let msg = get_parse_error _env in
     (* debug output *)
-    Printf.printf "error at (%d, %d) %s\n" line pos
-      (Sedlexing.Utf8.lexeme lexbuf);
+    Printf.printf "error at (%d, %d) %s\n" line pos (Sedlexing.Utf8.lexeme lexbuf);
     raise (Exception.Syntax_error (Some (line, pos), msg))
   | I.Accepted v -> v
-  | I.Rejected ->
-    raise
-      (Exception.Syntax_error
-         (None, "invalid syntax (parser rejected the input)"))
+  | I.Rejected -> raise (Exception.Syntax_error (None, "invalid syntax (parser rejected the input)"))
 
 let format (option : Options.t) lexbuf =
-  let checkpoint =
-    Parser.Parser.Incremental.statements @@ fst
-    @@ Sedlexing.lexing_positions lexbuf
-  in
+  let checkpoint = Parser.Parser.Incremental.statements @@ fst @@ Sedlexing.lexing_positions lexbuf in
   let result = parse lexbuf checkpoint in
   let buffer = Buffer.create 16 in
   let formatter = Format.formatter_of_buffer buffer in

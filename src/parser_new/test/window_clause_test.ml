@@ -7,10 +7,7 @@ let p = P.Parser_window_clause.generate (P.Slot.get_taker ())
 
 let%expect_test "parse " =
   Util.run {| window abc as (partition by d) |} p |> print_endline;
-  Util.run
-    {| window abc as (partition by d), cde as (c partition by v order by b.b desc) |}
-    p
-  |> print_endline;
+  Util.run {| window abc as (partition by d), cde as (c partition by v order by b.b desc) |} p |> print_endline;
 
   [%expect
     {|

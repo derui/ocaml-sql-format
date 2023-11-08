@@ -10,8 +10,7 @@ let%expect_test "parse " =
   Util.run {| multi "column" "name" (+350) |} p |> print_endline;
   Util.run {| some_column (-3,+50) |} p |> print_endline;
 
-  [%expect
-    {|
+  [%expect {|
     column_name
     multi "column" "name" (+350)
     some_column (-3,+50) |}]

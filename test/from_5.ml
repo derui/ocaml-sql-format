@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   select * from
   a cross join (b as "t" left join c on a.id = b.id)
 |}

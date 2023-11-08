@@ -10,8 +10,7 @@ let%expect_test "parse " =
   Util.run {| over window_name |} p |> print_endline;
   Util.run {| over (partition by a,c) |} p |> print_endline;
   Util.run {| over (partition by a,c order by a desc) |} p |> print_endline;
-  Util.run {| over (partition by a,c order by a desc range current row) |} p
-  |> print_endline;
+  Util.run {| over (partition by a,c order by a desc range current row) |} p |> print_endline;
   Util.run {| over (partition by a,c range current row) |} p |> print_endline;
   Util.run {| over (range current row) |} p |> print_endline;
   Util.run {| over (order by a desc range current row) |} p |> print_endline;

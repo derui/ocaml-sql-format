@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   create index if not exists about.a on foo (long_column_name)
 |}
 
@@ -15,8 +14,7 @@ let%test_unit "create_index_4 for AST" =
 
 let%expect_test "create_index_4 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     CREATE INDEX IF NOT EXISTS about.a ON foo (
         long_column_name
     ); |}]

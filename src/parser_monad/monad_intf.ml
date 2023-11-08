@@ -24,15 +24,13 @@ module type S = sig
   (** [skip] ignore error. This function is useful with [choice] *)
   val skip : unit t
 
-  (** [choice a b] get first success parsing. If [a] is valid, do not evaluate
-      [b]. Fail if [a] and [b] are failed. *)
+  (** [choice a b] get first success parsing. If [a] is valid, do not evaluate [b]. Fail if [a] and [b] are failed. *)
   val choice : 'a t -> 'a t -> 'a t
 
   (** [many m] get list of result of [m]. This function never fail *)
   val many : 'a t -> 'a list t
 
-  (** [many1 m] get list of result of [m]. If [m] does not exist least 1
-      component, this function will fail *)
+  (** [many1 m] get list of result of [m]. If [m] does not exist least 1 component, this function will fail *)
   val many1 : 'a t -> 'a list t
 
   module Let_syntax : sig
@@ -59,16 +57,13 @@ module type S = sig
 
   (** functions *)
 
-  (** [bump_when token] bump current token into current node when the token is
-      same as [token] *)
+  (** [bump_when token] bump current token into current node when the token is same as [token] *)
   val bump_when : Types.Token.t -> unit t
 
-  (** [bump_kw kw] bump current token into current node when the token is same
-      as [kw] *)
+  (** [bump_kw kw] bump current token into current node when the token is same as [kw] *)
   val bump_kw : Types.Keyword.t -> unit t
 
-  (** [bump_match f] bump current token into current node when the token is
-      matched by [f] *)
+  (** [bump_match f] bump current token into current node when the token is matched by [f] *)
   val bump_match : (Types.Token.t -> bool) -> unit t
 
   (** [bump] bump current token into current node without any conditions *)

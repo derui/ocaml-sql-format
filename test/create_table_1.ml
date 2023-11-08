@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   create table a (
  b varchar constraint pk primary key,
  c decimal(1)
@@ -18,8 +17,7 @@ let%test_unit "create_table_1 for AST" =
 
 let%expect_test "create_table_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     CREATE TABLE a (
         b varchar CONSTRAINT pk PRIMARY KEY,
         c decimal(1)

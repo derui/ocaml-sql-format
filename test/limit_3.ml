@@ -14,8 +14,7 @@ let%test_unit "limit in from for AST" =
 
 let%expect_test "limit in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
       SELECT
           a,
           b

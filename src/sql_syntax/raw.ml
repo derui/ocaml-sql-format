@@ -18,8 +18,7 @@ include (
           ; data : leaf_data
           }
 
-    let make_leaf kind ~trailing ~leading ~token =
-      Leaf { kind; data = { trailing; leading; token } }
+    let make_leaf kind ~trailing ~leading ~token = Leaf { kind; data = { trailing; leading; token } }
 
     let make_node kind ~layouts = Node { kind; layouts = List.rev layouts }
 
@@ -44,9 +43,6 @@ include (
         in
         loop @@ List.rev layouts
       | Leaf { data; _ } ->
-        Printf.sprintf "%s%s%s"
-          (Trivia.to_string data.leading)
-          (Token.show data.token)
-          (Trivia.to_string data.trailing)
+        Printf.sprintf "%s%s%s" (Trivia.to_string data.leading) (Token.show data.token) (Trivia.to_string data.trailing)
   end :
     Raw_intf.S)

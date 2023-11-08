@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   delete from other_table as c where id >= 50 or
  id < 500
  returning *
@@ -17,8 +16,7 @@ let%test_unit "delete_2 for AST" =
 
 let%expect_test "delete_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     DELETE FROM other_table AS c
     WHERE
         id >= 50 OR id < 500

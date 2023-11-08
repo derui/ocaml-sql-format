@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   create unique index if not exists foo.a on foo (a,b,c)
 where a > 15
 |}

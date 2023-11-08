@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   SELECT * from test_table abc, ident as "next",
                third
 |}
@@ -16,8 +15,7 @@ let%test_unit "multiple tables in from for AST" =
 
 let%expect_test "multiple tables in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     SELECT
         *
     FROM

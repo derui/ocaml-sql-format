@@ -20,8 +20,7 @@ include (
     end
 
     module V (S : Param) = struct
-      let literal_value () =
-        M.start_syntax K.N_expr_literal @@ (M.skip >>= S.literal_value)
+      let literal_value () = M.start_syntax K.N_expr_literal @@ (M.skip >>= S.literal_value)
 
       let ident =
         M.bump_match (function
@@ -40,37 +39,24 @@ include (
         binary_operator () <|> M.skip
 
       and non_binary_expr () =
-        unary () <|> collate () <|> wrap_parens () <|> cast () <|> exists ()
-        <|> function_ () <|> case () <|> literal_value () <|> bind_parameter
-        <|> name
+        unary () <|> collate () <|> wrap_parens () <|> cast () <|> exists () <|> function_ () <|> case ()
+        <|> literal_value () <|> bind_parameter <|> name
 
       and binary_operator () =
-        let as_op op =
-          M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr)
-        in
-        let kw_as_op kw =
-          M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr)
-        in
-        let tier_1 =
-          as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat
-        in
+        let as_op op = M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr) in
+        let kw_as_op kw = M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr) in
+        let tier_1 = as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat in
         let tier_2 = as_op Op_star <|> as_op Op_slash <|> as_op Op_modulo in
         let tier_3 = as_op Op_plus <|> as_op Op_minus in
-        let tier_4 =
-          as_op Op_amp <|> as_op Op_pipe <|> as_op Op_rshift <|> as_op Op_lshift
-        in
-        let tier_5 =
-          as_op Op_gt <|> as_op Op_ge <|> as_op Op_le <|> as_op Op_lt
-        in
+        let tier_4 = as_op Op_amp <|> as_op Op_pipe <|> as_op Op_rshift <|> as_op Op_lshift in
+        let tier_5 = as_op Op_gt <|> as_op Op_ge <|> as_op Op_le <|> as_op Op_lt in
         let tier_6 =
-          as_op Op_eq <|> as_op Op_eq2 <|> as_op Op_ne <|> as_op Op_ne2
-          <|> is () <|> in_ () <|> between () <|> glob () <|> like ()
-          <|> regexp () <|> match_ ()
+          as_op Op_eq <|> as_op Op_eq2 <|> as_op Op_ne <|> as_op Op_ne2 <|> is () <|> in_ () <|> between () <|> glob ()
+          <|> like () <|> regexp () <|> match_ ()
         in
         let tier_7 = kw_as_op Kw_and in
         let tier_8 = kw_as_op Kw_or in
-        tier_1 <|> tier_2 <|> tier_3 <|> tier_4 <|> tier_5 <|> tier_6 <|> tier_7
-        <|> tier_8
+        tier_1 <|> tier_2 <|> tier_3 <|> tier_4 <|> tier_5 <|> tier_6 <|> tier_7 <|> tier_8
 
       and function_ () =
         let* () = ident *> M.bump_when T.Tok_lparen in
@@ -95,10 +81,7 @@ include (
         M.start_syntax K.N_expr_wrap p
 
       and unary () =
-        let op =
-          M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus
-          <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not
-        in
+        let op = M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not in
         M.start_syntax K.N_expr_unary @@ (op >>= expr)
 
       and cast () =
@@ -109,9 +92,7 @@ include (
         in
         Wrapping.parens p
 
-      and collate () =
-        M.start_syntax K.N_expr_collate
-        @@ ((M.skip >>= expr) *> M.bump_kw Kw.Kw_collate *> ident)
+      and collate () = M.start_syntax K.N_expr_collate @@ ((M.skip >>= expr) *> M.bump_kw Kw.Kw_collate *> ident)
 
       and like () =
         let p =
@@ -146,9 +127,7 @@ include (
         let p =
           let* () = M.bump_kw Kw.Kw_is in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          let* () =
-            M.bump_kw Kw.Kw_distinct *> M.bump_kw Kw.Kw_from <|> M.skip
-          in
+          let* () = M.bump_kw Kw.Kw_distinct *> M.bump_kw Kw.Kw_from <|> M.skip in
           expr ()
         in
         M.start_syntax K.N_expr_is p
@@ -156,8 +135,7 @@ include (
       and between () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          M.bump_kw Kw.Kw_between >>= non_binary_expr >>= fun () ->
-          M.bump_kw Kw.Kw_and >>= non_binary_expr
+          M.bump_kw Kw.Kw_between >>= non_binary_expr >>= fun () -> M.bump_kw Kw.Kw_and >>= non_binary_expr
         in
         M.start_syntax K.N_expr_between p
 
@@ -171,9 +149,7 @@ include (
           in
           let name = schema *> ident
           and table_function_ =
-            schema *> name
-            *> (M.bump_when Tok_lparen *> M.bump_when Tok_rparen
-               <|> Wrapping.parens list)
+            schema *> name *> (M.bump_when Tok_lparen *> M.bump_when Tok_rparen <|> Wrapping.parens list)
           in
           let* () = M.bump_kw Kw.Kw_in in
           table_function_ <|> name <|> Wrapping.parens list

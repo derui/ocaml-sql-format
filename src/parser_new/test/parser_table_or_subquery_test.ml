@@ -15,8 +15,7 @@ let%expect_test "parse " =
   Util.run {| f('fo') as other_name |} p |> print_endline;
   Util.run {| f('fo') other_name |} p |> print_endline;
   Util.run {| (f('fo') other_name) |} p |> print_endline;
-  Util.run {| (other inner join other_detail on d."value" = d2.value2) |} p
-  |> print_endline;
+  Util.run {| (other inner join other_detail on d."value" = d2.value2) |} p |> print_endline;
 
   [%expect
     {|

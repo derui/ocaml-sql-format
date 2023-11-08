@@ -9,8 +9,7 @@ include (
     type trailing
 
     let can_leading = function
-      | Token.Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _
-        -> true
+      | Token.Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ -> true
       | _ -> false
 
     let can_trailing = function

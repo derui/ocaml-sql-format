@@ -11,12 +11,9 @@ let unwind ~(protect : 'a -> unit) f x =
     protect x;
     raise e
 
-let resolve_path fname =
-  if Filename.is_relative fname then Filename.concat (Sys.getcwd ()) fname
-  else fname
+let resolve_path fname = if Filename.is_relative fname then Filename.concat (Sys.getcwd ()) fname else fname
 
-(** [move oldpath newpath] move [oldpath] to [newpath]. This function is *not*
-    atomic. *)
+(** [move oldpath newpath] move [oldpath] to [newpath]. This function is *not* atomic. *)
 let move oldpath newpath =
   if not @@ Sys.file_exists oldpath then raise Not_found;
 
@@ -55,10 +52,7 @@ let arg_config =
     let doc = "Overrides the default configuration file to format" in
     Cmd.Env.info "OCAML_SQL_FORMAT_CONFIG" ~doc
   in
-  Arg.(
-    value
-    & opt file "~/.ocaml-sql-format.toml"
-    & info [ "c"; "config" ] ~env ~doc ~docv:"CONFIG")
+  Arg.(value & opt file "~/.ocaml-sql-format.toml" & info [ "c"; "config" ] ~env ~doc ~docv:"CONFIG")
 
 let main overwrite config files =
   let option = ref Formatter.Options.default in
@@ -76,10 +70,7 @@ let main overwrite config files =
     in
 
     let ic = open_in file in
-    unwind ~protect:close_in
-      (fun ic -> Formatter.from_channel ~option:!option ic)
-      ic
-    |> redirect
+    unwind ~protect:close_in (fun ic -> Formatter.from_channel ~option:!option ic) ic |> redirect
   in
 
   let rec loop = function
@@ -96,9 +87,7 @@ let main_t = Term.(ret (const main $ arg_overwrite $ arg_config $ arg_files))
 
 let cmd =
   let doc = "print formatted SQL or write it directly" in
-  let man =
-    [ `S Manpage.s_bugs; `P "Email bug report to <derutakayu@gmail.com>" ]
-  in
+  let man = [ `S Manpage.s_bugs; `P "Email bug report to <derutakayu@gmail.com>" ] in
   let info = Cmd.info "ocaml-sql-format" ~version:"0.1.0" ~doc ~man in
   Cmd.v info main_t
 

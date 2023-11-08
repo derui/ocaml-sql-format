@@ -7,10 +7,7 @@ include (
     module Kw = Types.Keyword
 
     let parse expr () =
-      let* () =
-        M.bump_kw Kw.Kw_filter *> M.bump_when T.Tok_lparen
-        *> M.bump_kw Kw.Kw_where
-      in
+      let* () = M.bump_kw Kw.Kw_filter *> M.bump_when T.Tok_lparen *> M.bump_kw Kw.Kw_where in
       let* () = expr () in
       M.bump_when T.Tok_rparen
 

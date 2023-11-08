@@ -20,10 +20,7 @@ include (
       let parse () =
         let p =
           let* () = ident in
-          let columns =
-            Wrapping.parens
-              (Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) ident)
-          in
+          let columns = Wrapping.parens (Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) ident) in
           let* _ = columns <|> M.skip in
           let* () = M.bump_kw Kw.Kw_as in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in

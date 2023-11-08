@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   select * from a, (select c,d,f from e) as v_v
 ,(select abc from f) as e
 |}

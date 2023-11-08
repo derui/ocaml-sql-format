@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
    SELECT a, b from test_table where b regexp 'abad' or c not regexp ab
    |}
 

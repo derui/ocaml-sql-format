@@ -8,9 +8,7 @@ include (
 
     module P = struct
       let parse () =
-        let p =
-          M.bump_kw Kw.Kw_commit *> (M.bump_kw Kw.Kw_transaction <|> M.skip)
-        in
+        let p = M.bump_kw Kw.Kw_commit *> (M.bump_kw Kw.Kw_transaction <|> M.skip) in
         M.start_syntax K.N_commit_stmt p
     end
 

@@ -9,22 +9,15 @@ let%expect_test "parse " =
   Util.run {| select 1 |} p |> print_endline;
   Util.run {| select distinct a,b,c
                 from z
-            |} p
-  |> print_endline;
-  Util.run
-    {| select all a,b,c
+            |} p |> print_endline;
+  Util.run {| select all a,b,c
                 from z
                 group by b
-            |}
-    p
-  |> print_endline;
-  Util.run
-    {| select all a,b,c
+            |} p |> print_endline;
+  Util.run {| select all a,b,c
                 from z
                 having b > 0
-            |}
-    p
-  |> print_endline;
+            |} p |> print_endline;
   Util.run
     {| select all a,b,c
                 from z

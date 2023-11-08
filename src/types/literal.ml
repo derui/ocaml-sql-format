@@ -1,18 +1,9 @@
 (** literals *)
-type 'a identifier =
-  | Identifier of [ `keyword of Token.t | `raw of string ] * 'a
+type 'a identifier = Identifier of [ `keyword of Token.t | `raw of string ] * 'a
 
 and 'a non_reserved_identifier =
   | Non_reserved_identifier of
-      [ `exception'
-      | `serial
-      | `object'
-      | `index
-      | `json
-      | `geometry
-      | `geography
-      | `basic of 'a basic_non_reserved
-      ]
+      [ `exception' | `serial | `object' | `index | `json | `geometry | `geography | `basic of 'a basic_non_reserved ]
       * 'a
 
 and 'a basic_non_reserved =

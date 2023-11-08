@@ -23,9 +23,7 @@ include (
             (M.skip >>= D.expr) *> (alias <|> M.skip)
           in
           let star = M.bump_when T.Op_star in
-          let table_name =
-            ident *> M.bump_when T.Tok_period *> M.bump_when T.Op_star
-          in
+          let table_name = ident *> M.bump_when T.Tok_period *> M.bump_when T.Op_star in
           expr' <|> star <|> table_name
         in
         M.start_syntax K.N_result_column p

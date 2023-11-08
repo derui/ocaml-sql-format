@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
    SELECT a, b from test_table where b between 50 and 60 or b not between 1 and 5
    |}
 

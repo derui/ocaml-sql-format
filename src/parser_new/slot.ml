@@ -17,15 +17,12 @@ include (
       |> Kind_map.add K.N_type_name (module Parser_type_name : Intf.GEN)
       |> Kind_map.add K.N_select_core (module Parser_select_core : Intf.GEN)
       |> Kind_map.add K.N_from_clause (module Parser_from_clause : Intf.GEN)
-      |> Kind_map.add K.N_table_or_subquery
-           (module Parser_table_or_subquery : Intf.GEN)
+      |> Kind_map.add K.N_table_or_subquery (module Parser_table_or_subquery : Intf.GEN)
       |> Kind_map.add K.N_join_clause (module Parser_join_clause : Intf.GEN)
       |> Kind_map.add K.N_where_clause (module Parser_where_clause : Intf.GEN)
-      |> Kind_map.add K.N_group_by_clause
-           (module Parser_group_by_clause : Intf.GEN)
+      |> Kind_map.add K.N_group_by_clause (module Parser_group_by_clause : Intf.GEN)
       |> Kind_map.add K.N_having_clause (module Parser_having_clause : Intf.GEN)
-      |> Kind_map.add K.N_order_by_clause
-           (module Parser_order_by_clause : Intf.GEN)
+      |> Kind_map.add K.N_order_by_clause (module Parser_order_by_clause : Intf.GEN)
       |> Kind_map.add K.N_ordering_term (module Parser_ordering_term : Intf.GEN)
       |> Kind_map.add K.N_frame_spec (module Parser_frame_spec : Intf.GEN)
       |> Kind_map.add K.N_window_defn (module Parser_window_defn : Intf.GEN)
@@ -34,15 +31,14 @@ include (
       |> Kind_map.add K.N_select_core (module Parser_select_core : Intf.GEN)
       |> Kind_map.add K.N_over_clause (module Parser_over_clause : Intf.GEN)
       |> Kind_map.add K.N_limit_clause (module Parser_limit_clause : Intf.GEN)
-      |> Kind_map.add K.N_common_table_expression
-           (module Parser_common_table_expression : Intf.GEN)
+      |> Kind_map.add K.N_common_table_expression (module Parser_common_table_expression : Intf.GEN)
       |> Kind_map.add K.N_with_clause (module Parser_with_clause : Intf.GEN)
       |> Kind_map.add K.N_select_stmt (module Parser_select_stmt : Intf.GEN)
       |> Kind_map.add K.N_begin_stmt (module Parser_begin_stmt : Intf.GEN)
       |> Kind_map.add K.N_rollback_stmt (module Parser_rollback_stmt : Intf.GEN)
       |> Kind_map.add K.N_commit_stmt (module Parser_commit_stmt : Intf.GEN)
-      |> Kind_map.add K.N_indexed_column
-           (module Parser_indexed_column : Intf.GEN)
+      |> Kind_map.add K.N_indexed_column (module Parser_indexed_column : Intf.GEN)
+      |> Kind_map.add K.N_create_index_stmt (module Parser_create_index_stmt : Intf.GEN)
 
     let get_taker () =
       let rec f kind =

@@ -60,9 +60,7 @@ include (
     let fail v =
       let open Let_syntax in
       let* data' = data () in
-      let { start_pos; end_pos; token = _ } : Tokenizer.t =
-        data'.token_stream.(data'.pointer)
-      in
+      let { start_pos; end_pos; token = _ } : Tokenizer.t = data'.token_stream.(data'.pointer) in
       fun _ -> Error { Parse_error.start_pos; end_pos; message = v }
 
     let skip = return ()
@@ -109,14 +107,9 @@ include (
 
     let put_current c size =
       edit_data (fun data ->
-          { data with
-            current = Some c
-          ; pointer =
-              min (data.pointer + size) (pred @@ Array.length data.token_stream)
-          })
+          { data with current = Some c; pointer = min (data.pointer + size) (pred @@ Array.length data.token_stream) })
 
-    let array_get_opt ary idx =
-      if Array.length ary <= idx then None else Some ary.(idx)
+    let array_get_opt ary idx = if Array.length ary <= idx then None else Some ary.(idx)
 
     let current =
       let open Let_syntax in
@@ -128,37 +121,25 @@ include (
         let leading =
           let rec leading' pointer buf =
             match array_get_opt d.token_stream pointer with
-            | Some c when S.Trivia.can_leading c.token ->
-              leading' (succ pointer) (c.token :: buf)
+            | Some c when S.Trivia.can_leading c.token -> leading' (succ pointer) (c.token :: buf)
             | _ -> List.rev buf
           in
           leading' d.pointer [] |> S.Trivia.leading
         in
-        let c =
-          array_get_opt d.token_stream (d.pointer + S.Trivia.length leading)
-        in
+        let c = array_get_opt d.token_stream (d.pointer + S.Trivia.length leading) in
         match c with
         | None -> fail "No any token"
         | Some c ->
           let trailing =
             let rec trailing' pointer buf =
               match array_get_opt d.token_stream pointer with
-              | Some c when S.Trivia.can_trailing c.token ->
-                trailing' (succ pointer) (c.token :: buf)
+              | Some c when S.Trivia.can_trailing c.token -> trailing' (succ pointer) (c.token :: buf)
               | _ -> List.rev buf
             in
-            trailing' (d.pointer + S.Trivia.length leading) []
-            |> S.Trivia.trailing
+            trailing' (d.pointer + S.Trivia.length leading) [] |> S.Trivia.trailing
           in
-          let leaf =
-            S.Raw.make_leaf
-              (Kind.token_to_leaf c.token)
-              ~trailing ~leading ~token:c.token
-          in
-          let* () =
-            put_current leaf
-              (S.Trivia.length leading + S.Trivia.length trailing + 1)
-          in
+          let leaf = S.Raw.make_leaf (Kind.token_to_leaf c.token) ~trailing ~leading ~token:c.token in
+          let* () = put_current leaf (S.Trivia.length leading + S.Trivia.length trailing + 1) in
           return leaf)
 
     let put_current () =
@@ -167,35 +148,18 @@ include (
       let* data = data () in
       match data.syntax_stack with
       | (k, p, s) :: rest ->
-        fun data ->
-          Ok
-            ( ()
-            , { data with
-                current = None
-              ; syntax_stack = (k, p, S.Raw.push_layout raw s) :: rest
-              } )
-      | [] ->
-        fun data ->
-          Ok
-            ( ()
-            , { data with
-                language = S.Language.append raw data.language
-              ; current = None
-              } )
+        fun data -> Ok ((), { data with current = None; syntax_stack = (k, p, S.Raw.push_layout raw s) :: rest })
+      | [] -> fun data -> Ok ((), { data with language = S.Language.append raw data.language; current = None })
 
     let push_syntax (kind : Kind.node) (raw : raw) =
       let open Let_syntax in
       let* data = data () in
 
-      if Syntax_memo.mem data.syntax_memo (kind, data.pointer) then
-        fail "Detect infinite recursion"
+      if Syntax_memo.mem data.syntax_memo (kind, data.pointer) then fail "Detect infinite recursion"
       else
         let key = (kind, data.pointer) in
         Syntax_memo.add data.syntax_memo key raw;
-        edit_data (fun data ->
-            { data with
-              syntax_stack = (kind, data.pointer, raw) :: data.syntax_stack
-            })
+        edit_data (fun data -> { data with syntax_stack = (kind, data.pointer, raw) :: data.syntax_stack })
 
     let pop_syntax () =
       let open Let_syntax in
@@ -216,8 +180,7 @@ include (
       let open Let_syntax in
       let* raw = current in
       if S.Raw.match' (Token.equal tok) raw then bump
-      else
-        fail @@ Printf.sprintf "Does not match token for %s" @@ Token.show tok
+      else fail @@ Printf.sprintf "Does not match token for %s" @@ Token.show tok
 
     let bump_match f =
       let open Let_syntax in
@@ -242,15 +205,8 @@ include (
       let* syntax = pop_syntax () in
       edit_data (fun data ->
           match data.syntax_stack with
-          | (k, p, raw) :: rest ->
-            { data with
-              syntax_stack = (k, p, S.Raw.push_layout syntax raw) :: rest
-            }
-          | [] ->
-            { data with
-              language = S.Language.append syntax data.language
-            ; syntax_stack = []
-            })
+          | (k, p, raw) :: rest -> { data with syntax_stack = (k, p, S.Raw.push_layout syntax raw) :: rest }
+          | [] -> { data with language = S.Language.append syntax data.language; syntax_stack = [] })
 
     let parse tokens monad =
       let data =

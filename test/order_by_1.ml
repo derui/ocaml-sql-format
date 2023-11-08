@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
    SELECT a, b from test_table order by a, b desc null last, c null first
    |}
 
@@ -15,8 +14,7 @@ let%test_unit "order by in from for AST" =
 
 let%expect_test "order by in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
       SELECT
           a,
           b

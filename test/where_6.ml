@@ -15,8 +15,7 @@ let%test_unit "where with quantified in from for AST" =
 
 let%expect_test "where with quantified in from for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     SELECT
         a,
         b

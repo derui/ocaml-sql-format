@@ -12,8 +12,7 @@ let%expect_test "parse " =
   Util.run {| foo asc |} p |> print_endline;
   Util.run {| foo desc |} p |> print_endline;
 
-  [%expect
-    {|
+  [%expect {|
     "name"
     +31
     foo collate c_name

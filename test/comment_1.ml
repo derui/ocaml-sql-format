@@ -15,8 +15,7 @@ let%test_unit "comment_1 for AST" =
 
 let%expect_test "comment_1 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     CREATE INDEX a ON foo (
         a,
         b,

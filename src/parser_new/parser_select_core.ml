@@ -28,10 +28,7 @@ include (
         let* () = M.bump_kw Kw.Kw_select in
         let* () = M.bump_kw Kw.Kw_distinct <|> M.bump_kw Kw.Kw_all <|> M.skip in
         let result_columns =
-          let* _ =
-            Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma)
-              (M.skip >>= D.result_column)
-          in
+          let* _ = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.result_column) in
           M.return ()
         in
         let* () = result_columns in
@@ -45,9 +42,7 @@ include (
       let values () =
         let* () = M.bump_kw Kw.Kw_values in
         let sep = M.bump_when T.Tok_comma in
-        let values =
-          Wrapping.parens (Subparser.nonempty_list ~sep (M.skip >>= D.expr))
-        in
+        let values = Wrapping.parens (Subparser.nonempty_list ~sep (M.skip >>= D.expr)) in
         let* _ = Subparser.nonempty_list ~sep values in
         M.return ()
 

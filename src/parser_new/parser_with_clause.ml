@@ -14,13 +14,8 @@ include (
     module P (D : Data) = struct
       let parse () =
         let p =
-          let* () =
-            M.bump_kw Kw.Kw_with *> (M.bump_kw Kw.Kw_recursive <|> M.skip)
-          in
-          let* _ =
-            Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma)
-              (D.common_table_expression ())
-          in
+          let* () = M.bump_kw Kw.Kw_with *> (M.bump_kw Kw.Kw_recursive <|> M.skip) in
+          let* _ = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (D.common_table_expression ()) in
           M.skip
         in
         M.start_syntax K.N_with_clause p
@@ -28,8 +23,7 @@ include (
 
     let generate taker () =
       let module P = P (struct
-        let common_table_expression =
-          taker Parser_monad.Kind.N_common_table_expression
+        let common_table_expression = taker Parser_monad.Kind.N_common_table_expression
       end) in
       P.parse ()
   end :

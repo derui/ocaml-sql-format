@@ -14,8 +14,7 @@ let%test_unit "select_5 for AST" =
 
 let%expect_test "select_5 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
       SELECT
           *
       FROM

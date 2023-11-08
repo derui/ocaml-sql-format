@@ -15,12 +15,8 @@ include (
 
       let parse () =
         let p =
-          let* () =
-            M.bump_kw Kw.Kw_rollback *> (M.bump_kw Kw.Kw_transaction <|> M.skip)
-          in
-          let savepoint =
-            M.bump_kw Kw.Kw_to *> M.bump_kw Kw.Kw_savepoint *> ident
-          in
+          let* () = M.bump_kw Kw.Kw_rollback *> (M.bump_kw Kw.Kw_transaction <|> M.skip) in
+          let savepoint = M.bump_kw Kw.Kw_to *> M.bump_kw Kw.Kw_savepoint *> ident in
           savepoint <|> M.skip
         in
         M.start_syntax K.N_rollback_stmt p

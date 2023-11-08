@@ -21,10 +21,7 @@ include (
     let parse () =
       let* () = M.many1 ident *> M.skip in
       let one_arg = Wrapping.parens signed_number in
-      let two_arg =
-        Wrapping.parens
-          (signed_number *> M.bump_when T.Tok_comma *> signed_number)
-      in
+      let two_arg = Wrapping.parens (signed_number *> M.bump_when T.Tok_comma *> signed_number) in
       one_arg <|> two_arg <|> M.skip
 
     let generate _ = parse

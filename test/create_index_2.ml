@@ -15,8 +15,7 @@ let%test_unit "create_index_2 for AST" =
 
 let%expect_test "create_index_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     CREATE UNIQUE INDEX a ON foo (
         a,
         b,

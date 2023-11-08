@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   SELECT  * from "some_table name" union select t.b from "table" t
 |}
 

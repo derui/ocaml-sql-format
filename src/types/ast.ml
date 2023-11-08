@@ -23,9 +23,7 @@ and 'a type_name =
 
 and 'a signed_number = Signed_number of sign option * 'a numeric_literal * 'a
 
-and 'a qualified_name =
-  | Qualified_name of
-      'a schema_name option * 'a table_name option * 'a column_name * 'a
+and 'a qualified_name = Qualified_name of 'a schema_name option * 'a table_name option * 'a column_name * 'a
 
 and 'a expr =
   | Expr of
@@ -51,8 +49,7 @@ and 'a expr =
         * [ `stmt of 'a select_statement
           | `expr of 'a expr list
           | `table of 'a schema_name option * 'a table_name
-          | `function' of
-            'a schema_name option * 'a function_name * 'a expr list
+          | `function' of 'a schema_name option * 'a function_name * 'a expr list
           ]
       | `exists of 'a expr * [ `not' ] option * 'a select_statement
       | `case of 'a expr option * ('a expr * 'a expr) list * 'a expr option
@@ -102,12 +99,7 @@ and 'a select_core =
       * 'a
 
 and 'a result_column =
-  | Result_column of
-      [ `expr of 'a expr * 'a identifier option
-      | `asterisk
-      | `qualified_asterisk of 'a table_name
-      ]
-      * 'a
+  | Result_column of [ `expr of 'a expr * 'a identifier option | `asterisk | `qualified_asterisk of 'a table_name ] * 'a
 
 and 'a table_or_subquery =
   | Table_or_subquery of
@@ -118,22 +110,15 @@ and 'a table_or_subquery =
       ]
       * 'a
 
-and 'a select_clause =
-  | Select_clause of quantifier option * 'a result_column list * 'a
+and 'a select_clause = Select_clause of quantifier option * 'a result_column list * 'a
 
-and 'a from_clause =
-  | From_clause of
-      [ `table_or_subquery of 'a table_or_subquery list
-      | `join of 'a join_clause
-      ]
-      * 'a
+and 'a from_clause = From_clause of [ `table_or_subquery of 'a table_or_subquery list | `join of 'a join_clause ] * 'a
 
 and 'a where_clause = Where_clause of 'a expr * 'a
 
 and 'a group_by_clause = Group_by_clause of 'a expr list * 'a
 
-and 'a window_clause =
-  | Window_clause of ('a window_name * 'a window_defn) list * 'a
+and 'a window_clause = Window_clause of ('a window_name * 'a window_defn) list * 'a
 
 and 'a having_clause = Having_clause of 'a expr * 'a
 
@@ -141,67 +126,34 @@ and 'a window_name = Window_name of 'a identifier * 'a
 
 and 'a window_defn =
   | Window_defn of
-      'a base_window_name option
-      * 'a partition_clause option
-      * 'a order_by_clause option
-      * 'a frame_spec option
-      * 'a
+      'a base_window_name option * 'a partition_clause option * 'a order_by_clause option * 'a frame_spec option * 'a
 
 and 'a base_window_name = Base_window_name of 'a identifier * 'a
 
 and 'a order_by_clause = Order_by_clause of 'a ordering_term list * 'a
 
 and 'a frame_spec =
-  | Frame_spec of
-      [ `range | `rows | `groups ]
-      * 'a frame_spec_core
-      * 'a frame_spec_excluding option
-      * 'a
+  | Frame_spec of [ `range | `rows | `groups ] * 'a frame_spec_core * 'a frame_spec_excluding option * 'a
 
 and 'a ordering_term =
-  | Ordering_term of
-      'a expr
-      * 'a collation_name option
-      * [ `asc | `desc ] option
-      * [ `first | `last ] option
-      * 'a
+  | Ordering_term of 'a expr * 'a collation_name option * [ `asc | `desc ] option * [ `first | `last ] option * 'a
 
 and 'a partition_clause = Partition_clause of 'a expr list * 'a
 
 and 'a collation_name = Collation_name of 'a identifier * 'a
 
-and 'a frame_spec_between =
-  | Frame_spec_between of 'a frame_spec_between_1 * 'a frame_spec_between_2 * 'a
+and 'a frame_spec_between = Frame_spec_between of 'a frame_spec_between_1 * 'a frame_spec_between_2 * 'a
 
 and 'a frame_spec_between_1 =
-  | Frame_spec_between_1 of
-      [ `unbounded
-      | `preceding of 'a expr
-      | `following of 'a expr
-      | `current_row
-      ]
-      * 'a
+  | Frame_spec_between_1 of [ `unbounded | `preceding of 'a expr | `following of 'a expr | `current_row ] * 'a
 
 and 'a frame_spec_between_2 =
-  | Frame_spec_between_2 of
-      [ `unbounded
-      | `preceding of 'a expr
-      | `following of 'a expr
-      | `current_row
-      ]
-      * 'a
+  | Frame_spec_between_2 of [ `unbounded | `preceding of 'a expr | `following of 'a expr | `current_row ] * 'a
 
 and 'a frame_spec_core =
-  | Frame_spec_core of
-      [ `between of 'a frame_spec_between
-      | `unbounded
-      | `preceding of 'a expr
-      | `current_row
-      ]
-      * 'a
+  | Frame_spec_core of [ `between of 'a frame_spec_between | `unbounded | `preceding of 'a expr | `current_row ] * 'a
 
-and 'a frame_spec_excluding =
-  | Frame_spec_excluding of [ `no_others | `current_row | `group | `ties ] * 'a
+and 'a frame_spec_excluding = Frame_spec_excluding of [ `no_others | `current_row | `group | `ties ] * 'a
 
 and 'a join_operator =
   | Join_operator of
@@ -214,18 +166,13 @@ and 'a join_operator =
       ]
       * 'a
 
-and 'a join_constraint =
-  | Join_constraint of [ `expr of 'a expr | `using of 'a column_name list ] * 'a
+and 'a join_constraint = Join_constraint of [ `expr of 'a expr | `using of 'a column_name list ] * 'a
 
 and 'a join_clause =
   | Join_clause of
-      'a table_or_subquery
-      * ('a join_operator * 'a table_or_subquery * 'a join_constraint option)
-        list
-      * 'a
+      'a table_or_subquery * ('a join_operator * 'a table_or_subquery * 'a join_constraint option) list * 'a
 
-and 'a unary_operator =
-  | Unary_operator of [ `tilda | `plus | `minus | `not' ] * 'a
+and 'a unary_operator = Unary_operator of [ `tilda | `plus | `minus | `not' ] * 'a
 
 and 'a binary_operator =
   | Binary_operator of
@@ -257,41 +204,21 @@ and 'a function_name = Function_name of 'a identifier * 'a
 
 and 'a function' =
   | Function of
-      [ `no_arg of
-        'a function_name * 'a filter_clause option * 'a over_clause option
-      | `asterisk of
-        'a function_name * 'a filter_clause option * 'a over_clause option
+      [ `no_arg of 'a function_name * 'a filter_clause option * 'a over_clause option
+      | `asterisk of 'a function_name * 'a filter_clause option * 'a over_clause option
       | `generic of
-        'a function_name
-        * [ `distinct ] option
-        * 'a expr list
-        * 'a filter_clause option
-        * 'a over_clause option
-      | `extract of
-        [ `year
-        | `month
-        | `day
-        | `hour
-        | `minute
-        | `second
-        | `quarter
-        | `epoch
-        ]
-        * 'a expr
+        'a function_name * [ `distinct ] option * 'a expr list * 'a filter_clause option * 'a over_clause option
+      | `extract of [ `year | `month | `day | `hour | `minute | `second | `quarter | `epoch ] * 'a expr
       | `position of 'a expr * 'a expr
-      | `trim of
-        [ `leading | `trailing | `both ] option * 'a expr option * 'a expr
+      | `trim of [ `leading | `trailing | `both ] option * 'a expr option * 'a expr
       ]
       * 'a
 
 and 'a filter_clause = Filter_clause of 'a expr * 'a
 
-and 'a limit_clause =
-  | Limit_clause of
-      'a expr * [ `no_offset | `offset of 'a expr | `comma of 'a expr ] * 'a
+and 'a limit_clause = Limit_clause of 'a expr * [ `no_offset | `offset of 'a expr | `comma of 'a expr ] * 'a
 
-and 'a over_clause =
-  | Over_clause of [ `name of 'a identifier | `defn of 'a window_defn ] * 'a
+and 'a over_clause = Over_clause of [ `name of 'a identifier | `defn of 'a window_defn ] * 'a
 
 and 'a common_table_expression =
   | Common_table_expression of
@@ -301,40 +228,28 @@ and 'a common_table_expression =
       * 'a select_statement
       * 'a
 
-and 'a with_clause =
-  | With_clause of [ `recursive ] option * 'a common_table_expression list * 'a
+and 'a with_clause = With_clause of [ `recursive ] option * 'a common_table_expression list * 'a
 
-and 'a compound_operator =
-  | Compound_operator of [ `union | `union_all | `intersect | `except ] * 'a
+and 'a compound_operator = Compound_operator of [ `union | `union_all | `intersect | `except ] * 'a
 
 and 'a update_statement =
   | Update_statement of
       'a with_clause option
       * 'a qualified_table_name
-      * [ `column of 'a column_name * 'a expr
-        | `list of 'a column_name list * 'a expr
-        ]
-        list
+      * [ `column of 'a column_name * 'a expr | `list of 'a column_name list * 'a expr ] list
       * 'a from_clause option
       * 'a where_clause option
       * 'a returning_clause option
       * 'a
 
 and 'a qualified_table_name =
-  | Qualified_table_name of
-      'a schema_name option * 'a table_name * 'a identifier option * 'a
+  | Qualified_table_name of 'a schema_name option * 'a table_name * 'a identifier option * 'a
 
-and 'a returning_clause =
-  | Returning_clause of
-      [ `asterisk | `expr of 'a expr * 'a identifier option ] list * 'a
+and 'a returning_clause = Returning_clause of [ `asterisk | `expr of 'a expr * 'a identifier option ] list * 'a
 
 and 'a delete_statement =
   | Delete_statement of
-      'a with_clause option
-      * 'a qualified_table_name
-      * 'a where_clause option
-      * 'a returning_clause option
-      * 'a
+      'a with_clause option * 'a qualified_table_name * 'a where_clause option * 'a returning_clause option * 'a
 
 and 'a insert_statement =
   | Insert_statement of
@@ -349,25 +264,19 @@ and 'a savepoint_statement = Savepoint_statement of 'a identifier * 'a
 
 and 'a rollback_statement = Rollback_statement of 'a identifier option * 'a
 
-and 'a drop_table_statement =
-  | Drop_table_statement of [ `exists ] option * 'a qualified_table_name * 'a
+and 'a drop_table_statement = Drop_table_statement of [ `exists ] option * 'a qualified_table_name * 'a
 
 and 'a begin_statement = Begin_statement of [ `transaction ] option * 'a
 
 and 'a commit_statement = Commit_statement of [ `transaction ] option * 'a
 
-and 'a drop_index_statement =
-  | Drop_index_statement of [ `exists ] option * 'a qualified_table_name * 'a
+and 'a drop_index_statement = Drop_index_statement of [ `exists ] option * 'a qualified_table_name * 'a
 
-and 'a drop_trigger_statement =
-  | Drop_trigger_statement of [ `exists ] option * 'a qualified_table_name * 'a
+and 'a drop_trigger_statement = Drop_trigger_statement of [ `exists ] option * 'a qualified_table_name * 'a
 
-and 'a drop_view_statement =
-  | Drop_view_statement of [ `exists ] option * 'a qualified_table_name * 'a
+and 'a drop_view_statement = Drop_view_statement of [ `exists ] option * 'a qualified_table_name * 'a
 
-and 'a foreign_key_constraint =
-  | Foreign_key_constraint of
-      'a qualified_table_name * 'a column_name list option * 'a
+and 'a foreign_key_constraint = Foreign_key_constraint of 'a qualified_table_name * 'a column_name list option * 'a
 
 and 'a column_constraint =
   | Column_constraint of
@@ -376,20 +285,14 @@ and 'a column_constraint =
         | `not_null
         | `unique
         | `check of 'a expr
-        | `default of
-          [ `expr of 'a expr
-          | `literal of 'a literal_value
-          | `signed of 'a signed_number
-          ]
+        | `default of [ `expr of 'a expr | `literal of 'a literal_value | `signed of 'a signed_number ]
         | `collate of 'a collation_name
         | `foreign_key of 'a foreign_key_constraint
         | `generated of 'a expr
         ]
       * 'a
 
-and 'a column_def =
-  | Column_def of
-      'a column_name * 'a type_name option * 'a column_constraint list * 'a
+and 'a column_def = Column_def of 'a column_name * 'a type_name option * 'a column_constraint list * 'a
 
 and 'a table_constraint =
   | Table_constraint of
@@ -405,9 +308,7 @@ and 'a foreign_key_clause =
   | Foreign_key_clause of
       'a qualified_table_name
       * 'a column_name list option
-      * [ `trigger of
-          [ `delete | `update ]
-          * [ `set_null | `set_default | `cascade | `restrict | `no_action ]
+      * [ `trigger of [ `delete | `update ] * [ `set_null | `set_default | `cascade | `restrict | `no_action ]
         | `match' of 'a identifier
         ]
         list
@@ -420,9 +321,7 @@ and 'a create_table_statement =
       * [ `exists ] option
       * 'a qualified_table_name
       * [ `select of 'a select_statement
-        | `def of
-          [ `coldef of 'a column_def | `constraint' of 'a table_constraint ]
-          list
+        | `def of [ `coldef of 'a column_def | `constraint' of 'a table_constraint ] list
         ]
       * 'a
 

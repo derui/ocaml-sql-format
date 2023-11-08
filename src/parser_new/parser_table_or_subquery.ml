@@ -19,16 +19,13 @@ include (
         let name = ident *> alias in
 
         let fname =
-          let expr_list =
-            M.skip >>= expr >>= fun () -> M.many (M.bump_when Tok_comma >>= expr)
-          in
+          let expr_list = M.skip >>= expr >>= fun () -> M.many (M.bump_when Tok_comma >>= expr) in
           ident *> Wrapping.parens expr_list *> alias
         in
         fname <|> name
       in
       M.start_syntax K.N_table_or_subquery @@ name_base
-      <|> ( M.skip >>= fun _ ->
-            Wrapping.parens (parse expr join_clause ()) *> M.skip )
+      <|> (M.skip >>= fun _ -> Wrapping.parens (parse expr join_clause ()) *> M.skip)
       <|> (M.skip >>= fun _ -> Wrapping.parens (join_clause ()))
 
     let generate taker () =

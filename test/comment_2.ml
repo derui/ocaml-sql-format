@@ -1,8 +1,7 @@
 module F = Formatter
 module P = Parser.Parser
 
-let actual =
-  {|
+let actual = {|
   /*
     sample block comment
 */
@@ -19,8 +18,7 @@ let%test_unit "comment_2 for AST" =
 
 let%expect_test "comment_2 for formatting" =
   print_endline @@ F.from_string actual ~option;
-  [%expect
-    {|
+  [%expect {|
     CREATE INDEX a ON foo (
         a,
         b,
