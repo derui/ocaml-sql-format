@@ -36,12 +36,15 @@ type node =
   | N_common_table_expression
   | N_with_clause
   | N_indexed_column
+  | N_qualified_table_name
+  | N_returning_clause
   (* statements *)
   | N_select_stmt
   | N_begin_stmt
   | N_rollback_stmt
   | N_commit_stmt
   | N_create_index_stmt
+  | N_delete_stmt
 [@@deriving ord, show]
 
 (** kind of leaf *)

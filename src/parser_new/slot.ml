@@ -39,6 +39,8 @@ include (
       |> Kind_map.add K.N_commit_stmt (module Parser_commit_stmt : Intf.GEN)
       |> Kind_map.add K.N_indexed_column (module Parser_indexed_column : Intf.GEN)
       |> Kind_map.add K.N_create_index_stmt (module Parser_create_index_stmt : Intf.GEN)
+      |> Kind_map.add K.N_qualified_table_name (module Parser_qualified_table_name : Intf.GEN)
+      |> Kind_map.add K.N_returning_clause (module Parser_returning_clause : Intf.GEN)
 
     let get_taker () =
       let rec f kind =
