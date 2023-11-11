@@ -40,6 +40,7 @@ type node =
   | N_returning_clause
   (* statements *)
   | N_sql_stmt
+  | N_sql_stmt_list
   | N_select_stmt
   | N_begin_stmt
   | N_rollback_stmt
