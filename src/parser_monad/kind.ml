@@ -39,6 +39,7 @@ type node =
   | N_qualified_table_name
   | N_returning_clause
   (* statements *)
+  | N_sql_stmt
   | N_select_stmt
   | N_begin_stmt
   | N_rollback_stmt

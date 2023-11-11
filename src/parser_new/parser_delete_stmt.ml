@@ -12,20 +12,20 @@ include (
 
       val with_clause : Type.parser
 
-      val returning_clause : Type.parser
+      val where_clause : Type.parser
 
-      val expr : Type.parser
+      val returning_clause : Type.parser
     end
 
     module P (D : Data) = struct
       let parse () =
         let p =
           let* () = D.with_clause () <|> M.skip in
-          let where = M.bump_kw Kw_where >>= D.expr <|> M.skip in
+          let where = D.where_clause () <|> M.skip in
           let returning = D.returning_clause () <|> M.skip in
           M.bump_kw Kw_delete *> M.bump_kw Kw_from *> D.qualified_table_name () *> where *> returning
         in
-        M.start_syntax K.N_select_stmt p
+        M.start_syntax K.N_delete_stmt p
     end
 
     let generate taker () =
@@ -36,7 +36,7 @@ include (
 
         let returning_clause = taker Parser_monad.Kind.N_returning_clause
 
-        let expr = taker Parser_monad.Kind.N_expr
+        let where_clause = taker Parser_monad.Kind.N_where_clause
       end) in
       P.parse ()
   end :
