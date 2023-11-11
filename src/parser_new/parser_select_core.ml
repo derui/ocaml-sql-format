@@ -4,7 +4,7 @@ include (
     open M.Syntax
     open M.Let_syntax
     module T = Types.Token
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module Kw = Types.Keyword
 
     module type Data = sig
@@ -53,19 +53,19 @@ include (
 
     let generate taker () =
       let module P = P (struct
-        let from_clause = taker Parser_monad.Kind.N_from_clause
+        let from_clause = taker Sql_syntax.Kind.N_from_clause
 
-        let group_by_clause = taker Parser_monad.Kind.N_group_by_clause
+        let group_by_clause = taker Sql_syntax.Kind.N_group_by_clause
 
-        let having_clause = taker Parser_monad.Kind.N_having_clause
+        let having_clause = taker Sql_syntax.Kind.N_having_clause
 
-        let where_clause = taker Parser_monad.Kind.N_where_clause
+        let where_clause = taker Sql_syntax.Kind.N_where_clause
 
-        let window_clause = taker Parser_monad.Kind.N_window_clause
+        let window_clause = taker Sql_syntax.Kind.N_window_clause
 
-        let result_column = taker Parser_monad.Kind.N_result_column
+        let result_column = taker Sql_syntax.Kind.N_result_column
 
-        let expr = taker Parser_monad.Kind.N_expr
+        let expr = taker Sql_syntax.Kind.N_expr
       end) in
       P.parse ()
   end :

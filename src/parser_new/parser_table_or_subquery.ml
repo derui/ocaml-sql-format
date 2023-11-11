@@ -3,7 +3,7 @@ include (
     module M = Parser_monad.Monad
     open M.Syntax
     open M.Let_syntax
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module T = Types.Token
     module Kw = Types.Keyword
 
@@ -29,8 +29,8 @@ include (
       <|> (M.skip >>= fun _ -> Wrapping.parens (join_clause ()))
 
     let generate taker () =
-      let expr = taker Parser_monad.Kind.N_expr in
-      let join_clause = taker Parser_monad.Kind.N_join_clause in
+      let expr = taker Sql_syntax.Kind.N_expr in
+      let join_clause = taker Sql_syntax.Kind.N_join_clause in
       parse expr join_clause ()
   end :
     Intf.GEN)

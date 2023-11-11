@@ -1,4 +1,5 @@
 (library
   (name sql_syntax)
   (public_name ocaml-sql-format.sql-syntax)
-  (libraries ocaml-sql-format.types))
+  (libraries ocaml-sql-format.types)
+  (preprocess (pps ppx_deriving.show ppx_deriving.eq ppx_deriving.ord)))

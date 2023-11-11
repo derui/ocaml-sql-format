@@ -3,7 +3,7 @@ include (
     module M = Parser_monad.Monad
     open M.Syntax
     open M.Let_syntax
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module T = Types.Token
     module Kw = Types.Keyword
 
@@ -23,7 +23,7 @@ include (
 
     let generate taker () =
       let module P = P (struct
-        let sql_stmt = taker Parser_monad.Kind.N_sql_stmt
+        let sql_stmt = taker Sql_syntax.Kind.N_sql_stmt
       end) in
       P.parse ()
   end :

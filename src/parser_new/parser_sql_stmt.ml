@@ -2,7 +2,7 @@ include (
   struct
     module M = Parser_monad.Monad
     open M.Syntax
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module T = Types.Token
     module Kw = Types.Keyword
 
@@ -36,17 +36,17 @@ include (
 
     let generate taker () =
       let module P = P (struct
-        let select_stmt = taker Parser_monad.Kind.N_select_stmt
+        let select_stmt = taker Sql_syntax.Kind.N_select_stmt
 
-        let begin_stmt = taker Parser_monad.Kind.N_begin_stmt
+        let begin_stmt = taker Sql_syntax.Kind.N_begin_stmt
 
-        let rollback_stmt = taker Parser_monad.Kind.N_rollback_stmt
+        let rollback_stmt = taker Sql_syntax.Kind.N_rollback_stmt
 
-        let commit_stmt = taker Parser_monad.Kind.N_commit_stmt
+        let commit_stmt = taker Sql_syntax.Kind.N_commit_stmt
 
-        let create_index_stmt = taker Parser_monad.Kind.N_create_index_stmt
+        let create_index_stmt = taker Sql_syntax.Kind.N_create_index_stmt
 
-        let delete_stmt = taker Parser_monad.Kind.N_delete_stmt
+        let delete_stmt = taker Sql_syntax.Kind.N_delete_stmt
       end) in
       P.parse ()
   end :

@@ -5,7 +5,7 @@ include (
     open M.Let_syntax
     module T = Types.Token
     module Kw = Types.Keyword
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
 
     module type Param = sig
       val literal_value : Type.parser
@@ -184,17 +184,17 @@ include (
 
     let generate v () =
       let literal_value = Parser_literal_value.generate v in
-      let filter_clause = v Parser_monad.Kind.N_filter_clause in
+      let filter_clause = v Sql_syntax.Kind.N_filter_clause in
       let module V = V (struct
         let literal_value = literal_value
 
         let filter_clause = filter_clause
 
-        let type_name = v Parser_monad.Kind.N_type_name
+        let type_name = v Sql_syntax.Kind.N_type_name
 
-        let over_clause = v Parser_monad.Kind.N_over_clause
+        let over_clause = v Sql_syntax.Kind.N_over_clause
 
-        let select_stmt = v Parser_monad.Kind.N_select_stmt
+        let select_stmt = v Sql_syntax.Kind.N_select_stmt
       end) in
       V.expr ()
   end :

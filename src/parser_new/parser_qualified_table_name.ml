@@ -2,7 +2,7 @@ include (
   struct
     module M = Parser_monad.Monad
     open M.Syntax
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module T = Types.Token
     module Kw = Types.Keyword
 

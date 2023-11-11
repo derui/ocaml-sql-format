@@ -1,6 +1,6 @@
 include (
   struct
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
 
     module Kind_map = Map.Make (struct
       type t = K.node

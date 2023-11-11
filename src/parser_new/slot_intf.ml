@@ -1,4 +1,4 @@
-type parser_taker = Parser_monad.Kind.node -> Type.parser
+type parser_taker = Sql_syntax.Kind.node -> Type.parser
 
 module type S = sig
   (** [get_taker ()] get parser taker *)

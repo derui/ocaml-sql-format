@@ -2,8 +2,8 @@ include (
   struct
     module Raw = Raw
 
-    type ('a, 'b) t =
-      { syntaxes : ('a, 'b) Raw.t option array
+    type t =
+      { syntaxes : Raw.t option array
       ; pointer : int
       }
 

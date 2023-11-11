@@ -4,7 +4,7 @@ include (
     open M.Syntax
     open M.Let_syntax
     module T = Types.Token
-    module K = Parser_monad.Kind
+    module K = Sql_syntax.Kind
     module Kw = Types.Keyword
 
     module type Data = sig

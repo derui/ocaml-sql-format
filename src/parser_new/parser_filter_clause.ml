@@ -12,7 +12,7 @@ include (
       M.bump_when T.Tok_rparen
 
     let generate taker () =
-      let expr = taker Parser_monad.Kind.N_expr in
+      let expr = taker Sql_syntax.Kind.N_expr in
       parse expr ()
   end :
     Intf.GEN)

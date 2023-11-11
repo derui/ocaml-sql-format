@@ -2,4 +2,5 @@
  (name formatter)
  (public_name ocaml-sql-format.formatter)
  (flags (:standard -safe-string))
- (libraries fmt ocaml-sql-format.parser ocaml-sql-format.lexer menhirLib ocaml-sql-format.parser-new))
+ (libraries fmt ocaml-sql-format.parser ocaml-sql-format.lexer menhirLib ocaml-sql-format.parser-new
+  ocaml-sql-format.rewriter))

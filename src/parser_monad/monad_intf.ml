@@ -1,6 +1,6 @@
 module S = Sql_syntax
 
-type language = (Kind.node, Kind.leaf) S.Language.t
+type language = S.Language.t
 
 module type S = sig
   (** type of parser monad *)
@@ -70,7 +70,7 @@ module type S = sig
   val bump : unit t
 
   (** [start_syntax kind_of_syntax inner] start syntax with [inner]. *)
-  val start_syntax : Kind.node -> 'a t -> unit t
+  val start_syntax : S.Kind.node -> 'a t -> unit t
 
   (** [parse monad] evaluate parser *)
   val parse : Tokenizer.t array -> 'a t -> (language, Parse_error.t) result

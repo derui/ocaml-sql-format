@@ -3,14 +3,14 @@ include (
     module Token = Types.Token
     module S = Sql_syntax
 
-    type raw = (Kind.node, Kind.leaf) S.Raw.t
+    type raw = S.Raw.t
 
     type pointer = int
 
-    type syntax_stack_element = Kind.node * pointer * raw
+    type syntax_stack_element = S.Kind.node * pointer * raw
 
     module Syntax_memo = Hashtbl.Make (struct
-      type t = Kind.node * pointer
+      type t = S.Kind.node * pointer
 
       let equal = Stdlib.( = )
 
@@ -138,7 +138,7 @@ include (
             in
             trailing' (d.pointer + S.Trivia.length leading) [] |> S.Trivia.trailing
           in
-          let leaf = S.Raw.make_leaf (Kind.token_to_leaf c.token) ~trailing ~leading ~token:c.token in
+          let leaf = S.Raw.make_leaf (S.Kind.token_to_leaf c.token) ~trailing ~leading ~token:c.token in
           let* () = put_current leaf (S.Trivia.length leading + S.Trivia.length trailing + 1) in
           return leaf)
 
@@ -151,7 +151,7 @@ include (
         fun data -> Ok ((), { data with current = None; syntax_stack = (k, p, S.Raw.push_layout raw s) :: rest })
       | [] -> fun data -> Ok ((), { data with language = S.Language.append raw data.language; current = None })
 
-    let push_syntax (kind : Kind.node) (raw : raw) =
+    let push_syntax (kind : S.Kind.node) (raw : raw) =
       let open Let_syntax in
       let* data = data () in
 
@@ -196,7 +196,7 @@ include (
       in
       if S.Raw.match' match_kw raw then bump else fail "Does not match token"
 
-    let start_syntax : Kind.node -> 'a t -> unit t =
+    let start_syntax : S.Kind.node -> 'a t -> unit t =
      fun kind m ->
       let open Let_syntax in
       let syntax = S.Raw.make_node kind ~layouts:[] in
