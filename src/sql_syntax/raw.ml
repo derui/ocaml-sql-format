@@ -27,6 +27,10 @@ include (
       | Node _ -> false
       | Leaf { data = { token; _ }; _ } -> f token
 
+    let replace f = function
+      | Node _ as v -> v
+      | Leaf ({ data; _ } as v) -> Leaf { v with data = { data with token = f data.token } }
+
     let push_layout raw = function
       | Node v -> Node { v with layouts = raw :: v.layouts }
       | Leaf _ as v -> v

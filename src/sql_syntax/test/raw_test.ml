@@ -12,6 +12,14 @@ let%test_unit "make leaf data" =
   assert (R.match' (Types.Token.equal Tok_colon) node = true);
   assert (R.match' (Types.Token.equal Op_eq) node = false)
 
+let%test_unit "replace leaf data" =
+  let leaf = R.make_leaf Tok_colon in
+  let leaf' = R.replace (fun _ -> Op_eq) leaf in
+  let node = R.make_node N_expr ~layouts:[] in
+  let node' = R.replace (fun _ -> Op_eq) node in
+  assert (R.match' (Types.Token.equal Op_eq) leaf' = true);
+  assert (R.match' (Types.Token.equal Op_eq) node' = false)
+
 let%expect_test "replace layouts" =
   let node = R.make_node N_expr ~layouts:[] in
   let node' = R.replace_layouts [ R.make_leaf Tok_colon ] node in

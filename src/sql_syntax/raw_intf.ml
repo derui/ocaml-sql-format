@@ -25,6 +25,10 @@ module type S = sig
   (** [match' f t] return the [t] is matched with [f]. If [t] is Node, always return false. *)
   val match' : (Token.t -> bool) -> t -> bool
 
+  (** [replace f t] return the new [t] that is replaced data from [f]. If [t] is Node, this returns same instance of
+      [t]. *)
+  val replace : (Token.t -> Token.t) -> t -> t
+
   (** [push_layout raw t] push [raw] into layout of [t]. Returns new instance of [t]. If [t] is leaf, this function do
       not anything *)
   val push_layout : t -> t -> t
