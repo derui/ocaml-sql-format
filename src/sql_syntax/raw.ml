@@ -18,7 +18,8 @@ include (
           ; data : leaf_data
           }
 
-    let make_leaf kind ~trailing ~leading ~token = Leaf { kind; data = { trailing; leading; token } }
+    let make_leaf ?(trailing = Trivia.trailing []) ?(leading = Trivia.leading []) token =
+      Leaf { kind = Kind.token_to_leaf token; data = { trailing; leading; token } }
 
     let make_node kind ~layouts = Node { kind; layouts = List.rev layouts }
 
@@ -28,6 +29,10 @@ include (
 
     let push_layout raw = function
       | Node v -> Node { v with layouts = raw :: v.layouts }
+      | Leaf _ as v -> v
+
+    let replace_layouts layouts = function
+      | Node v -> Node { v with layouts }
       | Leaf _ as v -> v
 
     let rec to_string t =

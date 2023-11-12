@@ -91,6 +91,7 @@ type leaf =
   | L_lshift
   | L_rshift
   | L_eof
+[@@deriving show]
 
 let token_to_leaf = function
   | Types.Token.Tok_ident _ -> L_ident

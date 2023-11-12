@@ -138,7 +138,7 @@ include (
             in
             trailing' (d.pointer + S.Trivia.length leading) [] |> S.Trivia.trailing
           in
-          let leaf = S.Raw.make_leaf (S.Kind.token_to_leaf c.token) ~trailing ~leading ~token:c.token in
+          let leaf = S.Raw.make_leaf ~trailing ~leading c.token in
           let* () = put_current leaf (S.Trivia.length leading + S.Trivia.length trailing + 1) in
           return leaf)
 
