@@ -27,6 +27,13 @@ let%expect_test "replace layouts" =
 
   [%expect {| : |}]
 
+let%test_unit "replace trivia" =
+  let leaf = R.make_leaf Tok_dollar in
+  let leaf' =
+    R.replace_trivia ~leading:(T.leading [ Tok_space ]) ~trailing:(T.trailing [ Tok_space; Tok_space ]) leaf
+  in
+  assert (" $  " = R.to_string leaf')
+
 let%expect_test "raw to string" =
   Printf.printf "%s" @@ R.to_string
   @@ R.make_node N_expr

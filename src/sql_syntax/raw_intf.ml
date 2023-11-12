@@ -29,6 +29,10 @@ module type S = sig
       [t]. *)
   val replace : (Token.t -> Token.t) -> t -> t
 
+  (** [replace_trivia ~leading ~trailing t] replace trivia of [t]. If neithor leading nor trailing is given, this
+      function does nothing. *)
+  val replace_trivia : ?leading:Trivia.leading Trivia.t -> ?trailing:Trivia.trailing Trivia.t -> t -> t
+
   (** [push_layout raw t] push [raw] into layout of [t]. Returns new instance of [t]. If [t] is leaf, this function do
       not anything *)
   val push_layout : t -> t -> t

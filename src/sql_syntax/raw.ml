@@ -31,6 +31,18 @@ include (
       | Node _ as v -> v
       | Leaf ({ data; _ } as v) -> Leaf { v with data = { data with token = f data.token } }
 
+    let replace_trivia ?leading ?trailing = function
+      | Node _ as v -> v
+      | Leaf ({ data; _ } as v) ->
+        Leaf
+          { v with
+            data =
+              { data with
+                trailing = Option.value ~default:data.trailing trailing
+              ; leading = Option.value ~default:data.leading leading
+              }
+          }
+
     let push_layout raw = function
       | Node v -> Node { v with layouts = raw :: v.layouts }
       | Leaf _ as v -> v
