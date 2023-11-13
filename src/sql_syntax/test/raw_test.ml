@@ -30,7 +30,10 @@ let%expect_test "replace layouts" =
 let%test_unit "replace trivia" =
   let leaf = R.make_leaf Tok_dollar in
   let leaf' =
-    R.replace_trivia ~leading:(T.leading [ Tok_space ]) ~trailing:(T.trailing [ Tok_space; Tok_space ]) leaf
+    R.replace_trivia
+      ~leading:(fun _ -> T.leading [ Tok_space ])
+      ~trailing:(fun _ -> T.trailing [ Tok_space; Tok_space ])
+      leaf
   in
   assert (" $  " = R.to_string leaf')
 

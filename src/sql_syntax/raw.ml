@@ -38,8 +38,8 @@ include (
           { v with
             data =
               { data with
-                trailing = Option.value ~default:data.trailing trailing
-              ; leading = Option.value ~default:data.leading leading
+                trailing = Option.map (fun f -> f data.trailing) trailing |> Option.value ~default:data.trailing
+              ; leading = Option.map (fun f -> f data.leading) leading |> Option.value ~default:data.leading
               }
           }
 
