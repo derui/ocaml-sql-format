@@ -1,0 +1,6 @@
+(library
+ (name rewriter)
+ (public_name ocaml-sql-format.rewriter)
+ (flags (:standard -safe-string))
+ (libraries ocaml-sql-format.types ocaml-sql-format.sql-syntax)
+ )
