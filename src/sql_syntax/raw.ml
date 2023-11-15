@@ -48,7 +48,7 @@ include (
       | Leaf _ as v -> v
 
     let replace_layouts layouts = function
-      | Node v -> Node { v with layouts }
+      | Node v -> Node { v with layouts = List.rev layouts }
       | Leaf _ as v -> v
 
     let rec to_string t =

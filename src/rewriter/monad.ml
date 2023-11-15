@@ -60,7 +60,7 @@ include (
     let current_raw () =
       let* env = env () in
       match env.current_node with
-      | R.Node { layouts; _ } -> return @@ List.nth layouts env.layout_index
+      | R.Node { layouts; _ } -> return @@ List.nth (List.rev layouts) env.layout_index
       | _ -> fail "Leaf only syntax is invalid"
 
     let leaf k =
@@ -77,7 +77,7 @@ include (
       let* raw = current_raw () in
       match raw with
       | R.Node { kind; _ } when kind = k ->
-        let* () = new_env { env with layout_index = succ env.layout_index } in
+        let* () = new_env { env with current_node = raw; layout_index = succ env.layout_index } in
         return raw
       | _ -> fail @@ Printf.sprintf "Do not match required kind: %s" @@ K.show_node k
 
