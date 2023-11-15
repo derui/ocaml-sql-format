@@ -72,12 +72,16 @@ include (
         return raw
       | _ -> fail @@ Printf.sprintf "Do not match required kind: %s" @@ K.show_leaf k
 
-    let node k =
+    let node r =
       let* env = env () in
       let* raw = current_raw () in
       match raw with
-      | R.Node { kind; _ } when kind = k -> new_env { env with current_node = raw; layout_index = 0 }
-      | _ -> fail @@ Printf.sprintf "Do not match required kind: %s" @@ K.show_node k
+      | R.Node _ ->
+        let* () = new_env { env with current_node = raw; layout_index = 0 } in
+        let* r' = r in
+        let* () = new_env env in
+        return r'
+      | _ -> fail "Current raw is not node"
 
     let new_node layouts =
       let* env = env () in

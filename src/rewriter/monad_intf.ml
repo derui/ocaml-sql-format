@@ -34,8 +34,8 @@ module type S = sig
   (** [leaf kind] return raw as leaf at current index. This function advances the index by one.*)
   val leaf : K.leaf -> R.t t
 
-  (** [node kind] enter new node at current index. This function resets the index with new node *)
-  val node : K.node -> unit t
+  (** [node rewriter] applys [rewriter] to current node at the index. This function advances the index by one *)
+  val node : R.t t -> R.t t
 
   (** [new_node layouts] return new raw as same kind of node in current environment. *)
   val new_node : R.t list -> R.t t
