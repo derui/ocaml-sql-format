@@ -76,9 +76,7 @@ include (
       let* env = env () in
       let* raw = current_raw () in
       match raw with
-      | R.Node { kind; _ } when kind = k ->
-        let* () = new_env { env with current_node = raw; layout_index = succ env.layout_index } in
-        return raw
+      | R.Node { kind; _ } when kind = k -> new_env { env with current_node = raw; layout_index = 0 }
       | _ -> fail @@ Printf.sprintf "Do not match required kind: %s" @@ K.show_node k
 
     let new_node layouts =

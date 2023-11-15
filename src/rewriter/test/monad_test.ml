@@ -25,7 +25,7 @@ let%test_unit "newline with indent" =
   let v = eval m (R.make_node N_expr ~layouts:[ R.make_leaf Op_ge ]) |> R.to_string in
   assert (v = "\n  >=")
 
-let%test_unit "node and leaf" =
+let%test_unit "multi leaf" =
   let m =
     let* () = Re.indent_in 2 in
     let* v = leaf L_ident >>= Re.spacer in
