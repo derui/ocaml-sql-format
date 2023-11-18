@@ -28,5 +28,14 @@ include (
         syntaxes;
 
       Buffer.to_bytes buffer |> Bytes.to_string
+
+    let walk ~f t =
+      let seq = t.syntaxes |> Array.to_seq in
+      Seq.iter
+        (fun v ->
+          match v with
+          | None -> ()
+          | Some r -> Raw.walk ~f r)
+        seq
   end :
     Language_intf.S)

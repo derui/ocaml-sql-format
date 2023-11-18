@@ -65,5 +65,11 @@ include (
         loop @@ List.rev layouts
       | Leaf { data; _ } ->
         Printf.sprintf "%s%s%s" (Trivia.to_string data.leading) (Token.show data.token) (Trivia.to_string data.trailing)
+
+    let rec walk ~f t =
+      f t;
+      match t with
+      | Node { layouts; _ } -> List.iter (walk ~f) layouts
+      | Leaf _ -> ()
   end :
     Raw_intf.S)

@@ -46,4 +46,8 @@ module type S = sig
 
   (** [to_string t] get string representation of [t] *)
   val to_string : t -> string
+
+  (** [walk ~f t] applies [f] to each raw of [t]. This function visits *all* nodes in raw, and it uses depth first
+      search *)
+  val walk : f:(t -> unit) -> t -> unit
 end
