@@ -1,0 +1,18 @@
+open Runner_intf
+module K = Sql_syntax.Kind
+
+module type S = sig
+  (** [map ~rewriter ~option raw] applies [rewriter] with [options] to nodes of the [raw]. Returns list contains result
+      of [rewriter] that is only [Some]. Order of results is same as original order of the [raw]. *)
+  val map : rewriter:R.t option rewriter -> Env.t -> R.t -> R.t list
+
+  (** [when_leaf leaf rewriter ~options raw] applies [rewriter] if [raw] is same kind of [leaf]. *)
+  val when_leaf : K.leaf -> R.t rewriter -> Env.t -> R.t -> R.t option
+
+  (** [space ~leading ~trailing options raw] returns new [raw] that is changed leading/trailing trivia via [leading] and
+      [trailing]. The default value of [leading] and [trailing] is [0]. *)
+  val space : ?leading:int -> ?trailing:int -> Env.t -> R.t -> R.t option
+
+  (** [newline ~options raw] returns new [raw] that is appended a newline. *)
+  val newline : Env.t -> R.t -> R.t option
+end
