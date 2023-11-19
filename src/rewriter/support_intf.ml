@@ -7,7 +7,7 @@ module type S = sig
   val map : rewriter:R.t option rewriter -> Env.t -> R.t -> R.t list
 
   (** [when_leaf leaf rewriter ~options raw] applies [rewriter] if [raw] is same kind of [leaf]. *)
-  val when_leaf : K.leaf -> R.t rewriter -> Env.t -> R.t -> R.t option
+  val when_leaf : K.leaf -> R.t option rewriter -> Env.t -> R.t -> R.t option
 
   (** [space ~leading ~trailing options raw] returns new [raw] that is changed leading/trailing trivia via [leading] and
       [trailing]. The default value of [leading] and [trailing] is [0]. *)

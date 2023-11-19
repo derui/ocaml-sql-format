@@ -10,18 +10,19 @@ include (
 
     let map ~rewriter env r =
       let ret = ref [] in
-
-      R.walk
-        ~f:(fun r ->
-          match rewriter env r with
-          | None -> ()
-          | Some r -> ret := r :: !ret)
-        r;
-
-      !ret
+      match r with
+      | R.Leaf _ -> !ret
+      | R.Node { layouts; _ } ->
+        List.iter
+          (fun r ->
+            match rewriter env r with
+            | None -> ()
+            | Some r -> ret := r :: !ret)
+          layouts;
+        !ret
 
     let when_leaf kind rewriter env = function
-      | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter env r |> Option.some
+      | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter env r
       | _ -> None
 
     let space ?(leading = 0) ?(trailing = 0) _ = function
