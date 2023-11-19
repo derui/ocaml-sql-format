@@ -49,5 +49,23 @@ include (
           r
         |> Option.some
       | _ -> None
+
+    let choice rewriters env raw =
+      let rewriter =
+        match raw with
+        | R.Leaf { kind; _ } ->
+          rewriters
+          |> List.find_opt (function
+               | `leaf k, _ -> k = kind
+               | _ -> false)
+          |> Option.map snd
+        | R.Node { kind; _ } ->
+          rewriters
+          |> List.find_opt (function
+               | `node k, _ -> k = kind
+               | _ -> false)
+          |> Option.map snd
+      in
+      Option.bind rewriter (fun rewriter -> rewriter env raw)
   end :
     S)

@@ -15,4 +15,7 @@ module type S = sig
 
   (** [newline ~options raw] returns new [raw] that is appended a newline. *)
   val newline : Env.t -> R.t -> R.t option
+
+  (** [choice rewriters env raw] choices and applies a rewirter in [rewriters] to [raw] *)
+  val choice : ([ `leaf of K.leaf | `node of K.node ] * R.t option rewriter) list -> Env.t -> R.t -> R.t option
 end
