@@ -16,6 +16,12 @@ let%test_unit "trailing trivia can not contain newline and line comment" =
     failwith "Invalid"
   with _ -> ()
 
+let%test_unit "push and unshift token" =
+  let t = T.leading [ Tok_space ] in
+  let t = T.unshift (Tok_line_comment "com") t in
+  let t = T.push Tok_space t in
+  assert (T.to_tokens t = [ Tok_line_comment "com"; Tok_space; Tok_space ])
+
 let%expect_test "trivia to string" =
   Printf.printf "%s" @@ T.to_string
   @@ T.leading [ Tok_space; Tok_newline; Tok_line_comment "-- comment\n"; Tok_newline; Tok_block_comment "/* block */" ];

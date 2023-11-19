@@ -41,6 +41,22 @@ let%expect_test "walk raw in language" =
 
   List.iter (fun v -> print_endline @@ R.to_string v) !v;
 
-  [%expect {|
+  [%expect
+    {|
+    ident
+    =
+    1
+    +
+    2
+    1+2
+
     ident = 1+2
+
+    ident
+    =
+    1
+    +
+    2
+    1+2
+
     ident = 1+2 |}]

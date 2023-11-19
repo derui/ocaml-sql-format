@@ -27,4 +27,10 @@ module type S = sig
 
   (** [length trivia] get length of token in trivia *)
   val length : 'a t -> int
+
+  (** [push token tr] pushs [token] to tail of [tr] *)
+  val push : Token.t -> 'a t -> 'a t
+
+  (** [unshift token tr] pushs [token] to head of [tr] *)
+  val unshift : Token.t -> 'a t -> 'a t
 end
