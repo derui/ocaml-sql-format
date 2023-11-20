@@ -1,6 +1,8 @@
 (** kind of node *)
 type node =
   | N_expr
+  | N_expr_function
+  | N_expr_cast
   | N_filter_clause
   | N_type_name
   | N_expr_collate
@@ -10,7 +12,6 @@ type node =
   | N_expr_glob
   | N_expr_regexp
   | N_expr_match
-  | N_expr_literal
   | N_expr_is
   | N_expr_between
   | N_expr_in

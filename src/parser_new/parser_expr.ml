@@ -20,7 +20,7 @@ include (
     end
 
     module V (S : Param) = struct
-      let literal_value () = M.start_syntax K.N_expr_literal @@ (M.skip >>= S.literal_value)
+      let literal_value = S.literal_value
 
       let ident =
         M.bump_match (function
@@ -34,7 +34,9 @@ include (
 
       let bind_parameter = M.bump_when T.Tok_qmark
 
-      let rec expr () =
+      let rec expr () = M.start_syntax K.N_expr (expr' ())
+
+      and expr' () =
         let* () = non_binary_expr () in
         binary_operator () <|> M.skip
 
@@ -43,8 +45,8 @@ include (
         <|> literal_value () <|> bind_parameter <|> name
 
       and binary_operator () =
-        let as_op op = M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr) in
-        let kw_as_op kw = M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr) in
+        let as_op op = M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr') in
+        let kw_as_op kw = M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr') in
         let tier_1 = as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat in
         let tier_2 = as_op Op_star <|> as_op Op_slash <|> as_op Op_modulo in
         let tier_3 = as_op Op_plus <|> as_op Op_minus in
@@ -59,22 +61,25 @@ include (
         tier_1 <|> tier_2 <|> tier_3 <|> tier_4 <|> tier_5 <|> tier_6 <|> tier_7 <|> tier_8
 
       and function_ () =
-        let* () = ident *> M.bump_when T.Tok_lparen in
-        let exprs =
-          let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
-          let* () = expr () in
-          M.many (M.bump_when T.Tok_comma *> expr ()) *> M.skip
+        let p =
+          let* () = ident *> M.bump_when T.Tok_lparen in
+          let exprs =
+            let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
+            let* () = expr' () in
+            M.many (M.bump_when T.Tok_comma *> expr' ()) *> M.skip
+          in
+          let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
+          let* () = M.bump_when Tok_rparen in
+          let* () = S.filter_clause () <|> M.skip in
+          S.over_clause () <|> M.skip
         in
-        let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
-        let* () = M.bump_when Tok_rparen in
-        let* () = S.filter_clause () <|> M.skip in
-        S.over_clause () <|> M.skip
+        M.start_syntax K.N_expr_function p
 
       and wrap_parens () =
         let p =
           let e =
-            let* () = M.skip >>= expr in
-            M.many (M.bump_when T.Tok_comma >>= expr) *> M.skip
+            let* () = M.skip >>= expr' in
+            M.many (M.bump_when T.Tok_comma >>= expr') *> M.skip
           in
           Wrapping.parens e
         in
@@ -82,44 +87,49 @@ include (
 
       and unary () =
         let op = M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not in
-        M.start_syntax K.N_expr_unary @@ (op >>= expr)
+        M.start_syntax K.N_expr_unary @@ (op >>= expr')
 
       and cast () =
-        let* () = M.bump_kw Kw.Kw_cast in
         let p =
-          let* () = expr () in
-          M.bump_kw Kw.Kw_as >>= S.type_name
+          let* () = M.bump_kw Kw.Kw_cast in
+          let wrapped =
+            let* () = expr' () in
+            M.bump_kw Kw.Kw_as >>= S.type_name
+          in
+          Wrapping.parens wrapped
         in
-        Wrapping.parens p
+        M.start_syntax K.N_expr_cast p
 
-      and collate () = M.start_syntax K.N_expr_collate @@ ((M.skip >>= expr) *> M.bump_kw Kw.Kw_collate *> ident)
+      and collate () =
+        let p = (M.skip >>= expr') *> M.bump_kw Kw.Kw_collate *> ident in
+        M.start_syntax K.N_expr_collate p
 
       and like () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          let* () = M.bump_kw Kw.Kw_like >>= expr in
-          M.bump_kw Kw.Kw_escape >>= expr <|> M.skip
+          let* () = M.bump_kw Kw.Kw_like >>= expr' in
+          M.bump_kw Kw.Kw_escape >>= expr' <|> M.skip
         in
         M.start_syntax K.N_expr_like p
 
       and glob () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          M.bump_kw Kw.Kw_glob >>= expr
+          M.bump_kw Kw.Kw_glob >>= expr'
         in
         M.start_syntax K.N_expr_glob p
 
       and regexp () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          M.bump_kw Kw.Kw_regexp >>= expr
+          M.bump_kw Kw.Kw_regexp >>= expr'
         in
         M.start_syntax K.N_expr_regexp p
 
       and match_ () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          M.bump_kw Kw.Kw_match >>= expr
+          M.bump_kw Kw.Kw_match >>= expr'
         in
         M.start_syntax K.N_expr_match p
 
@@ -128,7 +138,7 @@ include (
           let* () = M.bump_kw Kw.Kw_is in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let* () = M.bump_kw Kw.Kw_distinct *> M.bump_kw Kw.Kw_from <|> M.skip in
-          expr ()
+          expr' ()
         in
         M.start_syntax K.N_expr_is p
 
@@ -144,8 +154,8 @@ include (
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let schema = ident *> M.bump_when T.Tok_period <|> M.skip in
           let list =
-            let* () = M.skip >>= expr in
-            M.many (M.bump_when T.Tok_comma >>= expr)
+            let* () = M.skip >>= expr' in
+            M.many (M.bump_when T.Tok_comma >>= expr')
           in
           let name = schema *> ident
           and table_function_ =
@@ -168,15 +178,15 @@ include (
         let p =
           let when_ =
             let p =
-              let* () = M.bump_kw Kw.Kw_when >>= expr in
-              M.bump_kw Kw.Kw_then >>= expr
+              let* () = M.bump_kw Kw.Kw_when >>= expr' in
+              M.bump_kw Kw.Kw_then >>= expr'
             in
             M.start_syntax K.N_expr_when p
           in
           let* () = M.bump_kw Kw.Kw_case in
-          let* () = M.skip >>= expr <|> M.skip in
+          let* () = M.skip >>= expr' <|> M.skip in
           let* _ = M.many1 when_ in
-          let* () = M.bump_kw Kw.Kw_else >>= expr <|> M.skip in
+          let* () = M.bump_kw Kw.Kw_else >>= expr' <|> M.skip in
           M.bump_kw Kw.Kw_end
         in
         M.start_syntax K.N_expr_case p

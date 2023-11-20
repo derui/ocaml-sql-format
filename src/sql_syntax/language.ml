@@ -23,9 +23,7 @@ include (
 
     let to_string { syntaxes; _ } =
       let buffer = Buffer.create 10 in
-      Array.iter
-        (fun v -> Option.map (fun v -> Raw.to_string v |> Buffer.add_string buffer) v |> Option.value ~default:())
-        syntaxes;
+      Array.iter (fun v -> v |> Option.map (fun v -> v |> Raw.to_string |> Buffer.add_string buffer) |> ignore) syntaxes;
 
       Buffer.to_bytes buffer |> Bytes.to_string
 
