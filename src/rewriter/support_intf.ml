@@ -9,6 +9,9 @@ module type S = sig
   (** [when_leaf leaf rewriter ~options raw] applies [rewriter] if [raw] is same kind of [leaf]. *)
   val when_leaf : K.leaf -> R.t option rewriter -> Env.t -> R.t -> R.t option
 
+  (** [should_be_node node raw] provides assertion which [raw] is [node] or not. *)
+  val should_be_node : K.node -> R.t -> unit
+
   (** [space ~leading ~trailing options raw] returns new [raw] that is changed leading/trailing trivia via [leading] and
       [trailing]. The default value of [leading] and [trailing] is [0]. *)
   val space : ?leading:int -> ?trailing:int -> Env.t -> R.t -> R.t option

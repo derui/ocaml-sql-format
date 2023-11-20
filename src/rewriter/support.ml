@@ -25,6 +25,10 @@ include (
       | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter env r
       | _ -> None
 
+    let should_be_node kind = function
+      | R.Node { kind = kind'; _ } -> assert (kind = kind') |> ignore
+      | _ -> assert false |> ignore
+
     let space ?(leading = 0) ?(trailing = 0) _ = function
       | R.Leaf _ as r ->
         assert (leading >= 0 && trailing >= 0);
