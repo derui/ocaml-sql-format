@@ -11,12 +11,12 @@ include (
     let map ~rewriter env r =
       let ret = ref [] in
       match r with
-      | R.Leaf _ -> !ret
+      | R.Leaf _ -> []
       | R.Node { layouts; _ } ->
         List.iter
           (fun r ->
             match rewriter env r with
-            | None -> ()
+            | None -> ret := r :: !ret
             | Some r -> ret := r :: !ret)
           layouts;
         !ret
