@@ -25,7 +25,8 @@ include (
       | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter env r
       | _ -> None
 
-    let should_be_node kind = function
+    let should_be_node kind r =
+      match r with
       | R.Node { kind = kind'; _ } -> assert (kind = kind') |> ignore
       | _ -> assert false |> ignore
 

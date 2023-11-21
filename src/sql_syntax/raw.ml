@@ -67,9 +67,11 @@ include (
         Printf.sprintf "%s%s%s" (Trivia.to_string data.leading) (Token.show data.token) (Trivia.to_string data.trailing)
 
     let rec walk ~f t =
-      f t;
-      match t with
-      | Node { layouts; _ } -> List.iter (walk ~f) layouts
-      | Leaf _ -> ()
+      match f t with
+      | Some () -> (
+        match t with
+        | Node { layouts; _ } -> List.iter (walk ~f) layouts
+        | Leaf _ -> ())
+      | None -> ()
   end :
     Raw_intf.S)

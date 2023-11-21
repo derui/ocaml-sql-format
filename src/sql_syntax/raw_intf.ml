@@ -49,5 +49,5 @@ module type S = sig
 
   (** [walk ~f t] applies [f] to each raw of [t]. This function visits *all* nodes in raw, and it uses depth first
       search *)
-  val walk : f:(t -> unit) -> t -> unit
+  val walk : f:(t -> unit option) -> t -> unit
 end

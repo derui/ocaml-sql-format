@@ -11,8 +11,12 @@ include (
       L.walk
         ~f:(fun raw ->
           match r env raw with
-          | None -> new_language := L.append raw !new_language
-          | Some raw -> new_language := L.append raw !new_language)
+          | None ->
+            new_language := L.append raw !new_language;
+            Some ()
+          | Some raw ->
+            new_language := L.append raw !new_language;
+            None)
         language;
 
       !new_language
