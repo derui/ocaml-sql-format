@@ -28,9 +28,12 @@ include (
           | _ -> false)
 
       let name =
-        let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
-        let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
-        ident
+        let p =
+          let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
+          let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
+          ident
+        in
+        M.start_syntax K.N_expr_name p
 
       let bind_parameter = M.bump_when T.Tok_qmark
 
@@ -45,8 +48,8 @@ include (
         <|> literal_value () <|> bind_parameter <|> name
 
       and binary_operator () =
-        let as_op op = M.start_syntax (K.N_expr_binary_op (`op op)) (M.bump_when op >>= expr') in
-        let kw_as_op kw = M.start_syntax (K.N_expr_binary_op (`kw kw)) (M.bump_kw kw >>= expr') in
+        let as_op op = M.start_syntax K.N_expr_binary_op (M.bump_when op >>= expr') in
+        let as_logical_op kw = M.start_syntax K.N_expr_logical_op (M.bump_kw kw >>= expr') in
         let tier_1 = as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat in
         let tier_2 = as_op Op_star <|> as_op Op_slash <|> as_op Op_modulo in
         let tier_3 = as_op Op_plus <|> as_op Op_minus in
@@ -56,8 +59,8 @@ include (
           as_op Op_eq <|> as_op Op_eq2 <|> as_op Op_ne <|> as_op Op_ne2 <|> is () <|> in_ () <|> between () <|> glob ()
           <|> like () <|> regexp () <|> match_ ()
         in
-        let tier_7 = kw_as_op Kw_and in
-        let tier_8 = kw_as_op Kw_or in
+        let tier_7 = as_logical_op Kw_and in
+        let tier_8 = as_logical_op Kw_or in
         tier_1 <|> tier_2 <|> tier_3 <|> tier_4 <|> tier_5 <|> tier_6 <|> tier_7 <|> tier_8
 
       and function_ () =

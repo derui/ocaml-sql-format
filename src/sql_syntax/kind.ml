@@ -2,6 +2,7 @@
 type node =
   | N_expr
   | N_expr_function
+  | N_expr_name
   | N_expr_cast
   | N_filter_clause
   | N_type_name
@@ -18,7 +19,8 @@ type node =
   | N_expr_case
   | N_expr_when
   | N_expr_exists
-  | N_expr_binary_op of [ `op of Types.Token.t | `kw of Types.Keyword.t ]
+  | N_expr_binary_op
+  | N_expr_logical_op
   | N_select_core
   | N_from_clause
   | N_table_or_subquery

@@ -105,6 +105,13 @@ include (
       let ( *> ) x y = (fun _ y -> y) <$> x <*> y
     end
 
+    let catch m f data =
+      match m data with
+      | Ok _ as v -> v
+      | Error _ as e ->
+        f data |> ignore;
+        e
+
     let put_current c size =
       edit_data (fun data ->
           { data with current = Some c; pointer = min (data.pointer + size) (pred @@ Array.length data.token_stream) })
@@ -166,10 +173,19 @@ include (
       let* data = data () in
       match data.syntax_stack with
       | (k, p, syntax) :: rest ->
-        fun data ->
-          Syntax_memo.remove data.syntax_memo (k, p);
-          Ok (syntax, { data with syntax_stack = rest })
+        Syntax_memo.remove data.syntax_memo (k, p);
+        let* () = edit_data (fun data -> { data with syntax_stack = rest }) in
+        return syntax
       | [] -> fail "Invalid stack management"
+
+    let pop_memo () =
+      let open Let_syntax in
+      let* data = data () in
+      match data.syntax_stack with
+      | (k, p, _) :: _ ->
+        Syntax_memo.remove data.syntax_memo (k, p);
+        return ()
+      | [] -> return ()
 
     let bump : unit t =
       let open Let_syntax in
@@ -201,7 +217,7 @@ include (
       let open Let_syntax in
       let syntax = S.Raw.make_node kind ~layouts:[] in
       let* () = push_syntax kind syntax in
-      let* _ = m in
+      let* _ = catch m (pop_memo ()) in
       let* syntax = pop_syntax () in
       edit_data (fun data ->
           match data.syntax_stack with
