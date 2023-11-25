@@ -37,10 +37,10 @@ include (
         R.replace_trivia
           ~leading:(fun tr ->
             if leading = 0 then tr
-            else List.init leading (fun _ -> Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
+            else List.init leading (Fun.const Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
           ~trailing:(fun tr ->
             if trailing = 0 then tr
-            else List.init trailing (fun _ -> Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
+            else List.init trailing (Fun.const Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
           r
         |> Option.some
       | _ -> None
@@ -49,7 +49,7 @@ include (
       | R.Leaf _ as r ->
         R.replace_trivia
           ~leading:(fun tr ->
-            let indents = Tok_newline :: List.init env.Env.current_indent (fun _ -> Tok_space) in
+            let indents = Tok_newline :: List.init env.Env.current_indent (Fun.const Tok_space) in
             List.fold_left (fun tr tok -> Tr.push tok tr) tr indents)
           r
         |> Option.some
