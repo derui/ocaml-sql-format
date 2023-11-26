@@ -76,5 +76,15 @@ include (
         | Tr_block_comment _ | Tr_space _ -> true
         | _ -> false);
       { t with trivias = trivia :: t.trivias }
+
+    let shrink t =
+      { t with
+        trivias =
+          List.filter
+            (function
+              | Tr_line_comment _ | Tr_block_comment _ -> true
+              | _ -> false)
+            t.trivias
+      }
   end :
     Trivia_intf.S)

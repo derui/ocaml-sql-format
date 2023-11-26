@@ -32,3 +32,12 @@ let%expect_test "trivia to string" =
     -- comment
 
     /* block */ |}]
+
+let%expect_test "shrink" =
+  let t = T.leading [ Tok_space ] in
+  let t = T.unshift (Tr_block_comment "/* com */") t in
+  let t = T.push (Tr_space 3) t in
+  let t = T.push (Tr_block_comment "/* after*/") t in
+  t |> T.shrink |> T.to_string |> print_endline;
+
+  [%expect "/* com *//* after*/"]

@@ -42,4 +42,7 @@ module type S = sig
 
   (** [unshift token tr] pushs [token] to head of [tr] *)
   val unshift : trivia -> 'a t -> 'a t
+
+  (** [shrink tr] shrinks all non-meaning spaces of [tr] *)
+  val shrink : 'a t -> 'a t
 end
