@@ -102,9 +102,9 @@ and rewrite_expr_collate env raw =
   R.replace_layouts layouts raw |> Option.some
 
 (* like rewriter *)
-and rewrite_expr_like env raw =
+and _rewrite_expr_like_like node env raw =
   let open Sp.Syntax in
-  Sp.should_be_node K.N_expr_like raw;
+  Sp.should_be_node node raw;
   let rewriter =
     Sp.choice
       [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
@@ -113,42 +113,14 @@ and rewrite_expr_like env raw =
   in
   let layouts = Sp.map ~rewriter env raw in
   R.replace_layouts layouts raw |> Option.some
+
+and rewrite_expr_like env raw = _rewrite_expr_like_like K.N_expr_like env raw
 
 (* glob rewriter *)
-and rewrite_expr_glob env raw =
-  let open Sp.Syntax in
-  Sp.should_be_node K.N_expr_glob raw;
-  let rewriter =
-    Sp.choice
-      [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
-      ; (`any, fun env r -> Sp.shrink env r >>= Sp.space ~leading:1 ~trailing:0 env)
-      ]
-  in
-  let layouts = Sp.map ~rewriter env raw in
-  R.replace_layouts layouts raw |> Option.some
+and rewrite_expr_glob env raw = _rewrite_expr_like_like K.N_expr_glob env raw
 
 (* regexp rewriter *)
-and rewrite_expr_regexp env raw =
-  let open Sp.Syntax in
-  Sp.should_be_node K.N_expr_regexp raw;
-  let rewriter =
-    Sp.choice
-      [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
-      ; (`any, fun env r -> Sp.shrink env r >>= Sp.space ~leading:1 ~trailing:0 env)
-      ]
-  in
-  let layouts = Sp.map ~rewriter env raw in
-  R.replace_layouts layouts raw |> Option.some
+and rewrite_expr_regexp env raw = _rewrite_expr_like_like K.N_expr_regexp env raw
 
 (* match rewriter *)
-and rewrite_expr_match env raw =
-  let open Sp.Syntax in
-  Sp.should_be_node K.N_expr_match raw;
-  let rewriter =
-    Sp.choice
-      [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
-      ; (`any, fun env r -> Sp.shrink env r >>= Sp.space ~leading:1 ~trailing:0 env)
-      ]
-  in
-  let layouts = Sp.map ~rewriter env raw in
-  R.replace_layouts layouts raw |> Option.some
+and rewrite_expr_match env raw = _rewrite_expr_like_like K.N_expr_match env raw

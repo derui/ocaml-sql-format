@@ -111,5 +111,5 @@ let%expect_test "match" =
   |> Printf.printf "|%s|\n";
 
   [%expect {|
-    | a.colu RegExp '%ab'|
-    | a.colu noT regEXP '%ab'| |}]
+    | a.colu match '%ab'|
+    | a.colu noT MATCH '%ab'| |}]
