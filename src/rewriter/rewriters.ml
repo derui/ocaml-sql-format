@@ -11,6 +11,7 @@ let rec rewrite_expr env raw =
       ; (`leaf K.L_numeric, fun env r -> Sp.space ~leading:1 env r)
       ; (`leaf K.L_blob, fun env r -> Sp.space ~leading:1 env r)
       ; (`node K.N_expr_name, rewrite_expr_name)
+      ; (`node K.N_expr_unary, rewrite_expr_unary)
       ]
       env raw
   in
@@ -21,6 +22,17 @@ let rec rewrite_expr env raw =
 and rewrite_expr_name env raw =
   Sp.should_be_node K.N_expr_name raw;
   let rewriter = Sp.space ~leading:0 ~trailing:0 in
+  let layouts = Sp.map ~rewriter env raw in
+  let layouts =
+    match layouts with
+    | r :: rest -> (Sp.space ~leading:1 env r |> Option.get) :: rest
+    | _ as v -> v
+  in
+  R.replace_layouts layouts raw |> Option.some
+
+and rewrite_expr_unary env raw =
+  Sp.should_be_node K.N_expr_unary raw;
+  let rewriter = Sp.choice [ (`leaf K.L_keyword, Sp.keyword); (`any, Sp.space ~leading:0 ~trailing:0) ] in
   let layouts = Sp.map ~rewriter env raw in
   let layouts =
     match layouts with

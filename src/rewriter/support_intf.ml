@@ -20,5 +20,8 @@ module type S = sig
   val newline : Env.t -> R.t -> R.t option
 
   (** [choice rewriters env raw] choices and applies a rewirter in [rewriters] to [raw] *)
-  val choice : ([ `leaf of K.leaf | `node of K.node ] * R.t option rewriter) list -> Env.t -> R.t -> R.t option
+  val choice : ([ `leaf of K.leaf | `node of K.node | `any ] * R.t option rewriter) list -> Env.t -> R.t -> R.t option
+
+  (** [keyword env raw] applies special transform to [raw] with keyword options *)
+  val keyword : Env.t -> R.t -> R.t option
 end

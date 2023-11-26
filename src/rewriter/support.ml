@@ -57,15 +57,34 @@ include (
           rewriters
           |> List.find_opt (function
                | `leaf k, _ -> k = kind
+               | `any, _ -> true
                | _ -> false)
           |> Option.map snd
         | R.Node { kind; _ } ->
           rewriters
           |> List.find_opt (function
                | `node k, _ -> k = kind
+               | `any, _ -> true
                | _ -> false)
           |> Option.map snd
       in
       Option.bind rewriter (fun rewriter -> rewriter env raw)
+
+    let keyword env = function
+      | R.Leaf _ as r ->
+        let module T = Types.Token in
+        r
+        |> R.replace (function
+             | T.Tok_keyword (v, t) ->
+               let v =
+                 match env.Env.options.keyword_case with
+                 | `as_is -> v
+                 | `upper -> String.uppercase_ascii v
+                 | `lower -> String.lowercase_ascii v
+               in
+               T.Tok_keyword (v, t)
+             | _ as k -> k)
+        |> Option.some
+      | _ -> None
   end :
     S)
