@@ -85,3 +85,17 @@ let%expect_test "glob" =
   [%expect {|
     | a.colu GLOB '%ab'|
     | a.colu NOT GLOB '%ab'| |}]
+
+let%expect_test "regexp" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `as_is } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu RegExp '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu noT regEXP '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | a.colu RegExp '%ab'|
+    | a.colu noT regEXP '%ab'| |}]
