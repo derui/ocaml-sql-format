@@ -1,11 +1,23 @@
 module Token = Types.Token
 
-module type S = sig
-  type 'a t
+module Type = struct
+  (** type of trivia. *)
+  type trivia =
+    | Tr_space of int (* space only, no break *)
+    | Tr_break of int (* enter spawce or indent if width is reached. *)
+    | Tr_newline of int (* force newline with indent. *)
+    | Tr_line_comment of string (* line comment. With force newline *)
+    | Tr_block_comment of string (* a block comment. without force newline. This variant is just used as space *)
 
   type leading
 
   type trailing
+end
+
+module type S = sig
+  include module type of Type
+
+  type 'a t
 
   (** [trailing tokens] make [trailing] trivia *)
   val trailing : Token.t list -> trailing t
@@ -19,9 +31,6 @@ module type S = sig
   (** [can_leading token] return a [token] can contains in leading trivia *)
   val can_leading : Token.t -> bool
 
-  (** [to_tokens trivia] get tokens from [trivia] *)
-  val to_tokens : 'a t -> Token.t list
-
   (** [to_string trivia] get trivia *)
   val to_string : 'a t -> string
 
@@ -29,8 +38,8 @@ module type S = sig
   val length : 'a t -> int
 
   (** [push token tr] pushs [token] to tail of [tr] *)
-  val push : Token.t -> 'a t -> 'a t
+  val push : trivia -> 'a t -> 'a t
 
   (** [unshift token tr] pushs [token] to head of [tr] *)
-  val unshift : Token.t -> 'a t -> 'a t
+  val unshift : trivia -> 'a t -> 'a t
 end

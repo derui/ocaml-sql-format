@@ -1,15 +1,12 @@
 include (
   struct
+    include Trivia_intf.Type
     module Token = Types.Token
 
     type _ t =
-      { tokens : Token.t list
+      { trivias : trivia list
       ; typ : [ `leading | `trailing ]
       }
-
-    type leading
-
-    type trailing
 
     let can_leading = function
       | Token.Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ -> true
@@ -19,40 +16,65 @@ include (
       | Token.Tok_space | Tok_block_comment _ -> true
       | _ -> false
 
+    let trivia_of_tokens tokens =
+      let ret : trivia list ref = ref [] in
+      let rec loop accum tokens =
+        match tokens with
+        | [] -> if List.length accum > 0 then ret := Tr_space (List.length accum) :: !ret
+        | t :: rest -> (
+          match t with
+          | Token.Tok_space -> loop (t :: accum) rest
+          | Tok_newline ->
+            ret := Tr_newline (List.length accum) :: !ret;
+            loop [] rest
+          | Tok_line_comment v ->
+            if List.length accum > 0 then ret := Tr_space (List.length accum) :: !ret;
+            ret := Tr_line_comment v :: !ret;
+            loop [] rest
+          | Tok_block_comment v ->
+            if List.length accum > 0 then ret := Tr_space (List.length accum) :: !ret;
+            ret := Tr_line_comment v :: !ret;
+            loop [] rest
+          | _ -> failwith "Can not convert trivia from token")
+      in
+      loop [] tokens;
+      List.rev !ret
+
     let leading tokens =
       assert (List.for_all can_leading tokens);
-      { tokens; typ = `leading }
+      { trivias = trivia_of_tokens tokens; typ = `leading }
 
     let trailing tokens =
       assert (List.for_all can_trailing tokens);
-      { tokens; typ = `trailing }
+      { trivias = trivia_of_tokens tokens; typ = `trailing }
 
-    let length { tokens; _ } = List.length tokens
-
-    let to_tokens { tokens; _ } = tokens
+    let length { trivias; _ } = List.length trivias
 
     let to_string : 'a t -> string =
-     fun { tokens; _ } ->
+     fun { trivias; _ } ->
       let raws =
         List.map
           (function
-            | Token.Tok_newline -> "\n"
-            | Tok_space -> " "
-            | Tok_line_comment v -> v
-            | Tok_block_comment v -> v
-            | _ -> failwith "Invalid trivia")
-          tokens
+            | Tr_newline v ->
+              let spaces = String.init v (Fun.const ' ') in
+              Printf.sprintf "%s\n" spaces
+            | Tr_break v ->
+              let spaces = String.init v (Fun.const ' ') in
+              Printf.sprintf "%s\n" spaces
+            | Tr_space v -> String.init v (Fun.const ' ')
+            | Tr_line_comment v -> Printf.sprintf "%s\n" v
+            | Tr_block_comment v -> v)
+          trivias
       in
       String.concat "" raws
 
-    let push token t =
-      match t.typ with
-      | `leading -> if can_leading token then leading (List.rev t.tokens |> List.cons token |> List.rev) else t
-      | `trailing -> if can_trailing token then trailing (List.rev t.tokens |> List.cons token |> List.rev) else t
+    let push trivia t = { t with trivias = t.trivias @ [ trivia ] }
 
-    let unshift token t =
-      match t.typ with
-      | `leading -> if can_leading token then leading (token :: t.tokens) else t
-      | `trailing -> if can_trailing token then trailing (token :: t.tokens) else t
+    let unshift trivia t =
+      assert (
+        match trivia with
+        | Tr_block_comment _ | Tr_space _ -> true
+        | _ -> false);
+      { t with trivias = trivia :: t.trivias }
   end :
     Trivia_intf.S)

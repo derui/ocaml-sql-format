@@ -20,7 +20,7 @@ let%expect_test "newline with indent" =
 
   Option.map R.to_string raw |> Option.value ~default:"" |> Printf.printf "|%s|";
 
-  [%expect "\n    |\n        ?|"]
+  [%expect "\n    |\n    ?|"]
 
 let%test_unit "when leaf is not match" =
   let raw = R.make_leaf Tok_qmark in
@@ -37,7 +37,7 @@ let%expect_test "when leaf is match" =
 
   Option.map R.to_string raw |> Option.value ~default:"" |> Printf.printf "|%s|";
 
-  [%expect "\n    |\n        ?|"]
+  [%expect "\n    |\n    ?|"]
 
 let%expect_test "map layouts" =
   let raw = R.make_node N_expr ~layouts:[ R.make_leaf Tok_qmark; R.make_leaf (Tok_ident "ident") ] in
@@ -46,4 +46,4 @@ let%expect_test "map layouts" =
 
   List.iter (fun v -> R.to_string v |> Printf.printf "|%s|") raw;
 
-  [%expect "\n    |\n        ?||\n        ident|"]
+  [%expect "\n    |\n    ?||\n    ident|"]

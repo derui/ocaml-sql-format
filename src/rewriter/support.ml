@@ -6,7 +6,6 @@ include (
   struct
     module R = Sql_syntax.Raw
     module Tr = Sql_syntax.Trivia
-    open Types.Token
 
     let map ~rewriter env r =
       let ret = ref [] in
@@ -35,12 +34,8 @@ include (
         assert (leading >= 0 && trailing >= 0);
 
         R.replace_trivia
-          ~leading:(fun tr ->
-            if leading = 0 then tr
-            else List.init leading (Fun.const Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
-          ~trailing:(fun tr ->
-            if trailing = 0 then tr
-            else List.init trailing (Fun.const Tok_space) |> List.fold_left (fun tr tok -> Tr.push tok tr) tr)
+          ~leading:(fun tr -> if leading = 0 then tr else Tr.unshift (Tr.Tr_space leading) tr)
+          ~trailing:(fun tr -> if trailing = 0 then tr else Tr.push (Tr.Tr_space trailing) tr)
           r
         |> Option.some
       | _ -> None
@@ -49,8 +44,8 @@ include (
       | R.Leaf _ as r ->
         R.replace_trivia
           ~leading:(fun tr ->
-            let indents = Tok_newline :: List.init env.Env.current_indent (Fun.const Tok_space) in
-            List.fold_left (fun tr tok -> Tr.push tok tr) tr indents)
+            let indents = Tr.Tr_newline env.Env.current_indent in
+            Tr.push indents tr)
           r
         |> Option.some
       | _ -> None
