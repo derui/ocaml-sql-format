@@ -46,6 +46,16 @@ let%expect_test "cast" =
     | cast('ref' as integer (3, 2))|
     | cast("ref" as unsigned integer (3))| |}]
 
+let%expect_test "wrap" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "('ref')" |> Printf.printf "|%s|\n";
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "(3,5,     53)" |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    |('ref')|
+    |(3, 5, 53)| |}]
+
 let%expect_test "collate" =
   let parser = Util.of_parser (module P.Parser_expr) in
   let options = { R.Options.default with keyword_case = `upper } in
@@ -125,5 +135,5 @@ let%expect_test "between" =
   |> Printf.printf "|%s|\n";
 
   [%expect {|
-    | a.colu match '%ab'|
-    | a.colu noT MATCH '%ab'| |}]
+    | a.colu between 1 and 3|
+    | a.colu not between 3 and 5| |}]

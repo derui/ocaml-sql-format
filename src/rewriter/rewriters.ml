@@ -19,6 +19,7 @@ let rec rewrite_expr env raw =
       ; (`node K.N_expr_regexp, rewrite_expr_regexp)
       ; (`node K.N_expr_match, rewrite_expr_match)
       ; (`node K.N_expr_between, rewrite_expr_between)
+      ; (`node K.N_expr_wrap, rewrite_expr_wrap)
       ]
       env raw
   in
@@ -46,6 +47,20 @@ and rewrite_expr_unary env raw =
     | r :: rest -> (Sp.space ~leading:1 env r |> Option.get) :: rest
     | _ as v -> v
   in
+  R.replace_layouts layouts raw |> Option.some
+
+and rewrite_expr_wrap env raw =
+  let open Sp.Syntax in
+  Sp.should_be_node K.N_expr_wrap raw;
+  let rewriter =
+    Sp.choice
+      [ (`leaf K.L_lparen, Sp.shrink)
+      ; (`leaf K.L_rparen, Sp.shrink)
+      ; (`leaf K.L_comma, fun env r -> Sp.shrink env r >>= Sp.space ~trailing:1 env)
+      ; (`any, Sp.shrink)
+      ]
+  in
+  let layouts = Sp.map ~rewriter env raw in
   R.replace_layouts layouts raw |> Option.some
 
 and rewrite_type_name env raw =
