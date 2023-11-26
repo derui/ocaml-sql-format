@@ -24,4 +24,11 @@ module type S = sig
 
   (** [keyword env raw] applies special transform to [raw] with keyword options *)
   val keyword : Env.t -> R.t -> R.t option
+
+  (** [shrink env raw] applies special transform to raw that removes all trivias without comments *)
+  val shrink : Env.t -> R.t -> R.t option
+
+  module Syntax : sig
+    val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option
+  end
 end

@@ -7,6 +7,10 @@ include (
     module R = Sql_syntax.Raw
     module Tr = Sql_syntax.Trivia
 
+    module Syntax = struct
+      let ( >>= ) = Option.bind
+    end
+
     let map ~rewriter env r =
       let ret = ref [] in
       match r with
@@ -48,6 +52,10 @@ include (
             Tr.push indents tr)
           r
         |> Option.some
+      | _ -> None
+
+    let shrink _ = function
+      | R.Leaf _ as r -> R.replace_trivia ~leading:Tr.shrink ~trailing:Tr.shrink r |> Option.some
       | _ -> None
 
     let choice rewriters env raw =

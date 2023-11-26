@@ -13,6 +13,7 @@ let rec rewrite_expr env raw =
       ; (`node K.N_expr_name, rewrite_expr_name)
       ; (`node K.N_expr_unary, rewrite_expr_unary)
       ; (`node K.N_expr_cast, rewrite_expr_cast)
+      ; (`node K.N_expr_collate, rewrite_expr_collate)
       ]
       env raw
   in
@@ -60,6 +61,7 @@ and rewrite_type_name env raw =
   in
   R.replace_layouts layouts raw |> Option.some
 
+(* cast rewriter *)
 and rewrite_expr_cast env raw =
   Sp.should_be_node K.N_expr_cast raw;
   let rewriter =
@@ -67,6 +69,24 @@ and rewrite_expr_cast env raw =
       [ (`leaf K.L_keyword, Sp.keyword)
       ; (`node K.N_type_name, rewrite_type_name)
       ; (`any, Sp.space ~leading:0 ~trailing:0)
+      ]
+  in
+  let layouts = Sp.map ~rewriter env raw in
+  let layouts =
+    match layouts with
+    | r :: rest -> (Sp.space ~leading:1 env r |> Option.get) :: rest
+    | _ as v -> v
+  in
+  R.replace_layouts layouts raw |> Option.some
+
+(* collation rewriter *)
+and rewrite_expr_collate env raw =
+  let open Sp.Syntax in
+  Sp.should_be_node K.N_expr_collate raw;
+  let rewriter =
+    Sp.choice
+      [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
+      ; (`any, fun env r -> Sp.shrink env r >>= Sp.space ~leading:1 ~trailing:0 env)
       ]
   in
   let layouts = Sp.map ~rewriter env raw in

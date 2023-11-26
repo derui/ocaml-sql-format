@@ -45,3 +45,13 @@ let%expect_test "cast" =
   [%expect {|
     | cast('ref' as integer (3, 2))|
     | cast("ref" as unsigned integer (3))| |}]
+
+let%expect_test "collate" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `upper } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "2315 collate \"foobar\" "
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    |  2315 COLLATE "foobar"| |}]
