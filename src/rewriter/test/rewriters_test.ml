@@ -99,3 +99,17 @@ let%expect_test "regexp" =
   [%expect {|
     | a.colu RegExp '%ab'|
     | a.colu noT regEXP '%ab'| |}]
+
+let%expect_test "match" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `as_is } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu match '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu noT MATCH '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | a.colu RegExp '%ab'|
+    | a.colu noT regEXP '%ab'| |}]

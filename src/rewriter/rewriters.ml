@@ -17,6 +17,7 @@ let rec rewrite_expr env raw =
       ; (`node K.N_expr_like, rewrite_expr_like)
       ; (`node K.N_expr_glob, rewrite_expr_glob)
       ; (`node K.N_expr_regexp, rewrite_expr_regexp)
+      ; (`node K.N_expr_match, rewrite_expr_match)
       ]
       env raw
   in
@@ -130,6 +131,19 @@ and rewrite_expr_glob env raw =
 and rewrite_expr_regexp env raw =
   let open Sp.Syntax in
   Sp.should_be_node K.N_expr_regexp raw;
+  let rewriter =
+    Sp.choice
+      [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
+      ; (`any, fun env r -> Sp.shrink env r >>= Sp.space ~leading:1 ~trailing:0 env)
+      ]
+  in
+  let layouts = Sp.map ~rewriter env raw in
+  R.replace_layouts layouts raw |> Option.some
+
+(* match rewriter *)
+and rewrite_expr_match env raw =
+  let open Sp.Syntax in
+  Sp.should_be_node K.N_expr_match raw;
   let rewriter =
     Sp.choice
       [ (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~leading:1 ~trailing:0 env)
