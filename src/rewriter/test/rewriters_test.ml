@@ -113,3 +113,17 @@ let%expect_test "match" =
   [%expect {|
     | a.colu match '%ab'|
     | a.colu noT MATCH '%ab'| |}]
+
+let%expect_test "between" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `as_is } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu between   1\nand 3"
+  |> Printf.printf "|%s|\n";
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu not   between 3 and 5"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | a.colu match '%ab'|
+    | a.colu noT MATCH '%ab'| |}]

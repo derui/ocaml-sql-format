@@ -18,6 +18,7 @@ let rec rewrite_expr env raw =
       ; (`node K.N_expr_glob, rewrite_expr_glob)
       ; (`node K.N_expr_regexp, rewrite_expr_regexp)
       ; (`node K.N_expr_match, rewrite_expr_match)
+      ; (`node K.N_expr_between, rewrite_expr_between)
       ]
       env raw
   in
@@ -124,3 +125,6 @@ and rewrite_expr_regexp env raw = _rewrite_expr_like_like K.N_expr_regexp env ra
 
 (* match rewriter *)
 and rewrite_expr_match env raw = _rewrite_expr_like_like K.N_expr_match env raw
+
+(* between rewriter *)
+and rewrite_expr_between env raw = _rewrite_expr_like_like K.N_expr_between env raw
