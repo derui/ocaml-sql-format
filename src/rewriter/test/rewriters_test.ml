@@ -27,4 +27,21 @@ let%expect_test "unary" =
   Util.run ~options:uppercase_option parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "not v"
   |> Printf.printf "|%s|\n";
 
-  [%expect {||}]
+  [%expect {|
+    | ~1|
+    | +35|
+    | -test|
+    | not v|
+    | NOT v| |}]
+
+let%expect_test "cast" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "caST('ref' as integer(3,2))"
+  |> Printf.printf "|%s|\n";
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "caST(\"ref\" as unsigned integer(3))"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | cast('ref' as integer (3, 2))|
+    | cast("ref" as unsigned integer (3))| |}]

@@ -19,10 +19,10 @@ include (
            | _ -> false)
 
     let parse () =
-      let* () = M.many1 ident *> M.skip in
+      let* _ = M.many1 ident in
       let one_arg = Wrapping.parens signed_number in
       let two_arg = Wrapping.parens (signed_number *> M.bump_when T.Tok_comma *> signed_number) in
-      one_arg <|> two_arg <|> M.skip
+      M.start_syntax K.N_type_name (one_arg <|> two_arg <|> M.skip)
 
     let generate _ = parse
   end :
