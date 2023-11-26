@@ -20,6 +20,7 @@ let rec rewrite_expr env raw =
       ; (`node K.N_expr_match, rewrite_expr_match)
       ; (`node K.N_expr_between, rewrite_expr_between)
       ; (`node K.N_expr_wrap, rewrite_expr_wrap)
+      ; (`node K.N_expr_function, rewrite_expr_function)
       ]
       env raw
   in
@@ -56,6 +57,35 @@ and rewrite_expr_wrap env raw =
     Sp.choice
       [ (`leaf K.L_lparen, Sp.shrink)
       ; (`leaf K.L_rparen, Sp.shrink)
+      ; (`leaf K.L_comma, fun env r -> Sp.shrink env r >>= Sp.space ~trailing:1 env)
+      ; (`any, Sp.shrink)
+      ]
+  in
+  let layouts = Sp.map ~rewriter env raw in
+  R.replace_layouts layouts raw |> Option.some
+
+(* TODO need implementation *)
+and rewriter_filter_clause _ raw =
+  Sp.should_be_node K.N_filter_clause raw;
+  Some raw
+
+(* TODO need implementation *)
+and rewriter_over_clause _ raw =
+  Sp.should_be_node K.N_over_clause raw;
+  Some raw
+
+and rewrite_expr_function env raw =
+  let open Sp.Syntax in
+  Sp.should_be_node K.N_expr_function raw;
+  let rewriter =
+    Sp.choice
+      [ (`leaf K.L_lparen, Sp.shrink)
+      ; (`leaf K.L_rparen, Sp.shrink)
+      ; (`leaf K.L_star, Sp.shrink)
+      ; (`leaf K.L_ident, Sp.shrink)
+      ; (`leaf K.L_keyword, fun env r -> Sp.keyword env r >>= Sp.shrink env >>= Sp.space ~trailing:1 env)
+      ; (`node K.N_filter_clause, rewriter_filter_clause)
+      ; (`node K.N_over_clause, rewriter_over_clause)
       ; (`leaf K.L_comma, fun env r -> Sp.shrink env r >>= Sp.space ~trailing:1 env)
       ; (`any, Sp.shrink)
       ]

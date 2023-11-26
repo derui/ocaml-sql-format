@@ -56,6 +56,22 @@ let%expect_test "wrap" =
     |('ref')|
     |(3, 5, 53)| |}]
 
+let%expect_test "function" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "fun()" |> Printf.printf "|%s|\n";
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "fun(   *   )" |> Printf.printf "|%s|\n";
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "bcd   ('a',  'ef' , 121)"
+  |> Printf.printf "|%s|\n";
+  Util.run parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "bcd   (DISTINCT 'a',  'ef' , 121)"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    |fun()|
+    |fun(*)|
+    |bcd('a', 'ef', 121)|
+    |bcd(distinct 'a', 'ef', 121)| |}]
+
 let%expect_test "collate" =
   let parser = Util.of_parser (module P.Parser_expr) in
   let options = { R.Options.default with keyword_case = `upper } in
