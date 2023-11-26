@@ -55,3 +55,33 @@ let%expect_test "collate" =
 
   [%expect {|
     |  2315 COLLATE "foobar"| |}]
+
+let%expect_test "like" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `upper } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu like '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  Util.run ~options parser
+    (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some)
+    "a.colu not like '%ab' escape 'ff'"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | a.colu LIKE '%ab'|
+    | a.colu NOT LIKE '%ab' ESCAPE 'ff'| |}]
+
+let%expect_test "glob" =
+  let parser = Util.of_parser (module P.Parser_expr) in
+  let options = { R.Options.default with keyword_case = `upper } in
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu glob '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  Util.run ~options parser (fun env v -> R.Rewriters.rewrite_expr env v |> Option.some) "a.colu not glob '%ab'"
+  |> Printf.printf "|%s|\n";
+
+  [%expect {|
+    | a.colu GLOB '%ab'|
+    | a.colu NOT GLOB '%ab'| |}]
