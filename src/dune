@@ -2,4 +2,4 @@
  (name main)
  (public_name ocaml-sql-format)
  (flags (:standard -safe-string))
- (libraries ocaml-sql-format.lexer ocaml-sql-format.formatter cmdliner otoml unix))
+ (libraries ocaml-sql-format.lexer ocaml-sql-format.formatter ocaml-sql-format.formatter-new cmdliner otoml unix))

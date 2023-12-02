@@ -2,5 +2,5 @@
  (name formatter_new)
  (public_name ocaml-sql-format.formatter-new)
  (flags (:standard -safe-string))
- (libraries ocaml-sql-format.types ocaml-sql-format.sql-syntax)
+ (libraries ocaml-sql-format.types ocaml-sql-format.sql-syntax fmt)
  )
