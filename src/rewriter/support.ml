@@ -11,21 +11,21 @@ include (
       let ( >>= ) = Option.bind
     end
 
-    let map ~rewriter env r =
+    let map ~rewriter r =
       let ret = ref [] in
       match r with
       | R.Leaf _ -> []
       | R.Node { layouts; _ } ->
         List.iter
           (fun r ->
-            match rewriter env r with
+            match rewriter r with
             | None -> ret := r :: !ret
             | Some r -> ret := r :: !ret)
           layouts;
         !ret
 
-    let when_leaf kind rewriter env = function
-      | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter env r
+    let when_leaf kind rewriter = function
+      | R.Leaf { kind = kind'; _ } as r when kind' = kind -> rewriter r
       | _ -> None
 
     let should_be_node kind r =
@@ -33,7 +33,7 @@ include (
       | R.Node { kind = kind'; _ } -> assert (kind = kind') |> ignore
       | _ -> assert false |> ignore
 
-    let space ?(leading = 0) ?(trailing = 0) _ = function
+    let space ?(leading = 0) ?(trailing = 0) = function
       | R.Leaf _ as r ->
         assert (leading >= 0 && trailing >= 0);
 
@@ -44,21 +44,11 @@ include (
         |> Option.some
       | _ -> None
 
-    let newline env = function
-      | R.Leaf _ as r ->
-        R.replace_trivia
-          ~leading:(fun tr ->
-            let indents = Tr.Tr_newline env.Env.current_indent in
-            Tr.push indents tr)
-          r
-        |> Option.some
-      | _ -> None
-
-    let shrink _ = function
+    let shrink = function
       | R.Leaf _ as r -> R.replace_trivia ~leading:Tr.shrink ~trailing:Tr.shrink r |> Option.some
       | _ -> None
 
-    let choice rewriters env raw =
+    let choice rewriters raw =
       let rewriter =
         match raw with
         | R.Leaf { kind; _ } ->
@@ -76,23 +66,6 @@ include (
                | _ -> false)
           |> Option.map snd
       in
-      Option.bind rewriter (fun rewriter -> rewriter env raw)
-
-    let keyword env = function
-      | R.Leaf _ as r ->
-        let module T = Types.Token in
-        r
-        |> R.replace (function
-             | T.Tok_keyword (v, t) ->
-               let v =
-                 match env.Env.options.keyword_case with
-                 | `as_is -> v
-                 | `upper -> String.uppercase_ascii v
-                 | `lower -> String.lowercase_ascii v
-               in
-               T.Tok_keyword (v, t)
-             | _ as k -> k)
-        |> Option.some
-      | _ -> None
+      Option.bind rewriter (fun rewriter -> rewriter raw)
   end :
     S)

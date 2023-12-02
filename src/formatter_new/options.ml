@@ -1,4 +1,4 @@
-(** Options for rewriter *)
+(** Options for formatter *)
 type t =
   { indent_size : int
   ; keyword_case : [ `upper | `lower | `as_is ]

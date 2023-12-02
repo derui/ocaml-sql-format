@@ -4,13 +4,12 @@ include (
   struct
     module L = Sql_syntax.Language
 
-    let rewrite r option language =
+    let rewrite r language =
       let new_language = ref @@ L.empty () in
-      let env = Env.make option in
 
       L.walk
         ~f:(fun raw ->
-          match r env raw with
+          match r raw with
           | None ->
             new_language := L.append raw !new_language;
             Some ()
