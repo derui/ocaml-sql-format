@@ -4,7 +4,6 @@ module Type = struct
   (** type of trivia. *)
   type trivia =
     | Tr_space of int (* space only, no break *)
-    | Tr_break of int (* enter spawce or indent if width is reached. *)
     | Tr_newline of int (* force newline with indent. *)
     | Tr_line_comment of string (* line comment. With force newline *)
     | Tr_block_comment of string (* a block comment. without force newline. This variant is just used as space *)

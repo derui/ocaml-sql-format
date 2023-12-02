@@ -58,9 +58,6 @@ include (
             | Tr_newline v ->
               let spaces = String.init v (Fun.const ' ') in
               Printf.sprintf "%s\n" spaces
-            | Tr_break v ->
-              let spaces = String.init v (Fun.const ' ') in
-              Printf.sprintf "%s\n" spaces
             | Tr_space v -> String.init v (Fun.const ' ')
             | Tr_line_comment v -> Printf.sprintf "%s\n" v
             | Tr_block_comment v -> v)

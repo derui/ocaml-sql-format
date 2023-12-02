@@ -2,12 +2,6 @@ include (
   struct
     module Token = Types.Token
 
-    type leaf_data =
-      { trailing : Trivia.trailing Trivia.t
-      ; leading : Trivia.leading Trivia.t
-      ; token : Token.t
-      }
-
     type t =
       | Node of
           { kind : Kind.node
@@ -15,32 +9,31 @@ include (
           }
       | Leaf of
           { kind : Kind.leaf
-          ; data : leaf_data
+          ; trailing : Trivia.trailing Trivia.t
+          ; leading : Trivia.leading Trivia.t
+          ; token : Token.t
           }
 
     let make_leaf ?(trailing = Trivia.trailing []) ?(leading = Trivia.leading []) token =
-      Leaf { kind = Kind.token_to_leaf token; data = { trailing; leading; token } }
+      Leaf { kind = Kind.token_to_leaf token; trailing; leading; token }
 
     let make_node kind ~layouts = Node { kind; layouts = List.rev layouts }
 
     let match' f = function
       | Node _ -> false
-      | Leaf { data = { token; _ }; _ } -> f token
+      | Leaf { token; _ } -> f token
 
     let replace f = function
       | Node _ as v -> v
-      | Leaf ({ data; _ } as v) -> Leaf { v with data = { data with token = f data.token } }
+      | Leaf (_ as v) -> Leaf { v with token = f v.token }
 
     let replace_trivia ?leading ?trailing = function
       | Node _ as v -> v
-      | Leaf ({ data; _ } as v) ->
+      | Leaf (_ as v) ->
         Leaf
           { v with
-            data =
-              { data with
-                trailing = Option.map (fun f -> f data.trailing) trailing |> Option.value ~default:data.trailing
-              ; leading = Option.map (fun f -> f data.leading) leading |> Option.value ~default:data.leading
-              }
+            trailing = Option.map (fun f -> f v.trailing) trailing |> Option.value ~default:v.trailing
+          ; leading = Option.map (fun f -> f v.leading) leading |> Option.value ~default:v.leading
           }
 
     let push_layout raw = function
@@ -63,8 +56,8 @@ include (
             loop rest
         in
         loop @@ List.rev layouts
-      | Leaf { data; _ } ->
-        Printf.sprintf "%s%s%s" (Trivia.to_string data.leading) (Token.show data.token) (Trivia.to_string data.trailing)
+      | Leaf { token; leading; trailing; _ } ->
+        Printf.sprintf "%s%s%s" (Trivia.to_string leading) (Token.show token) (Trivia.to_string trailing)
 
     let rec walk ~f t =
       match f t with

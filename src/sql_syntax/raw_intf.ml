@@ -4,8 +4,6 @@ module Token = Types.Token
 module type Leaf_data = sig end
 
 module type S = sig
-  type leaf_data
-
   type t =
     | Node of
         { kind : Kind.node
@@ -13,7 +11,9 @@ module type S = sig
         }
     | Leaf of
         { kind : Kind.leaf
-        ; data : leaf_data
+        ; trailing : Trivia.trailing Trivia.t
+        ; leading : Trivia.leading Trivia.t
+        ; token : Token.t
         }
 
   (** [make_leaf ~leading ~trailing token] make a new leaf data. If trivias not given, use empty trivia as default *)
