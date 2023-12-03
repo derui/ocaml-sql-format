@@ -3,6 +3,7 @@ module S = Formatter_new.Support
 module O = Formatter_new.Options
 module L = Sql_syntax.Language
 module R = Sql_syntax.Raw
+module Tr = Sql_syntax.Trivia
 module K = Sql_syntax.Kind
 module T = Types.Token
 
@@ -25,3 +26,11 @@ let%expect_test "leaf" =
   M.Run.run m O.default Fmt.stdout raw;
   M.Run.run no_m O.default Fmt.stdout raw;
   [%expect "="]
+
+let%expect_test "keyword" =
+  let raw = R.make_leaf ~leading:(Tr.leading [ T.Tok_space ]) (T.Tok_keyword ("By", Types.Keyword.Kw_by)) in
+  let m = S.keyword Option.some raw in
+  M.Run.run m O.default Fmt.stdout raw;
+  M.Run.run m { O.default with O.keyword_case = `upper } Fmt.stdout raw;
+  M.Run.run m { O.default with O.keyword_case = `as_is } Fmt.stdout raw;
+  [%expect "by BY By"]
