@@ -31,6 +31,15 @@ module type S = sig
   (** [replace ppf] replace current ppf to [ppf] *)
   val replace : (raw Fmt.t -> raw Fmt.t) -> unit t
 
+  (** [current] gets current raw *)
+  val current : S.Raw.t t
+
+  (** [push raw] pushs [raw] to stack of formatter *)
+  val push : S.Raw.t -> unit t
+
+  (** [pop ()] pops top of stack as [raw] *)
+  val pop : unit -> S.Raw.t t
+
   module Run : sig
     (** [run m options pf raw] run monad and print with [pf] *)
     val run : 'a t -> Options.t -> Format.formatter -> raw -> unit

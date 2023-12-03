@@ -8,6 +8,7 @@ include (
     type data =
       { options : Options.t
       ; ppf : raw Fmt.t
+      ; stack : raw list
       }
 
     type 'a t = data -> 'a * data
@@ -35,11 +36,25 @@ include (
 
     let options data = (data.options, data)
 
+    let current data =
+      match data.stack with
+      | [] -> failwith "Illegal stack operation"
+      | x :: _ -> (x, data)
+
     let replace ppff data = ((), { data with ppf = ppff data.ppf })
+
+    let push raw data =
+      let data' = { data with stack = raw :: data.stack } in
+      ((), data')
+
+    let pop () data =
+      match data.stack with
+      | [] -> failwith "Illegal stack operation"
+      | x :: xs -> (x, { data with stack = xs })
 
     module Run = struct
       let run m options pf raw =
-        let data = { options; ppf = Fmt.nop } in
+        let data = { options; stack = [ raw ]; ppf = Fmt.nop } in
         let _, data = m data in
         data.ppf pf raw
     end

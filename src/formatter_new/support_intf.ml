@@ -7,11 +7,17 @@ module Type = struct
 end
 
 module type S = sig
-  (** [leaf selector raw] append some leaf into monad if selected by [selector] *)
-  val leaf : Type.selector -> R.t -> unit M.t
+  (** [iter f] iterates all layouts in [raw]. If [raw] is not [R.Node], do not anything. *)
+  val iter : (unit -> unit M.t) -> unit M.t
 
-  (** [keyword selector raw] append leaf as keyword into monad if selected by [selector] *)
-  val keyword : Type.selector -> R.t -> unit M.t
+  (** [leaf selector ] append some leaf into monad if selected by [selector] *)
+  val leaf : Type.selector -> unit M.t
+
+  (** [leaf selector ] append some leaf into monad if selected by [selector] *)
+  val node : Type.selector -> (unit -> 'a M.t) -> unit M.t
+
+  (** [keyword selector ] append leaf as keyword into monad if selected by [selector] *)
+  val keyword : Type.selector -> unit M.t
 
   (** [cut ?indentation] appends break hint into monad without space. *)
   val cut : ?indentation:unit -> unit -> unit M.t

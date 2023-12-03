@@ -12,18 +12,44 @@ include (
 
     let trivia pp tr = Fmt.pf pp "%s" @@ Tr.to_string tr
 
+    let iter f =
+      let* raw = current in
+      match raw with
+      | R.Node { layouts; _ } ->
+        List.fold_left
+          (fun acc x ->
+            let* () = acc in
+            let* _ = push x in
+            let* _ = f () in
+            let* _ = pop () in
+            return ())
+          (return ()) layouts
+      | _ -> return ()
+
     let leaf_inner leading trailing v =
       let* _ = append @@ Fmt.const trivia leading in
       let* _ = append @@ Fmt.const Fmt.string v in
       let* _ = append @@ Fmt.const trivia trailing in
       return ()
 
-    let leaf selector raw =
+    let leaf selector =
+      let* raw = current in
       match selector raw with
       | Some (R.Leaf { leading; trailing; token; _ }) -> leaf_inner leading trailing @@ Types.Token.show token
       | _ -> return ()
 
-    let keyword selector raw =
+    let node selector f =
+      let* raw = current in
+      match selector raw with
+      | Some (R.Node _ as r) ->
+        let* () = push r in
+        let* _ = f () in
+        let* _ = pop () in
+        return ()
+      | _ -> return ()
+
+    let keyword selector =
+      let* raw = current in
       match selector raw with
       | Some (R.Leaf { kind = L_keyword; leading; trailing; token }) ->
         let* opts = options in
