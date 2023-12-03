@@ -42,9 +42,10 @@ and format_begin_stmt () =
 
 and format_rollback_stmt () =
   let open M.Let_syntax in
-  let* _ = Sp.keyword C.Rollback_stmt.kw_rollback in
-  let* _ = Sp.keyword ~leading:Sp.nonbreak C.Rollback_stmt.kw_transaction in
-  M.return ()
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword C.Rollback_stmt.kw_rollback in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak C.Rollback_stmt.kw_transaction in
+      M.return ())
 
 and format_select_stmt () = M.return ()
 
