@@ -1,0 +1,5 @@
+(library
+ (name formatter_test)
+ (libraries ocaml-sql-format.formatter-new ocaml-sql-format.parser-new)
+ (inline_tests)
+ (preprocess (pps ppx_expect)))

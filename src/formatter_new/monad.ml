@@ -35,6 +35,8 @@ include (
 
     let options data = (data.options, data)
 
+    let replace ppff data = ((), { data with ppf = ppff data.ppf })
+
     module Run = struct
       let run m options pf raw =
         let data = { options; ppf = Fmt.nop } in

@@ -28,6 +28,9 @@ module type S = sig
   (** Get options of current environment *)
   val options : Options.t t
 
+  (** [replace ppf] replace current ppf to [ppf] *)
+  val replace : (raw Fmt.t -> raw Fmt.t) -> unit t
+
   module Run : sig
     (** [run m options pf raw] run monad and print with [pf] *)
     val run : 'a t -> Options.t -> Format.formatter -> raw -> unit
