@@ -48,7 +48,7 @@ include (
         return ()
       | _ -> return ()
 
-    let keyword selector =
+    let keyword ?leading:leading_m ?trailing:trailing_m selector =
       let* raw = current in
       match selector raw with
       | Some (R.Leaf { kind = L_keyword; leading; trailing; token }) ->
@@ -59,8 +59,13 @@ include (
           | `lower -> Types.Token.show token |> String.lowercase_ascii
           | `upper -> Types.Token.show token |> String.uppercase_ascii
         in
-        leaf_inner leading trailing kw
+        let* _ = Option.map Fun.id leading_m |> Option.value ~default:(return ()) in
+        let* _ = leaf_inner leading trailing kw in
+        let* _ = Option.map Fun.id trailing_m |> Option.value ~default:(return ()) in
+        return ()
       | _ -> return ()
+
+    let nonbreak = append @@ Fmt.any " "
 
     let cut ?indentation () =
       let* opts = options in

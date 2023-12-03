@@ -16,8 +16,13 @@ module type S = sig
   (** [leaf selector ] append some leaf into monad if selected by [selector] *)
   val node : Type.selector -> (unit -> 'a M.t) -> unit M.t
 
-  (** [keyword selector ] append leaf as keyword into monad if selected by [selector] *)
-  val keyword : Type.selector -> unit M.t
+  (** [keyword ?leading ?trailing selector ] append leaf as keyword into monad if selected by [selector].
+
+      [leading] and [trailing] optional parameters are applied if selector is matched *)
+  val keyword : ?leading:unit M.t -> ?trailing:unit M.t -> Type.selector -> unit M.t
+
+  (** [nonbreak] appends nonbreakable space into monad *)
+  val nonbreak : unit M.t
 
   (** [cut ?indentation] appends break hint into monad without space. *)
   val cut : ?indentation:unit -> unit -> unit M.t
