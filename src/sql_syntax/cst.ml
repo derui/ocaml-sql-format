@@ -19,14 +19,10 @@ module Sql_stmt = struct
   module T = Types.Token
 
   (** [kw_explain raw] selects [explain] *)
-  let kw_explain = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_explain); _ } as v -> Some v
-    | _ -> None
+  let kw_explain = Cst_support.is_keyword Types.Keyword.Kw_explain
 
   (** [kw_analyze raw] selects [analyze] *)
-  let kw_analyze = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_analyze); _ } as v -> Some v
-    | _ -> None
+  let kw_analyze = Cst_support.is_keyword Types.Keyword.Kw_analyze
 
   (** [n_select_stmt raw] selects [select_stmt] *)
   let n_select_stmt = function
@@ -63,26 +59,18 @@ module Begin_stmt = struct
   module T = Types.Token
 
   (** [kw_begin raw] selects keyword [begin] *)
-  let kw_begin = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_begin); _ } as v -> Some v
-    | _ -> None
+  let kw_begin = Cst_support.is_keyword Types.Keyword.Kw_begin
 
   (** [kw_transaction raw] selects keyword [transaction] *)
-  let kw_transaction = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_transaction); _ } as v -> Some v
-    | _ -> None
+  let kw_transaction = Cst_support.is_keyword Types.Keyword.Kw_transaction
 end
 
 module Rollback_stmt = struct
   module T = Types.Token
 
   (** [kw_rollback raw] selects keyword [rollback] *)
-  let kw_rollback = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_rollback); _ } as v -> Some v
-    | _ -> None
+  let kw_rollback = Cst_support.is_keyword Types.Keyword.Kw_rollback
 
   (** [kw_transaction raw] selects keyword [transaction] *)
-  let kw_transaction = function
-    | Raw.Leaf { kind = Kind.L_keyword; token = T.Tok_keyword (_, Types.Keyword.Kw_transaction); _ } as v -> Some v
-    | _ -> None
+  let kw_transaction = Cst_support.is_keyword Types.Keyword.Kw_transaction
 end
