@@ -16,14 +16,14 @@ include (
       let* raw = current in
       match raw with
       | R.Node { layouts; _ } ->
-        List.fold_left
-          (fun acc x ->
+        List.fold_right
+          (fun x acc ->
             let* () = acc in
             let* _ = push x in
             let* _ = f () in
             let* _ = pop () in
             return ())
-          (return ()) layouts
+          layouts (return ())
       | _ -> return ()
 
     let leaf_inner leading trailing v =

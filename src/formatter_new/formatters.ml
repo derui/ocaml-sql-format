@@ -23,8 +23,8 @@ and format_sql_stmt () =
   let open M.Let_syntax in
   let* () =
     Sp.iter (fun () ->
-        let* _ = Sp.keyword C.Sql_stmt.kw_explain in
-        let* _ = Sp.keyword C.Sql_stmt.kw_analyze in
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak C.Sql_stmt.kw_explain in
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak C.Sql_stmt.kw_analyze in
         let* _ = Sp.node C.Sql_stmt.n_begin_stmt format_begin_stmt in
         let* _ = Sp.node C.Sql_stmt.n_rollback_stmt format_rollback_stmt in
         let* _ = Sp.node C.Sql_stmt.n_select_stmt format_select_stmt in
@@ -35,14 +35,15 @@ and format_sql_stmt () =
 
 and format_begin_stmt () =
   let open M.Let_syntax in
-  let* _ = Sp.keyword C.Begin_stmt.kw_begin in
-  let* _ = Sp.keyword C.Begin_stmt.kw_transaction in
-  M.return ()
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword C.Begin_stmt.kw_begin in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak C.Begin_stmt.kw_transaction in
+      M.return ())
 
 and format_rollback_stmt () =
   let open M.Let_syntax in
   let* _ = Sp.keyword C.Rollback_stmt.kw_rollback in
-  let* _ = Sp.keyword C.Rollback_stmt.kw_transaction in
+  let* _ = Sp.keyword ~leading:Sp.nonbreak C.Rollback_stmt.kw_transaction in
   M.return ()
 
 and format_select_stmt () = M.return ()
