@@ -32,10 +32,14 @@ include (
       let* _ = append @@ Fmt.const trivia trailing in
       return ()
 
-    let leaf selector =
+    let leaf ?leading:leading_m ?trailing:trailing_m selector =
       let* raw = current in
       match selector raw with
-      | Some (R.Leaf { leading; trailing; token; _ }) -> leaf_inner leading trailing @@ Types.Token.show token
+      | Some (R.Leaf { leading; trailing; token; _ }) ->
+        let* _ = Option.map Fun.id leading_m |> Option.value ~default:(return ()) in
+        let* _ = leaf_inner leading trailing @@ Types.Token.show token in
+        let* _ = Option.map Fun.id trailing_m |> Option.value ~default:(return ()) in
+        return ()
       | _ -> return ()
 
     let node selector f =
@@ -67,9 +71,13 @@ include (
 
     let nonbreak = append @@ Fmt.any " "
 
-    let cut ?indentation () =
+    let cut ?(indentation = false) () =
       let* opts = options in
-      let indent = indentation |> Option.map @@ Fun.const opts.indent_size |> Option.value ~default:0 in
+      let indent =
+        match indentation with
+        | true -> opts.indent_size
+        | false -> 0
+      in
 
       append @@ fun fmt _ -> Format.pp_print_break fmt 0 indent
 
@@ -79,8 +87,25 @@ include (
       assert (indent >= 0);
       append @@ fun fmt _ -> Format.pp_print_break fmt sps indent
 
-    let vbox = replace (fun ppf -> Fmt.vbox ppf)
+    let vbox ?(indentation = false) m =
+      let* opt = options in
+      let indent =
+        match indentation with
+        | true -> opt.indent_size
+        | false -> 0
+      in
 
-    let hovbox = replace (fun ppf -> Fmt.hovbox ppf)
+      let* ppf = with_new_ppf m in
+      append @@ Fmt.vbox ~indent ppf
+
+    let hovbox ?(indentation = false) m =
+      let* opt = options in
+      let indent =
+        match indentation with
+        | true -> opt.indent_size
+        | false -> 0
+      in
+      let* ppf = with_new_ppf m in
+      append @@ Fmt.vbox ~indent ppf
   end :
     Support_intf.S)

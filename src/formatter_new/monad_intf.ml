@@ -34,6 +34,9 @@ module type S = sig
   (** [current] gets current raw *)
   val current : S.Raw.t t
 
+  (** [with_new_ppf m] runs with empty ppf, then return ppf created by [m] *)
+  val with_new_ppf : 'a t -> raw Fmt.t t
+
   (** [push raw] pushs [raw] to stack of formatter *)
   val push : S.Raw.t -> unit t
 

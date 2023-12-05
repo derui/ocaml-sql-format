@@ -82,9 +82,6 @@ end
 module Select_stmt = struct
   module K = Types.Keyword
 
-  (** [kw_select raw] selects keyword [select] *)
-  let kw_select = Cst_support.is_keyword K.Kw_select
-
   (** [kw_distinct raw] selects keyword [distinct] *)
   let kw_distinct = Cst_support.is_keyword K.Kw_distinct
 
@@ -108,5 +105,85 @@ module Select_stmt = struct
   (** [n_select_core raw] selects [select_core] *)
   let n_select_core = function
     | Raw.Node { kind = Kind.N_select_core; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for with_clause *)
+module With_clause = struct
+  module K = Types.Keyword
+
+  (** [kw_with raw] selects keyword [with] *)
+  let kw_with = Cst_support.is_keyword K.Kw_with
+
+  (** [kw_recursive raw] selects keyword [recursive] *)
+  let kw_recursive = Cst_support.is_keyword K.Kw_recursive
+
+  (** [t_comma raw] selects keyword [comma] *)
+  let t_comma = function
+    | Raw.Leaf { kind = Kind.L_comma; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_common_table_expression raw] selects [common_table_expression] *)
+  let n_common_table_expression = function
+    | Raw.Node { kind = Kind.N_common_table_expression; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_select_stmt raw] selects [select_stmt] *)
+  let n_select_stmt = function
+    | Raw.Node { kind = Kind.N_select_stmt; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for common_table_expression *)
+module Common_table_expression = struct
+  module K = Types.Keyword
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = function
+    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = function
+    | Raw.Leaf { kind = L_lparen; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = function
+    | Raw.Leaf { kind = L_rparen; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_select_stmt raw] selects [select_stmt] *)
+  let n_select_stmt = function
+    | Raw.Node { kind = Kind.N_select_stmt; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_column_name_list raw] selects [column_name_list] *)
+  let n_column_name_list = function
+    | Raw.Node { kind = Kind.N_column_name_list; _ } as v -> Some v
+    | _ -> None
+
+  (** [kw_as raw] selects [as] keyword *)
+  let kw_as = Cst_support.is_keyword K.Kw_as
+
+  (** [kw_not raw] selects [not] keyword *)
+  let kw_not = Cst_support.is_keyword K.Kw_not
+
+  (** [kw_materialized raw] selects [materialized] keyword *)
+  let kw_materialized = Cst_support.is_keyword K.Kw_materialized
+end
+
+(** CST for column_name_list *)
+module Column_name_list = struct
+  module K = Types.Keyword
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = function
+    | Raw.Leaf { kind = L_comma; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = function
+    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
     | _ -> None
 end

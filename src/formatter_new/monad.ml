@@ -41,6 +41,11 @@ include (
       | [] -> failwith "Illegal stack operation"
       | x :: _ -> (x, data)
 
+    let with_new_ppf m data =
+      let ppf = Fmt.nop in
+      let _, data' = m { data with ppf } in
+      (data'.ppf, data)
+
     let replace ppff data = ((), { data with ppf = ppff data.ppf })
 
     let push raw data =
