@@ -41,6 +41,7 @@ type node =
   | N_indexed_column
   | N_qualified_table_name
   | N_returning_clause
+  | N_column_name_list
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list
