@@ -187,3 +187,116 @@ module Column_name_list = struct
     | Raw.Leaf { kind = L_ident; _ } as v -> Some v
     | _ -> None
 end
+
+(** CST for select_core *)
+module Select_core = struct
+  module K = Types.Keyword
+
+  (** [n_result_column_list raw] selects [result_column_list] *)
+  let n_result_column_list = function
+    | Raw.Node { kind = Kind.N_result_column_list; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_from_clause raw] selects [from_clause] *)
+  let n_from_clause = function
+    | Raw.Node { kind = Kind.N_from_clause; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_where_clause raw] selects [where_clause] *)
+  let n_where_clause = function
+    | Raw.Node { kind = Kind.N_where_clause; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_group_by_clause raw] selects [group_by_clause] *)
+  let n_group_by_clause = function
+    | Raw.Node { kind = Kind.N_group_by_clause; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_having_clause raw] selects [having_clause] *)
+  let n_having_clause = function
+    | Raw.Node { kind = Kind.N_having_clause; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_window_clause raw] selects [window_clause] *)
+  let n_window_clause = function
+    | Raw.Node { kind = Kind.N_window_clause; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for result_column_list *)
+module Result_column_list = struct
+  module K = Types.Keyword
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = function
+    | Raw.Leaf { kind = L_comma; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_result_column raw] selects [result_column] *)
+  let n_result_column = function
+    | Raw.Node { kind = Kind.N_result_column; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for result_column *)
+module Result_column = struct
+  module K = Types.Keyword
+
+  (** [n_alias] selects [result_column_alias] node *)
+  let n_alias = function
+    | Raw.Node { kind = Kind.N_result_column_alias; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_star] selects [star] *)
+  let t_star = function
+    | Raw.Leaf { kind = L_star; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_table_name] selects [result_column_table_name] *)
+  let n_table_name = function
+    | Raw.Node { kind = Kind.N_result_column_table_name; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for result_column_alias *)
+module Result_column_alias = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] node *)
+  let n_expr = function
+    | Raw.Node { kind = N_expr; _ } as v -> Some v
+    | _ -> None
+
+  (** [kw_as raw] selects [as] keyword *)
+  let kw_as = Cst_support.is_keyword Kw_as
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = function
+    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for result_column_table_name *)
+module Result_column_table_name = struct
+  module K = Types.Keyword
+
+  (** [t_period raw] selects [period] *)
+  let t_period = function
+    | Raw.Leaf { kind = L_period; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_star raw] selects [star] *)
+  let t_star = function
+    | Raw.Leaf { kind = L_star; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = function
+    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
+    | _ -> None
+end
+
+(** CST for expr *)
+module Expr = struct
+  module K = Types.Keyword
+end

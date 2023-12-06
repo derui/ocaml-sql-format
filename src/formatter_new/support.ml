@@ -98,6 +98,17 @@ include (
       let* ppf = with_new_ppf m in
       append @@ Fmt.vbox ~indent ppf
 
+    let hvbox ?(indentation = false) m =
+      let* opt = options in
+      let indent =
+        match indentation with
+        | true -> opt.indent_size
+        | false -> 0
+      in
+
+      let* ppf = with_new_ppf m in
+      append @@ Fmt.hvbox ~indent ppf
+
     let hovbox ?(indentation = false) m =
       let* opt = options in
       let indent =

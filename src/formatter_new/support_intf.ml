@@ -38,6 +38,10 @@ module type S = sig
       [indentation] passed *)
   val vbox : ?indentation:bool -> 'a M.t -> unit M.t
 
+  (** [hvbox ?indentation m] makes hvbox to current environemnt. Use [Options.indent_size] to indent parameter of hvbox
+      if [indentation] passed *)
+  val hvbox : ?indentation:bool -> 'a M.t -> unit M.t
+
   (** [hovbox ?indentation m] makes hovbox to current environemnt. Use [Options.indent_size] to indent parameter of
       hovbox if [indentation] passed *)
   val hovbox : ?indentation:bool -> 'a M.t -> unit M.t
