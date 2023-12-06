@@ -41,7 +41,7 @@ type t =
   | Op_ne2
   | Op_extract
   | Op_extract_2
-  | Op_tilda
+  | Op_tilde
   | Op_lshift
   | Op_rshift
   | Tok_eof
@@ -89,7 +89,7 @@ let show = function
   | Op_ne2 -> "!="
   | Op_extract -> "->"
   | Op_extract_2 -> "->>"
-  | Op_tilda -> "~"
+  | Op_tilde -> "~"
   | Op_lshift -> "<<"
   | Op_rshift -> ">>"
   | Tok_eof -> ""

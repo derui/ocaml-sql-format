@@ -37,3 +37,15 @@ let%expect_test "rollback statement" =
 
   Util.run ~options:{ O.default with keyword_case = `upper } "rollback    transaction";
   [%expect {| ROLLBACK  TRANSACTION |}]
+
+let%expect_test "rollback statement" =
+  Util.run "rollback;";
+  [%expect {|
+    rollback
+    ; |}];
+
+  Util.run "rollback    transaction";
+  [%expect {| rollback  transaction |}];
+
+  Util.run ~options:{ O.default with keyword_case = `upper } "rollback    transaction";
+  [%expect {| ROLLBACK  TRANSACTION |}]

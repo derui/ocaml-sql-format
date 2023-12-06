@@ -299,4 +299,153 @@ end
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword
+
+  (** [t_qmark raw] selects [qmark] *)
+  let t_qmark = function
+    | Raw.Leaf { kind = L_qmark; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_string raw] selects [Tok_string] *)
+  let t_string = function
+    | Raw.Leaf { kind = L_string; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_numeric raw] selects [Tok_numeric] *)
+  let t_numeric = function
+    | Raw.Leaf { kind = L_numeric; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_blob raw] selects [Tok_blob] *)
+  let t_blob = function
+    | Raw.Leaf { kind = L_blob; _ } as v -> Some v
+    | _ -> None
+
+  (** [kw_null raw] selects [null] keyword *)
+  let kw_null = Cst_support.is_keyword K.Kw_null
+
+  (** [kw_true raw] selects [true] keyword *)
+  let kw_true = Cst_support.is_keyword K.Kw_true
+
+  (** [kw_false raw] selects [false] keyword *)
+  let kw_false = Cst_support.is_keyword K.Kw_false
+
+  (** [kw_current_time raw] selects [current_time] keyword *)
+  let kw_current_time = Cst_support.is_keyword K.Kw_current_time
+
+  (** [kw_current_date raw] selects [current_date] keyword *)
+  let kw_current_date = Cst_support.is_keyword K.Kw_current_date
+
+  (** [kw_current_timestamp raw] selects [current_timestamp] keyword *)
+  let kw_current_timestamp = Cst_support.is_keyword K.Kw_current_timestamp
+
+  (** [n_expr_name] selects [N_expr_name] node *)
+  let n_expr_name = function
+    | Raw.Node { kind = N_expr_name; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_unary] selects [N_expr_unary] node *)
+  let n_expr_unary = function
+    | Raw.Node { kind = N_expr_unary; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_function] selects [N_expr_function] node *)
+  let n_expr_function = function
+    | Raw.Node { kind = N_expr_function; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_cast] selects [N_expr_cast] node *)
+  let n_expr_cast = function
+    | Raw.Node { kind = N_expr_cast; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_collate] selects [N_expr_collate] node *)
+  let n_expr_collate = function
+    | Raw.Node { kind = N_expr_collate; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_like] selects [N_expr_like] node *)
+  let n_expr_like = function
+    | Raw.Node { kind = N_expr_like; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_in] selects [N_expr_in] node *)
+  let n_expr_in = function
+    | Raw.Node { kind = N_expr_in; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_between] selects [N_expr_between] node *)
+  let n_expr_between = function
+    | Raw.Node { kind = N_expr_between; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_glob] selects [N_expr_glob] node *)
+  let n_expr_glob = function
+    | Raw.Node { kind = N_expr_glob; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_regexp] selects [N_expr_regexp] node *)
+  let n_expr_regexp = function
+    | Raw.Node { kind = N_expr_regexp; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_match] selects [N_expr_match] node *)
+  let n_expr_match = function
+    | Raw.Node { kind = N_expr_match; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_is] selects [N_expr_is] node *)
+  let n_expr_is = function
+    | Raw.Node { kind = N_expr_is; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_exists] selects [N_expr_exists] node *)
+  let n_expr_exists = function
+    | Raw.Node { kind = N_expr_exists; _ } as v -> Some v
+    | _ -> None
+
+  (** [n_expr_case] selects [N_expr_case] node *)
+  let n_expr_case = function
+    | Raw.Node { kind = N_expr_case; _ } as v -> Some v
+    | _ -> None
+end
+
+module Expr_name = struct
+  module K = Types.Keyword
+
+  (** [t_period raw] selects [period] *)
+  let t_period = function
+    | Raw.Leaf { kind = L_period; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = function
+    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
+    | _ -> None
+end
+
+module Expr_unary = struct
+  module K = Types.Keyword
+
+  (** [t_minus raw] selects [minus] *)
+  let t_minus = function
+    | Raw.Leaf { kind = L_minus; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_plus raw] selects [plus] *)
+  let t_plus = function
+    | Raw.Leaf { kind = L_plus; _ } as v -> Some v
+    | _ -> None
+
+  (** [t_tilde raw] selects [tilde] *)
+  let t_tilde = function
+    | Raw.Leaf { kind = L_tilde; _ } as v -> Some v
+    | _ -> None
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = function
+    | Raw.Node { kind = N_expr; _ } as v -> Some v
+    | _ -> None
 end

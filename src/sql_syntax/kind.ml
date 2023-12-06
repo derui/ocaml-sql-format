@@ -94,7 +94,7 @@ type leaf =
   | L_ne2
   | L_extract
   | L_extract_2
-  | L_tilda
+  | L_tilde
   | L_lshift
   | L_rshift
   | L_eof
@@ -138,7 +138,7 @@ let token_to_leaf = function
   | Op_ne2 -> L_ne2
   | Op_extract -> L_extract
   | Op_extract_2 -> L_extract
-  | Op_tilda -> L_tilda
+  | Op_tilde -> L_tilde
   | Op_lshift -> L_lshift
   | Op_rshift -> L_rshift
   | Tok_eof -> L_eof

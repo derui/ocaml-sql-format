@@ -89,7 +89,7 @@ include (
         M.start_syntax K.N_expr_wrap p
 
       and unary () =
-        let op = M.bump_when T.Op_tilda <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not in
+        let op = M.bump_when T.Op_tilde <|> M.bump_when T.Op_plus <|> M.bump_when T.Op_minus <|> M.bump_kw Kw_not in
         M.start_syntax K.N_expr_unary @@ (op >>= expr')
 
       and cast () =

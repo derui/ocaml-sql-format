@@ -141,23 +141,48 @@ and format_result_column_table_name () =
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
-  let m = Sp.iter (fun () -> M.return ()) in
-  Sp.vbox m
-
-and format_select_core () =
-  let open M.Let_syntax in
-  let module S = C.Select_core in
+  (* TODO implement *)
   let m =
     Sp.iter (fun () ->
-        let* _ = Sp.keyword S.kw_select in
-        let* _ = Sp.node S.n_result_column_list format_result_column_list in
-        let* _ = Sp.node S.n_from_clause format_from_clause in
-        let* _ = Sp.node S.n_where_clause format_where_clause in
-        let* _ = Sp.node S.n_group_by_clause format_group_by_clause in
-        let* _ = Sp.node S.n_order_by_clause format_order_by_clause in
-        let* _ = Sp.node S.n_limit_clause format_limit_clause in
+        let* _ = Sp.leaf E.t_qmark in
+        let* _ = Sp.leaf E.t_string in
+        let* _ = Sp.leaf E.t_numeric in
+        let* _ = Sp.leaf E.t_blob in
+        let* _ = Sp.keyword E.kw_null in
+        let* _ = Sp.keyword E.kw_true in
+        let* _ = Sp.keyword E.kw_false in
+        let* _ = Sp.keyword E.kw_current_date in
+        let* _ = Sp.keyword E.kw_current_time in
+        let* _ = Sp.keyword E.kw_current_timestamp in
+        let* _ = Sp.node E.n_expr_name format_expr_name in
+        let* _ = Sp.node E.n_expr_unary format_expr_unary in
         M.return ())
   in
+  Sp.vbox m
+
+and format_expr_name () =
+  let open M.Let_syntax in
+  let module E = C.Expr_name in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf E.t_ident in
+      let* _ = Sp.leaf E.t_period in
+      M.return ())
+
+and format_expr_unary () =
+  let open M.Let_syntax in
+  let module E = C.Expr_unary in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf E.t_minus in
+      let* _ = Sp.leaf E.t_plus in
+      let* _ = Sp.leaf E.t_tilde in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
+and format_select_core () =
+  let module S = C.Select_core in
+  (* TODO implement *)
+  let m = Sp.iter (fun () -> M.return ()) in
   Sp.vbox m
 
 and format_create_index_stmt () = M.return ()
