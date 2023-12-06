@@ -42,6 +42,7 @@ type node =
   | N_qualified_table_name
   | N_returning_clause
   | N_column_name_list
+  | N_result_column_list
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list

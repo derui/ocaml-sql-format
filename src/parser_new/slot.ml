@@ -37,6 +37,7 @@ include (
       |> Kind_map.add K.N_returning_clause (module Parser_returning_clause : Intf.GEN)
       |> Kind_map.add K.N_indexed_column (module Parser_indexed_column : Intf.GEN)
       |> Kind_map.add K.N_column_name_list (module Parser_column_name_list : Intf.GEN)
+      |> Kind_map.add K.N_result_column_list (module Parser_result_column_list : Intf.GEN)
       (* statements *)
       |> Kind_map.add K.N_sql_stmt (module Parser_sql_stmt : Intf.GEN)
       |> Kind_map.add K.N_select_stmt (module Parser_select_stmt : Intf.GEN)

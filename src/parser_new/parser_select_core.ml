@@ -18,7 +18,7 @@ include (
 
       val having_clause : Type.parser
 
-      val result_column : Type.parser
+      val result_column_list : Type.parser
 
       val expr : Type.parser
     end
@@ -27,11 +27,7 @@ include (
       let select () =
         let* () = M.bump_kw Kw.Kw_select in
         let* () = M.bump_kw Kw.Kw_distinct <|> M.bump_kw Kw.Kw_all <|> M.skip in
-        let result_columns =
-          let* _ = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.result_column) in
-          M.return ()
-        in
-        let* () = result_columns in
+        let* () = D.result_column_list () in
         let* () = D.from_clause () <|> M.skip in
         let* () = D.where_clause () <|> M.skip in
         let* () = D.group_by_clause () <|> M.skip in
@@ -63,7 +59,7 @@ include (
 
         let window_clause = taker Sql_syntax.Kind.N_window_clause
 
-        let result_column = taker Sql_syntax.Kind.N_result_column
+        let result_column_list = taker Sql_syntax.Kind.N_result_column_list
 
         let expr = taker Sql_syntax.Kind.N_expr
       end) in
