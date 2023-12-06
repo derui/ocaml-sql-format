@@ -34,6 +34,8 @@ type node =
   | N_frame_spec
   | N_window_clause
   | N_result_column
+  | N_result_column_alias
+  | N_result_column_table_name
   | N_over_clause
   | N_limit_clause
   | N_common_table_expression
