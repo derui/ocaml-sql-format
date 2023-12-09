@@ -250,6 +250,24 @@ module Type_name = struct
   let t_minus = Cst_support.is_leaf L_minus
 end
 
+(** CST for filter_clause *)
+module Filter_clause = struct
+  (** [kw_filter raw] selects [filter] keyword *)
+  let kw_filter = Cst_support.is_keyword Kw_filter
+
+  (** [kw_where raw] selects [where] keyword *)
+  let kw_where = Cst_support.is_keyword Kw_where
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+end
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword

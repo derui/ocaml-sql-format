@@ -151,6 +151,20 @@ and format_type_name () =
       let* _ = Sp.leaf T.t_rparen in
       M.return ())
 
+and format_filter_clause () =
+  let open M.Let_syntax in
+  let module F = C.Filter_clause in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword F.kw_filter ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+        let* _ = Sp.leaf F.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.leaf F.t_rparen ~leading:(Sp.cut ()) in
+        let* _ = Sp.keyword F.kw_where ~trailing:Sp.nonbreak in
+        let* _ = Sp.node F.n_expr format_expr in
+        M.return ())
+  in
+  Sp.hovbox p
+
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
