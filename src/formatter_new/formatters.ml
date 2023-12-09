@@ -193,6 +193,28 @@ and format_window_defn () =
   in
   Sp.hovbox p
 
+and format_frame_spec () =
+  let open M.Let_syntax in
+  let module F = C.Frame_spec in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword F.kw_rows ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_range ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_groups ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_between ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_unbounded ~leading:(Sp.sp ()) in
+      let* _ = Sp.keyword F.kw_preceding ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_following ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_current ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_row ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_and ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_no ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_others ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_ties ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_group ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword F.kw_exclude ~leading:Sp.nonbreak in
+      let* _ = Sp.node F.n_expr format_expr in
+      M.return ())
+
 and format_order_by_clause () =
   let open M.Let_syntax in
   let module O = C.Order_by_clause in
@@ -212,6 +234,7 @@ and format_ordering_term () =
   Sp.iter (fun () ->
       let* _ = Sp.node O.n_expr format_expr in
       let* _ = Sp.keyword O.kw_asc ~leading:Sp.nonbreak in
+
       let* _ = Sp.keyword O.kw_desc ~leading:Sp.nonbreak in
       let* _ = Sp.keyword O.kw_nulls ~leading:Sp.nonbreak in
       let* _ = Sp.keyword O.kw_first ~leading:Sp.nonbreak in

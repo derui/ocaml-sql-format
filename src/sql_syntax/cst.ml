@@ -340,6 +340,57 @@ module Ordering_term = struct
   let kw_last = Cst_support.is_keyword Kw_last
 end
 
+(** CST for frame_spec *)
+module Frame_spec = struct
+  (** [kw_and raw] selects [and] keyword *)
+  let kw_and = Cst_support.is_keyword Kw_and
+
+  (** [kw_rows raw] selects [rows] keyword *)
+  let kw_rows = Cst_support.is_keyword Kw_rows
+
+  (** [kw_range raw] selects [range] keyword *)
+  let kw_range = Cst_support.is_keyword Kw_range
+
+  (** [kw_between raw] selects [between] keyword *)
+  let kw_between = Cst_support.is_keyword Kw_between
+
+  (** [kw_unbounded raw] selects [unbounded] keyword *)
+  let kw_unbounded = Cst_support.is_keyword Kw_unbounded
+
+  (** [kw_preceding raw] selects [preceding] keyword *)
+  let kw_preceding = Cst_support.is_keyword Kw_preceding
+
+  (** [kw_following raw] selects [following] keyword *)
+  let kw_following = Cst_support.is_keyword Kw_following
+
+  (** [kw_current raw] selects [current] keyword *)
+  let kw_current = Cst_support.is_keyword Kw_current
+
+  (** [kw_row raw] selects [row] keyword *)
+  let kw_row = Cst_support.is_keyword Kw_row
+
+  (** [kw_groups raw] selects [groups] keyword *)
+  let kw_groups = Cst_support.is_keyword Kw_groups
+
+  (** [kw_no raw] selects [no] keyword *)
+  let kw_no = Cst_support.is_keyword Kw_no
+
+  (** [kw_others raw] selects [others] keyword *)
+  let kw_others = Cst_support.is_keyword Kw_others
+
+  (** [kw_ties raw] selects [ties] keyword *)
+  let kw_ties = Cst_support.is_keyword Kw_ties
+
+  (** [kw_group raw] selects [group] keyword *)
+  let kw_group = Cst_support.is_keyword Kw_group
+
+  (** [kw_exclude raw] selects [exclude] keyword *)
+  let kw_exclude = Cst_support.is_keyword Kw_exclude
+
+  (** [n_expr raw] selects [expr] node *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword
