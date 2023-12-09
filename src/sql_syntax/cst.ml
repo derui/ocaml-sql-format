@@ -224,6 +224,32 @@ module Result_column_table_name = struct
   let t_ident = Cst_support.is_leaf L_ident
 end
 
+(** CST for type_name *)
+module Type_name = struct
+  module K = Types.Keyword
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [t_numeric raw] selects [numeric] *)
+  let t_numeric = Cst_support.is_leaf L_numeric
+
+  (** [t_plus raw] selects [plus] *)
+  let t_plus = Cst_support.is_leaf L_plus
+
+  (** [t_minus raw] selects [minus] *)
+  let t_minus = Cst_support.is_leaf L_minus
+end
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword
@@ -330,6 +356,58 @@ module Expr_unary = struct
   let n_expr = Cst_support.is_node N_expr
 end
 
+(** CST for expr_cast *)
+module Expr_cast = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_as raw] selects [as] *)
+  let kw_as = Cst_support.is_keyword Kw_as
+
+  (** [kw_cast raw] selects [cast] *)
+  let kw_cast = Cst_support.is_keyword Kw_cast
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [n_type_name raw] selects [type_name] *)
+  let n_type_name = Cst_support.is_node N_type_name
+end
+
+(** CST for expr_function *)
+module Expr_function = struct
+  module K = Types.Keyword
+
+  (** [kw_distinct raw] selects [distinct] *)
+  let kw_distinct = Cst_support.is_keyword Kw_distinct
+
+  (** [t_star raw] selects [star] *)
+  let t_star = Cst_support.is_leaf L_star
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [t_period raw] selects [period] *)
+  let t_period = Cst_support.is_leaf L_period
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
 (** CST for expr_collate *)
 module Expr_collate = struct
   module K = Types.Keyword
@@ -402,3 +480,48 @@ module Expr_in = struct
 end
 
 (** CST for expr_between *)
+module Expr_between = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_between raw] selects [between] *)
+  let kw_between = Cst_support.is_keyword Kw_between
+
+  (** [kw_and raw] selects [and] *)
+  let kw_and = Cst_support.is_keyword Kw_and
+end
+
+(** CST for expr_regexp *)
+module Expr_regexp = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_regexp raw] selects [regexp] *)
+  let kw_regexp = Cst_support.is_keyword Kw_regexp
+end
+
+(** CST for expr_match *)
+module Expr_match = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_match raw] selects [match] *)
+  let kw_match = Cst_support.is_keyword Kw_match
+end
+
+(** CST for expr_is *)

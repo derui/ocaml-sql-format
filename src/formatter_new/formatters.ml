@@ -138,6 +138,19 @@ and format_result_column_table_name () =
       let* _ = Sp.leaf R.t_star in
       M.return ())
 
+and format_type_name () =
+  let open M.Let_syntax in
+  let module T = C.Type_name in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf ~trailing:Sp.nonbreak T.t_ident in
+      let* _ = Sp.leaf T.t_lparen in
+      let* _ = Sp.leaf T.t_plus in
+      let* _ = Sp.leaf T.t_minus in
+      let* _ = Sp.leaf T.t_numeric in
+      let* _ = Sp.leaf T.t_comma in
+      let* _ = Sp.leaf T.t_rparen in
+      M.return ())
+
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
@@ -156,6 +169,18 @@ and format_expr () =
         let* _ = Sp.keyword E.kw_current_timestamp in
         let* _ = Sp.node E.n_expr_name format_expr_name in
         let* _ = Sp.node E.n_expr_unary format_expr_unary in
+        let* _ = Sp.node E.n_expr_function format_expr_function in
+        let* _ = Sp.node E.n_expr_cast format_expr_cast in
+        let* _ = Sp.node E.n_expr_collate format_expr_collate in
+        let* _ = Sp.node E.n_expr_like format_expr_like in
+        let* _ = Sp.node E.n_expr_in format_expr_in in
+        let* _ = Sp.node E.n_expr_between format_expr_between in
+        let* _ = Sp.node E.n_expr_glob format_expr_glob in
+        let* _ = Sp.node E.n_expr_regexp format_expr_regexp in
+        let* _ = Sp.node E.n_expr_match format_expr_match in
+        let* _ = Sp.node E.n_expr_is format_expr_is in
+        let* _ = Sp.node E.n_expr_exists format_expr_exists in
+        let* _ = Sp.node E.n_expr_case format_expr_case in
         M.return ())
   in
   Sp.vbox m
@@ -177,6 +202,18 @@ and format_expr_unary () =
       let* _ = Sp.leaf E.t_tilde in
       let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
       let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
+and format_expr_cast () =
+  let open M.Let_syntax in
+  let module E = C.Expr_cast in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_cast in
+      let* _ = Sp.leaf E.t_lparen in
+      let* _ = Sp.node E.n_expr format_expr in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak E.kw_as in
+      let* _ = Sp.node E.n_type_name format_type_name in
+      let* _ = Sp.leaf E.t_rparen in
       M.return ())
 
 and format_expr_collate () =
@@ -218,11 +255,44 @@ and format_expr_in () =
         let* _ = Sp.leaf E.t_period in
         let* _ = Sp.node E.n_expr format_expr in
         let* _ = Sp.leaf E.t_lparen in
+        let* _ = Sp.node E.n_select_stmt format_sql_stmt in
         let* _ = Sp.leaf ~leading:(Sp.cut ~indentation:true ()) E.t_comma in
         let* _ = Sp.leaf ~leading:(Sp.cut ()) E.t_rparen in
         M.return ())
   in
   Sp.hvbox p
+
+and format_expr_between () =
+  let open M.Let_syntax in
+  let module E = C.Expr_between in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_between in
+        let* _ = Sp.node E.n_expr format_expr in
+        let* _ = Sp.keyword ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.kw_and in
+        let* _ = Sp.node E.n_expr format_expr in
+        M.return ())
+  in
+  Sp.hvbox p
+
+and format_expr_regexp () =
+  let open M.Let_syntax in
+  let module E = C.Expr_regexp in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_regexp in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
+and format_expr_match () =
+  let open M.Let_syntax in
+  let module E = C.Expr_match in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_match in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
 
 and format_select_core () =
   let module S = C.Select_core in
