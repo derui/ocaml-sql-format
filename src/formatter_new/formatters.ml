@@ -206,6 +206,18 @@ and format_order_by_clause () =
   in
   Sp.hvbox p
 
+and format_ordering_term () =
+  let open M.Let_syntax in
+  let module O = C.Ordering_term in
+  Sp.iter (fun () ->
+      let* _ = Sp.node O.n_expr format_expr in
+      let* _ = Sp.keyword O.kw_asc ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword O.kw_desc ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword O.kw_nulls ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword O.kw_first ~leading:Sp.nonbreak in
+      let* _ = Sp.keyword O.kw_last ~leading:Sp.nonbreak in
+      M.return ())
+
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in

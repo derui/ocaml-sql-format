@@ -319,7 +319,26 @@ module Order_by_clause = struct
   let n_ordering_term = Cst_support.is_node N_ordering_term
 end
 
-(** CST for frame_spec *)
+(** CST for ordering_term *)
+module Ordering_term = struct
+  (** [n_expr raw] selects [expr] node *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_asc raw] selects [asc] keyword *)
+  let kw_asc = Cst_support.is_keyword Kw_asc
+
+  (** [kw_desc raw] selects [desc] keyword *)
+  let kw_desc = Cst_support.is_keyword Kw_desc
+
+  (** [kw_nulls raw] selects [nulls] keyword *)
+  let kw_nulls = Cst_support.is_keyword Kw_nulls
+
+  (** [kw_first raw] selects [first] keyword *)
+  let kw_first = Cst_support.is_keyword Kw_first
+
+  (** [kw_last raw] selects [last] keyword *)
+  let kw_last = Cst_support.is_keyword Kw_last
+end
 
 (** CST for expr *)
 module Expr = struct
