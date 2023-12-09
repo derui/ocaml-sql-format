@@ -427,6 +427,21 @@ and format_expr_exists () =
   in
   Sp.hovbox p
 
+and format_expr_case () =
+  let open M.Let_syntax in
+  let module E = C.Expr_case in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword E.kw_case ~trailing:Sp.nonbreak in
+        let* _ = Sp.node E.n_expr format_expr in
+        let* _ = Sp.keyword E.kw_when ~leading:(Sp.cut ()) ~trailing:(Sp.sp ()) in
+        let* _ = Sp.keyword E.kw_then ~leading:(Sp.sp ()) ~trailing:(Sp.sp ()) in
+        let* _ = Sp.keyword E.kw_else ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
+        let* _ = Sp.keyword E.kw_end ~leading:(Sp.cut ()) in
+        M.return ())
+  in
+  Sp.hvbox p
+
 and format_select_core () =
   let module S = C.Select_core in
   (* TODO implement *)

@@ -663,3 +663,22 @@ module Expr_exists = struct
 end
 
 (** CST for expr_case *)
+module Expr_case = struct
+  (** [kw_case raw] selects [case] *)
+  let kw_case = Cst_support.is_keyword Kw_case
+
+  (** [kw_end raw] selects [end] *)
+  let kw_end = Cst_support.is_keyword Kw_end
+
+  (** [kw_when raw] selects [when] *)
+  let kw_when = Cst_support.is_keyword Kw_when
+
+  (** [kw_then raw] selects [then] *)
+  let kw_then = Cst_support.is_keyword Kw_then
+
+  (** [kw_else raw] selects [else] *)
+  let kw_else = Cst_support.is_keyword Kw_else
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
