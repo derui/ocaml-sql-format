@@ -179,6 +179,51 @@ and format_expr_unary () =
       let* _ = Sp.node E.n_expr format_expr in
       M.return ())
 
+and format_expr_collate () =
+  let open M.Let_syntax in
+  let module E = C.Expr_collate in
+  Sp.iter (fun () ->
+      let* _ = Sp.node E.n_expr format_expr in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak E.kw_collate in
+      let* _ = Sp.leaf E.t_ident in
+      M.return ())
+
+and format_expr_like () =
+  let open M.Let_syntax in
+  let module E = C.Expr_like in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_like in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak E.kw_escape in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
+and format_expr_glob () =
+  let open M.Let_syntax in
+  let module E = C.Expr_glob in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_glob in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
+and format_expr_in () =
+  let open M.Let_syntax in
+  let module E = C.Expr_in in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_in in
+        let* _ = Sp.leaf E.t_ident in
+        let* _ = Sp.leaf E.t_period in
+        let* _ = Sp.node E.n_expr format_expr in
+        let* _ = Sp.leaf E.t_lparen in
+        let* _ = Sp.leaf ~leading:(Sp.cut ~indentation:true ()) E.t_comma in
+        let* _ = Sp.leaf ~leading:(Sp.cut ()) E.t_rparen in
+        M.return ())
+  in
+  Sp.hvbox p
+
 and format_select_core () =
   let module S = C.Select_core in
   (* TODO implement *)

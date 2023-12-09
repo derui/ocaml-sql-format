@@ -154,7 +154,6 @@ include (
 
       and in_ () =
         let p =
-          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let schema = ident *> M.bump_when T.Tok_period <|> M.skip in
           let list =
             let* () = M.skip >>= expr' in
@@ -164,6 +163,7 @@ include (
           and table_function_ =
             schema *> name *> (M.bump_when Tok_lparen *> M.bump_when Tok_rparen <|> Wrapping.parens list)
           in
+          let* () = M.bump_kw Kw.Kw_not <|> M.skip in
           let* () = M.bump_kw Kw.Kw_in in
           table_function_ <|> name <|> Wrapping.parens list
         in

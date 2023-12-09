@@ -5,14 +5,10 @@
 
 module Sql_stmt_list = struct
   (** [n_sql_stmt raw] selects [sql_stmt] *)
-  let n_sql_stmt = function
-    | Raw.Node { kind = Kind.N_sql_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_sql_stmt = Cst_support.is_node N_sql_stmt
 
-  (** [t_semicolonf raw] selects *)
-  let t_semicolon = function
-    | Raw.Leaf { kind = Kind.L_semicolon; _ } as v -> Some v
-    | _ -> None
+  (** [t_semicolon raw] selects *)
+  let t_semicolon = Cst_support.is_leaf L_semicolon
 end
 
 (** CST for sql_stmt *)
@@ -26,34 +22,22 @@ module Sql_stmt = struct
   let kw_analyze = Cst_support.is_keyword Types.Keyword.Kw_analyze
 
   (** [n_select_stmt raw] selects [select_stmt] *)
-  let n_select_stmt = function
-    | Raw.Node { kind = Kind.N_select_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_select_stmt = Cst_support.is_node N_select_stmt
 
   (** [n_delete_stmt raw] selects [delete_stmt] *)
-  let n_delete_stmt = function
-    | Raw.Node { kind = Kind.N_delete_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_delete_stmt = Cst_support.is_node N_delete_stmt
 
   (** [n_rollback_stmt raw] selects [rollback_stmt] *)
-  let n_rollback_stmt = function
-    | Raw.Node { kind = Kind.N_rollback_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_rollback_stmt = Cst_support.is_node N_rollback_stmt
 
   (** [n_begin_stmt raw] selects [begin_stmt] *)
-  let n_begin_stmt = function
-    | Raw.Node { kind = Kind.N_begin_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_begin_stmt = Cst_support.is_node N_begin_stmt
 
   (** [n_commit_stmt raw] selects [commit_stmt] *)
-  let n_commit_stmt = function
-    | Raw.Node { kind = Kind.N_commit_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_commit_stmt = Cst_support.is_node N_commit_stmt
 
   (** [n_create_index_stmt raw] selects [create_index_stmt] *)
-  let n_create_index_stmt = function
-    | Raw.Node { kind = Kind.N_create_index_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_create_index_stmt = Cst_support.is_node N_create_index_stmt
 end
 
 (** CST for begin_stmt *)
@@ -98,14 +82,10 @@ module Select_stmt = struct
   let kw_except = Cst_support.is_keyword K.Kw_except
 
   (** [n_with_clause raw] selects [with_clause] *)
-  let n_with_clause = function
-    | Raw.Node { kind = Kind.N_with_clause; _ } as v -> Some v
-    | _ -> None
+  let n_with_clause = Cst_support.is_node N_with_clause
 
   (** [n_select_core raw] selects [select_core] *)
-  let n_select_core = function
-    | Raw.Node { kind = Kind.N_select_core; _ } as v -> Some v
-    | _ -> None
+  let n_select_core = Cst_support.is_node N_select_core
 end
 
 (** CST for with_clause *)
@@ -119,19 +99,13 @@ module With_clause = struct
   let kw_recursive = Cst_support.is_keyword K.Kw_recursive
 
   (** [t_comma raw] selects keyword [comma] *)
-  let t_comma = function
-    | Raw.Leaf { kind = Kind.L_comma; _ } as v -> Some v
-    | _ -> None
+  let t_comma = Cst_support.is_leaf L_comma
 
   (** [n_common_table_expression raw] selects [common_table_expression] *)
-  let n_common_table_expression = function
-    | Raw.Node { kind = Kind.N_common_table_expression; _ } as v -> Some v
-    | _ -> None
+  let n_common_table_expression = Cst_support.is_node N_common_table_expression
 
   (** [n_select_stmt raw] selects [select_stmt] *)
-  let n_select_stmt = function
-    | Raw.Node { kind = Kind.N_select_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_select_stmt = Cst_support.is_node N_select_stmt
 end
 
 (** CST for common_table_expression *)
@@ -139,29 +113,19 @@ module Common_table_expression = struct
   module K = Types.Keyword
 
   (** [t_ident raw] selects [ident] *)
-  let t_ident = function
-    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
-    | _ -> None
+  let t_ident = Cst_support.is_leaf L_ident
 
   (** [t_lparen raw] selects [lparen] *)
-  let t_lparen = function
-    | Raw.Leaf { kind = L_lparen; _ } as v -> Some v
-    | _ -> None
+  let t_lparen = Cst_support.is_leaf L_lparen
 
   (** [t_rparen raw] selects [rparen] *)
-  let t_rparen = function
-    | Raw.Leaf { kind = L_rparen; _ } as v -> Some v
-    | _ -> None
+  let t_rparen = Cst_support.is_leaf L_rparen
 
   (** [n_select_stmt raw] selects [select_stmt] *)
-  let n_select_stmt = function
-    | Raw.Node { kind = Kind.N_select_stmt; _ } as v -> Some v
-    | _ -> None
+  let n_select_stmt = Cst_support.is_node N_select_stmt
 
   (** [n_column_name_list raw] selects [column_name_list] *)
-  let n_column_name_list = function
-    | Raw.Node { kind = Kind.N_column_name_list; _ } as v -> Some v
-    | _ -> None
+  let n_column_name_list = Cst_support.is_node N_column_name_list
 
   (** [kw_as raw] selects [as] keyword *)
   let kw_as = Cst_support.is_keyword K.Kw_as
@@ -178,14 +142,10 @@ module Column_name_list = struct
   module K = Types.Keyword
 
   (** [t_comma raw] selects [comma] *)
-  let t_comma = function
-    | Raw.Leaf { kind = L_comma; _ } as v -> Some v
-    | _ -> None
+  let t_comma = Cst_support.is_leaf L_comma
 
   (** [t_ident raw] selects [ident] *)
-  let t_ident = function
-    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
-    | _ -> None
+  let t_ident = Cst_support.is_leaf L_ident
 end
 
 (** CST for select_core *)
@@ -193,34 +153,22 @@ module Select_core = struct
   module K = Types.Keyword
 
   (** [n_result_column_list raw] selects [result_column_list] *)
-  let n_result_column_list = function
-    | Raw.Node { kind = Kind.N_result_column_list; _ } as v -> Some v
-    | _ -> None
+  let n_result_column_list = Cst_support.is_node N_result_column_list
 
   (** [n_from_clause raw] selects [from_clause] *)
-  let n_from_clause = function
-    | Raw.Node { kind = Kind.N_from_clause; _ } as v -> Some v
-    | _ -> None
+  let n_from_clause = Cst_support.is_node N_from_clause
 
   (** [n_where_clause raw] selects [where_clause] *)
-  let n_where_clause = function
-    | Raw.Node { kind = Kind.N_where_clause; _ } as v -> Some v
-    | _ -> None
+  let n_where_clause = Cst_support.is_node N_where_clause
 
   (** [n_group_by_clause raw] selects [group_by_clause] *)
-  let n_group_by_clause = function
-    | Raw.Node { kind = Kind.N_group_by_clause; _ } as v -> Some v
-    | _ -> None
+  let n_group_by_clause = Cst_support.is_node N_group_by_clause
 
   (** [n_having_clause raw] selects [having_clause] *)
-  let n_having_clause = function
-    | Raw.Node { kind = Kind.N_having_clause; _ } as v -> Some v
-    | _ -> None
+  let n_having_clause = Cst_support.is_node N_having_clause
 
   (** [n_window_clause raw] selects [window_clause] *)
-  let n_window_clause = function
-    | Raw.Node { kind = Kind.N_window_clause; _ } as v -> Some v
-    | _ -> None
+  let n_window_clause = Cst_support.is_node N_window_clause
 end
 
 (** CST for result_column_list *)
@@ -228,14 +176,10 @@ module Result_column_list = struct
   module K = Types.Keyword
 
   (** [t_comma raw] selects [comma] *)
-  let t_comma = function
-    | Raw.Leaf { kind = L_comma; _ } as v -> Some v
-    | _ -> None
+  let t_comma = Cst_support.is_leaf L_comma
 
   (** [n_result_column raw] selects [result_column] *)
-  let n_result_column = function
-    | Raw.Node { kind = Kind.N_result_column; _ } as v -> Some v
-    | _ -> None
+  let n_result_column = Cst_support.is_node N_result_column
 end
 
 (** CST for result_column *)
@@ -243,19 +187,13 @@ module Result_column = struct
   module K = Types.Keyword
 
   (** [n_alias] selects [result_column_alias] node *)
-  let n_alias = function
-    | Raw.Node { kind = Kind.N_result_column_alias; _ } as v -> Some v
-    | _ -> None
+  let n_alias = Cst_support.is_node N_result_column_alias
 
   (** [t_star] selects [star] *)
-  let t_star = function
-    | Raw.Leaf { kind = L_star; _ } as v -> Some v
-    | _ -> None
+  let t_star = Cst_support.is_leaf L_star
 
   (** [n_table_name] selects [result_column_table_name] *)
-  let n_table_name = function
-    | Raw.Node { kind = Kind.N_result_column_table_name; _ } as v -> Some v
-    | _ -> None
+  let n_table_name = Cst_support.is_node N_result_column_table_name
 end
 
 (** CST for result_column_alias *)
@@ -263,17 +201,13 @@ module Result_column_alias = struct
   module K = Types.Keyword
 
   (** [n_expr raw] selects [expr] node *)
-  let n_expr = function
-    | Raw.Node { kind = N_expr; _ } as v -> Some v
-    | _ -> None
+  let n_expr = Cst_support.is_node N_expr
 
   (** [kw_as raw] selects [as] keyword *)
   let kw_as = Cst_support.is_keyword Kw_as
 
   (** [t_ident raw] selects [ident] *)
-  let t_ident = function
-    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
-    | _ -> None
+  let t_ident = Cst_support.is_leaf L_ident
 end
 
 (** CST for result_column_table_name *)
@@ -281,19 +215,13 @@ module Result_column_table_name = struct
   module K = Types.Keyword
 
   (** [t_period raw] selects [period] *)
-  let t_period = function
-    | Raw.Leaf { kind = L_period; _ } as v -> Some v
-    | _ -> None
+  let t_period = Cst_support.is_leaf L_period
 
   (** [t_star raw] selects [star] *)
-  let t_star = function
-    | Raw.Leaf { kind = L_star; _ } as v -> Some v
-    | _ -> None
+  let t_star = Cst_support.is_leaf L_star
 
   (** [t_ident raw] selects [ident] *)
-  let t_ident = function
-    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
-    | _ -> None
+  let t_ident = Cst_support.is_leaf L_ident
 end
 
 (** CST for expr *)
@@ -301,24 +229,16 @@ module Expr = struct
   module K = Types.Keyword
 
   (** [t_qmark raw] selects [qmark] *)
-  let t_qmark = function
-    | Raw.Leaf { kind = L_qmark; _ } as v -> Some v
-    | _ -> None
+  let t_qmark = Cst_support.is_leaf L_qmark
 
   (** [t_string raw] selects [Tok_string] *)
-  let t_string = function
-    | Raw.Leaf { kind = L_string; _ } as v -> Some v
-    | _ -> None
+  let t_string = Cst_support.is_leaf L_string
 
   (** [t_numeric raw] selects [Tok_numeric] *)
-  let t_numeric = function
-    | Raw.Leaf { kind = L_numeric; _ } as v -> Some v
-    | _ -> None
+  let t_numeric = Cst_support.is_leaf L_numeric
 
   (** [t_blob raw] selects [Tok_blob] *)
-  let t_blob = function
-    | Raw.Leaf { kind = L_blob; _ } as v -> Some v
-    | _ -> None
+  let t_blob = Cst_support.is_leaf L_blob
 
   (** [kw_null raw] selects [null] keyword *)
   let kw_null = Cst_support.is_keyword K.Kw_null
@@ -339,113 +259,146 @@ module Expr = struct
   let kw_current_timestamp = Cst_support.is_keyword K.Kw_current_timestamp
 
   (** [n_expr_name] selects [N_expr_name] node *)
-  let n_expr_name = function
-    | Raw.Node { kind = N_expr_name; _ } as v -> Some v
-    | _ -> None
+  let n_expr_name = Cst_support.is_node N_expr_name
 
   (** [n_expr_unary] selects [N_expr_unary] node *)
-  let n_expr_unary = function
-    | Raw.Node { kind = N_expr_unary; _ } as v -> Some v
-    | _ -> None
+  let n_expr_unary = Cst_support.is_node N_expr_unary
 
   (** [n_expr_function] selects [N_expr_function] node *)
-  let n_expr_function = function
-    | Raw.Node { kind = N_expr_function; _ } as v -> Some v
-    | _ -> None
+  let n_expr_function = Cst_support.is_node N_expr_function
 
   (** [n_expr_cast] selects [N_expr_cast] node *)
-  let n_expr_cast = function
-    | Raw.Node { kind = N_expr_cast; _ } as v -> Some v
-    | _ -> None
+  let n_expr_cast = Cst_support.is_node N_expr_cast
 
   (** [n_expr_collate] selects [N_expr_collate] node *)
-  let n_expr_collate = function
-    | Raw.Node { kind = N_expr_collate; _ } as v -> Some v
-    | _ -> None
+  let n_expr_collate = Cst_support.is_node N_expr_collate
 
   (** [n_expr_like] selects [N_expr_like] node *)
-  let n_expr_like = function
-    | Raw.Node { kind = N_expr_like; _ } as v -> Some v
-    | _ -> None
+  let n_expr_like = Cst_support.is_node N_expr_like
 
   (** [n_expr_in] selects [N_expr_in] node *)
-  let n_expr_in = function
-    | Raw.Node { kind = N_expr_in; _ } as v -> Some v
-    | _ -> None
+  let n_expr_in = Cst_support.is_node N_expr_in
 
   (** [n_expr_between] selects [N_expr_between] node *)
-  let n_expr_between = function
-    | Raw.Node { kind = N_expr_between; _ } as v -> Some v
-    | _ -> None
+  let n_expr_between = Cst_support.is_node N_expr_between
 
   (** [n_expr_glob] selects [N_expr_glob] node *)
-  let n_expr_glob = function
-    | Raw.Node { kind = N_expr_glob; _ } as v -> Some v
-    | _ -> None
+  let n_expr_glob = Cst_support.is_node N_expr_glob
 
   (** [n_expr_regexp] selects [N_expr_regexp] node *)
-  let n_expr_regexp = function
-    | Raw.Node { kind = N_expr_regexp; _ } as v -> Some v
-    | _ -> None
+  let n_expr_regexp = Cst_support.is_node N_expr_regexp
 
   (** [n_expr_match] selects [N_expr_match] node *)
-  let n_expr_match = function
-    | Raw.Node { kind = N_expr_match; _ } as v -> Some v
-    | _ -> None
+  let n_expr_match = Cst_support.is_node N_expr_match
 
   (** [n_expr_is] selects [N_expr_is] node *)
-  let n_expr_is = function
-    | Raw.Node { kind = N_expr_is; _ } as v -> Some v
-    | _ -> None
+  let n_expr_is = Cst_support.is_node N_expr_is
 
   (** [n_expr_exists] selects [N_expr_exists] node *)
-  let n_expr_exists = function
-    | Raw.Node { kind = N_expr_exists; _ } as v -> Some v
-    | _ -> None
+  let n_expr_exists = Cst_support.is_node N_expr_exists
 
   (** [n_expr_case] selects [N_expr_case] node *)
-  let n_expr_case = function
-    | Raw.Node { kind = N_expr_case; _ } as v -> Some v
-    | _ -> None
+  let n_expr_case = Cst_support.is_node N_expr_case
 end
 
 module Expr_name = struct
   module K = Types.Keyword
 
   (** [t_period raw] selects [period] *)
-  let t_period = function
-    | Raw.Leaf { kind = L_period; _ } as v -> Some v
-    | _ -> None
+  let t_period = Cst_support.is_leaf L_period
 
   (** [t_ident raw] selects [ident] *)
-  let t_ident = function
-    | Raw.Leaf { kind = L_ident; _ } as v -> Some v
-    | _ -> None
+  let t_ident = Cst_support.is_leaf L_ident
 end
 
 module Expr_unary = struct
   module K = Types.Keyword
 
   (** [t_minus raw] selects [minus] *)
-  let t_minus = function
-    | Raw.Leaf { kind = L_minus; _ } as v -> Some v
-    | _ -> None
+  let t_minus = Cst_support.is_leaf L_minus
 
   (** [t_plus raw] selects [plus] *)
-  let t_plus = function
-    | Raw.Leaf { kind = L_plus; _ } as v -> Some v
-    | _ -> None
+  let t_plus = Cst_support.is_leaf L_plus
 
   (** [t_tilde raw] selects [tilde] *)
-  let t_tilde = function
-    | Raw.Leaf { kind = L_tilde; _ } as v -> Some v
-    | _ -> None
+  let t_tilde = Cst_support.is_leaf L_tilde
 
   (** [kw_not raw] selects [not] *)
   let kw_not = Cst_support.is_keyword Kw_not
 
   (** [n_expr raw] selects [expr] *)
-  let n_expr = function
-    | Raw.Node { kind = N_expr; _ } as v -> Some v
-    | _ -> None
+  let n_expr = Cst_support.is_node N_expr
 end
+
+(** CST for expr_collate *)
+module Expr_collate = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_collate raw] selects [collate] *)
+  let kw_collate = Cst_support.is_keyword Kw_collate
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+end
+
+(** CST for expr_like *)
+module Expr_like = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_like raw] selects [like] *)
+  let kw_like = Cst_support.is_keyword Kw_like
+
+  (** [kw_escape raw] selects [escape] *)
+  let kw_escape = Cst_support.is_keyword Kw_escape
+end
+
+(** CST for expr_glob *)
+module Expr_glob = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_glob raw] selects [glob] *)
+  let kw_glob = Cst_support.is_keyword Kw_glob
+end
+
+(** CST for expr_in *)
+module Expr_in = struct
+  module K = Types.Keyword
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_in raw] selects [in] *)
+  let kw_in = Cst_support.is_keyword Kw_in
+
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  let t_comma = Cst_support.is_leaf L_comma
+
+  let t_period = Cst_support.is_leaf L_period
+
+  let t_ident = Cst_support.is_leaf L_ident
+
+  let n_select_stmt = Cst_support.is_node N_select_stmt
+end
+
+(** CST for expr_between *)
