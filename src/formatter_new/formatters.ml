@@ -413,6 +413,20 @@ and format_expr_is () =
       let* _ = Sp.node E.n_expr format_expr in
       M.return ())
 
+and format_expr_exists () =
+  let open M.Let_syntax in
+  let module E = C.Expr_exists in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword E.kw_exists ~trailing:Sp.nonbreak in
+        let* _ = Sp.keyword E.kw_not ~trailing:Sp.nonbreak in
+        let* _ = Sp.node E.n_select_stmt format_sql_stmt in
+        let* _ = Sp.leaf E.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.leaf E.t_rparen ~leading:(Sp.cut ()) in
+        M.return ())
+  in
+  Sp.hovbox p
+
 and format_select_core () =
   let module S = C.Select_core in
   (* TODO implement *)

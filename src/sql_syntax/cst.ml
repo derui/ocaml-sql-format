@@ -645,3 +645,21 @@ module Expr_is = struct
 end
 
 (** CST for expr_exists *)
+module Expr_exists = struct
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_exists raw] selects [exists] *)
+  let kw_exists = Cst_support.is_keyword Kw_exists
+
+  (** [n_select_stmt raw] selects [select_stmt] *)
+  let n_select_stmt = Cst_support.is_node N_select_stmt
+
+  (** [t_lparen] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+end
+
+(** CST for expr_case *)
