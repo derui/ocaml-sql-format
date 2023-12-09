@@ -304,6 +304,23 @@ module Window_defn = struct
   let n_frame_spec = Cst_support.is_node N_frame_spec
 end
 
+(** CST for order_by_clause *)
+module Order_by_clause = struct
+  (** [kw_order raw] selects [order] keyword *)
+  let kw_order = Cst_support.is_keyword Kw_order
+
+  (** [kw_by raw] selects [by] keyword *)
+  let kw_by = Cst_support.is_keyword Kw_by
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_ordering_term raw] selects [ordering_term] node *)
+  let n_ordering_term = Cst_support.is_node N_ordering_term
+end
+
+(** CST for frame_spec *)
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword

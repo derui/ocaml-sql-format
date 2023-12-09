@@ -193,6 +193,19 @@ and format_window_defn () =
   in
   Sp.hovbox p
 
+and format_order_by_clause () =
+  let open M.Let_syntax in
+  let module O = C.Order_by_clause in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.keyword O.kw_order ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+        let* _ = Sp.keyword O.kw_by ~trailing:Sp.nonbreak in
+        let* _ = Sp.node O.n_ordering_term format_ordering_term in
+        let* _ = Sp.leaf O.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+        M.return ())
+  in
+  Sp.hvbox p
+
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
