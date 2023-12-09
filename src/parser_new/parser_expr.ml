@@ -16,6 +16,8 @@ include (
 
       val over_clause : Type.parser
 
+      val order_by_clause : Type.parser
+
       val select_stmt : Type.parser
     end
 
@@ -69,7 +71,8 @@ include (
           let exprs =
             let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
             let* () = expr' () in
-            M.many (M.bump_when T.Tok_comma *> expr' ()) *> M.skip
+            let* _ = M.many (M.bump_when T.Tok_comma *> expr' ()) in
+            S.order_by_clause () <|> M.skip
           in
           let* () = exprs <|> M.bump_when T.Op_star <|> M.skip in
           let* () = M.bump_when Tok_rparen in
@@ -206,6 +209,8 @@ include (
         let type_name = v Sql_syntax.Kind.N_type_name
 
         let over_clause = v Sql_syntax.Kind.N_over_clause
+
+        let order_by_clause = v Sql_syntax.Kind.N_order_by_clause
 
         let select_stmt = v Sql_syntax.Kind.N_select_stmt
       end) in

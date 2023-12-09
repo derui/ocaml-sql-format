@@ -120,6 +120,7 @@ let%expect_test "function" =
   Util.run "func()" p |> print_endline;
   Util.run "func(  *   )" p |> print_endline;
   Util.run "func(  distinct 1, 3 , 'a'   )" p |> print_endline;
+  Util.run "func(  distinct 1, 3 , 'a' order by 3 desc )" p |> print_endline;
   Util.run "func() filter (where 'data')" p |> print_endline;
   Util.run "func() over (partition by c)" p |> print_endline;
   Util.run "func() filter (where 'foo') over (partition by c)" p |> print_endline;
@@ -130,6 +131,7 @@ let%expect_test "function" =
     func()
     func( * )
     func( distinct 1, 3 , 'a' )
+    func( distinct 1, 3 , 'a' order by 3 desc )
     func() filter (where 'data')
     func() over (partition by c)
     func() filter (where 'foo') over (partition by c) |}]
