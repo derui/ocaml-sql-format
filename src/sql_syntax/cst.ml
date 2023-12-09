@@ -16,10 +16,10 @@ module Sql_stmt = struct
   module T = Types.Token
 
   (** [kw_explain raw] selects [explain] *)
-  let kw_explain = Cst_support.is_keyword Types.Keyword.Kw_explain
+  let kw_explain = Cst_support.is_keyword Kw_explain
 
   (** [kw_analyze raw] selects [analyze] *)
-  let kw_analyze = Cst_support.is_keyword Types.Keyword.Kw_analyze
+  let kw_analyze = Cst_support.is_keyword Kw_analyze
 
   (** [n_select_stmt raw] selects [select_stmt] *)
   let n_select_stmt = Cst_support.is_node N_select_stmt
@@ -42,44 +42,38 @@ end
 
 (** CST for begin_stmt *)
 module Begin_stmt = struct
-  module K = Types.Keyword
-
   (** [kw_begin raw] selects keyword [begin] *)
-  let kw_begin = Cst_support.is_keyword K.Kw_begin
+  let kw_begin = Cst_support.is_keyword Kw_begin
 
   (** [kw_transaction raw] selects keyword [transaction] *)
-  let kw_transaction = Cst_support.is_keyword K.Kw_transaction
+  let kw_transaction = Cst_support.is_keyword Kw_transaction
 end
 
 (** CST for rollback_stmt *)
 module Rollback_stmt = struct
-  module K = Types.Keyword
-
   (** [kw_rollback raw] selects keyword [rollback] *)
-  let kw_rollback = Cst_support.is_keyword K.Kw_rollback
+  let kw_rollback = Cst_support.is_keyword Kw_rollback
 
   (** [kw_transaction raw] selects keyword [transaction] *)
-  let kw_transaction = Cst_support.is_keyword K.Kw_transaction
+  let kw_transaction = Cst_support.is_keyword Kw_transaction
 end
 
 (** CST for select_stmt *)
 module Select_stmt = struct
-  module K = Types.Keyword
-
   (** [kw_distinct raw] selects keyword [distinct] *)
-  let kw_distinct = Cst_support.is_keyword K.Kw_distinct
+  let kw_distinct = Cst_support.is_keyword Kw_distinct
 
   (** [kw_union raw] selects keyword [union] *)
-  let kw_union = Cst_support.is_keyword K.Kw_union
+  let kw_union = Cst_support.is_keyword Kw_union
 
   (** [kw_all raw] selects keyword [all] *)
-  let kw_all = Cst_support.is_keyword K.Kw_all
+  let kw_all = Cst_support.is_keyword Kw_all
 
   (** [kw_intersect raw] selects keyword [intersect] *)
-  let kw_intersect = Cst_support.is_keyword K.Kw_intersect
+  let kw_intersect = Cst_support.is_keyword Kw_intersect
 
   (** [kw_except raw] selects keyword [except] *)
-  let kw_except = Cst_support.is_keyword K.Kw_except
+  let kw_except = Cst_support.is_keyword Kw_except
 
   (** [n_with_clause raw] selects [with_clause] *)
   let n_with_clause = Cst_support.is_node N_with_clause
@@ -90,13 +84,11 @@ end
 
 (** CST for with_clause *)
 module With_clause = struct
-  module K = Types.Keyword
-
   (** [kw_with raw] selects keyword [with] *)
-  let kw_with = Cst_support.is_keyword K.Kw_with
+  let kw_with = Cst_support.is_keyword Kw_with
 
   (** [kw_recursive raw] selects keyword [recursive] *)
-  let kw_recursive = Cst_support.is_keyword K.Kw_recursive
+  let kw_recursive = Cst_support.is_keyword Kw_recursive
 
   (** [t_comma raw] selects keyword [comma] *)
   let t_comma = Cst_support.is_leaf L_comma
@@ -110,8 +102,6 @@ end
 
 (** CST for common_table_expression *)
 module Common_table_expression = struct
-  module K = Types.Keyword
-
   (** [t_ident raw] selects [ident] *)
   let t_ident = Cst_support.is_leaf L_ident
 
@@ -128,19 +118,17 @@ module Common_table_expression = struct
   let n_column_name_list = Cst_support.is_node N_column_name_list
 
   (** [kw_as raw] selects [as] keyword *)
-  let kw_as = Cst_support.is_keyword K.Kw_as
+  let kw_as = Cst_support.is_keyword Kw_as
 
   (** [kw_not raw] selects [not] keyword *)
-  let kw_not = Cst_support.is_keyword K.Kw_not
+  let kw_not = Cst_support.is_keyword Kw_not
 
   (** [kw_materialized raw] selects [materialized] keyword *)
-  let kw_materialized = Cst_support.is_keyword K.Kw_materialized
+  let kw_materialized = Cst_support.is_keyword Kw_materialized
 end
 
 (** CST for column_name_list *)
 module Column_name_list = struct
-  module K = Types.Keyword
-
   (** [t_comma raw] selects [comma] *)
   let t_comma = Cst_support.is_leaf L_comma
 
@@ -150,8 +138,6 @@ end
 
 (** CST for select_core *)
 module Select_core = struct
-  module K = Types.Keyword
-
   (** [n_result_column_list raw] selects [result_column_list] *)
   let n_result_column_list = Cst_support.is_node N_result_column_list
 
@@ -173,8 +159,6 @@ end
 
 (** CST for result_column_list *)
 module Result_column_list = struct
-  module K = Types.Keyword
-
   (** [t_comma raw] selects [comma] *)
   let t_comma = Cst_support.is_leaf L_comma
 
@@ -184,8 +168,6 @@ end
 
 (** CST for result_column *)
 module Result_column = struct
-  module K = Types.Keyword
-
   (** [n_alias] selects [result_column_alias] node *)
   let n_alias = Cst_support.is_node N_result_column_alias
 
@@ -198,8 +180,6 @@ end
 
 (** CST for result_column_alias *)
 module Result_column_alias = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] node *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -212,8 +192,6 @@ end
 
 (** CST for result_column_table_name *)
 module Result_column_table_name = struct
-  module K = Types.Keyword
-
   (** [t_period raw] selects [period] *)
   let t_period = Cst_support.is_leaf L_period
 
@@ -226,8 +204,6 @@ end
 
 (** CST for type_name *)
 module Type_name = struct
-  module K = Types.Keyword
-
   (** [t_ident raw] selects [ident] *)
   let t_ident = Cst_support.is_leaf L_ident
 
@@ -393,8 +369,6 @@ end
 
 (** CST for expr *)
 module Expr = struct
-  module K = Types.Keyword
-
   (** [t_qmark raw] selects [qmark] *)
   let t_qmark = Cst_support.is_leaf L_qmark
 
@@ -408,22 +382,22 @@ module Expr = struct
   let t_blob = Cst_support.is_leaf L_blob
 
   (** [kw_null raw] selects [null] keyword *)
-  let kw_null = Cst_support.is_keyword K.Kw_null
+  let kw_null = Cst_support.is_keyword Kw_null
 
   (** [kw_true raw] selects [true] keyword *)
-  let kw_true = Cst_support.is_keyword K.Kw_true
+  let kw_true = Cst_support.is_keyword Kw_true
 
   (** [kw_false raw] selects [false] keyword *)
-  let kw_false = Cst_support.is_keyword K.Kw_false
+  let kw_false = Cst_support.is_keyword Kw_false
 
   (** [kw_current_time raw] selects [current_time] keyword *)
-  let kw_current_time = Cst_support.is_keyword K.Kw_current_time
+  let kw_current_time = Cst_support.is_keyword Kw_current_time
 
   (** [kw_current_date raw] selects [current_date] keyword *)
-  let kw_current_date = Cst_support.is_keyword K.Kw_current_date
+  let kw_current_date = Cst_support.is_keyword Kw_current_date
 
   (** [kw_current_timestamp raw] selects [current_timestamp] keyword *)
-  let kw_current_timestamp = Cst_support.is_keyword K.Kw_current_timestamp
+  let kw_current_timestamp = Cst_support.is_keyword Kw_current_timestamp
 
   (** [n_expr_name] selects [N_expr_name] node *)
   let n_expr_name = Cst_support.is_node N_expr_name
@@ -469,8 +443,6 @@ module Expr = struct
 end
 
 module Expr_name = struct
-  module K = Types.Keyword
-
   (** [t_period raw] selects [period] *)
   let t_period = Cst_support.is_leaf L_period
 
@@ -479,8 +451,6 @@ module Expr_name = struct
 end
 
 module Expr_unary = struct
-  module K = Types.Keyword
-
   (** [t_minus raw] selects [minus] *)
   let t_minus = Cst_support.is_leaf L_minus
 
@@ -499,8 +469,6 @@ end
 
 (** CST for expr_cast *)
 module Expr_cast = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -522,8 +490,6 @@ end
 
 (** CST for expr_function *)
 module Expr_function = struct
-  module K = Types.Keyword
-
   (** [kw_distinct raw] selects [distinct] *)
   let kw_distinct = Cst_support.is_keyword Kw_distinct
 
@@ -560,8 +526,6 @@ end
 
 (** CST for expr_collate *)
 module Expr_collate = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -574,8 +538,6 @@ end
 
 (** CST for expr_like *)
 module Expr_like = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -591,8 +553,6 @@ end
 
 (** CST for expr_glob *)
 module Expr_glob = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -605,8 +565,6 @@ end
 
 (** CST for expr_in *)
 module Expr_in = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -631,8 +589,6 @@ end
 
 (** CST for expr_between *)
 module Expr_between = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -648,8 +604,6 @@ end
 
 (** CST for expr_regexp *)
 module Expr_regexp = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -662,8 +616,6 @@ end
 
 (** CST for expr_match *)
 module Expr_match = struct
-  module K = Types.Keyword
-
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 
@@ -675,3 +627,21 @@ module Expr_match = struct
 end
 
 (** CST for expr_is *)
+module Expr_is = struct
+  (** [kw_not raw] selects [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_is raw] selects [is] *)
+  let kw_is = Cst_support.is_keyword Kw_is
+
+  (** [kw_distinct raw] selects [distinct] *)
+  let kw_distinct = Cst_support.is_keyword Kw_distinct
+
+  (** [kw_from raw] selects [from] *)
+  let kw_from = Cst_support.is_keyword Kw_from
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for expr_exists *)

@@ -402,6 +402,17 @@ and format_expr_match () =
       let* _ = Sp.node E.n_expr format_expr in
       M.return ())
 
+and format_expr_is () =
+  let open M.Let_syntax in
+  let module E = C.Expr_is in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword E.kw_is ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword E.kw_not ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword E.kw_distinct ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword E.kw_from ~trailing:Sp.nonbreak in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
+
 and format_select_core () =
   let module S = C.Select_core in
   (* TODO implement *)
