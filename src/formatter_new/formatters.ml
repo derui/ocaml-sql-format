@@ -216,6 +216,24 @@ and format_expr_cast () =
       let* _ = Sp.leaf E.t_rparen in
       M.return ())
 
+and format_expr_function () =
+  let open M.Let_syntax in
+  let module E = C.Expr_function in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.leaf E.t_ident in
+        let* _ = Sp.leaf E.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.leaf E.kw_distinct ~trailing:Sp.nonbreak in
+        let* _ = Sp.node E.n_expr format_expr in
+        let* _ = Sp.leaf E.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.leaf E.t_rparen in
+        let* _ = Sp.node E.n_filter_clause format_filter_clause in
+        let* _ = Sp.node E.n_over_clause format_over_clause in
+        let* _ = Sp.node E.n_order_by_clause format_order_by_clause in
+        M.return ())
+  in
+  Sp.hvbox p
+
 and format_expr_collate () =
   let open M.Let_syntax in
   let module E = C.Expr_collate in

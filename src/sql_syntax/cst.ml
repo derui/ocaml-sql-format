@@ -406,6 +406,15 @@ module Expr_function = struct
 
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
+
+  (** [n_order_by_clause raw] selects [order_by_clause] *)
+  let n_order_by_clause = Cst_support.is_node N_order_by_clause
+
+  (** [n_filter_clause raw] selects [filter_clause] *)
+  let n_filter_clause = Cst_support.is_node N_filter_clause
+
+  (** [n_over_clause raw] selects [over_clause] *)
+  let n_over_clause = Cst_support.is_node N_over_clause
 end
 
 (** CST for expr_collate *)
