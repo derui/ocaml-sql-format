@@ -268,6 +268,18 @@ module Filter_clause = struct
   let t_rparen = Cst_support.is_leaf L_rparen
 end
 
+(** CST for over_clause *)
+module Over_clause = struct
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [kw_over raw] select [over] keyword *)
+  let kw_over = Cst_support.is_keyword Kw_over
+
+  (** [n_window_defn raw] select [window_defn] node *)
+  let n_window_defn = Cst_support.is_node N_window_defn
+end
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword
