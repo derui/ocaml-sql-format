@@ -177,6 +177,22 @@ and format_over_clause () =
   in
   Sp.hovbox p
 
+and format_window_defn () =
+  let open M.Let_syntax in
+  let module W = C.Window_defn in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.leaf W.t_ident in
+        let* _ = Sp.keyword W.kw_partition ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak in
+        let* _ = Sp.keyword W.kw_by ~trailing:Sp.nonbreak in
+        let* _ = Sp.leaf W.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.node W.n_expr format_expr in
+        let* _ = Sp.node W.n_order_by_clause format_order_by_clause in
+        let* _ = Sp.node W.n_frame_spec format_frame_spec in
+        M.return ())
+  in
+  Sp.hovbox p
+
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in

@@ -280,6 +280,30 @@ module Over_clause = struct
   let n_window_defn = Cst_support.is_node N_window_defn
 end
 
+(** CST for window_defn *)
+module Window_defn = struct
+  (** [kw_partition raw] selects [partition] keyword *)
+  let kw_partition = Cst_support.is_keyword Kw_partition
+
+  (** [kw_by raw] selects [by] keyword *)
+  let kw_by = Cst_support.is_keyword Kw_by
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [n_expr raw] selects [expr] node *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [n_order_by_clause raw] selects [order_by_clause] node *)
+  let n_order_by_clause = Cst_support.is_node N_order_by_clause
+
+  (** [n_frame_spec raw] selects [frame_spec] node *)
+  let n_frame_spec = Cst_support.is_node N_frame_spec
+end
+
 (** CST for expr *)
 module Expr = struct
   module K = Types.Keyword
