@@ -535,3 +535,18 @@ and format_table_or_subquery_table_name () =
       let* _ = Sp.leaf T.t_period in
       let* _ = Sp.keyword T.kw_as ~trailing:Sp.nonbreak ~leading:Sp.nonbreak in
       M.return ())
+
+and format_table_or_subquery_table_function () =
+  let open M.Let_syntax in
+  let module T = C.Table_or_subquery_table_function in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.leaf T.t_ident in
+        let* _ = Sp.leaf T.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.node T.n_expr format_expr in
+        let* _ = Sp.leaf T.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.leaf T.t_rparen ~leading:(Sp.cut ()) in
+        let* _ = Sp.keyword T.kw_as ~trailing:Sp.nonbreak ~leading:Sp.nonbreak in
+        M.return ())
+  in
+  Sp.hvbox p

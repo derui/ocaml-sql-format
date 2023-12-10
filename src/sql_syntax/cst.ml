@@ -775,8 +775,8 @@ end
 
 (** CST for table_or_subquery_table_function *)
 module Table_or_subquery_table_function = struct
-  (** [t_period raw] selects [period] *)
-  let t_period = Cst_support.is_leaf L_period
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
 
   (** [t_ident raw] selects [ident] *)
   let t_ident = Cst_support.is_leaf L_ident
@@ -789,4 +789,7 @@ module Table_or_subquery_table_function = struct
 
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
+
+  (** [kw_as raw] selects [as] keyword *)
+  let kw_as = Cst_support.is_keyword Kw_as
 end
