@@ -2,35 +2,38 @@ include (
   struct
     module M = Parser_monad.Monad
     open M.Syntax
-    open M.Let_syntax
     module K = Sql_syntax.Kind
     module T = Types.Token
     module Kw = Types.Keyword
 
-    let ident =
-      M.bump_match (function
-        | T.Tok_ident _ -> true
-        | _ -> false)
+    module type D = sig
+      val join_clause : Type.parser
 
-    let rec parse expr join_clause () =
-      let name_base =
-        let alias = (M.bump_kw Kw.Kw_as <|> M.skip) *> ident <|> M.skip in
-        let* () = ident *> M.bump_when T.Tok_period <|> M.skip in
-        let name = ident *> alias in
+      val table_name : Type.parser
 
-        let fname =
-          let expr_list = M.skip >>= expr >>= fun () -> M.many (M.bump_when Tok_comma >>= expr) in
-          ident *> Wrapping.parens expr_list *> alias
+      val table_function : Type.parser
+    end
+
+    module P (D : D) = struct
+      let rec parse () =
+        let p =
+          let name = D.table_name () in
+          let fname = D.table_function () in
+          fname <|> name
+          <|> (M.skip >>= fun _ -> Wrapping.parens (parse ()) *> M.skip)
+          <|> (M.skip >>= fun _ -> Wrapping.parens (D.join_clause ()))
         in
-        fname <|> name
-      in
-      M.start_syntax K.N_table_or_subquery @@ name_base
-      <|> (M.skip >>= fun _ -> Wrapping.parens (parse expr join_clause ()) *> M.skip)
-      <|> (M.skip >>= fun _ -> Wrapping.parens (join_clause ()))
+        M.start_syntax K.N_table_or_subquery p
+    end
 
     let generate taker () =
-      let expr = taker Sql_syntax.Kind.N_expr in
-      let join_clause = taker Sql_syntax.Kind.N_join_clause in
-      parse expr join_clause ()
+      let module P = P (struct
+        let join_clause = taker Sql_syntax.Kind.N_join_clause
+
+        let table_name = taker Sql_syntax.Kind.N_table_or_subquery_table_name
+
+        let table_function = taker Sql_syntax.Kind.N_table_or_subquery_table_function
+      end) in
+      P.parse ()
   end :
     Intf.GEN)

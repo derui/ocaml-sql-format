@@ -739,3 +739,27 @@ module From_clause = struct
   (** [n_join_clause raw] selects [join_clause] *)
   let n_join_clause = Cst_support.is_node N_join_clause
 end
+
+(** CST for table_or_subquery *)
+module Table_or_subquery = struct
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [n_table_name raw] selects [table_name] *)
+  let n_table_name = Cst_support.is_node N_table_or_subquery_table_name
+
+  (** [n_table_function raw] selects [table_function] *)
+  let n_table_function = Cst_support.is_node N_table_or_subquery_table_function
+
+  (** [n_select_stmt raw] selects [select_stmt] *)
+  let n_select_stmt = Cst_support.is_node N_select_stmt
+
+  (** [n_join_clause raw] selects [join_clause] *)
+  let n_join_clause = Cst_support.is_node N_join_clause
+end

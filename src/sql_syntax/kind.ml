@@ -24,6 +24,8 @@ type node =
   | N_select_core
   | N_from_clause
   | N_table_or_subquery
+  | N_table_or_subquery_table_name
+  | N_table_or_subquery_table_function
   | N_join_clause
   | N_where_clause
   | N_group_by_clause
