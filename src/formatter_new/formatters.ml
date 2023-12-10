@@ -54,6 +54,10 @@ and format_select_stmt () =
     Sp.iter (fun () ->
         let* _ = Sp.node S.n_with_clause format_with_clause in
         let* _ = Sp.node S.n_select_core format_select_core in
+        let* _ = Sp.keyword S.kw_all ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_union ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_intersect ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_except ~trailing:(Sp.cut ()) in
         M.return ())
   in
   Sp.vbox m

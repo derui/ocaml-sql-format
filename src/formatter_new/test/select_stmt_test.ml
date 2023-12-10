@@ -1,4 +1,3 @@
-(** test for sql formatting *)
 module O = Formatter_new.Options
 
 let options = { O.default with keyword_case = `upper }
@@ -27,3 +26,19 @@ let%expect_test "simple select" =
          a
      FROM
          "long table name" |}]
+
+let%expect_test "union" =
+  Util.run ~options {|
+  SELECT  * from "some_table name" union select t.b from "table" t
+|};
+  [%expect
+    {|
+    SELECT
+        *
+    FROM
+        "some_table name"
+    UNION
+    SELECT
+        t.b
+    FROM
+        "table" t |}]
