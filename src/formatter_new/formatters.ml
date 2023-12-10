@@ -490,3 +490,11 @@ and format_group_by_clause () =
     Sp.cut ()
   in
   Sp.hvbox p
+
+and format_having_clause () =
+  let open M.Let_syntax in
+  let module H = C.Having_clause in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword H.kw_having ~trailing:(Sp.cut ~indentation:true ()) in
+      let* _ = Sp.node H.n_expr format_expr in
+      M.return ())
