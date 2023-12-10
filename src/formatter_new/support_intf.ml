@@ -7,6 +7,11 @@ module Type = struct
 end
 
 module type S = sig
+  module Condition : sig
+    (** [contains selector] returns boolean that the raw of selector is contained current or not. *)
+    val contains : Type.selector -> bool M.t
+  end
+
   (** [iter f] iterates all layouts in [raw]. If [raw] is not [R.Node], do not anything. *)
   val iter : (unit -> unit M.t) -> unit M.t
 

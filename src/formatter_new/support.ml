@@ -12,6 +12,18 @@ include (
 
     let trivia pp tr = Fmt.pf pp "%s" @@ Tr.to_string tr
 
+    module Condition = struct
+      let contains sel =
+        let* raw = current in
+        let contains raw = sel raw |> Option.is_some in
+        let contained =
+          match raw with
+          | R.Leaf _ -> contains raw
+          | R.Node { layouts; _ } -> List.exists contains layouts
+        in
+        return contained
+    end
+
     let iter f =
       let* raw = current in
       match raw with
