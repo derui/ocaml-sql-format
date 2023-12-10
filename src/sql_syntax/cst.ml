@@ -760,3 +760,33 @@ module Table_or_subquery = struct
   (** [n_join_clause raw] selects [join_clause] *)
   let n_join_clause = Cst_support.is_node N_join_clause
 end
+
+(** CST for table_or_subquery_table_name *)
+module Table_or_subquery_table_name = struct
+  (** [t_period raw] selects [period] *)
+  let t_period = Cst_support.is_leaf L_period
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [kw_as raw] selects [as] keyword *)
+  let kw_as = Cst_support.is_keyword Kw_as
+end
+
+(** CST for table_or_subquery_table_function *)
+module Table_or_subquery_table_function = struct
+  (** [t_period raw] selects [period] *)
+  let t_period = Cst_support.is_leaf L_period
+
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end

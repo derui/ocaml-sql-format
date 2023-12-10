@@ -526,3 +526,12 @@ and format_table_or_subquery () =
         M.return ())
   in
   Sp.vbox p
+
+and format_table_or_subquery_table_name () =
+  let open M.Let_syntax in
+  let module T = C.Table_or_subquery_table_name in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf T.t_ident in
+      let* _ = Sp.leaf T.t_period in
+      let* _ = Sp.keyword T.kw_as ~trailing:Sp.nonbreak ~leading:Sp.nonbreak in
+      M.return ())
