@@ -796,6 +796,42 @@ end
 
 (** CST for join_clause *)
 module Join_clause = struct
+  (** [n_table_or_subquery raw] selects [table_or_subquery] *)
+  let n_table_or_subquery = Cst_support.is_node N_table_or_subquery
+
+  (** [n_join_constraint raw] selects [join_constraint] *)
+  let n_join_constraint = Cst_support.is_node N_join_constraint
+
+  (** [n_join_operator raw] selects [join_operator] *)
+  let n_join_operator = Cst_support.is_node N_join_operator
+end
+
+(** CST for join_constraint *)
+module Join_constraint = struct
+  (** [kw_on raw] selects [on] *)
+  let kw_on = Cst_support.is_keyword Kw_on
+
+  (** [kw_using raw] selects [using] *)
+  let kw_using = Cst_support.is_keyword Kw_using
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [n_column_name_list raw] selects [column_name_list] *)
+  let n_column_name_list = Cst_support.is_node N_column_name_list
+end
+
+(** CST for join_operator *)
+module Join_operator = struct
   (** [kw_join raw] selects [join] *)
   let kw_join = Cst_support.is_keyword Kw_join
 
@@ -805,29 +841,18 @@ module Join_clause = struct
   (** [kw_left raw] selects [left] *)
   let kw_left = Cst_support.is_keyword Kw_left
 
+  (** [kw_right raw] selects [right] *)
+  let kw_right = Cst_support.is_keyword Kw_right
+
+  (** [kw_full raw] selects [full] *)
+  let kw_full = Cst_support.is_keyword Kw_full
+
   (** [kw_outer raw] selects [outer] *)
   let kw_outer = Cst_support.is_keyword Kw_outer
-
-  (** [kw_inner raw] selects [inner] *)
-  let kw_inner = Cst_support.is_keyword Kw_inner
 
   (** [kw_cross raw] selects [cross] *)
   let kw_cross = Cst_support.is_keyword Kw_cross
 
-  (** [kw_using raw] selects [using] *)
-  let kw_using = Cst_support.is_keyword Kw_using
-
-  (** [kw_on raw] selects [on] *)
-  let kw_on = Cst_support.is_keyword Kw_on
-
-  (** [t_comma raw] selects [comma] *)
-  let t_comma = Cst_support.is_leaf L_comma
-
-  (** [n_table_or_subquery raw] selects [table_or_subquery] *)
-  let n_table_or_subquery = Cst_support.is_node N_table_or_subquery
-
-  (** [n_join_constraint raw] selects [join_constraint] *)
-  let n_join_constraint = Cst_support.is_node N_join_constraint
+  (** [kw_inner raw] selects [inner] *)
+  let kw_inner = Cst_support.is_keyword Kw_inner
 end
-
-(** CST for join_constraint *)

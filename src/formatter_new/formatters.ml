@@ -550,3 +550,12 @@ and format_table_or_subquery_table_function () =
         M.return ())
   in
   Sp.hvbox p
+
+and format_join_clause () =
+  let open M.Let_syntax in
+  let module J = C.Join_clause in
+  Sp.iter (fun () ->
+      let* _ = Sp.node J.n_table_or_subquery format_table_or_subquery in
+      let* _ = Sp.node J.n_join_operator format_join_operator in
+      let* _ = Sp.node J.n_join_constraint format_join_constraint in
+      M.return ())
