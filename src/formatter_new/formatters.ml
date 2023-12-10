@@ -474,3 +474,19 @@ and format_where_clause () =
       let* _ = Sp.keyword W.kw_where ~trailing:(Sp.cut ~indentation:true ()) in
       let* _ = Sp.node W.n_expr format_expr in
       M.return ())
+
+and format_group_by_clause () =
+  let open M.Let_syntax in
+  let module G = C.Group_by_clause in
+  let p =
+    let* _ =
+      Sp.iter (fun () ->
+          let* _ = Sp.keyword G.kw_group ~trailing:Sp.nonbreak in
+          let* _ = Sp.keyword G.kw_by ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.node G.n_expr format_expr in
+          let* _ = Sp.leaf G.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+          M.return ())
+    in
+    Sp.cut ()
+  in
+  Sp.hvbox p
