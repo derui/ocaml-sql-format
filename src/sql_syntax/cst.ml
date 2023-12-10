@@ -757,9 +757,6 @@ module Table_or_subquery = struct
   (** [n_table_function raw] selects [table_function] *)
   let n_table_function = Cst_support.is_node N_table_or_subquery_table_function
 
-  (** [n_select_stmt raw] selects [select_stmt] *)
-  let n_select_stmt = Cst_support.is_node N_select_stmt
-
   (** [n_join_clause raw] selects [join_clause] *)
   let n_join_clause = Cst_support.is_node N_join_clause
 end

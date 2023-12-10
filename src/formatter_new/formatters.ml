@@ -514,3 +514,15 @@ and format_from_clause () =
     Sp.cut ()
   in
   Sp.hvbox p
+
+and format_table_or_subquery () =
+  let open M.Let_syntax in
+  let module T = C.Table_or_subquery in
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.node T.n_table_name format_table_or_subquery_table_name in
+        let* _ = Sp.node T.n_table_function format_table_or_subquery_table_function in
+        let* _ = Sp.node T.n_join_clause format_join_clause in
+        M.return ())
+  in
+  Sp.vbox p
