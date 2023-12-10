@@ -498,3 +498,19 @@ and format_having_clause () =
       let* _ = Sp.keyword H.kw_having ~trailing:(Sp.cut ~indentation:true ()) in
       let* _ = Sp.node H.n_expr format_expr in
       M.return ())
+
+and format_from_clause () =
+  let open M.Let_syntax in
+  let module F = C.From_clause in
+  let p =
+    let* _ =
+      Sp.iter (fun () ->
+          let* _ = Sp.keyword F.kw_from ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.node F.n_table_or_subquery format_table_or_subquery in
+          let* _ = Sp.leaf F.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.node F.n_join_clause format_join_clause in
+          M.return ())
+    in
+    Sp.cut ()
+  in
+  Sp.hvbox p
