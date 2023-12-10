@@ -466,3 +466,11 @@ and format_select_core () =
         M.return ())
   in
   Sp.vbox p
+
+and format_where_clause () =
+  let open M.Let_syntax in
+  let module W = C.Where_clause in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword W.kw_where ~trailing:(Sp.cut ~indentation:true ()) in
+      let* _ = Sp.node W.n_expr format_expr in
+      M.return ())

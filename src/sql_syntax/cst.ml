@@ -691,3 +691,51 @@ module Expr_case = struct
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
 end
+
+(** CST for where_clause *)
+module Where_clause = struct
+  (** [kw_where raw] selects [where] *)
+  let kw_where = Cst_support.is_keyword Kw_where
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for group_by_clause *)
+module Group_by_clause = struct
+  (** [kw_group raw] selects [group] *)
+  let kw_group = Cst_support.is_keyword Kw_group
+
+  (** [kw_by raw] selects [by] *)
+  let kw_by = Cst_support.is_keyword Kw_by
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for having_clause *)
+module Having_clause = struct
+  (** [kw_having raw] selects [having] *)
+  let kw_having = Cst_support.is_keyword Kw_having
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for from_clause *)
+module From_clause = struct
+  (** [kw_from raw] selects [from] *)
+  let kw_from = Cst_support.is_keyword Kw_from
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_table_or_subquery raw] selects [table_or_subquery] *)
+  let n_table_or_subquery = Cst_support.is_node N_table_or_subquery
+
+  (** [n_join_clause raw] selects [join_clause] *)
+  let n_join_clause = Cst_support.is_node N_join_clause
+end
