@@ -28,7 +28,7 @@ and format_sql_stmt () =
         let* _ = Sp.node C.Sql_stmt.n_begin_stmt format_begin_stmt in
         let* _ = Sp.node C.Sql_stmt.n_rollback_stmt format_rollback_stmt in
         let* _ = Sp.node C.Sql_stmt.n_select_stmt format_select_stmt in
-        let* _ = Sp.node C.Sql_stmt.n_create_index_stmt format_create_index_stmt in
+        (* let* _ = Sp.node C.Sql_stmt.n_create_index_stmt format_create_index_stmt in *)
         M.return ())
   in
   Sp.vbox m
@@ -505,15 +505,20 @@ and format_from_clause () =
   let p =
     let* _ =
       Sp.iter (fun () ->
-          let* _ = Sp.keyword F.kw_from ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.keyword F.kw_from ~leading:(Sp.cut ()) ~trailing:(Sp.cut ~indentation:true ()) in
+          M.return ())
+    in
+    let p' =
+      Sp.iter (fun () ->
           let* _ = Sp.node F.n_table_or_subquery format_table_or_subquery in
           let* _ = Sp.leaf F.t_comma ~trailing:(Sp.cut ~indentation:true ()) in
           let* _ = Sp.node F.n_join_clause format_join_clause in
           M.return ())
     in
+    let* _ = Sp.hvbox p' in
     Sp.cut ()
   in
-  Sp.hvbox p
+  p
 
 and format_table_or_subquery () =
   let open M.Let_syntax in

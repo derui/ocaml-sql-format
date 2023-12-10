@@ -83,5 +83,9 @@ include (
               | _ -> false)
             t.trivias
       }
+
+    let show _ = to_string
+
+    let pp _ fmt t = Format.fprintf fmt "%s" (to_string t)
   end :
     Trivia_intf.S)

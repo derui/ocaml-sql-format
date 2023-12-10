@@ -13,6 +13,7 @@ include (
           ; leading : Trivia.leading Trivia.t
           ; token : Token.t
           }
+    [@@deriving show]
 
     let make_leaf ?(trailing = Trivia.trailing []) ?(leading = Trivia.leading []) token =
       Leaf { kind = Kind.token_to_leaf token; trailing; leading; token }

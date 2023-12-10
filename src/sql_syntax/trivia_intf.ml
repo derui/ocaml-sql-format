@@ -7,16 +7,21 @@ module Type = struct
     | Tr_newline of int (* force newline with indent. *)
     | Tr_line_comment of string (* line comment. With force newline *)
     | Tr_block_comment of string (* a block comment. without force newline. This variant is just used as space *)
+  [@@deriving show]
 
   type leading
 
   type trailing
+
+  let pp_leading _ _ = ()
+
+  let pp_trailing _ _ = ()
 end
 
 module type S = sig
   include module type of Type
 
-  type 'a t
+  type 'a t [@@deriving show]
 
   (** [trailing tokens] make [trailing] trivia *)
   val trailing : Token.t list -> trailing t

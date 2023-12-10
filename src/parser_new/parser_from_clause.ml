@@ -15,11 +15,14 @@ include (
 
     module P (D : Data) = struct
       let parse () =
-        let* () = M.bump_kw Kw.Kw_from in
-        let table_or_subquery =
-          Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.table_or_subquery) *> M.skip
+        let p =
+          let* () = M.bump_kw Kw.Kw_from in
+          let table_or_subquery =
+            Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) (M.skip >>= D.table_or_subquery) *> M.skip
+          in
+          M.skip >>= D.join_clause <|> table_or_subquery
         in
-        M.skip >>= D.join_clause <|> table_or_subquery
+        M.start_syntax K.N_from_clause p
     end
 
     let generate taker () =

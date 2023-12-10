@@ -859,3 +859,42 @@ module Join_operator = struct
   (** [kw_inner raw] selects [inner] *)
   let kw_inner = Cst_support.is_keyword Kw_inner
 end
+
+(** CST for create_index_stmt *)
+module Create_index_stmt = struct
+  (** [kw_create raw] selects keyword [create] *)
+  let kw_create = Cst_support.is_keyword Kw_create
+
+  (** [kw_index raw] selects keyword [index] *)
+  let kw_index = Cst_support.is_keyword Kw_index
+
+  (** [kw_if raw] selects keyword [if] *)
+  let kw_if = Cst_support.is_keyword Kw_if
+
+  (** [kw_not raw] selects keyword [not] *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [kw_exists raw] selects [exists] keyword *)
+  let kw_exists = Cst_support.is_keyword Kw_exists
+
+  (** [kw_unique raw] selects [unique] keyword *)
+  let kw_unique = Cst_support.is_keyword Kw_unique
+
+  (** [kw_on raw] selects [on] keyword *)
+  let kw_on = Cst_support.is_keyword Kw_on
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_indexed_column raw] selects [indexed_column] *)
+  let n_indexed_column = Cst_support.is_node N_indexed_column
+
+  (** [n_where_clause raw] selects [where_clause] *)
+  let n_where_clause = Cst_support.is_node N_where_clause
+end

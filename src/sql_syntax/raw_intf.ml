@@ -15,6 +15,7 @@ module type S = sig
         ; leading : Trivia.leading Trivia.t
         ; token : Token.t
         }
+  [@@deriving show]
 
   (** [make_leaf ~leading ~trailing token] make a new leaf data. If trivias not given, use empty trivia as default *)
   val make_leaf : ?trailing:Trivia.trailing Trivia.t -> ?leading:Trivia.leading Trivia.t -> Token.t -> t
