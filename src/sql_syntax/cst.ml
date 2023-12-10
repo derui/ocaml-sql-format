@@ -823,11 +823,11 @@ module Join_constraint = struct
   (** [t_comma raw] selects [comma] *)
   let t_comma = Cst_support.is_leaf L_comma
 
+  (** [t_ident raw] selects [ident] *)
+  let t_ident = Cst_support.is_leaf L_ident
+
   (** [n_expr raw] selects [expr] *)
   let n_expr = Cst_support.is_node N_expr
-
-  (** [n_column_name_list raw] selects [column_name_list] *)
-  let n_column_name_list = Cst_support.is_node N_column_name_list
 end
 
 (** CST for join_operator *)

@@ -576,3 +576,22 @@ and format_join_operator () =
       let* _ = Sp.keyword J.kw_outer ~trailing:Sp.nonbreak in
       let* _ = Sp.keyword J.kw_join ~trailing:Sp.nonbreak in
       M.return ())
+
+and format_join_constraint () =
+  let open M.Let_syntax in
+  let module J = C.Join_constraint in
+  let p =
+    let* _ =
+      Sp.iter (fun () ->
+          let* _ = Sp.keyword J.kw_on ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.node J.n_expr format_expr in
+          let* _ = Sp.keyword J.kw_using ~trailing:Sp.nonbreak in
+          let* _ = Sp.leaf J.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
+          let* _ = Sp.leaf J.t_ident in
+          let* _ = Sp.leaf J.t_comma ~trailing:(Sp.sp ()) in
+          let* _ = Sp.leaf J.t_rparen in
+          M.return ())
+    in
+    Sp.cut ()
+  in
+  Sp.hvbox p
