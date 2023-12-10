@@ -832,6 +832,9 @@ end
 
 (** CST for join_operator *)
 module Join_operator = struct
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
   (** [kw_join raw] selects [join] *)
   let kw_join = Cst_support.is_keyword Kw_join
 

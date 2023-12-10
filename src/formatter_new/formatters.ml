@@ -559,3 +559,20 @@ and format_join_clause () =
       let* _ = Sp.node J.n_join_operator format_join_operator in
       let* _ = Sp.node J.n_join_constraint format_join_constraint in
       M.return ())
+
+and format_join_operator () =
+  let open M.Let_syntax in
+  let module J = C.Join_operator in
+  let* natural_head = Sp.Condition.contains J.kw_natural in
+  let leading_after_natural = if natural_head then None else Some (Sp.cut ()) in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword J.t_comma ~leading:(Sp.cut ()) in
+      let* _ = Sp.keyword J.kw_cross ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_natural ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_left ?leading:leading_after_natural ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_right ?leading:leading_after_natural ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_full ?leading:leading_after_natural ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_inner ?leading:leading_after_natural ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_outer ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword J.kw_join ~trailing:Sp.nonbreak in
+      M.return ())
