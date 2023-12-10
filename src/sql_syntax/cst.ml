@@ -793,3 +793,41 @@ module Table_or_subquery_table_function = struct
   (** [kw_as raw] selects [as] keyword *)
   let kw_as = Cst_support.is_keyword Kw_as
 end
+
+(** CST for join_clause *)
+module Join_clause = struct
+  (** [kw_join raw] selects [join] *)
+  let kw_join = Cst_support.is_keyword Kw_join
+
+  (** [kw_natural raw] selects [natural] *)
+  let kw_natural = Cst_support.is_keyword Kw_natural
+
+  (** [kw_left raw] selects [left] *)
+  let kw_left = Cst_support.is_keyword Kw_left
+
+  (** [kw_outer raw] selects [outer] *)
+  let kw_outer = Cst_support.is_keyword Kw_outer
+
+  (** [kw_inner raw] selects [inner] *)
+  let kw_inner = Cst_support.is_keyword Kw_inner
+
+  (** [kw_cross raw] selects [cross] *)
+  let kw_cross = Cst_support.is_keyword Kw_cross
+
+  (** [kw_using raw] selects [using] *)
+  let kw_using = Cst_support.is_keyword Kw_using
+
+  (** [kw_on raw] selects [on] *)
+  let kw_on = Cst_support.is_keyword Kw_on
+
+  (** [t_comma raw] selects [comma] *)
+  let t_comma = Cst_support.is_leaf L_comma
+
+  (** [n_table_or_subquery raw] selects [table_or_subquery] *)
+  let n_table_or_subquery = Cst_support.is_node N_table_or_subquery
+
+  (** [n_join_constraint raw] selects [join_constraint] *)
+  let n_join_constraint = Cst_support.is_node N_join_constraint
+end
+
+(** CST for join_constraint *)

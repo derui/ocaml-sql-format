@@ -27,6 +27,8 @@ type node =
   | N_table_or_subquery_table_name
   | N_table_or_subquery_table_function
   | N_join_clause
+  | N_join_operator
+  | N_join_constraint
   | N_where_clause
   | N_group_by_clause
   | N_having_clause
