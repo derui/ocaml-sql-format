@@ -104,10 +104,13 @@ and format_result_column_list () =
   let open M.Let_syntax in
   let module S = C.Result_column_list in
   let m =
-    Sp.iter (fun () ->
-        let* _ = Sp.leaf ~trailing:(Sp.cut ()) S.t_comma in
-        let* _ = Sp.node S.n_result_column format_result_column in
-        M.return ())
+    let* _ =
+      Sp.iter (fun () ->
+          let* _ = Sp.leaf ~trailing:(Sp.cut ()) S.t_comma in
+          let* _ = Sp.node S.n_result_column format_result_column in
+          M.return ())
+    in
+    Sp.cut ()
   in
   Sp.hvbox m
 
@@ -443,9 +446,23 @@ and format_expr_case () =
   Sp.hvbox p
 
 and format_select_core () =
+  let open M.Let_syntax in
   let module S = C.Select_core in
-  (* TODO implement *)
-  let m = Sp.iter (fun () -> M.return ()) in
-  Sp.vbox m
-
-and format_create_index_stmt () = M.return ()
+  let p =
+    let* distinct_contained = Sp.Condition.contains S.kw_distinct in
+    let* all_contained = Sp.Condition.contains S.kw_all in
+    Sp.iter (fun () ->
+        let* _ =
+          if distinct_contained || all_contained then Sp.keyword S.kw_select ~trailing:Sp.nonbreak
+          else Sp.keyword S.kw_select ~trailing:(Sp.cut ~indentation:true ())
+        in
+        let* _ = Sp.keyword S.kw_distinct ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.keyword S.kw_all ~trailing:(Sp.cut ~indentation:true ()) in
+        let* _ = Sp.node S.n_result_column_list format_result_column_list in
+        let* _ = Sp.node S.n_from_clause format_from_clause in
+        let* _ = Sp.node S.n_where_clause format_where_clause in
+        let* _ = Sp.node S.n_group_by_clause format_group_by_clause in
+        let* _ = Sp.node S.n_having_clause format_having_clause in
+        M.return ())
+  in
+  Sp.vbox p

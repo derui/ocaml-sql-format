@@ -138,6 +138,15 @@ end
 
 (** CST for select_core *)
 module Select_core = struct
+  (** [kw_select raw] selects [select] keyword *)
+  let kw_select = Cst_support.is_keyword Kw_select
+
+  (** [kw_distinct raw] selects [distinct] keyword *)
+  let kw_distinct = Cst_support.is_keyword Kw_distinct
+
+  (** [kw_all raw] selects [all] keyword *)
+  let kw_all = Cst_support.is_keyword Kw_all
+
   (** [n_result_column_list raw] selects [result_column_list] *)
   let n_result_column_list = Cst_support.is_node N_result_column_list
 
