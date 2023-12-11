@@ -28,6 +28,7 @@ include (
       let* raw = current in
       match raw with
       | R.Node { layouts; _ } ->
+        (* TODO should be hidden implementation detail of layouts *)
         List.fold_right
           (fun x acc ->
             let* () = acc in

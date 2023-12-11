@@ -244,19 +244,10 @@ and format_ordering_term () =
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
-  (* TODO implement *)
   let m =
     Sp.iter (fun () ->
-        let* _ = Sp.leaf E.t_qmark in
-        let* _ = Sp.leaf E.t_string in
-        let* _ = Sp.leaf E.t_numeric in
-        let* _ = Sp.leaf E.t_blob in
-        let* _ = Sp.keyword E.kw_null in
-        let* _ = Sp.keyword E.kw_true in
-        let* _ = Sp.keyword E.kw_false in
-        let* _ = Sp.keyword E.kw_current_date in
-        let* _ = Sp.keyword E.kw_current_time in
-        let* _ = Sp.keyword E.kw_current_timestamp in
+        let* _ = Sp.node E.n_bind_parameter format_expr_bind_parameter in
+        let* _ = Sp.node E.n_expr_literal format_expr_literal in
         let* _ = Sp.node E.n_expr_name format_expr_name in
         let* _ = Sp.node E.n_expr_unary format_expr_unary in
         let* _ = Sp.node E.n_expr_function format_expr_function in
@@ -274,6 +265,28 @@ and format_expr () =
         M.return ())
   in
   Sp.vbox m
+
+and format_expr_bind_parameter () =
+  let open M.Let_syntax in
+  let module E = C.Expr_bind_parameter in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf E.t_qmark in
+      M.return ())
+
+and format_expr_literal () =
+  let open M.Let_syntax in
+  let module E = C.Expr_literal in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf E.t_string in
+      let* _ = Sp.leaf E.t_numeric in
+      let* _ = Sp.leaf E.t_blob in
+      let* _ = Sp.keyword E.kw_null in
+      let* _ = Sp.keyword E.kw_true in
+      let* _ = Sp.keyword E.kw_false in
+      let* _ = Sp.keyword E.kw_current_date in
+      let* _ = Sp.keyword E.kw_current_time in
+      let* _ = Sp.keyword E.kw_current_timestamp in
+      M.return ())
 
 and format_expr_name () =
   let open M.Let_syntax in
@@ -374,12 +387,13 @@ and format_expr_between () =
   let open M.Let_syntax in
   let module E = C.Expr_between in
   let p =
+    let* c = M.current in
+    print_endline @@ Sql_syntax.Raw.show c;
     Sp.iter (fun () ->
         let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
         let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_between in
         let* _ = Sp.node E.n_expr format_expr in
         let* _ = Sp.keyword ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.kw_and in
-        let* _ = Sp.node E.n_expr format_expr in
         M.return ())
   in
   Sp.hvbox p
@@ -468,7 +482,7 @@ and format_where_clause () =
   let open M.Let_syntax in
   let module W = C.Where_clause in
   Sp.iter (fun () ->
-      let* _ = Sp.keyword W.kw_where ~trailing:(Sp.cut ~indentation:true ()) in
+      let* _ = Sp.keyword W.kw_where ~leading:(Sp.cut ()) ~trailing:(Sp.cut ~indentation:true ()) in
       let* _ = Sp.node W.n_expr format_expr in
       M.return ())
 

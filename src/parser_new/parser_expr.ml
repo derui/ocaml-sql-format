@@ -22,7 +22,7 @@ include (
     end
 
     module V (S : Param) = struct
-      let literal_value = S.literal_value
+      let literal_value () = M.start_syntax N_expr_literal @@ S.literal_value ()
 
       let ident =
         M.bump_match (function
@@ -37,7 +37,7 @@ include (
         in
         M.start_syntax K.N_expr_name p
 
-      let bind_parameter = M.bump_when T.Tok_qmark
+      let bind_parameter = M.start_syntax N_expr_bind_parameter @@ M.bump_when T.Tok_qmark
 
       let rec expr () = M.start_syntax K.N_expr (expr' ())
 

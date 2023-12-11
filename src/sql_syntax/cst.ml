@@ -373,18 +373,15 @@ module Frame_spec = struct
   let n_expr = Cst_support.is_node N_expr
 end
 
-(** CST for expr *)
-module Expr = struct
-  (** [t_qmark raw] selects [qmark] *)
-  let t_qmark = Cst_support.is_leaf L_qmark
-
-  (** [t_string raw] selects [Tok_string] *)
+(** CST for expr_literal *)
+module Expr_literal = struct
+  (** [t_string raw] selects [string] *)
   let t_string = Cst_support.is_leaf L_string
 
-  (** [t_numeric raw] selects [Tok_numeric] *)
+  (** [t_numeric raw] selects [numeric] *)
   let t_numeric = Cst_support.is_leaf L_numeric
 
-  (** [t_blob raw] selects [Tok_blob] *)
+  (** [t_blob raw] selects [blob] *)
   let t_blob = Cst_support.is_leaf L_blob
 
   (** [kw_null raw] selects [null] keyword *)
@@ -404,6 +401,20 @@ module Expr = struct
 
   (** [kw_current_timestamp raw] selects [current_timestamp] keyword *)
   let kw_current_timestamp = Cst_support.is_keyword Kw_current_timestamp
+end
+
+module Expr_bind_parameter = struct
+  (** [t_qmark raw] selects [qmark] *)
+  let t_qmark = Cst_support.is_leaf L_qmark
+end
+
+(** CST for expr *)
+module Expr = struct
+  (** [n_bind_parameter raw] selects [bind_parameter] *)
+  let n_bind_parameter = Cst_support.is_node N_expr_bind_parameter
+
+  (** [n_expr_literal] selects [N_expr_literal] node *)
+  let n_expr_literal = Cst_support.is_node N_expr_literal
 
   (** [n_expr_name] selects [N_expr_name] node *)
   let n_expr_name = Cst_support.is_node N_expr_name

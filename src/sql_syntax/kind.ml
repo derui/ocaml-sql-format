@@ -2,6 +2,8 @@
 type node =
   | N_expr
   | N_expr_function
+  | N_expr_literal
+  | N_expr_bind_parameter
   | N_expr_name
   | N_expr_cast
   | N_filter_clause
