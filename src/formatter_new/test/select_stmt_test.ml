@@ -42,3 +42,19 @@ let%expect_test "union" =
         t.b
     FROM
         "table" t |}]
+
+let%expect_test "with clause" =
+  Util.run ~options
+    {|
+with a as (select 1 from b),
+"abc" (e) as (select 2 from c),
+foo (e, b, f) as (select 3 from d)
+select * from a, "abc", foo
+                     |};
+  [%expect {||}];
+
+  Util.run ~options {|
+with recursive a as (select 1 from b)
+select a.* from a
+                     |};
+  [%expect {||}]

@@ -12,7 +12,10 @@ include (
           | _ -> false)
 
       let parse () =
-        let p = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) ident in
+        let p =
+          let p' = Subparser.nonempty_list ~sep:(M.bump_when T.Tok_comma) ident in
+          Wrapping.parens p'
+        in
         M.start_syntax K.N_column_name_list p
     end
 

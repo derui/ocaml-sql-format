@@ -95,9 +95,6 @@ module With_clause = struct
 
   (** [n_common_table_expression raw] selects [common_table_expression] *)
   let n_common_table_expression = Cst_support.is_node N_common_table_expression
-
-  (** [n_select_stmt raw] selects [select_stmt] *)
-  let n_select_stmt = Cst_support.is_node N_select_stmt
 end
 
 (** CST for common_table_expression *)
@@ -134,6 +131,12 @@ module Column_name_list = struct
 
   (** [t_ident raw] selects [ident] *)
   let t_ident = Cst_support.is_leaf L_ident
+
+  (** [t_lparen raw] selects [lparen] *)
+  let t_lparen = Cst_support.is_leaf L_lparen
+
+  (** [t_rparen raw] selects [rparen] *)
+  let t_rparen = Cst_support.is_leaf L_rparen
 end
 
 (** CST for select_core *)

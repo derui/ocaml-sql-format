@@ -70,7 +70,6 @@ and format_with_clause () =
         let* _ = Sp.keyword W.kw_with in
         let* _ = Sp.keyword ~leading:Sp.nonbreak W.kw_recursive in
         let* _ = Sp.node W.n_common_table_expression format_common_table_expression in
-        let* _ = Sp.leaf ~leading:Sp.nonbreak W.kw_recursive in
         let* _ = Sp.leaf ~trailing:(Sp.cut ()) ~leading:(Sp.cut ()) W.t_comma in
         M.return ())
   in
@@ -84,7 +83,7 @@ and format_common_table_expression () =
         let* _ = Sp.leaf C.t_ident in
         let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
         let* _ = Sp.node C.n_column_name_list format_column_name_list in
-        let* _ = Sp.leaf ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak C.t_rparen in
+        let* _ = Sp.leaf C.t_rparen in
         let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_as in
         let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_not in
         let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_materialized in
@@ -96,13 +95,12 @@ and format_common_table_expression () =
 and format_column_name_list () =
   let open M.Let_syntax in
   let module C = C.Column_name_list in
-  let m =
-    Sp.iter (fun () ->
-        let* _ = Sp.leaf C.t_ident in
-        let* _ = Sp.leaf ~trailing:(Sp.cut ()) C.t_comma in
-        M.return ())
-  in
-  Sp.vbox m
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf C.t_ident in
+      let* _ = Sp.leaf ~trailing:(Sp.cut ()) C.t_comma in
+      let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
+      let* _ = Sp.leaf ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak C.t_rparen in
+      M.return ())
 
 and format_result_column_list () =
   let open M.Let_syntax in

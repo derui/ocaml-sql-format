@@ -22,7 +22,7 @@ include (
       let parse () =
         let p =
           let* () = ident in
-          let columns = Wrapping.parens (D.column_name_list ()) in
+          let columns = D.column_name_list () in
           let* _ = columns <|> M.skip in
           let* () = M.bump_kw Kw.Kw_as in
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
