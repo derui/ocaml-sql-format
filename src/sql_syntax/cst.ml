@@ -131,12 +131,6 @@ module Column_name_list = struct
 
   (** [t_ident raw] selects [ident] *)
   let t_ident = Cst_support.is_leaf L_ident
-
-  (** [t_lparen raw] selects [lparen] *)
-  let t_lparen = Cst_support.is_leaf L_lparen
-
-  (** [t_rparen raw] selects [rparen] *)
-  let t_rparen = Cst_support.is_leaf L_rparen
 end
 
 (** CST for select_core *)

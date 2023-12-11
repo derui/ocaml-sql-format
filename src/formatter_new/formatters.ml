@@ -55,9 +55,9 @@ and format_select_stmt () =
         let* _ = Sp.node S.n_with_clause format_with_clause in
         let* _ = Sp.node S.n_select_core format_select_core in
         let* _ = Sp.keyword S.kw_all ~trailing:(Sp.cut ()) in
-        let* _ = Sp.keyword S.kw_union ~trailing:(Sp.cut ()) in
-        let* _ = Sp.keyword S.kw_intersect ~trailing:(Sp.cut ()) in
-        let* _ = Sp.keyword S.kw_except ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_union ~leading:(Sp.cut ()) ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_intersect ~leading:(Sp.cut ()) ~trailing:(Sp.cut ()) in
+        let* _ = Sp.keyword S.kw_except ~leading:(Sp.cut ()) ~trailing:(Sp.cut ()) in
         M.return ())
   in
   Sp.vbox m
@@ -78,41 +78,36 @@ and format_with_clause () =
 and format_common_table_expression () =
   let open M.Let_syntax in
   let module C = C.Common_table_expression in
-  let m =
-    Sp.iter (fun () ->
-        let* _ = Sp.leaf C.t_ident in
-        let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
-        let* _ = Sp.node C.n_column_name_list format_column_name_list in
-        let* _ = Sp.leaf C.t_rparen in
-        let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_as in
-        let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_not in
-        let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_materialized in
-        let* _ = Sp.node C.n_select_stmt format_select_stmt in
-        M.return ())
-  in
-  Sp.vbox m
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf C.t_ident in
+      let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
+      let* _ = Sp.node C.n_column_name_list format_column_name_list in
+      let* _ = Sp.leaf ~leading:(Sp.cut ()) C.t_rparen in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_as in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_not in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_materialized in
+      let* _ = Sp.node C.n_select_stmt format_select_stmt in
+      M.return ())
 
 and format_column_name_list () =
   let open M.Let_syntax in
   let module C = C.Column_name_list in
-  Sp.iter (fun () ->
-      let* _ = Sp.leaf C.t_ident in
-      let* _ = Sp.leaf ~trailing:(Sp.cut ()) C.t_comma in
-      let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
-      let* _ = Sp.leaf ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak C.t_rparen in
-      M.return ())
+  let m =
+    Sp.iter (fun () ->
+        let* _ = Sp.leaf C.t_ident in
+        let* _ = Sp.leaf ~trailing:(Sp.cut ()) C.t_comma in
+        M.return ())
+  in
+  Sp.hvbox m
 
 and format_result_column_list () =
   let open M.Let_syntax in
   let module S = C.Result_column_list in
   let m =
-    let* _ =
-      Sp.iter (fun () ->
-          let* _ = Sp.leaf ~trailing:(Sp.cut ()) S.t_comma in
-          let* _ = Sp.node S.n_result_column format_result_column in
-          M.return ())
-    in
-    Sp.cut ()
+    Sp.iter (fun () ->
+        let* _ = Sp.leaf ~trailing:(Sp.cut ()) S.t_comma in
+        let* _ = Sp.node S.n_result_column format_result_column in
+        M.return ())
   in
   Sp.hvbox m
 
@@ -517,8 +512,7 @@ and format_from_clause () =
           let* _ = Sp.node F.n_join_clause format_join_clause in
           M.return ())
     in
-    let* _ = Sp.hvbox p' in
-    Sp.cut ()
+    Sp.hvbox p'
   in
   p
 

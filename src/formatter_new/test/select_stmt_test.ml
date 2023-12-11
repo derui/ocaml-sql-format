@@ -51,10 +51,52 @@ with a as (select 1 from b),
 foo (e, b, f) as (select 3 from d)
 select * from a, "abc", foo
                      |};
-  [%expect {||}];
+  [%expect
+    {|
+    WITH a AS  (
+        SELECT
+             1
+         FROM
+             b
+    )
+    ,
+
+    "abc" (
+        e
+    ) AS  (
+        SELECT
+             2
+         FROM
+             c
+    )
+    ,
+
+    foo (
+        e, b, f
+    ) AS  (
+        SELECT
+             3
+         FROM
+             d
+    )
+    SELECT
+          *
+      FROM
+          a "abc" foo |}];
 
   Util.run ~options {|
 with recursive a as (select 1 from b)
 select a.* from a
                      |};
-  [%expect {||}]
+  [%expect
+    {|
+    WITH  RECURSIVE a AS  (
+        SELECT
+             1
+         FROM
+             b
+    )
+    SELECT
+          a.*
+      FROM
+          a |}]
