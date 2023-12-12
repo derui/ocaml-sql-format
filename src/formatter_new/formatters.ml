@@ -244,27 +244,62 @@ and format_ordering_term () =
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
-  let m =
-    Sp.iter (fun () ->
-        let* _ = Sp.node E.n_bind_parameter format_expr_bind_parameter in
-        let* _ = Sp.node E.n_expr_literal format_expr_literal in
-        let* _ = Sp.node E.n_expr_name format_expr_name in
-        let* _ = Sp.node E.n_expr_unary format_expr_unary in
-        let* _ = Sp.node E.n_expr_function format_expr_function in
-        let* _ = Sp.node E.n_expr_cast format_expr_cast in
-        let* _ = Sp.node E.n_expr_collate format_expr_collate in
-        let* _ = Sp.node E.n_expr_like format_expr_like in
-        let* _ = Sp.node E.n_expr_in format_expr_in in
-        let* _ = Sp.node E.n_expr_between format_expr_between in
-        let* _ = Sp.node E.n_expr_glob format_expr_glob in
-        let* _ = Sp.node E.n_expr_regexp format_expr_regexp in
-        let* _ = Sp.node E.n_expr_match format_expr_match in
-        let* _ = Sp.node E.n_expr_is format_expr_is in
-        let* _ = Sp.node E.n_expr_exists format_expr_exists in
-        let* _ = Sp.node E.n_expr_case format_expr_case in
-        M.return ())
-  in
-  Sp.vbox m
+  Sp.iter (fun () ->
+      let* _ = Sp.node E.n_bind_parameter format_expr_bind_parameter in
+      let* _ = Sp.node E.n_expr_literal format_expr_literal in
+      let* _ = Sp.node E.n_expr_name format_expr_name in
+      let* _ = Sp.node E.n_expr_unary format_expr_unary in
+      let* _ = Sp.node E.n_expr_function format_expr_function in
+      let* _ = Sp.node E.n_expr_cast format_expr_cast in
+      let* _ = Sp.node E.n_expr_collate format_expr_collate in
+      let* _ = Sp.node E.n_expr_like format_expr_like in
+      let* _ = Sp.node E.n_expr_in format_expr_in in
+      let* _ = Sp.node E.n_expr_between format_expr_between in
+      let* _ = Sp.node E.n_expr_glob format_expr_glob in
+      let* _ = Sp.node E.n_expr_regexp format_expr_regexp in
+      let* _ = Sp.node E.n_expr_match format_expr_match in
+      let* _ = Sp.node E.n_expr_is format_expr_is in
+      let* _ = Sp.node E.n_expr_exists format_expr_exists in
+      let* _ = Sp.node E.n_expr_case format_expr_case in
+      let* _ = Sp.node E.n_expr_logical_op format_expr_logical_op in
+      let* _ = Sp.node E.n_expr_binary_op format_expr_binary_op in
+      M.return ())
+
+and format_expr_logical_op () =
+  let open M.Let_syntax in
+  let module E = C.Expr_logical_op in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_and in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_or in
+      let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
+      M.return ())
+
+and format_expr_binary_op () =
+  let open M.Let_syntax in
+  let module E = C.Expr_binary_op in
+  Sp.iter (fun () ->
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_plus in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_minus in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_star in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_slash in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_modulo in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_lt in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_le in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_gt in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_ge in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_eq in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_eq2 in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_ne in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_ne2 in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_amp in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_pipe in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_lshift in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_rshift in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_concat in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_extract in
+      let* _ = Sp.leaf ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.t_extract_2 in
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
 
 and format_expr_bind_parameter () =
   let open M.Let_syntax in
@@ -451,15 +486,39 @@ and format_expr_case () =
   let module E = C.Expr_case in
   let p =
     Sp.iter (fun () ->
-        let* _ = Sp.keyword E.kw_case ~trailing:Sp.nonbreak in
         let* _ = Sp.node E.n_expr format_expr in
-        let* _ = Sp.keyword E.kw_when ~leading:(Sp.cut ()) ~trailing:(Sp.sp ()) in
-        let* _ = Sp.keyword E.kw_then ~leading:(Sp.sp ()) ~trailing:(Sp.sp ()) in
-        let* _ = Sp.keyword E.kw_else ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
+        let* _ = Sp.node E.n_expr_case_when format_expr_case_when in
+        let* _ = Sp.node E.n_expr_case_case format_expr_case_case in
+        let* _ = Sp.node E.n_expr_case_else format_expr_case_else in
         let* _ = Sp.keyword E.kw_end ~leading:(Sp.cut ()) in
         M.return ())
   in
   Sp.hvbox p
+
+and format_expr_case_when () =
+  let open M.Let_syntax in
+  let module E = C.Expr_case_when in
+  Sp.iter (fun () ->
+      let* _ = Sp.keyword E.kw_when ~trailing:Sp.nonbreak in
+      let* _ = Sp.node E.n_expr format_expr in
+      let* _ = Sp.keyword E.kw_then ~trailing:Sp.nonbreak in
+      M.return ())
+
+and format_expr_case_case () =
+  let open M.Let_syntax in
+  let module E = C.Expr_case_case in
+  Sp.iter (fun () ->
+      let* _ = Sp.node E.n_expr format_expr in
+      let* _ = Sp.keyword E.kw_case ~trailing:Sp.nonbreak in
+      M.return ())
+
+and format_expr_case_else () =
+  let open M.Let_syntax in
+  let module E = C.Expr_case_else in
+  Sp.iter (fun () ->
+      let* _ = Sp.node E.n_expr format_expr in
+      let* _ = Sp.keyword E.kw_else ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
+      M.return ())
 
 and format_select_core () =
   let open M.Let_syntax in
@@ -468,10 +527,8 @@ and format_select_core () =
     let* distinct_contained = Sp.Condition.contains S.kw_distinct in
     let* all_contained = Sp.Condition.contains S.kw_all in
     Sp.iter (fun () ->
-        let* _ =
-          if distinct_contained || all_contained then Sp.keyword S.kw_select ~trailing:Sp.nonbreak
-          else Sp.keyword S.kw_select ~trailing:(Sp.cut ~indentation:true ())
-        in
+        let trailing = if distinct_contained || all_contained then Sp.nonbreak else Sp.cut ~indentation:true () in
+        let* _ = Sp.keyword S.kw_select ~trailing in
         let* _ = Sp.keyword S.kw_distinct ~trailing:(Sp.cut ~indentation:true ()) in
         let* _ = Sp.keyword S.kw_all ~trailing:(Sp.cut ~indentation:true ()) in
         let* _ = Sp.node S.n_result_column_list format_result_column_list in

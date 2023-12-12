@@ -50,7 +50,7 @@ include (
         <|> literal_value () <|> bind_parameter <|> name
 
       and binary_operator () =
-        let as_op op = M.start_syntax K.N_expr_binary_op (M.bump_when op >>= expr') in
+        let as_op op = M.start_syntax K.N_expr_binary_op (M.bump_when op >>= expr) in
         let as_logical_op kw = M.start_syntax K.N_expr_logical_op (M.bump_kw kw >>= expr') in
         let tier_1 = as_op Op_extract <|> as_op Op_extract_2 <|> as_op Op_concat in
         let tier_2 = as_op Op_star <|> as_op Op_slash <|> as_op Op_modulo in
@@ -189,17 +189,27 @@ include (
 
       and case () =
         let p =
+          let case =
+            let p =
+              let* () = M.bump_kw Kw.Kw_case in
+              M.skip >>= expr <|> M.skip
+            in
+            M.start_syntax K.N_expr_case_case p
+          in
           let when_ =
             let p =
-              let* () = M.bump_kw Kw.Kw_when >>= expr' in
-              M.bump_kw Kw.Kw_then >>= expr'
+              let* () = M.bump_kw Kw.Kw_when >>= expr in
+              M.bump_kw Kw.Kw_then >>= expr
             in
-            M.start_syntax K.N_expr_when p
+            M.start_syntax K.N_expr_case_when p
           in
-          let* () = M.bump_kw Kw.Kw_case in
-          let* () = M.skip >>= expr' <|> M.skip in
+          let else_ =
+            let p = M.bump_kw Kw.Kw_else >>= expr <|> M.skip in
+            M.start_syntax K.N_expr_case_else p
+          in
+          let* _ = case in
           let* _ = M.many1 when_ in
-          let* () = M.bump_kw Kw.Kw_else >>= expr' <|> M.skip in
+          let* _ = else_ in
           M.bump_kw Kw.Kw_end
         in
         M.start_syntax K.N_expr_case p

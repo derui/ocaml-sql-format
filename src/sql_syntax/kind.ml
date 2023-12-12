@@ -20,7 +20,9 @@ type node =
   | N_expr_between_predicand
   | N_expr_in
   | N_expr_case
-  | N_expr_when
+  | N_expr_case_when
+  | N_expr_case_case
+  | N_expr_case_else
   | N_expr_exists
   | N_expr_binary_op
   | N_expr_logical_op

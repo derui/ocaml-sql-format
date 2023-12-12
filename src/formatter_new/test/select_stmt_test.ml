@@ -109,4 +109,21 @@ let%expect_test "where" =
     FROM
         a
     WHERE
-        a BETWEEN  1  AND  b |}]
+        a BETWEEN  1  AND  b |}];
+
+  Util.run ~options ~debug:true
+    {|
+  select
+ case a * 10
+   when 15 then 11
+   when c then 12
+   else 13
+ end as v,
+  case a * 10
+  when 5 then 1
+ end as v
+
+from a
+                     |};
+
+  [%expect {||}]

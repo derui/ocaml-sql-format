@@ -457,6 +457,93 @@ module Expr = struct
 
   (** [n_expr_case] selects [N_expr_case] node *)
   let n_expr_case = Cst_support.is_node N_expr_case
+
+  (** [n_expr_logical_op] selects [N_expr_logical_op] node *)
+  let n_expr_logical_op = Cst_support.is_node N_expr_logical_op
+
+  (** [n_expr_binary_op] selects [N_expr_binary_op] node *)
+  let n_expr_binary_op = Cst_support.is_node N_expr_binary_op
+end
+
+(** CST for expr_logical_op *)
+module Expr_logical_op = struct
+  (** [kw_and raw] selects [and] keyword *)
+  let kw_and = Cst_support.is_keyword Kw_and
+
+  (** [kw_or raw] selects [or] keyword *)
+  let kw_or = Cst_support.is_keyword Kw_or
+
+  (** [kw_not raw] selects [not] keyword *)
+  let kw_not = Cst_support.is_keyword Kw_not
+
+  (** [n_expr raw] selects [expr] node *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for expr_binary_op *)
+module Expr_binary_op = struct
+  (** [n_expr] selects [expr] node *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [t_extract] selects [extract] *)
+  let t_extract = Cst_support.is_leaf L_extract
+
+  (** [t_extract_2] selects [extract_2] *)
+  let t_extract_2 = Cst_support.is_leaf L_extract_2
+
+  (** [t_concat] selects [concat] *)
+  let t_concat = Cst_support.is_leaf L_concat
+
+  (** [t_plus raw] selects [plus] *)
+  let t_plus = Cst_support.is_leaf L_plus
+
+  (** [t_minus raw] selects [minus] *)
+  let t_minus = Cst_support.is_leaf L_minus
+
+  (** [t_star raw] selects [star] *)
+  let t_star = Cst_support.is_leaf L_star
+
+  (** [t_slash raw] selects [slash] *)
+  let t_slash = Cst_support.is_leaf L_slash
+
+  (** [t_modulo raw] selects [modulo] *)
+  let t_modulo = Cst_support.is_leaf L_modulo
+
+  (** [t_lt raw] selects [lt] *)
+  let t_lt = Cst_support.is_leaf L_lt
+
+  (** [t_gt raw] selects [gt] *)
+  let t_gt = Cst_support.is_leaf L_gt
+
+  (** [t_le raw] selects [le] *)
+  let t_le = Cst_support.is_leaf L_le
+
+  (** [t_ge raw] selects [ge] *)
+  let t_ge = Cst_support.is_leaf L_ge
+
+  (** [t_eq raw] selects [eq] *)
+  let t_eq = Cst_support.is_leaf L_eq
+
+  (** [t_eq2 raw] selects [eq2] *)
+  let t_eq2 = Cst_support.is_leaf L_eq2
+
+  (** [t_ne raw] selects [ne] *)
+  let t_ne = Cst_support.is_leaf L_ne
+
+  (** [t_ne2 raw] selects [ne2] *)
+  let t_ne2 = Cst_support.is_leaf L_ne2
+
+  (** [t_amp raw] selects [amp] *)
+  let t_amp = Cst_support.is_leaf L_amp
+
+  (** [t_pipe raw] selects [pipe] *)
+  let t_pipe = Cst_support.is_leaf L_pipe
+
+  (** [t_lshift raw] selects [lshift] *)
+  let t_lshift = Cst_support.is_leaf L_lshift
+
+  (** [t_rshift raw] selects [rshift] *)
+  let t_rshift = Cst_support.is_leaf L_rshift
 end
 
 module Expr_name = struct
@@ -687,18 +774,45 @@ end
 
 (** CST for expr_case *)
 module Expr_case = struct
-  (** [kw_case raw] selects [case] *)
-  let kw_case = Cst_support.is_keyword Kw_case
-
   (** [kw_end raw] selects [end] *)
   let kw_end = Cst_support.is_keyword Kw_end
 
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+
+  (** [n_expr_case_when raw] selects [expr_case_when] *)
+  let n_expr_case_when = Cst_support.is_node N_expr_case_when
+
+  (** [n_expr_case_case raw] selects [expr_case_case] *)
+  let n_expr_case_case = Cst_support.is_node N_expr_case_case
+
+  (** [n_expr_case_else raw] selects [expr_case_else] *)
+  let n_expr_case_else = Cst_support.is_node N_expr_case_else
+end
+
+(** CST for expr_case_when *)
+module Expr_case_when = struct
   (** [kw_when raw] selects [when] *)
   let kw_when = Cst_support.is_keyword Kw_when
 
   (** [kw_then raw] selects [then] *)
   let kw_then = Cst_support.is_keyword Kw_then
 
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for expr_case_case *)
+module Expr_case_case = struct
+  (** [kw_case raw] selects [case] *)
+  let kw_case = Cst_support.is_keyword Kw_case
+
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
+end
+
+(** CST for expr_case_else *)
+module Expr_case_else = struct
   (** [kw_else raw] selects [else] *)
   let kw_else = Cst_support.is_keyword Kw_else
 
