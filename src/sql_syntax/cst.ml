@@ -606,8 +606,8 @@ end
 
 (** CST for expr_between *)
 module Expr_between = struct
-  (** [n_expr raw] selects [expr] *)
-  let n_expr = Cst_support.is_node N_expr
+  (** [n_expr_between_predicand raw] selects [expr_between_predicand] *)
+  let n_expr_between_predicand = Cst_support.is_node N_expr_between_predicand
 
   (** [kw_not raw] selects [not] *)
   let kw_not = Cst_support.is_keyword Kw_not
@@ -617,6 +617,12 @@ module Expr_between = struct
 
   (** [kw_and raw] selects [and] *)
   let kw_and = Cst_support.is_keyword Kw_and
+end
+
+(** CST for expr_between_predicand *)
+module Expr_between_predicand = struct
+  (** [n_expr raw] selects [expr] *)
+  let n_expr = Cst_support.is_node N_expr
 end
 
 (** CST for expr_regexp *)

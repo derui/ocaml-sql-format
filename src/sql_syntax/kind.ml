@@ -17,6 +17,7 @@ type node =
   | N_expr_match
   | N_expr_is
   | N_expr_between
+  | N_expr_between_predicand
   | N_expr_in
   | N_expr_case
   | N_expr_when

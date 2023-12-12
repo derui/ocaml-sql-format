@@ -387,16 +387,21 @@ and format_expr_between () =
   let open M.Let_syntax in
   let module E = C.Expr_between in
   let p =
-    let* c = M.current in
-    print_endline @@ Sql_syntax.Raw.show c;
     Sp.iter (fun () ->
         let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
         let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_between in
-        let* _ = Sp.node E.n_expr format_expr in
+        let* _ = Sp.node E.n_expr_between_predicand format_expr_between_predicand in
         let* _ = Sp.keyword ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.kw_and in
         M.return ())
   in
   Sp.hvbox p
+
+and format_expr_between_predicand () =
+  let open M.Let_syntax in
+  let module E = C.Expr_between_predicand in
+  Sp.iter (fun () ->
+      let* _ = Sp.node E.n_expr format_expr in
+      M.return ())
 
 and format_expr_regexp () =
   let open M.Let_syntax in

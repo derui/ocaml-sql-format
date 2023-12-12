@@ -151,9 +151,16 @@ include (
       and between () =
         let p =
           let* () = M.bump_kw Kw.Kw_not <|> M.skip in
-          M.bump_kw Kw.Kw_between >>= non_binary_expr >>= fun () -> M.bump_kw Kw.Kw_and >>= non_binary_expr
+          M.bump_kw Kw.Kw_between >>= between_predicand >>= fun () -> M.bump_kw Kw.Kw_and >>= between_predicand
         in
         M.start_syntax K.N_expr_between p
+
+      and between_predicand () =
+        let p =
+          (* TODO split expr into boolean expression and value expression  *)
+          M.start_syntax K.N_expr @@ non_binary_expr ()
+        in
+        M.start_syntax K.N_expr_between_predicand p
 
       and in_ () =
         let p =

@@ -100,3 +100,13 @@ select a.* from a
           a.*
       FROM
           a |}]
+
+let%expect_test "where" =
+  Util.run ~options {|  select * from a where a between 1 and b |};
+  [%expect {|
+    SELECT
+        *
+    FROM
+        a
+    WHERE
+        a BETWEEN  1  AND  b |}]
