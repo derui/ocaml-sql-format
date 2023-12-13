@@ -53,25 +53,25 @@ select * from a, "abc", foo
                      |};
   [%expect
     {|
-    WITHaAS (
+    WITH a AS (
         SELECT
             1
         FROM
             b
     )
     ,
-    "abc"(
+    "abc" (
         e
-    )AS (
+    ) AS (
         SELECT
             2
         FROM
             c
     )
     ,
-    foo(
+    foo (
         e,b,f
-    )AS (
+    ) AS (
         SELECT
             3
         FROM
@@ -87,7 +87,7 @@ select a.* from a
                      |};
   [%expect
     {|
-    WITH RECURSIVEaAS (
+    WITH RECURSIVE a AS (
         SELECT
             1
         FROM
@@ -105,7 +105,7 @@ let%expect_test "where" =
     FROM
         a
     WHERE
-        aBETWEEN 1 AND b |}];
+        a BETWEEN 1 AND b |}];
 
   Util.run ~options
     {|

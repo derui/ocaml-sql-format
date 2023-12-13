@@ -67,8 +67,8 @@ and format_with_clause () =
   let module W = C.With_clause in
   let m =
     Sp.iter (fun () ->
-        let* _ = Sp.keyword W.kw_with in
-        let* _ = Sp.keyword ~leading:Sp.nonbreak W.kw_recursive in
+        let* _ = Sp.keyword W.kw_with ~trailing:Sp.nonbreak in
+        let* _ = Sp.keyword ~trailing:Sp.nonbreak W.kw_recursive in
         let* _ = Sp.node W.n_common_table_expression format_common_table_expression in
         let* _ = Sp.leaf ~trailing:(Sp.cut ()) ~leading:(Sp.cut ()) W.t_comma in
         M.return ())
@@ -80,12 +80,12 @@ and format_common_table_expression () =
   let module C = C.Common_table_expression in
   Sp.iter (fun () ->
       let* _ = Sp.leaf C.t_ident in
-      let* _ = Sp.leaf ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
+      let* _ = Sp.leaf ~leading:Sp.nonbreak ~trailing:(Sp.cut ~indentation:true ()) C.t_lparen in
       let* _ = Sp.node C.n_column_name_list format_column_name_list in
       let* _ = Sp.leaf ~leading:(Sp.cut ()) C.t_rparen in
-      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_as in
-      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_not in
-      let* _ = Sp.keyword ~trailing:Sp.nonbreak C.kw_materialized in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak C.kw_as in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak C.kw_not in
+      let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak C.kw_materialized in
       let* _ = Sp.node C.n_select_stmt format_select_stmt in
       M.return ())
 
@@ -427,7 +427,7 @@ and format_expr_between () =
   let p =
     Sp.iter (fun () ->
         let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_not in
-        let* _ = Sp.keyword ~trailing:Sp.nonbreak E.kw_between in
+        let* _ = Sp.keyword ~leading:Sp.nonbreak ~trailing:Sp.nonbreak E.kw_between in
         let* _ = Sp.node E.n_expr_between_predicand format_expr_between_predicand in
         let* _ = Sp.keyword ~leading:(Sp.sp ()) ~trailing:Sp.nonbreak E.kw_and in
         M.return ())
