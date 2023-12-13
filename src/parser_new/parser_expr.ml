@@ -67,7 +67,11 @@ include (
 
       and function_ () =
         let p =
-          let* () = ident *> M.bump_when T.Tok_lparen in
+          let fname =
+            M.bump_kw Kw_count <|> M.bump_kw Kw_sum <|> M.bump_kw Kw_min <|> M.bump_kw Kw_max <|> M.bump_kw Kw_avg
+            <|> M.bump_kw Kw_every <|> M.bump_kw Kw_some <|> M.bump_kw Kw_any <|> ident
+          in
+          let* () = fname *> M.bump_when T.Tok_lparen in
           let exprs =
             let* () = M.bump_kw Kw.Kw_distinct <|> M.skip in
             let* () = expr' () in

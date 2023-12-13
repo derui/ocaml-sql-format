@@ -136,3 +136,21 @@ from a
         END AS v
     FROM
         a |}]
+
+let%expect_test "result columns" =
+  Util.run ~options
+    {| select
+ count() as v,
+ count(v) as v14,
+ sum(e) as v2,
+ avg(distinct e) as v3,
+ avg(distinct e) as v4,
+ min(e) as v5,
+ max(e) as v6,
+ every(e) as v7,
+ some(b.e) as v12,
+ any(e) as v13
+from a, b;
+                     |};
+
+  [%expect {||}]

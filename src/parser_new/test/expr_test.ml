@@ -124,6 +124,14 @@ let%expect_test "function" =
   Util.run "func() filter (where 'data')" p |> print_endline;
   Util.run "func() over (partition by c)" p |> print_endline;
   Util.run "func() filter (where 'foo') over (partition by c)" p |> print_endline;
+  Util.run "count(*)" p |> print_endline;
+  Util.run "sum(x)" p |> print_endline;
+  Util.run "avg(x)" p |> print_endline;
+  Util.run "min(x)" p |> print_endline;
+  Util.run "max(x)" p |> print_endline;
+  Util.run "every(x)" p |> print_endline;
+  Util.run "some(x)" p |> print_endline;
+  Util.run "any(x,y)" p |> print_endline;
   [%expect
     {|
     func(1)

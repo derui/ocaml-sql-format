@@ -362,6 +362,14 @@ and format_expr_function () =
   let module E = C.Expr_function in
   let p =
     Sp.iter (fun () ->
+        let* _ = Sp.keyword E.kw_avg in
+        let* _ = Sp.keyword E.kw_count in
+        let* _ = Sp.keyword E.kw_sum in
+        let* _ = Sp.keyword E.kw_min in
+        let* _ = Sp.keyword E.kw_max in
+        let* _ = Sp.keyword E.kw_every in
+        let* _ = Sp.keyword E.kw_some in
+        let* _ = Sp.keyword E.kw_any in
         let* _ = Sp.leaf E.t_ident in
         let* _ = Sp.leaf E.t_lparen ~trailing:(Sp.cut ~indentation:true ()) in
         let* _ = Sp.leaf E.kw_distinct ~trailing:Sp.nonbreak in

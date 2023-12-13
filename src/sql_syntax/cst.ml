@@ -626,6 +626,32 @@ module Expr_function = struct
 
   (** [n_over_clause raw] selects [over_clause] *)
   let n_over_clause = Cst_support.is_node N_over_clause
+
+  (* built-in function keywords *)
+
+  (** [kw_count raw] selects [count] *)
+  let kw_count = Cst_support.is_keyword Kw_count
+
+  (** [kw_avg raw] selects [avg] *)
+  let kw_avg = Cst_support.is_keyword Kw_avg
+
+  (** [kw_min raw] selects [min] *)
+  let kw_min = Cst_support.is_keyword Kw_min
+
+  (** [kw_max raw] selects [max] *)
+  let kw_max = Cst_support.is_keyword Kw_max
+
+  (** [kw_sum raw] selects [sum] *)
+  let kw_sum = Cst_support.is_keyword Kw_sum
+
+  (** [kw_every raw] selects [every] *)
+  let kw_every = Cst_support.is_keyword Kw_every
+
+  (** [kw_some raw] selects [some] *)
+  let kw_some = Cst_support.is_keyword Kw_some
+
+  (** [kw_any raw] selects [any] *)
+  let kw_any = Cst_support.is_keyword Kw_any
 end
 
 (** CST for expr_collate *)
