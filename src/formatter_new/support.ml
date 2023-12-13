@@ -10,7 +10,9 @@ include (
     open Monad
     open Let_syntax
 
-    let trivia pp tr = Fmt.pf pp "%s" @@ Tr.to_string tr
+    let trivia pp tr =
+      let tr = Tr.shrink tr in
+      Fmt.pf pp "%s" @@ Tr.to_string tr
 
     module Condition = struct
       let contains sel =
@@ -94,7 +96,9 @@ include (
 
       append @@ fun fmt _ -> Format.pp_print_break fmt 0 indent
 
-    let sp ?(sps = 1) () = append @@ fun fmt _ -> Format.pp_print_break fmt sps 0
+    let sp ?(sps = 1) () =
+      assert (sps > 0);
+      append @@ fun fmt _ -> Format.pp_print_break fmt sps 0
 
     let spi ?(sps = 1) ~indent () =
       assert (indent >= 0);
@@ -130,6 +134,6 @@ include (
         | false -> 0
       in
       let* ppf = with_new_ppf m in
-      append @@ Fmt.vbox ~indent ppf
+      append @@ Fmt.hovbox ~indent ppf
   end :
     Support_intf.S)

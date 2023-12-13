@@ -6,26 +6,26 @@ let%expect_test "simple select" =
   Util.run ~options "select 1";
   [%expect {|
     SELECT
-         1 |}];
+        1 |}];
 
   Util.run ~options "select *";
   [%expect {|
     SELECT
-         * |}];
+        * |}];
 
   Util.run ~options "select a from abc";
   [%expect {|
     SELECT
-         a
-     FROM
-         abc |}];
+        a
+    FROM
+        abc |}];
 
   Util.run ~options {|select a from "long table name"|};
   [%expect {|
     SELECT
-         a
-     FROM
-         "long table name" |}]
+        a
+    FROM
+        "long table name" |}]
 
 let%expect_test "union" =
   Util.run ~options {|
@@ -41,7 +41,7 @@ let%expect_test "union" =
     SELECT
         t.b
     FROM
-        "table" t |}]
+        "table"t |}]
 
 let%expect_test "with clause" =
   Util.run ~options
@@ -53,36 +53,33 @@ select * from a, "abc", foo
                      |};
   [%expect
     {|
-    WITH a AS  (
+    WITHaAS (
         SELECT
-             1
-         FROM
-             b
+            1
+        FROM
+            b
     )
     ,
-
-    "abc" (
+    "abc"(
         e
-    ) AS  (
+    )AS (
         SELECT
-             2
-         FROM
-             c
+            2
+        FROM
+            c
     )
     ,
-
-    foo (
-        e, b, f
-    ) AS  (
+    foo(
+        e,b,f
+    )AS (
         SELECT
-             3
-         FROM
-             d
-    )
-    SELECT
-          *
-      FROM
-          a "abc" foo |}];
+            3
+        FROM
+            d
+    )SELECT
+         *
+     FROM
+         a"abc"foo |}];
 
   Util.run ~options {|
 with recursive a as (select 1 from b)
@@ -90,16 +87,15 @@ select a.* from a
                      |};
   [%expect
     {|
-    WITH  RECURSIVE a AS  (
+    WITH RECURSIVEaAS (
         SELECT
-             1
-         FROM
-             b
-    )
-    SELECT
-          a.*
-      FROM
-          a |}]
+            1
+        FROM
+            b
+    )SELECT
+         a.*
+     FROM
+         a |}]
 
 let%expect_test "where" =
   Util.run ~options {|  select * from a where a between 1 and b |};
@@ -109,9 +105,9 @@ let%expect_test "where" =
     FROM
         a
     WHERE
-        a BETWEEN  1  AND  b |}];
+        aBETWEEN 1 AND b |}];
 
-  Util.run ~options ~debug:true
+  Util.run ~options
     {|
   select
  case a * 10
@@ -126,4 +122,16 @@ let%expect_test "where" =
 from a
                      |};
 
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        CASE a * 10
+        WHEN 15 THEN 11
+        WHEN c THEN 12
+        ELSE 13
+        END AS v,
+        CASE a * 10
+        WHEN 5 THEN 1
+        END AS v
+    FROM
+        a |}]

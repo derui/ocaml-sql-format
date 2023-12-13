@@ -244,26 +244,29 @@ and format_ordering_term () =
 and format_expr () =
   let open M.Let_syntax in
   let module E = C.Expr in
-  Sp.iter (fun () ->
-      let* _ = Sp.node E.n_bind_parameter format_expr_bind_parameter in
-      let* _ = Sp.node E.n_expr_literal format_expr_literal in
-      let* _ = Sp.node E.n_expr_name format_expr_name in
-      let* _ = Sp.node E.n_expr_unary format_expr_unary in
-      let* _ = Sp.node E.n_expr_function format_expr_function in
-      let* _ = Sp.node E.n_expr_cast format_expr_cast in
-      let* _ = Sp.node E.n_expr_collate format_expr_collate in
-      let* _ = Sp.node E.n_expr_like format_expr_like in
-      let* _ = Sp.node E.n_expr_in format_expr_in in
-      let* _ = Sp.node E.n_expr_between format_expr_between in
-      let* _ = Sp.node E.n_expr_glob format_expr_glob in
-      let* _ = Sp.node E.n_expr_regexp format_expr_regexp in
-      let* _ = Sp.node E.n_expr_match format_expr_match in
-      let* _ = Sp.node E.n_expr_is format_expr_is in
-      let* _ = Sp.node E.n_expr_exists format_expr_exists in
-      let* _ = Sp.node E.n_expr_case format_expr_case in
-      let* _ = Sp.node E.n_expr_logical_op format_expr_logical_op in
-      let* _ = Sp.node E.n_expr_binary_op format_expr_binary_op in
-      M.return ())
+  let p =
+    Sp.iter (fun () ->
+        let* _ = Sp.node E.n_bind_parameter format_expr_bind_parameter in
+        let* _ = Sp.node E.n_expr_literal format_expr_literal in
+        let* _ = Sp.node E.n_expr_name format_expr_name in
+        let* _ = Sp.node E.n_expr_unary format_expr_unary in
+        let* _ = Sp.node E.n_expr_function format_expr_function in
+        let* _ = Sp.node E.n_expr_cast format_expr_cast in
+        let* _ = Sp.node E.n_expr_collate format_expr_collate in
+        let* _ = Sp.node E.n_expr_like format_expr_like in
+        let* _ = Sp.node E.n_expr_in format_expr_in in
+        let* _ = Sp.node E.n_expr_between format_expr_between in
+        let* _ = Sp.node E.n_expr_glob format_expr_glob in
+        let* _ = Sp.node E.n_expr_regexp format_expr_regexp in
+        let* _ = Sp.node E.n_expr_match format_expr_match in
+        let* _ = Sp.node E.n_expr_is format_expr_is in
+        let* _ = Sp.node E.n_expr_exists format_expr_exists in
+        let* _ = Sp.node E.n_expr_case format_expr_case in
+        let* _ = Sp.node E.n_expr_logical_op format_expr_logical_op in
+        let* _ = Sp.node E.n_expr_binary_op format_expr_binary_op in
+        M.return ())
+  in
+  Sp.hovbox p
 
 and format_expr_logical_op () =
   let open M.Let_syntax in
@@ -493,15 +496,15 @@ and format_expr_case () =
         let* _ = Sp.keyword E.kw_end ~leading:(Sp.cut ()) in
         M.return ())
   in
-  Sp.hvbox p
+  Sp.vbox p
 
 and format_expr_case_when () =
   let open M.Let_syntax in
   let module E = C.Expr_case_when in
   Sp.iter (fun () ->
-      let* _ = Sp.keyword E.kw_when ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword E.kw_when ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
       let* _ = Sp.node E.n_expr format_expr in
-      let* _ = Sp.keyword E.kw_then ~trailing:Sp.nonbreak in
+      let* _ = Sp.keyword E.kw_then ~leading:Sp.nonbreak ~trailing:Sp.nonbreak in
       M.return ())
 
 and format_expr_case_case () =

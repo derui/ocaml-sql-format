@@ -15,16 +15,16 @@ let%expect_test "begin statement" =
   [%expect "\n    begin\n    ;"];
 
   Util.run "begin    transaction";
-  [%expect {| begin  transaction |}];
+  [%expect {| begin transaction |}];
 
   Util.run "explain begin";
-  [%expect {| explain  begin |}];
+  [%expect {| explain begin |}];
 
   Util.run "explain analyze begin";
-  [%expect {| explain  analyze  begin |}];
+  [%expect {| explain analyze begin |}];
 
   Util.run ~options:{ O.default with keyword_case = `upper } "begin    transaction";
-  [%expect {| BEGIN  TRANSACTION |}]
+  [%expect {| BEGIN TRANSACTION |}]
 
 let%expect_test "rollback statement" =
   Util.run "rollback;";
@@ -33,10 +33,10 @@ let%expect_test "rollback statement" =
     ; |}];
 
   Util.run "rollback    transaction";
-  [%expect {| rollback  transaction |}];
+  [%expect {| rollback transaction |}];
 
   Util.run ~options:{ O.default with keyword_case = `upper } "rollback    transaction";
-  [%expect {| ROLLBACK  TRANSACTION |}]
+  [%expect {| ROLLBACK TRANSACTION |}]
 
 let%expect_test "rollback statement" =
   Util.run "rollback;";
@@ -45,7 +45,7 @@ let%expect_test "rollback statement" =
     ; |}];
 
   Util.run "rollback    transaction";
-  [%expect {| rollback  transaction |}];
+  [%expect {| rollback transaction |}];
 
   Util.run ~options:{ O.default with keyword_case = `upper } "rollback    transaction";
-  [%expect {| ROLLBACK  TRANSACTION |}]
+  [%expect {| ROLLBACK TRANSACTION |}]

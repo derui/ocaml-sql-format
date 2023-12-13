@@ -30,4 +30,4 @@ let%expect_test "keyword" =
   M.Run.run m O.default Fmt.stdout raw;
   M.Run.run m { O.default with O.keyword_case = `upper } Fmt.stdout raw;
   M.Run.run m { O.default with O.keyword_case = `as_is } Fmt.stdout raw;
-  [%expect "by BY By"]
+  [%expect "byBYBy"]
