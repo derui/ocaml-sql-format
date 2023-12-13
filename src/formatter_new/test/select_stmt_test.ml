@@ -105,8 +105,9 @@ let%expect_test "where" =
     FROM
         a
     WHERE
-        a BETWEEN 1 AND b |}];
+        a BETWEEN 1 AND b |}]
 
+let%expect_test "case" =
   Util.run ~options
     {|
   select
