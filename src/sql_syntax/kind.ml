@@ -58,6 +58,9 @@ type node =
   | N_numeric_value_expression
   | N_numeric_value_expression_term
   | N_value_expression_primary
+  | N_non_numeric_literal
+  | N_unsigned_numeric_literal
+  | N_unsigned_value_expression_primary
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list
