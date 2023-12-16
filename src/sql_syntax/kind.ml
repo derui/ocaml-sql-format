@@ -54,6 +54,10 @@ type node =
   | N_returning_clause
   | N_column_name_list
   | N_result_column_list
+  | N_common_value_expression
+  | N_numeric_value_expression
+  | N_numeric_value_expression_term
+  | N_value_expression_primary
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list

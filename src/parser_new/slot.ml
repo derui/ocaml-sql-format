@@ -44,6 +44,8 @@ include (
       |> Kind_map.add K.N_table_or_subquery_table_function (module Parser_table_or_subquery_table_function : Intf.GEN)
       |> Kind_map.add K.N_join_operator (module Parser_join_operator : Intf.GEN)
       |> Kind_map.add K.N_join_constraint (module Parser_join_constraint : Intf.GEN)
+      |> Kind_map.add K.N_numeric_value_expression (module Parser_numeric_value_expression : Intf.GEN)
+      |> Kind_map.add K.N_numeric_value_expression_term (module Parser_numeric_value_expression_term : Intf.GEN)
       (* statements *)
       |> Kind_map.add K.N_sql_stmt (module Parser_sql_stmt : Intf.GEN)
       |> Kind_map.add K.N_select_stmt (module Parser_select_stmt : Intf.GEN)
