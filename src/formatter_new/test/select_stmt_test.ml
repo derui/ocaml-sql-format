@@ -79,7 +79,7 @@ select * from a, "abc", foo
     )SELECT
          *
      FROM
-         a"abc"foo |}];
+         a, "abc", foo |}];
 
   Util.run ~options {|
 with recursive a as (select 1 from b)
@@ -153,4 +153,19 @@ let%expect_test "result columns" =
 from a, b;
                      |};
 
-  [%expect {||}]
+  [%expect
+    {|
+    SELECT
+        COUNT() AS v,
+        COUNT() AS v14,
+        SUM() AS v2,
+        AVG(distinct ) AS v3,
+        AVG(distinct ) AS v4,
+        MIN() AS v5,
+        MAX() AS v6,
+        EVERY() AS v7,
+        SOME() AS v12,
+        ANY() AS v13
+    FROM
+        a, b
+    ; |}]

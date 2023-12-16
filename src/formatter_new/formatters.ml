@@ -654,7 +654,7 @@ and format_join_operator () =
   let* natural_head = Sp.Condition.contains J.kw_natural in
   let leading_after_natural = if natural_head then None else Some (Sp.cut ()) in
   Sp.iter (fun () ->
-      let* _ = Sp.keyword J.t_comma ~leading:(Sp.cut ()) in
+      let* _ = Sp.leaf J.t_comma ~trailing:(Sp.sp ()) in
       let* _ = Sp.keyword J.kw_cross ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
       let* _ = Sp.keyword J.kw_natural ~leading:(Sp.cut ()) ~trailing:Sp.nonbreak in
       let* _ = Sp.keyword J.kw_left ?leading:leading_after_natural ~trailing:Sp.nonbreak in

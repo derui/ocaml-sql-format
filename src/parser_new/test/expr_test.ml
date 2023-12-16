@@ -142,7 +142,15 @@ let%expect_test "function" =
     func( distinct 1, 3 , 'a' order by 3 desc )
     func() filter (where 'data')
     func() over (partition by c)
-    func() filter (where 'foo') over (partition by c) |}]
+    func() filter (where 'foo') over (partition by c)
+    count(*)
+    sum(x)
+    avg(x)
+    min(x)
+    max(x)
+    every(x)
+    some(x)
+    any(x,y) |}]
 
 let%expect_test "wrap parens" =
   Util.run "( 1 )" p |> print_endline;
