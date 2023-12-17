@@ -61,6 +61,13 @@ type node =
   | N_non_numeric_literal
   | N_unsigned_numeric_literal
   | N_unsigned_value_expression_primary
+  (* uvep is short term of unsigned_value_expression_primary *)
+  | N_uvep_subquery
+  | N_uvep_parameter_reference
+  | N_uvep_nested_expression
+  | N_uvep_case_expression
+  | N_uvep_function
+  | N_uvep_ident
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list
