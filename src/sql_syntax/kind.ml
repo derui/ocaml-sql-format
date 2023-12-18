@@ -68,6 +68,10 @@ type node =
   | N_uvep_case_expression
   | N_uvep_function
   | N_uvep_ident
+  | N_boolean_value_expression
+  | N_boolean_term
+  | N_boolean_factor
+  | N_boolean_primary
   (* statements *)
   | N_sql_stmt
   | N_sql_stmt_list
