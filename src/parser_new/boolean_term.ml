@@ -18,7 +18,7 @@ include (
           let op = M.bump_kw Kw_and in
           M.many (op *> S.boolean_factor ()) *> M.skip
         in
-        M.start_syntax K.N_common_value_expression p
+        M.start_syntax K.N_boolean_term p
     end
 
     let generate v () =
