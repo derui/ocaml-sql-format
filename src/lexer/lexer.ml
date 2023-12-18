@@ -1589,7 +1589,6 @@ let rec token buf =
   | ']' -> Tok_rsbrace
   | '?' -> Tok_qmark
   | ';' -> Tok_semicolon
-  | '\'' -> Tok_quote
   | "->>" -> Op_extract_2
   | "->" -> Op_extract
   | '+' -> Op_plus
@@ -1598,7 +1597,7 @@ let rec token buf =
   | '/' -> Op_slash
   | '%' -> Op_modulo
   | "||" -> Op_concat
-  | "&" -> Op_amp
+  | "&&" -> Op_amp
   | "|" -> Op_pipe
   | "==" -> Op_eq2
   | '=' -> Op_eq

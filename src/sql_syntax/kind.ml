@@ -98,7 +98,6 @@ type leaf =
   | L_rsbrace
   | L_qmark
   | L_semicolon
-  | L_quote
   | L_plus
   | L_minus
   | L_star
@@ -141,7 +140,6 @@ let token_to_leaf = function
   | Tok_rsbrace -> L_rsbrace
   | Tok_qmark -> L_qmark
   | Tok_semicolon -> L_semicolon
-  | Tok_quote -> L_quote
   | Tok_space | Tok_newline | Tok_line_comment _ | Tok_block_comment _ -> failwith "Invalid leaf"
   | Op_plus -> L_plus
   | Op_minus -> L_minus

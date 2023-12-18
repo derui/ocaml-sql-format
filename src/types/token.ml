@@ -17,7 +17,6 @@ type t =
   | Tok_rsbrace
   | Tok_qmark
   | Tok_semicolon
-  | Tok_quote
   | Tok_space
   | Tok_newline
   | Tok_line_comment of string
@@ -66,7 +65,6 @@ let show = function
   | Tok_rsbrace -> "]"
   | Tok_qmark -> "?"
   | Tok_semicolon -> ";"
-  | Tok_quote -> "'"
   | Tok_space -> " "
   | Tok_newline -> "\n"
   | Tok_line_comment t -> t
@@ -75,7 +73,7 @@ let show = function
   | Op_minus -> "-"
   | Op_star -> "*"
   | Op_slash -> "/"
-  | Op_amp -> "&"
+  | Op_amp -> "&&"
   | Op_modulo -> "%"
   | Op_pipe -> "|"
   | Op_concat -> "||"

@@ -21,16 +21,15 @@ include (
       let parse () =
         let p =
           let non_literal = S.non_numeric_literal () in
-          let signed_literal =
-            let* _ = M.bump_when Op_plus <|> M.bump_when Op_minus in
-            S.unsigned_numeric_literal ()
-          in
+          let sign = M.bump_when Op_plus <|> M.bump_when Op_minus in
+          let signed_literal = S.unsigned_numeric_literal () in
           let with_brace =
             let* _ = S.unsigned_value_expression_primary () in
             let index = M.bump_when Tok_lsbrace >>= S.numeric_value_expression >>= fun _ -> M.bump_when Tok_rsbrace in
-            index <|> M.skip
+            let* _ = M.many index in
+            M.return ()
           in
-          non_literal <|> signed_literal <|> with_brace
+          non_literal <|> (sign <|> M.skip >>= fun _ -> signed_literal <|> with_brace)
         in
         M.start_syntax K.N_value_expression_primary p
     end

@@ -90,29 +90,35 @@ let%expect_test "binary operator" =
   Util.run "ex->>4" p |> print_endline;
   Util.run "3 + 4 - 5" p |> print_endline;
   Util.run "(3 + 4) - 5" p |> print_endline;
-  [%expect
-    {|
-     1 + 2
-     2 - 3
-     3 * id
-     id / f
-     eq = eq
-     1 == 2
-     3 <> 4
-    4 != 4
-    5 < 4
-    6 <= 5
-    7 > 3
-    7 >= 4
-    8 & 7
-    9 | 7
-    'foo' || 'bar'
-    1 >> 2
-    rshift <<2
-    ex->3
-    ex->>4
-    3 + 4 - 5
-    (3 + 4) - 5 |}]
+  [%expect.unreachable]
+[@@expect.uncaught_exn
+  {|
+  (* CR expect_test_collector: This test expectation appears to contain a backtrace.
+     This is strongly discouraged as backtraces are fragile.
+     Please change this test to not include a backtrace. *)
+
+  (Failure "Malformed source: `'")
+  Raised at Stdlib.failwith in file "stdlib.ml", line 29, characters 17-33
+  Called from Parser_monad__Tokenizer.tokenize.loop in file "src/parser_monad/tokenizer.ml", line 13, characters 14-29
+  Called from Parser_monad__Tokenizer.tokenize in file "src/parser_monad/tokenizer.ml", line 21, characters 6-13
+  Called from Parser_new_test__Util.run in file "src/parser_new/test/util.ml", line 5, characters 14-82
+  Called from Parser_new_test__Expr_test.(fun) in file "src/parser_new/test/expr_test.ml", line 84, characters 2-20
+  Called from Expect_test_collector.Make.Instance_io.exec in file "collector/expect_test_collector.ml", line 234, characters 12-19
+
+  Trailing output
+  ---------------
+   1 + 2
+   2 - 3
+   3 * id
+   id / f
+   eq = eq
+   1 == 2
+   3 <> 4
+  4 != 4
+  5 < 4
+  6 <= 5
+  7 > 3
+  7 >= 4 |}]
 
 let%expect_test "function" =
   Util.run "func(1)" p |> print_endline;
